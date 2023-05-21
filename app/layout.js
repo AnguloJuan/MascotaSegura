@@ -1,13 +1,11 @@
 import '../public/styles/styles.css';
-import Option from "@/components/menu/menuOption";
 import Menu from "../components/menu/menu";
 
 const name = 'Mascota Segura';
 export const siteTitle = 'Mascota Segura';
 
 export default function RootLayout({ children }) {
-  var type = "usuario";
-
+  var type = "user";
 
   return (
     <html lang="en">
