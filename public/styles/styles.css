@@ -1,13 +1,9 @@
 body {
-    display: block;
+    display: flex;
     margin: 0;
 }
 
-.box {
-    position: relative;
-    height: 100%;
-}
-.box li{
+main{
     display: flex;
-    /*visibility: hidden;*/
+    flex-direction: column;
 }

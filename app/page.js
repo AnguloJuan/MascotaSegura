@@ -1,6 +1,11 @@
 import Image from 'next/image'
 
 export default function Home() {
+
+  const imageStyle = {
+    transform: 'translate(25vw, 25vh)'
+  };
+
   return (
     <>
       <Image
@@ -9,6 +14,7 @@ export default function Home() {
         width={500}
         height={350}
         priority={true}
+        style={imageStyle}
       />
     </>
   )

@@ -1,12 +1,16 @@
 .menu {
+    min-width: 240px;
+    width: 240px;
     height: 100vh;
     background-color: #4844F8;
-    position: fixed;
+    position: sticky;
     left: 0;
     top: 0;
+    overflow-y: auto;
 }
 
 .menu ul {
+    width: 240px;
     list-style-type: none;
     padding: 0;
     margin: 0;

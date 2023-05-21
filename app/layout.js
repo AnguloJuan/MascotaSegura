@@ -1,3 +1,5 @@
+import '../public/styles/styles.css';
+import Option from "@/components/menu/menuOption";
 import Menu from "../components/menu/menu";
 
 const name = 'Mascota Segura';
@@ -5,9 +7,11 @@ export const siteTitle = 'Mascota Segura';
 
 export default function RootLayout({ children }) {
   var type = "usuario";
-  
+
+
   return (
     <html lang="en">
+
       <head>
         <link rel="icon" href="/images/logo.png" />
         <meta
@@ -17,9 +21,12 @@ export default function RootLayout({ children }) {
         <meta name="og:title" content={siteTitle} />
         <title>Mascota Segura</title>
       </head>
+
       <body>
-        <Menu menuType = {type}/>
-        {children}
+        <Menu menuType={type} />
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   )
