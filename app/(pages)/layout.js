@@ -1,5 +1,5 @@
-import '../public/styles/styles.css';
-import Menu from "../components/menu/menu";
+import "@/styles/styles.css"
+import Menu from "@/components/menu/menu";
 
 const name = 'Mascota Segura';
 export const siteTitle = 'Mascota Segura';

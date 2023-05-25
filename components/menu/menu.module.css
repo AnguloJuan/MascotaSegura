@@ -2,7 +2,7 @@
     min-width: 240px;
     width: 240px;
     height: 100vh;
-    background-color: #4844F8;
+    background-color: var(--primaryColor);
     position: sticky;
     left: 0;
     top: 0;
@@ -34,7 +34,7 @@
     padding: 20px;
     gap: 16px;
 
-    background: #4844F8;
+    background: var(--primaryColor);
     border-radius: 8px;
     text-decoration: none;
 

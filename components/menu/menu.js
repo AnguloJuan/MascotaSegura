@@ -1,4 +1,3 @@
-import Link from "next/link";
 import menu from "./menu.module.css";
 import Option from "./menuOption";
 import Image from "next/image";
@@ -21,14 +20,14 @@ function MenuType({ menuType }) {
                 <Option url={"/adopcion"} text={"ADOPCIÓN"} iconUrl={"/images/menu/adopcion.png"} />
                 <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                 <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfil.png"} />
-                <Option url={"/cerrarSesion"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
+                <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
             </>
             ) : menuType == "employee" ? (<>
                 <Option url={"/rescate"} text={"RESCATE"} iconUrl={"/images/menu/rescate.png"} />
                 <Option url={"/adopcion"} text={"ADOPCIÓN"} iconUrl={"/images/menu/adopcion.png"} />
                 <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                 <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfil.png"} />
-                <Option url={"/cerrarSesion"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
+                <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
             </>
             ) : menuType == "admin" ? (
                 <>
@@ -38,7 +37,7 @@ function MenuType({ menuType }) {
                     <Option url={"/empleados"} text={"EMPLEADOS"} iconUrl={"/images/menu/empleados.png"} />
                     <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                     <Option url={"/perfilAdmin"} text={"PERFIL"} iconUrl={"/images/menu/perfilAdmin.png"} />
-                    <Option url={"/cerrarSesion"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
+                    <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
                 </>
             ) : (<>
                 <Option url={"/signIn"} text={"INICIAR SESIÓN"} iconUrl={"/images/menu/perfil.png"} />

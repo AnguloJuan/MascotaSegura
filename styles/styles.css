@@ -1,0 +1,19 @@
+:root {
+    --primaryColor: #4844F8;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-style: normal;
+}
+
+main{
+    padding: 16px;
+}
+
+input{
+    padding: 4px;
+}
