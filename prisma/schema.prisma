@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./mascotaSegura.db"
+}
+
+model estado{
+  id Int @id @default(autoincrement())
+  nombre String
+  municipio municipio[]
+}
+
+model municipio{
+  id Int @id @default(autoincrement())
+  nombre String
+  estado estado @relation(fields: [idEstado], references: [id])
+  idEstado Int
+  adoptante adoptante[]
+  refugio refugio[]
+  reporte reporte[]
+}
+
+model refugio{
+  id Int @id @default(autoincrement())
+  municipio  municipio @relation(fields: [idMunicipio], references: [id])
+  idMunicipio Int
+  espacios Int
+  fechaCreada DateTime @default(now())
+  adopcion adopcion[]
+  espacio espacios[]
+}
+
+model adoptante{
+  id Int @id @default(autoincrement())
+  municipio municipio @relation(fields: [idMunicipio], references: [id])
+  idMunicipio Int
+  nombre String
+  apellido String
+  correo String @unique
+  telefono Int
+  contrasena Int
+  fechaRegistro DateTime @default(now())
+  historialAdoptivo historialAdoptivo? @relation("historialAdoptante", fields: [idHistorialAdoptante], references: [id])
+  idHistorialAdoptante Int
+  adopcion adopcion[]
+  reportador reporte[] @relation("reportador")
+  reportado reporte[] @relation("reportado")
+}
+
+model empleado{
+  id Int @id @default(autoincrement())
+  idRefugio Int
+  nombre String
+  apellido String
+  correo String @unique
+  contrasena String
+  telefono String
+  NIP String
+  fechaRegistro DateTime @default(now())
+  tipo String
+}
+
+model historialAdoptivo{
+ id Int @id @default(autoincrement())
+ mascota mascota @relation("historialMascota", fields: [idMascota], references: [id])
+ adoptantes adoptante[] @relation("historialAdoptante")
+ idAdoptante Int
+ idMascota Int @unique
+}
+
+model cartilla{
+  id Int @id @default(autoincrement())
+  mascota mascota @relation(fields: [idMascota], references: [id])
+  idMascota Int @unique
+  cartilla Bytes
+}
+
+model mascota{
+  id Int @id @default(autoincrement())
+  idRefugio Int
+  idHistorial Int
+  idCartilla Int
+  nombre String?
+  edad Int?
+  sexo String
+  especie especie @relation(fields: [idEspecie], references: [id])
+  idEspecie Int
+  raza String? @default("Desconocida")
+  maltratado Boolean
+  fechaRegistro DateTime @default(now())
+  historialAdoptivo historialAdoptivo? @relation("historialMascota")
+  cartilla cartilla?
+  adopcion adopcion?
+  victima reporte[]
+}
+
+model adopcion{
+  id Int @id @default(autoincrement())
+  adoptante adoptante @relation(fields: [idAdoptante], references: [id])
+  idAdoptante Int
+  mascota mascota @relation(fields: [idMascota], references: [id])
+  idMascota Int @unique
+  refugio refugio @relation(fields: [idRefugio], references: [id])
+  idRefugio Int
+  fechaCreada DateTime @default(now())
+}
+
+model reporte{
+  id Int @id @default(autoincrement())
+  reportador adoptante? @relation("reportador", fields: [idReportador], references: [id])
+  reportado adoptante? @relation("reportado", fields: [idReportado], references: [id])
+  idReportador Int?
+  idReportado Int?
+  mascota mascota? @relation(fields: [idMascota], references: [id])
+  idMascota Int?
+  municipio municipio @relation(fields: [idMunicipio], references: [id])
+  idMunicipio Int
+  descripcion String
+  fechaCreada DateTime @default(now())
+}
+
+model especie{
+  id Int @id
+  especie String
+  mascota mascota[]
+  espacios espacios[]
+}
+
+model espacios{
+  id Int @id
+  espacios Int
+  especie especie @relation(fields: [idEspecie], references: [id])
+  idEspecie Int
+  refugio refugio @relation(fields: [idRefugio], references: [id])
+  idRefugio Int
+}
