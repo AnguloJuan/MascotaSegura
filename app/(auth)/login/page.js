@@ -1,9 +1,10 @@
-import InputLabel from "@/components/Input";
+import Input from "@/components/Input";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Adopcion() {
     return (
-        <form action="Post">
+        <>
             <h1>Iniciar sesión</h1>
             <>
                 <Image
@@ -14,10 +15,12 @@ export default function Adopcion() {
                     priority={true}
                 />
             </>
-            <label htmlFor="email" className="form-label">Correo electrónico</label>
-            <input type="email" className="form-control" id="email" placeholder="Correo electrónico"/>
-            <InputLabel id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"} />
-            <button type="submit">Iniciar sesión</button>
-        </form>
+            <form action="Post">
+                <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"} />
+                <Input id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"} />
+                <button type="submit">Iniciar sesión</button>
+            </form>
+            <Link href={"/signin"}>Crear cuenta</Link>
+        </>
     )
 }
