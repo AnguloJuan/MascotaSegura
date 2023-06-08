@@ -51,6 +51,8 @@ model adoptante{
   adopcion adopcion[]
   reportador reporte[] @relation("reportador")
   reportado reporte[] @relation("reportado")
+  tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
+  idTipoUsuario Int
 }
 
 model empleado{
@@ -63,7 +65,15 @@ model empleado{
   telefono String
   NIP String
   fechaRegistro DateTime @default(now())
-  tipo String
+  tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
+  idTipoUsuario Int
+}
+
+model tipoUsuario{
+  id Int @id
+  usuario String
+  empleado empleado[]
+  adoptante adoptante[]
 }
 
 model historialAdoptivo{
