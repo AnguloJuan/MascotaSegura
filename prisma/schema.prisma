@@ -144,7 +144,8 @@ model especie{
 
 model espacios{
   id Int @id
-  espacios Int
+  espacioTotal Int
+  espacioDisponible Int
   especie especie @relation(fields: [idEspecie], references: [id])
   idEspecie Int
   refugio refugio @relation(fields: [idRefugio], references: [id])
