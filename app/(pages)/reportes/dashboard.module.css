@@ -1,0 +1,9 @@
+.dashboard{
+    display: flex;   
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.dashboard div{
+    width: 500px;
+}
