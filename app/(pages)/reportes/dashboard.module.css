@@ -7,3 +7,53 @@
 .dashboard div{
     width: 500px;
 }
+
+.adopciones, .espacios, .reportes{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.adopciones div, .espacios div, .reportes div{
+    width: 100%;
+}
+
+.tarjetas{
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjetas div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: center;
+    text-align: center;
+    box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
+    padding: 1rem;
+    margin: 1rem 0;
+    width: 200px;
+}
+
+.tarjetas p{
+    margin: 0;
+}
+
+.dashboard canvas{
+    display: initial;
+}
+.canva{
+    padding: 1rem;
+    box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
+}
+.espacios{
+    gap: 1rem;
+}
+
+.espacios canvas, .reportes canvas{
+    width: 300px;
+    height: 300px;
+}
+
+.reportesM{
+    width: 300px;
+}

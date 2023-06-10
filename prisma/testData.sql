@@ -167,6 +167,27 @@ INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo,
 INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (29, 2, 9, 30, 'Charlie', 3, 'Macho', 1, 'Gato', 0, '2023-06-13 13:55:00');
 INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (30, 3, 1, 31, 'Daisy', 6, 'Hembra', 2, 'Perro', 0, '2023-06-15 16:30:00');
 
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (31, 1, 2, 32, 'Max', 3, 'Macho', 1, 'Gato', 0, '2023-04-05 14:30:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (32, 1, 3, 33, 'Lola', 2, 'Hembra', 2, 'Perro', 0, '2023-04-10 11:15:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (33, 1, 4, 34, 'Bella', 4, 'Hembra', 3, 'Conejo', 0, '2023-04-15 16:45:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (34, 1, 5, 35, 'Rocky', 5, 'Macho', 2, 'Perro', 0, '2023-04-20 13:30:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (35, 1, 6, 36, 'Simba', 1, 'Macho', 1, 'Gato', 0, '2023-04-25 10:20:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (36, 1, 7, 37, 'Luna', 3, 'Hembra', 2, 'Perro', 0, '2023-04-30 15:15:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (37, 1, 8, 38, 'Milo', 2, 'Macho', 3, 'Conejo', 0, '2023-05-05 12:10:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (38, 1, 9, 39, 'Lucy', 4, 'Hembra', 2, 'Perro', 0, '2023-05-10 17:00:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (39, 1, 10, 40, 'Toby', 2, 'Macho', 1, 'Gato', 0, '2023-05-15 11:45:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (40, 1, 11, 41, 'Lola', 3, 'Hembra', 2, 'Perro', 0, '2023-05-20 09:30:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (41, 1, 12, 42, 'Mia', 1, 'Hembra', 3, 'Conejo', 0, '2023-05-25 14:20:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (42, 1, 13, 43, 'Max', 5, 'Macho', 2, 'Perro', 0, '2023-05-30 11:15:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (43, 1, 14, 44, 'Luna', 2, 'Hembra', 1, 'Gato', 0, '2023-06-04 16:30:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (44, 1, 15, 45, 'Buddy', 4, 'Macho', 2, 'Perro', 0, '2023-06-09 13:45:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (45, 1, 16, 46, 'Coco', 3, 'Hembra', 3, 'Conejo', 0, '2023-06-14 10:30:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (46, 1, 17, 47, 'Rocky', 2, 'Macho', 1, 'Gato', 0, '2023-06-19 15:45:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (47, 1, 18, 48, 'Lola', 4, 'Hembra', 2, 'Perro', 0, '2023-06-24 12:20:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (48, 1, 19, 49, 'Charlie', 1, 'Macho', 3, 'Conejo', 0, '2023-06-29 09:10:00');
+INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado, fechaRegistro) VALUES (49, 1, 20, 50, 'Luna', 5, 'Hembra', 2, 'Perro', 0, '2023-07-04 14:50:00');
+
+
 --Especies --
 INSERT INTO especie (id, especie) VALUES (1, 'Canina');
 INSERT INTO especie (id, especie) VALUES (2, 'Felina');
@@ -280,3 +301,13 @@ INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (13, 13, 13, 1, '2023-05-30 11:15:00');
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (14, 14, 14, 14, '2023-06-04 16:30:00');
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (15, 15, 15, 1, '2023-06-09 13:45:00');
+
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (16, 16, 16, 1, '2023-05-05 14:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (17, 17, 17, 1, '2023-05-10 11:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (18, 18, 18, 1, '2023-05-15 16:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (19, 19, 19, 1, '2023-05-20 13:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (20, 20, 20, 1, '2023-05-25 10:20:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (21, 21, 21, 1, '2023-05-30 15:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (22, 22, 22, 1, '2023-06-04 16:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (23, 23, 23, 1, '2023-06-09 13:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (24, 24, 24, 1, '2023-06-14 10:30:00');

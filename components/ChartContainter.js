@@ -35,7 +35,11 @@ export function Espacios({ data }) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Espacios disponibles en el refugio'
+                        text: 'Espacios disponibles en el refugio',
+                        font: {
+                            weight: 'bold',
+                            size: 16,
+                        }
                     },
                 },
                 indexAxis: 'y',
@@ -73,7 +77,18 @@ export function PorcentajeEspecie({ data }) {
                         ],
                     },
                 ],
-            },
+            }, options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Porcentaje de espacio disponible por especie',
+                        font: { 
+                            weight: 'bold' ,
+                            size: 16,
+                        }
+                    },
+                },
+            }
         });
     }, [data]);
 
@@ -109,7 +124,18 @@ export function ReportesPorMunicipio({ data }) {
                         ],
                     },
                 ],
-            },
+            },options:{
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Cantidad de reportes por municipio',
+                        font: { 
+                            weight: 'bold',
+                            size: 16,
+                         }
+                    },
+                },
+            }
         });
     }, [data]);
 
@@ -210,7 +236,18 @@ export function AdopcionesPorMes({ adopciones, adoptantes }) {
                     fill: false,
                 }
                 ]
-            },
+            }, options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Adopciones y Adoptantes registrados por mes',
+                        font: {
+                            weight: 'bold',
+                            size: 16,
+                        }
+                    },
+                },
+            }
         });
     }, [])
     return <canvas ref={chartRef} />;
