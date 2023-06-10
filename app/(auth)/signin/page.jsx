@@ -40,7 +40,7 @@ export default function signin() {
 
 
     return (
-        <form action="Post">
+        <form onSubmit={handleSignIn} >
             <h1>Crear cuenta</h1>
             <>
                 <Image
