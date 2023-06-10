@@ -18,7 +18,7 @@ export default function Adopcion() {
             <form action="Post">
                 <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"} />
                 <Input id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"} />
-                <button type="submit">Iniciar sesión</button>
+                <button type="submit" className="btn btn-primary mb-3">Iniciar sesión</button>
             </form>
             <Link href={"/signin"}>Crear cuenta</Link>
         </>

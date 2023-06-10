@@ -1,5 +1,6 @@
 import "@/styles/styles.css"
 import form from "./form.module.css"
+import 'bootstrap/dist/css/bootstrap.css'
 
 export const metadata = {
   title: 'Mascota Segura',

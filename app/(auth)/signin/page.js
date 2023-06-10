@@ -58,7 +58,7 @@ export default function signin() {
             <Input id={"telefono"} type={"text"} label={"Teléfono"} placeholder={"Teléfono"} />
             <Input id={"estado"} type={"text"} label={"Estado"} placeholder={"Estado"} />
             <Input id={"municipio"} type={"text"} label={"Nombre"} placeholder={"Nombre"} />
-            <button type="submit">Crear cuenta</button>
+            <button type="submit" className="btn btn-primary mb-3">Crear cuenta</button>
         </form>
     )
 }

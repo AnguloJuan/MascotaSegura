@@ -1,5 +1,6 @@
 import "@/styles/styles.css"
 import Menu from "@/components/menu/menu";
+import 'bootstrap/dist/css/bootstrap.css'
 
 const name = 'Mascota Segura';
 export const siteTitle = 'Mascota Segura';
