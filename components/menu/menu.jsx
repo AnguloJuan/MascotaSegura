@@ -40,7 +40,7 @@ function MenuType({ menuType }) {
                     <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
                 </>
             ) : (<>
-                <Option url={"/signIn"} text={"INICIAR SESIÓN"} iconUrl={"/images/menu/perfil.png"} />
+                <Option url={"/login"} text={"INICIAR SESIÓN"} iconUrl={"/images/menu/perfil.png"} />
             </>
             )
     )

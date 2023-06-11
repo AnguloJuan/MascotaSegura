@@ -1,34 +1,38 @@
 "use client";
 import Input from "@/components/Input";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function signin() {
-    const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        telefono: '',
-        municipio: '',
-        password: ''
-    });
+export default function SignIn() {
+    const router = useRouter()
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [telefono, setTelefono] = useState("");
+    const [municipio, setMunicipio] = useState("");
+    const [password, setPassword] = useState("");
 
     const handleSignIn = async (e) => {
         e.preventDefault();
 
         try {
             // Make an HTTP POST request to the sign-in API route
-            const response = await fetch('/api/signin', {
+            const response = await fetch('/api/auth/signin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify({ firstName, lastName, email, telefono, municipio, password }),
             });
-
+            console.log(response);
             if (response.ok) {
                 // Sign-in successful, perform any necessary actions (e.g., redirect)
-                console.log('Sign-in successful');
+                response.json().then(
+                    response => setCookie('token', response.token)
+                )
+
+                router.replace('/')
             } else {
                 // Handle sign-in error
                 console.error('Sign-in failed');
@@ -51,13 +55,24 @@ export default function signin() {
                     priority={true}
                 />
             </>
-            <Input id={"name"} type={"text"} label={"Nombre"} placeholder={"Nombre"} />
-            <Input id={"lastName"} type={"text"} label={"Apellidos"} placeholder={"Apellidos"} />
-            <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"} />
-            <Input id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"} />
-            <Input id={"telefono"} type={"text"} label={"Teléfono"} placeholder={"Teléfono"} />
-            <Input id={"estado"} type={"text"} label={"Estado"} placeholder={"Estado"} />
-            <Input id={"municipio"} type={"text"} label={"Nombre"} placeholder={"Nombre"} />
+            <Input id={"name"} type={"text"} label={"Nombre"} placeholder={"Nombre"}
+                onChange={(e) => setFirstName(e.target.value)} />
+
+            <Input id={"lastName"} type={"text"} label={"Apellidos"} placeholder={"Apellidos"}
+                onChange={(e) => setLastName(e.target.value)} />
+
+            <Input id={"telefono"} type={"text"} label={"Teléfono"} placeholder={"Teléfono"}
+                onChange={(e) => setTelefono(e.target.value)} />
+
+            <Input id={"municipio"} type={"text"} label={"Municipio"} placeholder={"Municipio"}
+                onChange={(e) => setMunicipio(e.target.value)} />
+
+            <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"}
+                onChange={(e) => setEmail(e.target.value)} />
+
+            <Input id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"}
+                onChange={(e) => setPassword(e.target.value)} />
+
             <button type="submit" className="btn btn-primary mb-3">Crear cuenta</button>
         </form>
     )

@@ -43,11 +43,11 @@ model adoptante{
   nombre String
   apellido String
   correo String @unique
-  telefono Int
-  contrasena Int
+  telefono BigInt
+  contrasena String
   fechaRegistro DateTime @default(now())
   historialAdoptivo historialAdoptivo? @relation("historialAdoptante", fields: [idHistorialAdoptante], references: [id])
-  idHistorialAdoptante Int
+  idHistorialAdoptante Int?
   adopcion adopcion[]
   reportador reporte[] @relation("reportador")
   reportado reporte[] @relation("reportado")
