@@ -3,7 +3,6 @@ import Input from "@/components/Input";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
 import { useState } from "react";
 import { setCookie } from 'cookies-next';
 

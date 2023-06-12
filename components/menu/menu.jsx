@@ -2,34 +2,34 @@ import menu from "./menu.module.css";
 import Option from "./menuOption";
 import Image from "next/image";
 
-export default function Menu({ menuType }) {
+export default async function Menu({ user }) {
     return (
         <nav className={menu.menu}>
             <ul>
                 <Logo />
-                <MenuType menuType={menuType} />
+                <MenuType user={user} />
             </ul>
         </nav>
     )
 }
 
-function MenuType({ menuType }) {
+function MenuType({ user }) {
     return (
-        menuType == "user" ?
+        user == 1 ?
             (<>
                 <Option url={"/adopcion"} text={"ADOPCIÓN"} iconUrl={"/images/menu/adopcion.png"} />
                 <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                 <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfil.png"} />
                 <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
             </>
-            ) : menuType == "employee" ? (<>
+            ) : user == 2 ? (<>
                 <Option url={"/rescate"} text={"RESCATE"} iconUrl={"/images/menu/rescate.png"} />
                 <Option url={"/adopcion"} text={"ADOPCIÓN"} iconUrl={"/images/menu/adopcion.png"} />
                 <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                 <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfil.png"} />
                 <Option url={"/login"} text={"CERRAR SESIÓN"} iconUrl={"/images/menu/cerrarSesion.png"} />
             </>
-            ) : menuType == "admin" ? (
+            ) : user == 3 ? (
                 <>
                     <Option url={"/rescate"} text={"RESCATE"} iconUrl={"/images/menu/rescate.png"} />
                     <Option url={"/mascotas"} text={"MASCOTAS"} iconUrl={"/images/menu/adopcion.png"} />

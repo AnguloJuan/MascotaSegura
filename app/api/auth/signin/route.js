@@ -37,7 +37,7 @@ export async function POST(request) {
             console.log(e);
         }
 
-        const token = jwt.sign({ userId: user.id }, SECRET_KEY);
+        const token = jwt.sign(user, SECRET_KEY);
 
         return NextResponse.json({ message: 'User registered', token, user}, {status: 201});
     } catch (error) {

@@ -31,10 +31,10 @@ export async function POST(request) {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ userId: user.id }, SECRET_KEY);
+        BigInt.prototype.toJSON = function () { return this.toString() }
+        const token = jwt.sign(user, SECRET_KEY);
 
         // Return user data along with the token
-        BigInt.prototype.toJSON = function () { return this.toString() }
         return NextResponse.json({ message: 'Logged in', token, user }, { status: 200 });
     } catch (error) {
         console.log(error);
