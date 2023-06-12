@@ -2,6 +2,7 @@ import { GetUserType } from "@/app/(pages)/userType";
 import menu from "./menu.module.css";
 import Option from "./menuOption";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Menu() {
     const user = await GetUserType();
@@ -50,15 +51,17 @@ function MenuType({ user }) {
 
 function Logo() {
     return (
-        <a href="/" className={menu.logo}>
-            <Image
-                src={"/images/logo.png"}
-                alt="logo.png"
-                width={180}
-                height={120}
-                priority={true}
-            />
+        <>
+            <Link href="/" className={menu.logo}>
+                <Image
+                    src={"/images/logo.png"}
+                    alt="logo.png"
+                    width={180}
+                    height={120}
+                    priority={true}
+                />
+            </Link>
             <div className={menu.bar} />
-        </a>
+        </>
     )
 }
