@@ -3,10 +3,10 @@ import jwt from 'jsonwebtoken';
 
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
+import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const SECRET_KEY = process.env.SECRET_KEY
-
+const SECRET_KEY = process.env.SECRET_KEY;
 
 export async function POST(request) {
     const { firstName, lastName, email, telefono, municipio, password } = await request.json();
@@ -17,7 +17,11 @@ export async function POST(request) {
         const existingUser = await prisma.adoptante.findUnique({ where: { correo: email } });
 
         if (existingUser) {
-            return NextResponse.json({ message: 'Email already registered' }, {status: 409});
+            return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
+        }
+
+        if (!SECRET_KEY) {
+            return NextResponse.json({ message: 'Llave secreta no encontrada' }, { status: 500 })
         }
 
         // Hash the password
@@ -40,12 +44,25 @@ export async function POST(request) {
         } catch (e) {
             console.log(e);
         }
-
+        BigInt.prototype.toJSON = function () { return this.toString() }
         const token = jwt.sign(user, SECRET_KEY);
+        if (!token || !user) {
+            console.log(user);
+            console.log(token);
+            try {
+                await prisma.adoptante.delete({
+                    where: {
+                        id: user.id
+                    }
+                })
+            } catch (e) {
+                console.log(e);
+            }
+        }
 
-        return NextResponse.json({ message: 'User registered', token, user}, {status: 201});
+        return NextResponse.json({ message: 'User registered', token, user }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({message: 'Something went wrong'},{status: 500})
+        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
     }
 }

@@ -1,8 +1,10 @@
 import InputLabel from "@/components/Input";
 import perfilAdoptador from "./perfil.module.css";
+import { GetUserType } from "../userType";
 
 
-export default function Perfil({ user }) {
+export default async function Perfil() {
+    const user = await GetUserType();
     return (
         user == 1 ? (<>
         <div className={perfilAdoptador}>

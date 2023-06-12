@@ -1,10 +1,18 @@
 import InputLabel from "@/components/Input";
-import listaMascotas from "./page.module.css"
+import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 
-export default function Adopcion() {
+const prisma = new PrismaClient();
+
+async function getMascotas() {
+    const mascotas = await prisma.mascota.findMany();
+    return mascotas;
+}
+export default async function Adopcion() {
+    const mascotas = await getMascotas();
     return (
         <>
-            <div className={listaMascotas}>
+                 <div className={listaMascotas}>
                <center><h2>Lista de mascotas</h2></center> 
                 <div className={listaMascotas.contenedor}>
                     <InputLabel id={"idMascota"} label={"ID de la mascota"} placeholder={"nombre"} />
@@ -38,9 +46,16 @@ export default function Adopcion() {
                 </div>
             </div>
 
+            {mascotas.map((mascota) => (
+                <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
+                    <div className="mascota">
+                        <p>Nombre: {mascota.nombre}</p>
+                        <p>Edad: {mascota.edad}</p>
+                        <p>Sexo: {mascota.sexo}</p>
+                    </div>
+                </Link>
+            ))}
+            
 
-
-        </>
-    )
+)
 }
-

@@ -43,3 +43,8 @@ button{
     font-size: large;
     font-weight: bold;
 }
+
+.cerrar-dialog{
+    float: right;
+    -webkit-text-stroke-width: thick;
+}
