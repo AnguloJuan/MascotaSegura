@@ -238,7 +238,7 @@ export function listareportes() {
             <div className={maltrato}>
                 <div className={maltrato.busqueda}>
                     <InputLabel id={"reporte"} label={"Id del reporte"} placeholder={"nombre"} />
-                    <button>Buscar</button>
+                    <button type="submit">Buscar</button>
                 </div>
                 <div className={maltrato.busquedaAvanzada}>
                     <InputLabel id={"nombre"} label={"Nombre de mascota"} placeholder={"nombre"} />
