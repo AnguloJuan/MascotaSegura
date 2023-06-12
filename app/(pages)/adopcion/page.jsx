@@ -1,6 +1,6 @@
 import InputLabel from "@/components/Input";
 
-export default function Adopcion() {
+export default async function Adopcion() {
     return (
         <>
             <h1>Lista de mascotas</h1>
