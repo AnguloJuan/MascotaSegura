@@ -1,0 +1,23 @@
+
+
+.container {
+    display: flex;
+    align-items: center;
+background-color: rgb(221, 212, 212);
+border-radius: 10px 10px 10px 10px;
+  }
+  
+  .profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ccc;
+    margin-right: 20px;
+  }
+
+  .profile-data {
+    font-family: Arial, sans-serif;
+  }
+  
+  
+  
