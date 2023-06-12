@@ -1,0 +1,33 @@
+.listaMascota {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .contenedor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  
+  .busqueda {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .inputlabel {
+    margin-right: 5px;
+   
+  
+    width: 100%;
+
+  }
+
+ 
+  
+  .contenedor button {
+    margin-left: 10px;
+   
+    background-color: green;
+  }
+  

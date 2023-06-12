@@ -1,0 +1,52 @@
+
+.maltrato{
+    display: flex;   
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+}
+.busqueda {
+    display: flex;
+}
+#reporte {
+    flex: 1;
+    padding: 5px;
+  }
+  
+  button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+.busquedaAvanzada{
+
+   display: flex;
+      
+}
+#nombre {
+    flex: 1;
+        padding: 5px;
+}
+.containerReportes {
+    display: flex;
+    align-items: center;
+background-color: rgb(221, 212, 212);
+border-radius: 10px 10px 10px 10px;
+margin-bottom: 30px;
+  }
+  
+  .profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #852626;
+    margin-right: 20px;
+  }
+
+  .profile-data {
+    font-family: Arial, sans-serif;
+  }
+  

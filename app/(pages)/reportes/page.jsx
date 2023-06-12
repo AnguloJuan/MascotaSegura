@@ -1,6 +1,10 @@
 import { AdopcionesPorMes, Espacios, PorcentajeEspecie, ReportesPorMunicipio } from "@/components/ChartContainter";
 import { PrismaClient } from "@prisma/client";
 import dashboard from "./dashboard.module.css";
+import maltrato from "./reporte.module.css";
+
+import InputLabel from "@/components/Input";
+
 const prisma = new PrismaClient();
 
 async function getEspacios() {
@@ -220,6 +224,61 @@ export default async function Dashboard() {
                     <ReportesPorMunicipio className={dashboard.reportesM} data={reportesPorMunicipio} />
                 </div>
             </div>
+
+
         </div>
+
+
+    )
+}
+
+export function listareportes() {
+    return (
+        <>
+            <div className={maltrato}>
+                <div className={maltrato.busqueda}>
+                    <InputLabel id={"reporte"} label={"Id del reporte"} placeholder={"nombre"} />
+                    <button>Buscar</button>
+                </div>
+                <div className={maltrato.busquedaAvanzada}>
+                    <InputLabel id={"nombre"} label={"Nombre de mascota"} placeholder={"nombre"} />
+                    <InputLabel id={"nombre"} label={"Nombre de usuario"} placeholder={"nombre"} />
+                </div>
+                <div className={maltrato.containerReportes}>
+                    <div className={maltrato.profile - picture}></div>
+                    <div className={maltrato.profile - data}>
+                        <p>Nombre</p>
+                        <p>Especie</p>
+                        <p>Raza</p>
+                    </div>
+
+                </div>
+                <div className={maltrato.containerReportes}>
+                    <div className={maltrato.profile - picture}></div>
+                    <div className={maltrato.profile - data}>
+                        <p>Nombre</p>
+                        <p>Especie</p>
+                        <p>Raza</p>
+                    </div>
+
+                </div>
+                <div className={maltrato.containerReportes}>
+                    <div className={maltrato.profile - picture}></div>
+                    <div className={maltrato.profile - data}>
+                        <p>Nombre</p>
+                        <p>Especie</p>
+                        <p>Raza</p>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+        </>
     )
 }

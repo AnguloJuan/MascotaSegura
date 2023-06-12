@@ -1,0 +1,101 @@
+
+.listaAdoptante {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  .contenedor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+  
+  .busqueda {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .inputlabel {
+    margin-right: 5px;
+   
+  
+    width: 100%;
+
+  }
+
+ 
+  
+  .contenedor button {
+    margin-left: 10px;
+   
+    background-color: green;
+  }
+  
+  .contenedorAdoptante{
+    display: flex;
+    align-items: center;
+   
+  }
+  .perfil{
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px 10px 10px 10px;
+  }
+  .informacion{
+    font-family: Arial, sans-serif;
+
+  }
+  .botones{
+
+    display: flex;
+      justify-content: center;
+      margin-top: 100px;
+
+  }
+  .botones button {
+    margin:0 15px;
+    background-color: blue;
+    border: 10px;
+  }
+
+  .contenedorMascota {
+    display: flex;
+    align-items: center;
+background-color: rgb(221, 212, 212);
+border-radius: 10px 10px 10px 10px;
+  }
+  
+  .fotoPerfil{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #4a3333;
+    margin-right: 20px;
+  }
+
+  .datosMascota {
+    font-family: Arial, sans-serif;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+    flex: 1 0 25%; /* Ocupa 25% del espacio disponible */
+    min-width: 400px; /* Ancho mínimo del contenedor */
+    width: 100px;
+    height: 300px;
+    background-color: lightgray;
+    border: 1px solid gray;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    margin-left: 10px;
+    
+  }

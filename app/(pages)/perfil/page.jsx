@@ -23,9 +23,10 @@ export default function Perfil({ user }) {
                     <p>Raza</p>
                     </div>
                 
-                
+                <div className="contenedor-btn">
                 <button type="submit">Guardar</button>
                 <button type="submit">Eliminar cuenta</button>
+                </div>
                 </div>
                 </div>
    

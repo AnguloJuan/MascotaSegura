@@ -183,6 +183,7 @@ export function AdopcionesPorMes({ data }) {
     return <canvas ref={chartRef} />;
 }
 */
+
 export function AdopcionesPorMes({ adopciones, adoptantes }) {
     const chartRef = useRef();
 
