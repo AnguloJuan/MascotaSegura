@@ -2,8 +2,9 @@ import { AdopcionesPorMes, Espacios, PorcentajeEspecie, ReportesPorMunicipio } f
 import { PrismaClient } from "@prisma/client";
 import dashboard from "./dashboard.module.css";
 import maltrato from "./reporte.module.css";
+import registro from "./reporte.module.css";
 
-import rescate from "./reporte.module.css";
+import actualizar from "./reporte.module.css";
 
 import InputLabel from "@/components/Input";
 
