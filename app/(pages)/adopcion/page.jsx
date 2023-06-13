@@ -2,6 +2,8 @@ import InputLabel from "@/components/Input";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import visualizar from "./page.module.css"
+import listaMascotas from "./page.module.css"
+import Image from "next/image";
 
 const prisma = new PrismaClient();
 
@@ -58,14 +60,24 @@ export default async function Adopcion() {
             ))}
 
 
-<div className={listaMascotas.contendedorMascotas}>
-  <div className={listaMascotas.item}>Contenedor 1</div>
-  <div className={listaMascotas.item}>Contenedor 2</div>
-  <div className={listaMascotas.item}>Contenedor 3</div>
-  <div className={listaMascotas.item}>Contenedor 4</div>
-  <div className={listaMascotas.item}>Contenedor 5</div>
-  <div className={listaMascotas.item}>Contenedor 6</div>
-</div>
+            <div class={listaMascotas.tarjeta}>
+                <div class={listaMascotas.imagen}>
+                    <Image
+                        src={"/images/perro1.jpg"}
+                        alt='logo.png'
+                        width={300}
+                        height={300}
+                        priority={true}
+                    />
+                </div>
+                <div class={listaMascotas.datos}>
+                    <p>Firulais</p>
+                    <p>2 años </p>
+                    <p>Macho</p>
+                </div>
+            </div>
+
+
 
         </>
 
@@ -91,7 +103,7 @@ export function verMascota() {
                     </div>
 
                 </div>
-              
+
 
                 <div className={visualizar.contenedor}>
                     <div className={visualizar.busqueda}>
@@ -141,7 +153,7 @@ export function procesoAdopcion() {
     return (
         <>
 
-<div className={proceso}>
+            <div className={proceso}>
                 <h3>Proceso de adopcion</h3>
                 <div className={proceso.contenedorAdoptante}>
 
@@ -156,7 +168,7 @@ export function procesoAdopcion() {
                     </div>
 
                 </div>
-              
+
 
                 <div className={proceso.contenedor}>
                     <div className={proceso.busqueda}>
@@ -181,7 +193,7 @@ export function procesoAdopcion() {
                 <p>Estado:</p>
                 <p>Aprovado/Denegado</p>
 
-                
+
 
 
                 <div class={proceso.buton}>
