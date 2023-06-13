@@ -56,13 +56,13 @@ export default function SignIn() {
                         setIsErrorEmail(true);
                     }
                     if (response.status == 500) {
-                        console.error('An error occurred', error);
+                        console.error('An error occurred', message);
                         setIsErrorServidor(true);
                     }
                 }
-                
+
             } catch (error) {
-                console.error('An error occurred', error);
+                console.error('An error occurred', message);
                 setIsErrorServidor(true);
             }
         }
