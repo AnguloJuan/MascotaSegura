@@ -3,6 +3,7 @@ import listaMascotas from "./mascota.module.css";
 import InputLabel from "@/components/Input";
 import Link from "next/link";
 import visualizar from "./mascota.module.css"
+import Image from "next/image";
 
 const prisma = getPrisma();
 
@@ -63,14 +64,25 @@ export default async function Adopcion() {
             ))}
 
 
-            <div className={listaMascotas.contendedorMascotas}>
-                <div className={listaMascotas.item}>Contenedor 1</div>
-                <div className={listaMascotas.item}>Contenedor 2</div>
-                <div className={listaMascotas.item}>Contenedor 3</div>
-                <div className={listaMascotas.item}>Contenedor 4</div>
-                <div className={listaMascotas.item}>Contenedor 5</div>
-                <div className={listaMascotas.item}>Contenedor 6</div>
+            <div class={listaMascotas.tarjeta}>
+                <div class={listaMascotas.imagen}>
+                    <Image
+                        src={"/images/perro1.jpg"}
+                        alt='logo.png'
+                        width={300}
+                        height={300}
+                        priority={true}
+                    />
+                </div>
+                <div class={listaMascotas.datos}>
+                    <p>Firulais</p>
+                    <p>2 años </p>
+                    <p>Macho</p>
+                </div>
             </div>
+
+
+
         </>
     )
 }

@@ -336,7 +336,7 @@ export function editarReporte() {
                 <div class={actualizar.buton1}>
                     <button>Guardar</button>
                 </div>
-                <div class={rescaactualizarte.buton2}>
+                <div class={actualizar.buton2}>
                     <button>Eliminar</button>
                 </div>
                 </div>
