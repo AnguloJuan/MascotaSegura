@@ -1,0 +1,78 @@
+.listaRefugios {
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+.busqueda {
+  flex: 1;
+  margin-right: 10px;
+}
+ 
+.busqueda button {
+  margin-top: 30px;
+  margin-left: 20px;
+  align-items: center;
+}
+
+.contenedorBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.contenedorBotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+.buton1 button{
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  background-color: #4CAF50;
+  cursor: pointer;
+  margin-right: 100px;
+}
+.buton2 button{
+padding: 10px 20px;
+color: white;
+border: none;
+cursor: pointer;
+}
+.maltrato{
+  display: flex;   
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+.busqueda {
+  display: flex;
+}
+.busquedaAvanzada{
+
+  display: flex;
+     
+}
+
+.containerReportes {
+  width: 300px;
+  height: 150px;
+  border: 1px solid black;
+  text-align: center;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.info {
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+}
