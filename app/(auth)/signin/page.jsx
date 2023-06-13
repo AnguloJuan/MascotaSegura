@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/Input";
 import { Dialog } from "@/components/dialogs";
-import { setCookie } from "cookies-next";
+import { deleteCookie, hasCookie, setCookie } from "cookies-next";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,7 @@ export default function SignIn() {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || email || !telefono || !municipio || !password) {
+        if (!firstName || !lastName || !email || !telefono || !municipio || !password) {
             setIsFieldsFilled(true);
         } else {
             try {
