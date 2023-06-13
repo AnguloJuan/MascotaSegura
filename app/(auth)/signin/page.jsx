@@ -1,6 +1,6 @@
 "use client";
 import Input from "@/components/Input";
-import { ErrorDialog } from "@/components/dialogs";
+import { Dialog } from "@/components/dialogs";
 import { setCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -85,9 +85,10 @@ export default function SignIn() {
 
                 <button type="submit" className="btn btn-primary mb-3">Crear cuenta</button>
             </form>
-            <ErrorDialog id={"errorEmail"}>
+            <Dialog id={"errorEmail"}>
+                <h1>Error al registrarse</h1>
                 <p>Ya se registrado una cuenta con ese correo</p>
-            </ErrorDialog>
+            </Dialog>
         </>
     )
 }

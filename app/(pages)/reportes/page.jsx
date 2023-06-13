@@ -1,5 +1,5 @@
 import { AdopcionesPorMes, Espacios, PorcentajeEspecie, ReportesPorMunicipio } from "@/components/ChartContainter";
-import { PrismaClient } from "@prisma/client";
+
 import dashboard from "./dashboard.module.css";
 import maltrato from "./reporte.module.css";
 import registro from "./reporte.module.css";
@@ -7,8 +7,9 @@ import registro from "./reporte.module.css";
 import actualizar from "./reporte.module.css";
 
 import InputLabel from "@/components/Input";
+import { getPrisma } from "@/app/lib/prisma";
 
-const prisma = new PrismaClient();
+const prisma = getPrisma();
 
 async function getEspacios() {
     const espacios = await prisma.espacios.findMany({

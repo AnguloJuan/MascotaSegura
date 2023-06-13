@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 const name = 'Mascota Segura';
 export const siteTitle = 'Mascota Segura';
 
-export default async function RootLayout({ children }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>

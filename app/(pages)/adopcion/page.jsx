@@ -1,9 +1,10 @@
+import { getPrisma } from "@/app/lib/prisma";
+import listaMascotas from "./mascota.module.css";
 import InputLabel from "@/components/Input";
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import visualizar from "./page.module.css"
 
-const prisma = new PrismaClient();
+const prisma = getPrisma();
 
 async function getMascotas() {
     const mascotas = await prisma.mascota.findMany();
@@ -15,10 +16,12 @@ export default async function Adopcion() {
         <>
             <div className={listaMascotas}>
                 <center><h2>Lista de mascotas</h2></center>
+
                 <div className={listaMascotas.contenedor}>
                     <InputLabel id={"idMascota"} label={"ID de la mascota"} placeholder={"nombre"} />
                     <button>Buscar</button>
                 </div>
+
                 <div className={listaMascotas.contenedor}>
                     <div className={listaMascotas.busqueda}>
                         <InputLabel id={"nombre"} label={"nombre"} placeholder={"nombre"} />
@@ -38,11 +41,13 @@ export default async function Adopcion() {
                     <div className={listaMascotas.busqueda}>
                         <InputLabel id={"sexo"} label={"Sexo"} placeholder={"sexo"} />
                     </div>
+                </div>
+                <div className={listaMascotas.busqueda}>
+                    <InputLabel id={"sexo"} label={"Sexo"} placeholder={"sexo"} />
+                </div>
 
-                    <div className={listaMascotas.busqueda}>
-                        <InputLabel id={"tamaño"} label={"Tamaño"} placeholder={"Tamaño"} />
-
-                    </div>
+                <div className={listaMascotas.busqueda}>
+                    <InputLabel id={"tamaño"} label={"Tamaño"} placeholder={"Tamaño"} />
 
                 </div>
             </div>
@@ -58,20 +63,18 @@ export default async function Adopcion() {
             ))}
 
 
-<div className={listaMascotas.contendedorMascotas}>
-  <div className={listaMascotas.item}>Contenedor 1</div>
-  <div className={listaMascotas.item}>Contenedor 2</div>
-  <div className={listaMascotas.item}>Contenedor 3</div>
-  <div className={listaMascotas.item}>Contenedor 4</div>
-  <div className={listaMascotas.item}>Contenedor 5</div>
-  <div className={listaMascotas.item}>Contenedor 6</div>
-</div>
-
+            <div className={listaMascotas.contendedorMascotas}>
+                <div className={listaMascotas.item}>Contenedor 1</div>
+                <div className={listaMascotas.item}>Contenedor 2</div>
+                <div className={listaMascotas.item}>Contenedor 3</div>
+                <div className={listaMascotas.item}>Contenedor 4</div>
+                <div className={listaMascotas.item}>Contenedor 5</div>
+                <div className={listaMascotas.item}>Contenedor 6</div>
+            </div>
         </>
-
     )
-
 }
+
 export function verMascota() {
     return (
         <>
@@ -91,7 +94,7 @@ export function verMascota() {
                     </div>
 
                 </div>
-              
+
 
                 <div className={visualizar.contenedor}>
                     <div className={visualizar.busqueda}>
@@ -137,11 +140,13 @@ export function verMascota() {
         </>
     )
 }
+
+
 export function procesoAdopcion() {
     return (
         <>
 
-<div className={proceso}>
+            <div className={proceso}>
                 <h3>Proceso de adopcion</h3>
                 <div className={proceso.contenedorAdoptante}>
 
@@ -156,7 +161,7 @@ export function procesoAdopcion() {
                     </div>
 
                 </div>
-              
+
 
                 <div className={proceso.contenedor}>
                     <div className={proceso.busqueda}>
@@ -181,7 +186,7 @@ export function procesoAdopcion() {
                 <p>Estado:</p>
                 <p>Aprovado/Denegado</p>
 
-                
+
 
 
                 <div class={proceso.buton}>
