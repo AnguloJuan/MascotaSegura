@@ -58,7 +58,7 @@ export function actualizarRefugio() {
     )
 }
 
-export function listaRefugios(){
+export function ListaRefugios(){
 return(
     <>
     
