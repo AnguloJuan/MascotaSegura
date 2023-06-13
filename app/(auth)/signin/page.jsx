@@ -30,6 +30,9 @@ export default function SignIn() {
                 body: JSON.stringify({ firstName, lastName, email, telefono, municipio, password }),
             });
             if (response.ok) {
+                if (hasCookie('token')){
+                    deleteCookie('token');
+                }
                 // Sign-in successful, perform any necessary actions (e.g., redirect)
                 response.json().then (
                     response => setCookie('token', response.token)

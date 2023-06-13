@@ -2,7 +2,7 @@ import { getPrisma } from "@/app/lib/prisma";
 import listaMascotas from "./mascota.module.css";
 import InputLabel from "@/components/Input";
 import Link from "next/link";
-import visualizar from "./page.module.css"
+import visualizar from "./mascota.module.css"
 
 const prisma = getPrisma();
 

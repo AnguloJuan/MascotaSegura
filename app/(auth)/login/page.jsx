@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { setCookie } from 'cookies-next';
+import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 
 export default function LogIn() {
     const router = useRouter();
@@ -25,6 +25,9 @@ export default function LogIn() {
             });
 
             if (response.ok) {
+                if (hasCookie('token')){
+                    deleteCookie('token');
+                }
                 response.json().then (
                     response => setCookie('token', response.token)
                 )
