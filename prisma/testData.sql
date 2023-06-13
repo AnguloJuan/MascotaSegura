@@ -289,31 +289,31 @@ INSERT INTO reporte (id, idMunicipio, descripcion, fechaCreada) VALUES (34, 2, '
 INSERT INTO reporte (id, idMunicipio, descripcion, fechaCreada) VALUES (35, 1, 'Cachorro abandonado en el centro de la ciudad', '2023-05-31 13:55:00');
 
 --Adopcion--
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (1, 1, 1, 1, '2023-04-01 09:00:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (2, 2, 2, 3, '2023-04-05 14:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (3, 3, 3, 4, '2023-04-10 11:15:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (4, 4, 4, 5, '2023-04-15 16:45:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (5, 5, 5, 5, '2023-04-20 13:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (6, 6, 6, 6, '2023-04-25 10:20:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (7, 7, 7, 7, '2023-04-30 15:15:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (8, 8, 8, 2, '2023-05-05 12:10:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (9, 9, 9, 9, '2023-05-10 17:00:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (10, 10, 10, 1, '2023-05-15 11:45:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (11, 11, 11, 1, '2023-05-20 09:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (12, 12, 12, 12, '2023-05-25 14:20:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (13, 13, 13, 1, '2023-05-30 11:15:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (14, 14, 14, 14, '2023-06-04 16:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (15, 15, 15, 1, '2023-06-09 13:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (1, 1, 1, 1, '2023-04-01 09:00:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (2, 2, 2, 3, '2023-04-05 14:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (3, 3, 3, 4, '2023-04-10 11:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (4, 4, 4, 5, '2023-04-15 16:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (5, 5, 5, 5, '2023-04-20 13:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (6, 6, 6, 6, '2023-04-25 10:20:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (7, 7, 7, 7, '2023-04-30 15:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (8, 8, 8, 2, '2023-05-05 12:10:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (9, 9, 9, 9, '2023-05-10 17:00:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (10, 10, 10, 1, '2023-05-15 11:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (11, 11, 11, 1, '2023-05-20 09:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (12, 12, 12, 12, '2023-05-25 14:20:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (13, 13, 13, 1, '2023-05-30 11:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (14, 14, 14, 14, '2023-06-04 16:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (15, 15, 15, 1, '2023-06-09 13:45:00');
 
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (16, 16, 16, 1, '2023-05-05 14:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (17, 17, 17, 1, '2023-05-10 11:15:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (18, 18, 18, 1, '2023-05-15 16:45:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (19, 19, 19, 1, '2023-05-20 13:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (20, 20, 20, 1, '2023-05-25 10:20:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (21, 21, 21, 1, '2023-05-30 15:15:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (22, 22, 22, 1, '2023-06-04 16:30:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (23, 23, 23, 1, '2023-06-09 13:45:00');
-INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (24, 24, 24, 1, '2023-06-14 10:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (16, 16, 16, 1, '2023-05-05 14:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (17, 17, 17, 1, '2023-05-10 11:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (18, 18, 18, 1, '2023-05-15 16:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (19, 19, 19, 1, '2023-05-20 13:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (20, 20, 20, 1, '2023-05-25 10:20:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (21, 21, 21, 1, '2023-05-30 15:15:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (22, 22, 22, 1, '2023-06-04 16:30:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (23, 23, 23, 1, '2023-06-09 13:45:00');
+INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (24, 24, 24, 1, '2023-06-14 10:30:00');
 
 Insert INTO empleado 
 (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
