@@ -84,6 +84,9 @@ DELETE FROM reporte;
 -- Borrar datos de la tabla tipoUsuario
 DELETE FROM tipoUsuario;
 
+INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(1,'Aceptado');
+INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(2,'Denegado');
+INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(3,'Procesando');
 
 -------Tabla adoptantes-----
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, idHistorialAdoptante, idTipoUsuario) VALUES (1, 1, 'Juan', 'Pérez', 'juan.perez@example.com', '6122881676', 'contraseña123', 1, 1);

@@ -28,9 +28,10 @@ model municipio{
 
 model refugio{
   id Int @id @default(autoincrement())
+  nombre Int?
   municipio  municipio @relation(fields: [idMunicipio], references: [id])
   idMunicipio Int
-  espacios Int
+  espacios Int?
   fechaCreada DateTime @default(now())
   adopcion adopcion[]
   espacio espacios[]
@@ -119,6 +120,8 @@ model adopcion{
   refugio refugio @relation(fields: [idRefugio], references: [id])
   idRefugio Int
   fechaCreada DateTime @default(now())
+  estadoAdopcion estadoAdopcion @relation(fields: [idEstadoAdopcion], references: [id])
+  idEstadoAdopcion Int
 }
 
 model reporte{
@@ -150,4 +153,10 @@ model espacios{
   idEspecie Int
   refugio refugio @relation(fields: [idRefugio], references: [id])
   idRefugio Int
+}
+
+model estadoAdopcion{
+  id Int @id
+  estadoAdopcion String
+  adopcion adopcion[]
 }

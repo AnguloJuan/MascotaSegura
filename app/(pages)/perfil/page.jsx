@@ -1,12 +1,12 @@
 import InputLabel from "@/components/Input";
 import perfilAdoptador from "./perfil.module.css";
-import { GetUserType } from "../../lib/user";
+import { GetUser } from "../../lib/user";
 import { getPrisma } from "@/app/lib/prisma";
 
 const prisma = getPrisma();
 
 export default function Perfil() {
-    const user = GetUserType();
+    const user = GetUser();
     const userType = user.idTipoUsuario;
     return (
         userType == 1 ? (<>

@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 const SECRET_KEY = process.env.SECRET_KEY;
 let user;
 
-export function GetUserType() {
+export function GetUser() {
 
   if (!user) {
     const cookiesManager = cookies();

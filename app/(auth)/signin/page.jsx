@@ -15,7 +15,8 @@ export default function SignIn() {
     const [telefono, setTelefono] = useState("");
     const [municipio, setMunicipio] = useState("");
     const [password, setPassword] = useState("");
-    const dialog = document.getElementById('errorEmail');
+    const [isErrorEmail, setIsErrorEmail] = useState(false);
+
 
     const handleSignIn = async (e) => {
         e.preventDefault();
@@ -46,7 +47,7 @@ export default function SignIn() {
                     response => console.log(response.message)
                 )
                 if (response.status == 409) {
-                    dialog.showModal();
+                    setIsErrorEmail(true);
                 }
             }
         } catch (error) {
@@ -88,7 +89,10 @@ export default function SignIn() {
 
                 <button type="submit" className="btn btn-primary mb-3">Crear cuenta</button>
             </form>
-            <Dialog id={"errorEmail"}>
+            <Dialog id={"errorEmail"} 
+            isOpen={isErrorEmail}
+            onClose={() => setIsErrorEmail(false)}
+            >
                 <h1>Error al registrarse</h1>
                 <p>Ya se registrado una cuenta con ese correo</p>
             </Dialog>

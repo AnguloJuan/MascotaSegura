@@ -1,11 +1,11 @@
-import { GetUserType } from "@/app/lib/user";
+import { GetUser } from "@/app/lib/user";
 import menu from "./menu.module.css";
 import Option from "./menuOption";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Menu() {
-    const user = await GetUserType();
+    const user = await GetUser();
     return (
         <nav className={menu.menu}>
             <ul>

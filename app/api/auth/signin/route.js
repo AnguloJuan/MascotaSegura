@@ -37,6 +37,7 @@ export async function POST(request) {
                     telefono: numTelefono,
                     contrasena: password,
                     tipoUsuario: { connect: { id: 1 } },
+                    fechaRegistro: new Date().toISOString(),
                 },
             });
         } catch (e) {

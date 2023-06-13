@@ -1,19 +1,30 @@
-export function Dialog({ id, children, okDialog, confirmar, fun }) {
-    const dialog = document.getElementById(`${id}`);
-    const closeDialog = () => {
-        dialog.close();
-    }
+export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun }) {
     return (
-        <dialog id={id}>
-            <button id={`btnCerrar${id}`} className="btn cerrar-dialog" onClick={closeDialog}>X</button>
+      <>
+        {isOpen && (
+          <dialog id={id} open>
+            <button id={`btnCerrar${id}`} className="btn cerrar-dialog" onClick={onClose}>
+              X
+            </button>
             {children}
-            {okDialog && (<button id={`btnCerrar${id}`} className="btn btn-primary" onClick={closeDialog}>Ok</button>)}
-            {confirmar && (
-                <>
-                    <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={closeDialog}>Cancelar</button>
-                    <button id={`btnConfirmar${id}`} className="btn btn-primary" onClick={fun}>Confirmar</button>
-                </>
+            {okDialog && (
+              <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={onClose}>
+                Ok
+              </button>
             )}
-        </dialog>
-    )
-}
+            {confirmar && (
+              <>
+                <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={onClose}>
+                  Cancelar
+                </button>
+                <button id={`btnConfirmar${id}`} className="btn btn-primary" onClick={fun}>
+                  Confirmar
+                </button>
+              </>
+            )}
+          </dialog>
+        )}
+      </>
+    );
+  }
+  
