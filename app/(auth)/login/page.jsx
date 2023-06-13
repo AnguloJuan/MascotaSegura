@@ -5,40 +5,48 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
+import { Dialog } from "@/components/dialogs";
 
 export default function LogIn() {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isFieldsFilled, setIsFieldsFilled] = useState(false);
+    const [isLoginFailed, setIsLoginFailed] = useState(false);
 
     const handleLogIn = async (e) => {
         e.preventDefault();
 
-        try {
-            // Make an HTTP POST request to the log-in API route
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (response.ok) {
-                if (hasCookie('token')){
-                    deleteCookie('token');
+        if (!email || !password) {
+            setIsFieldsFilled(true);
+        } else {
+            try {
+                // Make an HTTP POST request to the log-in API route
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
+    
+                if (response.ok) {
+                    if (hasCookie('token')) {
+                        deleteCookie('token');
+                    }
+                    response.json().then(
+                        response => setCookie('token', response.token)
+                    )
+    
+                    router.replace('/')
+                } else {
+                    // Handle log-in error
+                    console.error('Log-in failed');
+                    setIsLoginFailed(true);
                 }
-                response.json().then (
-                    response => setCookie('token', response.token)
-                )
-
-                router.replace('/')
-            } else {
-                // Handle log-in error
-                console.error('Log-in failed');
+            } catch (error) {
+                console.error('An error occurred', error);
             }
-        } catch (error) {
-            console.error('An error occurred', error);
         }
     };
 
@@ -64,6 +72,23 @@ export default function LogIn() {
                 <button type="submit" className="btn btn-primary mb-3">Iniciar sesión</button>
                 <Link href={"/signin"}>Crear cuenta</Link>
             </form>
+            <Dialog
+                id={"errorCampos"}
+                isOpen={isFieldsFilled}
+                onClose={() => setIsFieldsFilled(false)}
+            >
+                <h1>Error</h1>
+                <p>Rellene todos los campos primero</p>
+            </Dialog>
+            <Dialog
+                id={"loginFailed"}
+                isOpen={isLoginFailed}
+                onClose={() => setIsLoginFailed(false)}
+            >
+                <h1>Error</h1>
+                <p>Error al iniciar sesion</p>
+                <p>Asegurese de ingresar bien los datos</p>
+            </Dialog>
         </>
     )
 }
