@@ -314,3 +314,7 @@ INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (22, 22, 22, 1, '2023-06-04 16:30:00');
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (23, 23, 23, 1, '2023-06-09 13:45:00');
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada) VALUES (24, 24, 24, 1, '2023-06-14 10:30:00');
+
+Insert INTO empleado 
+(id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
+VALUES (10, 1, "Juan Antonio", "Angulo Murillo", "jua4_20@alu.uabcs.mx", "TestAdmin", 6121373459, 6789, CURRENT_DATE, 3);
