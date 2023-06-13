@@ -30,7 +30,7 @@
   
   .contenedor button {
     margin-left: 10px;
-   
+   border-radius: 8px;
     background-color: green;
   }
 
@@ -91,8 +91,8 @@
   .imagen {
     width: 150px;
     height: 150px;
-    margin: 0 auto;
     border-radius: 10%;
+    filter: brightness(0.7);
   }
 
  
@@ -104,5 +104,6 @@
 
     align-items:end;
     color: white;
-
+    position: relative;
+    text-align: left;
   }

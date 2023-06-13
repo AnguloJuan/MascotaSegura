@@ -20,7 +20,7 @@ export default async function Adopcion() {
 
                 <div className={listaMascotas.contenedor}>
                     <InputLabel id={"idMascota"} label={"ID de la mascota"} placeholder={"nombre"} />
-                    <button>Buscar</button>
+                    <button className="btn btn-success btn-lg">Buscar</button>
                 </div>
 
                 <div className={listaMascotas.contenedor}>
@@ -55,32 +55,25 @@ export default async function Adopcion() {
 
             {mascotas.map((mascota) => (
                 <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
-                    <div className="mascota">
-                        <p>Nombre: {mascota.nombre}</p>
-                        <p>Edad: {mascota.edad}</p>
-                        <p>Sexo: {mascota.sexo}</p>
+                    <div class={listaMascotas.tarjeta}>
+                        <div class={listaMascotas.imagen}>
+                            <Image
+                                src={"/images/perro1.jpg"}
+                                alt='logo.png'
+                                width={300}
+                                height={300}
+                                loading="lazy"
+                                color="white"
+                            />
+                        </div>
+                        <div className={listaMascotas.datos}>
+                            <p>Nombre: {mascota.nombre}</p>
+                            <p>Edad: {mascota.edad}</p>
+                            <p>Sexo: {mascota.sexo}</p>
+                        </div>
                     </div>
                 </Link>
             ))}
-
-
-            <div class={listaMascotas.tarjeta}>
-                <div class={listaMascotas.imagen}>
-                    <Image
-                        src={"/images/perro1.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div class={listaMascotas.datos}>
-                    <p>Firulais</p>
-                    <p>2 años </p>
-                    <p>Macho</p>
-                </div>
-            </div>
-
 
 
         </>
