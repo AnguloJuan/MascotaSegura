@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import dashboard from "./dashboard.module.css";
 import maltrato from "./reporte.module.css";
 
+import rescate from "./reporte.module.css";
+
 import InputLabel from "@/components/Input";
 
 const prisma = new PrismaClient();
@@ -133,35 +135,35 @@ async function getAdopcionesPorMes() {
         },
     });
     */
-    const currentYear = new Date().getFullYear();
-    const startDate = new Date(currentYear - 1, 0, 1); // Primer día del año pasado
-    //const endDate = new Date(currentYear, 11, 31); // Último día del año actual
+const currentYear = new Date().getFullYear();
+const startDate = new Date(currentYear - 1, 0, 1); // Primer día del año pasado
+//const endDate = new Date(currentYear, 11, 31); // Último día del año actual
 
-    const adopciones = await prisma.adopcion.findMany({
-        where: {
-            idRefugio: 1,
-            fechaCreada: {
-                gte: startDate,
-            },
+const adopciones = await prisma.adopcion.findMany({
+    where: {
+        idRefugio: 1,
+        fechaCreada: {
+            gte: startDate,
         },
-    });
-    //console.log(adopciones);
-    return adopciones;
+    },
+});
+//console.log(adopciones);
+return adopciones;
 }
 
 async function getAdoptantesPorMes() {
-    const currentYear = new Date().getFullYear();
-    const startDate = new Date(currentYear - 1, 0, 1); // Primer día del año pasado
+const currentYear = new Date().getFullYear();
+const startDate = new Date(currentYear - 1, 0, 1); // Primer día del año pasado
 
-    const adoptantes = await prisma.adoptante.findMany({
-        select: { fechaRegistro: true },
-        where: {
-            fechaRegistro: {
-                gte: startDate,
-            },
+const adoptantes = await prisma.adoptante.findMany({
+    select: { fechaRegistro: true },
+    where: {
+        fechaRegistro: {
+            gte: startDate,
         },
-    });
-    return adoptantes;
+    },
+});
+return adoptantes;
 }
 
 export default async function Dashboard() {
@@ -269,14 +271,76 @@ export function listareportes() {
                         <p>Especie</p>
                         <p>Raza</p>
                     </div>
+                </div>
+            </div>
+        </>
+    )
+}
 
+export function registrarReporte() {
+    return (
+        <>
+            <div className={registro} >
+
+                <h3>Reportar caso de maltrato</h3>
+                <div className={registro.contenedorRegistro}>
+
+                    <div className={registro.perfil}></div>
+                    <div className={registro.informacion}>
+
+                       <InputLabel id={"adoptado"} label={"Adoptado"} placeholder={"Si/no"} />
+                        <InputLabel id={"mascota"} label={"Mascota"} placeholder={"id Mascota"} />
+                        <InputLabel id={"adoptante"} label={"adoptante"} placeholder={"id Adoptante"} />
+                    </div>
+
+
+                </div>
+                <InputLabel id={"ubicacion"} label={"Ubicacion"} placeholder={"ubicacion"} />
+                <InputLabel id={"descripcion"} label={"Descriocion"} placeholder={"descripcion"} />
+
+
+                <div class={registro.buton}>
+                    <button>Reportar</button>
                 </div>
 
 
             </div>
 
 
+        </>
+    )
+}
+export function editarReporte() {
+    return (
+        <>
+            <div className={actualizar} >
 
+                <h3>Informacion del reporte</h3>
+                <div className={actualizar.contenedorRegistro}>
+
+                    <div className={actualizar.perfil}></div>
+                    <div className={actualizar.informacion}>
+
+                       <InputLabel id={"adoptado"} label={"Adoptado"} placeholder={"Si/no"} />
+                        <InputLabel id={"mascota"} label={"Mascota"} placeholder={"id Mascota"} />
+                        <InputLabel id={"adoptante"} label={"adoptante"} placeholder={"id Adoptante"} />
+                    </div>
+                </div>
+                <InputLabel id={"ubicacion"} label={"Ubicacion"} placeholder={"ubicacion"} />
+                <InputLabel id={"descripcion"} label={"Descriocion"} placeholder={"descripcion"} />
+
+
+                <div className={actualizar.contenedorBotones}>
+                <div class={actualizar.buton1}>
+                    <button>Guardar</button>
+                </div>
+                <div class={rescaactualizarte.buton2}>
+                    <button>Eliminar</button>
+                </div>
+                </div>
+
+
+            </div>
 
 
         </>
