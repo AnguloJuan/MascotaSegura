@@ -80,6 +80,7 @@ model historialAdoptivo{
  id Int @id @default(autoincrement())
  mascota mascota @relation("historialMascota", fields: [idMascota], references: [id])
  adoptantes adoptante[] @relation("historialAdoptante")
+ motivo String? @default("Sin motivo específico")
  idAdoptante Int
  idMascota Int @unique
 }
@@ -100,7 +101,7 @@ model mascota{
   edad Int?
   sexo String
   tamano tamano? @relation(fields: [idTamano], references: [id])
-  idTamano Int?
+  idTamano Int? @default(1)
   especie especie @relation(fields: [idEspecie], references: [id])
   idEspecie Int
   raza String? @default("Desconocida")

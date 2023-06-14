@@ -138,6 +138,13 @@ INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, desc
 INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, descripcion) VALUES (9, 9, 8, 1, 5, 'Cachorro abandonado en una caja en la acera');
 INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, descripcion) VALUES (10, 10, 9, 4, 2, 'Conejo encontrado en el parque');
 INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, descripcion) VALUES (11, 2, 10, 5, 3, 'Tortuga en peligro cerca del río');
+--Tamaños--
+INSERT INTO tamano (id, tamano) VALUES (1, 'No especificado');
+INSERT INTO tamano (id, tamano) VALUES (2, 'Diminuto');
+INSERT INTO tamano (id, tamano) VALUES (3, 'Pequeño');
+INSERT INTO tamano (id, tamano) VALUES (4, 'Mediano');
+INSERT INTO tamano (id, tamano) VALUES (5, 'Grande');
+INSERT INTO tamano (id, tamano) VALUES (6, 'Enorme');
 -- Mascotas ---
 INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado) VALUES (1, 2, 2, 2, 'Bobby', 3, 'Hembra', 2, 'Perro', 1);
 INSERT INTO mascota (id, idRefugio, idHistorial, idCartilla, nombre, edad, sexo, idEspecie, raza, maltratado) VALUES (2, 1, 3, 3, 'Luna', 2, 'Hembra', 1, 'Gato', 0);
@@ -316,6 +323,11 @@ INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEsta
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (23, 23, 23, 1, '2023-06-09 13:45:00');
 INSERT INTO adopcion (id, idAdoptante, idMascota, idRefugio, fechaCreada, idEstadoAdopcion) VALUES (24, 24, 24, 1, '2023-06-14 10:30:00');
 
-Insert INTO empleado 
+/*INSERT INTO empleado 
 (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
-VALUES (10, 1, "Juan Antonio", "Angulo Murillo", "jua4_20@alu.uabcs.mx", "TestAdmin", 6121373459, 6789, CURRENT_DATE, 3);
+VALUES (10, 1, "Juan Antonio", "Angulo Murillo", "jua4_20@alu.com", "TestAdmin", 6121373459, 6789, CURRENT_DATE, 3);
+INSERT INTO empleado 
+(id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
+VALUES (11, 1, "Juan Antonio", "Angulo Murillo", "correo1@correo.com", "1234", 6121373459, 6789, CURRENT_DATE, 3);
+/*DELETE FROM empleado WHERE id = 11;*/
+UPDATE empleado SET idTipoUsuario = 3 WHERE id = 9;
