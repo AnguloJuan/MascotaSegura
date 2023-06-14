@@ -19,7 +19,7 @@ export default function EstadoAdopcion({ userId, adopcionId, estadoAdopcion }) {
             setIsEstado(true);
         } else {
             try {
-                console.log(adopcionId,estado);
+                console.log(JSON.stringify(parseInt(estado) ));
                 // Make an HTTP POST request to the API endpoint
                 const response = await fetch('/api/estadoAdopcion', {
                     method: 'POST',
@@ -52,9 +52,9 @@ export default function EstadoAdopcion({ userId, adopcionId, estadoAdopcion }) {
                 <br />
                 <p>Estado: {estadoAdopcion}</p>
                 <select onChange={handleEstadoChange}>
-                    <option value="Procesando">Procesando</option>
-                    <option value="Aceptado">Aceptado</option>
-                    <option value="Denegado">Denegado</option>
+                    <option value="1">Procesando</option>
+                    <option value="2">Aceptado</option>
+                    <option value="3">Denegado</option>
                 </select>
                 <br />
                 <center>
