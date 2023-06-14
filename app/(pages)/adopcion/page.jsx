@@ -19,7 +19,7 @@ export default async function Adopcion() {
                 <center><h2>Lista de mascotas</h2></center>
 
                 <div className={listaMascotas.contenedor}>
-                    <InputLabel id={"idMascota"} label={"ID de la mascota"} placeholder={"nombre"} />
+                    <InputLabel id={"idMascota"} label={"ID de la mascota"} placeholder={"Id de la Mascota"} />
                     <button className="btn btn-success btn-lg">Buscar</button>
                 </div>
 
@@ -43,14 +43,7 @@ export default async function Adopcion() {
                         <InputLabel id={"sexo"} label={"Sexo"} placeholder={"sexo"} />
                     </div>
                 </div>
-                <div className={listaMascotas.busqueda}>
-                    <InputLabel id={"sexo"} label={"Sexo"} placeholder={"sexo"} />
-                </div>
-
-                <div className={listaMascotas.busqueda}>
-                    <InputLabel id={"tamaño"} label={"Tamaño"} placeholder={"Tamaño"} />
-
-                </div>
+               
             </div>
 
             {mascotas.map((mascota) => (

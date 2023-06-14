@@ -1,9 +1,35 @@
+import { getPrisma } from "@/app/lib/prisma";
 import InputLabel from "@/components/Input";
+import Link from "next/link";
 import listaAdoptantes from "./adoptadores.module.css"
 import adoptador from "./adoptadores.module.css"
 import Image from "next/image";
 
-export default function adoptadores() {
+/*
+import { getPrisma } from "@/app/lib/prisma";
+import listaMascotas from "./mascota.module.css";
+import InputLabel from "@/components/Input";
+import Link from "next/link";
+import visualizar from "./mascota.module.css"
+import Image from "next/image";
+
+const prisma = getPrisma();
+
+async function getMascotas() {
+    const mascotas = await prisma.mascota.findMany();
+    return mascotas;
+}
+export default async function Adopcion() {
+    const mascotas = await getMascotas();
+*/ 
+const prisma = getPrisma();
+
+async function getAdoptante() {
+    const adoptantes = await prisma.adoptante.findMany();
+    return adoptantes;
+}
+export default async function adoptadores() {
+    const adoptantes = await getAdoptante();
     return (
         <>
             <div className={listaAdoptantes}>
@@ -35,102 +61,28 @@ export default function adoptadores() {
                 </div>
             </div>
 
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante1.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Marco Muñoz</p>
-                    <p>ID 021354 </p>
-                    <p>ito12@gmail.com</p>
-                </div>
-            </div>
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante7.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Diego Martinez</p>
-                    <p>ID 159254 </p>
-                    <p>ejo234@gmail.com</p>
-                </div>
-            </div>
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante3.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Osvaldo Lucero</p>
-                    <p>ID 789454 </p>
-                    <p>din45@gmail.com</p>
-                </div>
-            </div>
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante4.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Emiliano Ramirez</p>
-                    <p>ID 789456 </p>
-                    <p>ma1245@gmail.com</p>
-                </div>
-            </div>
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante5.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Isra Cota</p>
-                    <p>ID 235689 </p>
-                    <p>ra1234@gmail.com</p>
-                </div>
-            </div>
-            <div className={listaAdoptantes.container}>
-                <div className={listaAdoptantes.imagen}>
-                    <Image
-                        src={"/images/adoptante6.jpg"}
-                        alt='logo.png'
-                        width={300}
-                        height={300}
-                        priority={true}
-                    />
-                </div>
-                <div className={listaAdoptantes.datos}>
-                    <p>Alexis Ortega</p>
-                    <p>ID 475815 </p>
-                    <p>exis71@gmail.com</p>
-                </div>
-            </div>
+         
+            {adoptantes.map((adoptante) => (
+                <Link key={adoptante.id} href={`/adoptadores/adoptante/${adoptante.id}`}>
+                    <div class={listaAdoptantes.tarjeta}>
+                        <div class={listaAdoptantes.imagen}>
+                            <Image
+                                src={"/images/adoptante1.jpg"}
+                                alt='logo.png'
+                                width={300}
+                                height={300}
+                                loading="lazy"
+                                color="white"
+                            />
+                        </div>
+                        <div className={listaAdoptantes.datos}>
+                            <p>Nombre: {adoptante.nombre}</p>
+                            <p>id: {adoptante.id}</p>
+                            <p>correo: {adoptante.correo}</p>
+                        </div>
+                    </div>
+                </Link>
+            ))}
 
 
         </>
