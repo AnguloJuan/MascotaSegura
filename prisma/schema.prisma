@@ -5,7 +5,7 @@ generator client {
   provider = "prisma-client-js"
 }
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url = env("DATABASE_URL")
 }
 
@@ -62,7 +62,7 @@ model empleado{
   apellido String
   correo String @unique
   contrasena String
-  telefono String
+  telefono BigInt
   NIP String
   fechaRegistro DateTime @default(now())
   tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
@@ -99,6 +99,8 @@ model mascota{
   nombre String?
   edad Int?
   sexo String
+  tamano tamano? @relation(fields: [idTamano], references: [id])
+  idTamano Int?
   especie especie @relation(fields: [idEspecie], references: [id])
   idEspecie Int
   raza String? @default("Desconocida")
@@ -158,4 +160,10 @@ model estadoAdopcion{
   id Int @id
   estadoAdopcion String
   adopcion adopcion[]
+}
+
+model tamano{
+  id Int @id
+  tamano String
+  mascota mascota[]
 }

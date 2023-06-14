@@ -15,15 +15,18 @@ export async function POST(request) {
 
     try {
 
-        const user = await prisma.adoptante.findUnique({ where: { correo: email } });
+        //find either adoptante or empleado
+        let user = await prisma.adoptante.findUnique({ where: { correo: email } });
 
         if (!user) {
+            user = await prisma.empleado.findUnique({ where: { correo: email } })
+        } else if (!empleado) {
             return NextResponse.json({ message: 'Invalid credentials' }, { status: 409 });
         }
 
         // Compare passwords
         //console.log(await bcrypt.hash(password, 10));
-        //console.log(user.contrasena);
+
         //const isPasswordValid = await bcrypt.compare(password, user.contrasena);
         const isPasswordValid = password == user.contrasena ? 1 : 0;
         if (!isPasswordValid) {
