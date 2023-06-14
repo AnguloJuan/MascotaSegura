@@ -53,6 +53,7 @@ model adoptante{
   reportado reporte[] @relation("reportado")
   tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
   idTipoUsuario Int
+  municipios String?
 }
 
 model empleado{

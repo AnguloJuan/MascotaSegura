@@ -17,7 +17,7 @@ export default function SignIn() {
     const [selectedEstado, setSelectedEstado] = useState('');
     const [selectedMunicipio, setSelectedMunicipio] = useState('');
     const [estados, setEstados] = useState([]);
-    const [municipios, setMunicipios] = useState([]);
+    const [municipios, setMunicipios] = useState("");
     const [password, setPassword] = useState("");
     const [isErrorEmail, setIsErrorEmail] = useState(false);
     const [isErrorServidor, setIsErrorServidor] = useState(false);
@@ -37,7 +37,7 @@ export default function SignIn() {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || !email || !telefono || !selectedMunicipio || !password) {
+        if (!firstName || !lastName || !email || !telefono || !municipios || !password) {
             setIsFieldsFilled(true);
         } else {
             try {
@@ -48,7 +48,7 @@ export default function SignIn() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ firstName, lastName, email, telefono, selectedMunicipio, password }),
+                    body: JSON.stringify({ firstName, lastName, email, telefono, municipios, password }),
                 });
                 if (response.ok) {
                     if (hasCookie('token')) {
@@ -155,16 +155,19 @@ export default function SignIn() {
                     ))}
                 </select>*/}
 
-                <label htmlFor="municipio">Municipio:</label>
+                {/*<label htmlFor="municipio">Municipio:</label>
                 <select id="municipio" value={selectedMunicipio} onChange={handleMunicipioChange}>
                     <option value="">Selecciona Municipio</option>
-                    {/* Render municipio options based on selected estado */}
+                    {/* Render municipio options based on selected estado /}
                     {municipios.map((municipio) => (
                         <option key={municipio.id} value={municipio.id}>
                             {municipio.nombre}
                         </option>
                     ))}
-                </select>
+                </select>*/}
+
+                <Input id={"municipio"} type={"text"} label={"Municipio"} placeholder={"Municipio"}
+                    onChange={(e) => setMunicipios(e.target.value)} />
 
                 <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"}
                     onChange={(e) => setEmail(e.target.value)} />
