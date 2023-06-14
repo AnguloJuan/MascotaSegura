@@ -42,7 +42,7 @@ export default function rescateRegistro() {
                 </div>
                 <InputLabel id={"descripcion"} label={"Motivo de abandono"} placeholder={"motivo"} />
 
-                <div class={rescate.contenedordatos}>
+                <div className={rescate.contenedordatos}>
                   <p>Anteriores adopciones</p>
 
 
@@ -55,7 +55,7 @@ export default function rescateRegistro() {
                 </div>
 
 
-                <div class={rescate.buton}>
+                <div className={rescate.buton}>
                     <button>Registrar</button>
                 </div>
             </div>

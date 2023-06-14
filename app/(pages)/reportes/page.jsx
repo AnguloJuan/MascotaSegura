@@ -301,7 +301,7 @@ export function registrarReporte() {
                 <InputLabel id={"descripcion"} label={"Descriocion"} placeholder={"descripcion"} />
 
 
-                <div class={registro.buton}>
+                <div className={registro.buton}>
                     <button>Reportar</button>
                 </div>
 
@@ -333,10 +333,10 @@ export function editarReporte() {
 
 
                 <div className={actualizar.contenedorBotones}>
-                <div class={actualizar.buton1}>
+                <div className={actualizar.buton1}>
                     <button>Guardar</button>
                 </div>
-                <div class={actualizar.buton2}>
+                <div className={actualizar.buton2}>
                     <button>Eliminar</button>
                 </div>
                 </div>

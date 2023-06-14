@@ -84,7 +84,7 @@ export default async function Page({ params }) {
 
                 <Input id={"descripcion"} label={"Motivo de abandono"} placeholder={"motivo"} />
 
-                <div class={rescate.contenedordatos}>
+                <div className={rescate.contenedordatos}>
                     <p>Anteriores adopciones</p>
 
 
@@ -94,7 +94,7 @@ export default async function Page({ params }) {
                 </div>
 
 
-                <div class={rescate.buton}>
+                <div className={rescate.buton}>
                     <Adoptar mascotaId={mascota.id} adoptanteId={adoptante} />
                 </div>
 

@@ -22,7 +22,7 @@ export default function registrarRefugio() {
 
 
                 <div className={listaRefugios.contenedorBotones}>
-                    <button type="button" class="btn btn-success">Registrar</button>
+                    <button type="button" className="btn btn-success">Registrar</button>
                 </div>
 
 
@@ -47,10 +47,10 @@ export function actualizarRefugio() {
                 </div>
             </div>
             <div className={actualizar.contenedorBotones}>
-                <div class={actualizar.buton1}>
+                <div className={actualizar.buton1}>
                     <button>Guardar</button>
                 </div>
-                <div class={actualizar.buton2}>
+                <div className={actualizar.buton2}>
                     <button>Eliminar refugio</button>
                 </div>
             </div>

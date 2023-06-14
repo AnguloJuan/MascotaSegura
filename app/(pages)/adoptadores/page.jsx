@@ -35,8 +35,8 @@ export default function adoptadores() {
                 </div>
             </div>
 
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante1.jpg"}
                         alt='logo.png'
@@ -45,14 +45,14 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Marco Muñoz</p>
                     <p>ID 021354 </p>
                     <p>ito12@gmail.com</p>
                 </div>
             </div>
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante7.jpg"}
                         alt='logo.png'
@@ -61,14 +61,14 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Diego Martinez</p>
                     <p>ID 159254 </p>
                     <p>ejo234@gmail.com</p>
                 </div>
             </div>
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante3.jpg"}
                         alt='logo.png'
@@ -77,14 +77,14 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Osvaldo Lucero</p>
                     <p>ID 789454 </p>
                     <p>din45@gmail.com</p>
                 </div>
             </div>
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante4.jpg"}
                         alt='logo.png'
@@ -93,14 +93,14 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Emiliano Ramirez</p>
                     <p>ID 789456 </p>
                     <p>ma1245@gmail.com</p>
                 </div>
             </div>
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante5.jpg"}
                         alt='logo.png'
@@ -109,14 +109,14 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Isra Cota</p>
                     <p>ID 235689 </p>
                     <p>ra1234@gmail.com</p>
                 </div>
             </div>
-            <div class={listaAdoptantes.container}>
-                <div class={listaAdoptantes.imagen}>
+            <div className={listaAdoptantes.container}>
+                <div className={listaAdoptantes.imagen}>
                     <Image
                         src={"/images/adoptante6.jpg"}
                         alt='logo.png'
@@ -125,7 +125,7 @@ export default function adoptadores() {
                         priority={true}
                     />
                 </div>
-                <div class={listaAdoptantes.datos}>
+                <div className={listaAdoptantes.datos}>
                     <p>Alexis Ortega</p>
                     <p>ID 475815 </p>
                     <p>exis71@gmail.com</p>
@@ -169,9 +169,9 @@ export function verAdoptador() {
                     <p>Raza</p>
                 </div>
             </div>
-            <div class={adoptador.botones}>
-                <button class="button">Modificar</button>
-                <button class="button">Eliminar adoptante</button>
+            <div className={adoptador.botones}>
+                <button className="button">Modificar</button>
+                <button className="button">Eliminar adoptante</button>
             </div>
 
 

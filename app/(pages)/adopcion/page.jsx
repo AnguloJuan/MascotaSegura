@@ -55,8 +55,8 @@ export default async function Adopcion() {
 
             {mascotas.map((mascota) => (
                 <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
-                    <div class={listaMascotas.tarjeta}>
-                        <div class={listaMascotas.imagen}>
+                    <div className={listaMascotas.tarjeta}>
+                        <div className={listaMascotas.imagen}>
                             <Image
                                 src={"/images/perro1.jpg"}
                                 alt='logo.png'
@@ -123,7 +123,7 @@ export function verMascota() {
 
                 <InputLabel id={"descripcion"} label={"Motivo de abandono"} placeholder={"motivo"} />
 
-                <div class={rescate.contenedordatos}>
+                <div className={rescate.contenedordatos}>
                     <p>Anteriores adopciones</p>
 
 
@@ -136,7 +136,7 @@ export function verMascota() {
                 </div>
 
 
-                <div class={rescate.buton}>
+                <div className={rescate.buton}>
                     <button>Adoptar</button>
                 </div>
 
@@ -194,7 +194,7 @@ export function procesoAdopcion() {
 
 
 
-                <div class={proceso.buton}>
+                <div className={proceso.buton}>
                     <button>Cancelar adopcion</button>
                 </div>
 
