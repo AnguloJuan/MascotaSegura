@@ -14,6 +14,7 @@ export async function GetMascota(mascotaId) {
                     include: {
                         adoptante: true,
                         refugio: true,
+                        estadoAdopcion: true,
                     },
                 },
                 cartilla: true,

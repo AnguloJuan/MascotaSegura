@@ -50,6 +50,7 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
             <button onClick={handleAdoptarDialog} className="btn btn-primary">
                 Adoptar
             </button>
+            
             <Dialog
                 id={"confirmarAdopcion"}
                 confirmar
