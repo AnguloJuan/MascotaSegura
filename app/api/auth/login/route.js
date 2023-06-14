@@ -14,14 +14,14 @@ export async function POST(request) {
     const { email, password } = await request.json();
 
     try {
-
         //find either adoptante or empleado
         let user = await prisma.adoptante.findUnique({ where: { correo: email } });
-
+        console.log(user);
         if (!user) {
-            user = await prisma.empleado.findUnique({ where: { correo: email } })
-        } else if (!empleado) {
-            return NextResponse.json({ message: 'Invalid credentials' }, { status: 409 });
+            user = await prisma.empleado.findUnique({ where: { correo: email } });
+            if (!user) {
+                return NextResponse.json({ message: 'Invalid credentials' }, { status: 409 });
+            }
         }
 
         // Compare passwords
