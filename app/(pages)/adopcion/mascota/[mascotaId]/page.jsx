@@ -95,26 +95,27 @@ export default async function Page({ params }) {
                             <p className={rescate.cartilla}> Cuenta con cartilla de vacunación: {mascota.cartilla ? "Sí" : "No"} </p>
                         </div>
                         {/* Muestra adoptante */}
-                                <div>
-                                    <h3>Persona adoptante</h3>
-                                    <p>id: {mascota.adopcion.adoptante.id}</p>
-                                    <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
-                                    <p>correo: {mascota.adopcion.adoptante.correo}</p>
+                        {mascota.adopcion && (
+                            <div>
+                                <h3>Persona adoptante</h3>
+                                <p>id: {mascota.adopcion.adoptante.id}</p>
+                                <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
+                                <p>correo: {mascota.adopcion.adoptante.correo}</p>
+                            </div>
+                        )}
+                        {userType == 2 || 3 ? (<EstadoAdopcion userId={mascota.adopcion.adoptante.id} adopcionId={mascota.adopcion.id} estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />)
+                            :
+                            mascota.adoptante.id == adoptante ? (
+                                <div className={proceso.buton}>
+                                    <button className="btn btn-primary btn-lg">Cancelar adopcion</button>
                                 </div>
+                            ) : (
 
-                                {userType == 2 || 3 ? (<EstadoAdopcion userId={mascota.adopcion.adoptante.id} adopcionId={mascota.adopcion.id} estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />)
-                                    :
-                                    mascota.adoptante.id == adoptante ? (
-                                        <div className={proceso.buton}>
-                                            <button className="btn btn-primary btn-lg">Cancelar adopcion</button>
-                                        </div>
-                                    ) : (
-
-                                        < div className={rescate.buton}>
-                                            <Adoptar mascotaId={mascota.id} adoptanteId={adoptante} />
-                                        </div>
-                                    )
-                                }
+                                < div className={rescate.buton}>
+                                    <Adoptar mascotaId={mascota.id} adoptanteId={adoptante} />
+                                </div>
+                            )
+                        }
 
                         <br />
                         <div className={rescate.contenedordatos}>
