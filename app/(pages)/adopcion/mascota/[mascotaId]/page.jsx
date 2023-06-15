@@ -95,8 +95,6 @@ export default async function Page({ params }) {
                             <p className={rescate.cartilla}> Cuenta con cartilla de vacunación: {mascota.cartilla ? "Sí" : "No"} </p>
                         </div>
                         {/* Muestra adoptante */}
-                        {mascota.adopcion && (
-                            <>
                                 <div>
                                     <h3>Persona adoptante</h3>
                                     <p>id: {mascota.adopcion.adoptante.id}</p>
@@ -117,8 +115,6 @@ export default async function Page({ params }) {
                                         </div>
                                     )
                                 }
-                            </>
-                        )}
 
                         <br />
                         <div className={rescate.contenedordatos}>
