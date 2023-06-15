@@ -96,11 +96,23 @@ export default async function Page({ params }) {
                         </div>
                         {/* Muestra adoptante */}
                         {mascota.adopcion && (
-                            <div>
+                            <div className={visualizar.contenedorAdoptante}>
+                                <div className={visualizar.perfil}>
+                                <Image
+                                    src={"/images/adoptante1.jpg"}
+                                    alt='mascota.png'
+                                    width={200}
+                                    height={200}
+                                />
+                            </div>
+                                <div className={visualizar.informacion}>
                                 <h3>Persona adoptante</h3>
                                 <p>id: {mascota.adopcion.adoptante.id}</p>
                                 <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
                                 <p>correo: {mascota.adopcion.adoptante.correo}</p>
+
+                            </div>
+
                             </div>
                         )}
                         {userType == 2 || 3 ? (<EstadoAdopcion userId={mascota.adopcion.adoptante.id} adopcionId={mascota.adopcion.id} estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />)
