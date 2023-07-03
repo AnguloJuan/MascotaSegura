@@ -17,18 +17,21 @@ export default function SignIn() {
     const [selectedEstado, setSelectedEstado] = useState('');
     const [selectedMunicipio, setSelectedMunicipio] = useState('');
     const [estados, setEstados] = useState([]);
-    const [municipios, setMunicipios] = useState("");
+    const [municipios, setMunicipios] = useState([]);
     const [password, setPassword] = useState("");
     const [isErrorEmail, setIsErrorEmail] = useState(false);
     const [isErrorServidor, setIsErrorServidor] = useState(false);
     const [isFieldsFilled, setIsFieldsFilled] = useState(false);
     const [isRegistrado, setIsRegistrado] = useState(false);
 
-    /*const handleEstadoChange = (event) => {
+    const handleEstadoChange = (event) => {
         setSelectedEstado(event.target.value);
         // Reset selected municipio when estado changes
         setSelectedMunicipio('');
-    };*/
+        event.target.value ? 
+        document.getElementById("municipio").disabled = false
+        : document.getElementById("municipio").disabled = true;
+    };
 
     const handleMunicipioChange = (event) => {
         setSelectedMunicipio(event.target.value);
@@ -37,18 +40,17 @@ export default function SignIn() {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || !email || !telefono || !municipios || !password) {
+        if (!firstName || !lastName || !email || !telefono || !selectedMunicipio || !password) {
             setIsFieldsFilled(true);
         } else {
             try {
-                console.log(selectedMunicipio);
                 // Make an HTTP POST request to the sign-in API route
                 const response = await fetch('/api/auth/signin', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ firstName, lastName, email, telefono, municipios, password }),
+                    body: JSON.stringify({ firstName, lastName, email, telefono, selectedMunicipio, password }),
                 });
                 if (response.ok) {
                     if (hasCookie('token')) {
@@ -87,21 +89,21 @@ export default function SignIn() {
         // Fetch estados data from the API
         fetch('/api/estados')
             .then((response) => response.json())
-            .then((data) => setMunicipios(data.municipios))
+            .then((data) => setEstados(data.estados))
             .catch((error) => console.error('Error fetching estados:', error));
     }, []);
 
-    /*useEffect(() => {
+    useEffect(() => {
         // Fetch municipios data based on selected estado from the API
-        /*if (selectedEstado) {
+        if (selectedEstado) {
             fetch(`/api/municipios?estado=${selectedEstado}`)
                 .then((response) => response.json())
                 .then((data) => setMunicipios(data.municipios))
                 .catch((error) => console.error('Error fetching municipios:', error));
         }
-        
+
         // Define an async function to wrap your code
-        async function fetchData() {
+        /*async function fetchData() {
             console.log(selectedEstado);
             try {
                 const response = await fetch(`/api/municipios?estado=${selectedEstado}`);
@@ -118,8 +120,8 @@ export default function SignIn() {
         }
 
         // Call the async function
-        fetchData();
-    }, [selectedEstado]);*/
+        fetchData();*/
+    }, [selectedEstado]);
 
 
     return (
@@ -145,26 +147,36 @@ export default function SignIn() {
                 <Input id={"telefono"} type={"text"} label={"Teléfono"} placeholder={"Teléfono"}
                     onChange={(e) => setTelefono(e.target.value)} />
 
-                {/*<label htmlFor="estado">Estado:</label>
-                <select id="estado" value={selectedEstado} onChange={handleEstadoChange}>
+                <label htmlFor="estado">Estado:</label>
+                <select 
+                id="estado" 
+                value={selectedEstado} 
+                onChange={handleEstadoChange}
+                className="form-select">
                     <option value="">Selecciona Estado</option>
                     {estados.map((estado) => (
                         <option key={estado.id} value={estado.id}>
                             {estado.nombre}
                         </option>
                     ))}
-                </select>*/}
+                </select>
 
-                {/*<label htmlFor="municipio">Municipio:</label>
-                <select id="municipio" value={selectedMunicipio} onChange={handleMunicipioChange}>
+                <label htmlFor="municipio">Municipio:</label>
+                <select
+                    id="municipio"
+                    value={selectedMunicipio}
+                    onChange={handleMunicipioChange}
+                    className="form-select"
+                    disabled>
+
                     <option value="">Selecciona Municipio</option>
-                    {/* Render municipio options based on selected estado /}
+                    {/* Render municipio options based on selected estado */}
                     {municipios.map((municipio) => (
                         <option key={municipio.id} value={municipio.id}>
                             {municipio.nombre}
                         </option>
                     ))}
-                </select>*/}
+                </select>
 
                 <Input id={"municipio"} type={"text"} label={"Municipio"} placeholder={"Municipio"}
                     onChange={(e) => setMunicipios(e.target.value)} />
