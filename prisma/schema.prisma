@@ -48,7 +48,6 @@ model adoptante {
   telefono             BigInt
   contrasena           String
   fechaRegistro        DateTime @default(now())
-  municipios           String?
   idMunicipio          Int
   idHistorialAdoptante Int?
   idTipoUsuario        Int

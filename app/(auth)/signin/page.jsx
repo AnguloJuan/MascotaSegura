@@ -178,9 +178,6 @@ export default function SignIn() {
                     ))}
                 </select>
 
-                <Input id={"municipio"} type={"text"} label={"Municipio"} placeholder={"Municipio"}
-                    onChange={(e) => setMunicipios(e.target.value)} />
-
                 <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"}
                     onChange={(e) => setEmail(e.target.value)} />
 
