@@ -32,16 +32,23 @@ import Input from "@/components/Input";
 import Image from "next/image";
 import RedirectUser from "@/app/(pages)/redirectUser";
 import EstadoAdopcion from "./estadoAdopcion";
+import { getPrisma } from "@/app/lib/prisma";
 
+const prisma = getPrisma();
 
 export default async function Page({ params }) {
     const { mascotaId } = params;
-    let mascota = await GetMascota(mascotaId);
+    const mascota = await GetMascota(mascotaId);
+    /*const refugio = await prisma.refugio.findUnique({
+        where: {
+            id: mascota.idRefugio,
+        }
+    })*/
     const user = GetUser();
-    const adoptante = user.id;
-    const userType = user.idUserType;
+    const userId = user.id;
+    const userType = user.idTipoUsuario;
     return (
-        userType == (1 || 2 || 3) ? <RedirectUser />
+        user == null ? <RedirectUser />
             : (
                 <>
                     {userType == 1 ? (
@@ -49,6 +56,7 @@ export default async function Page({ params }) {
                     ) : (
                         <center><h1>Proceso de adopcion</h1></center>
                     )}
+
                     <div className={visualizar}>
                         <div className={visualizar.contenedorAdoptante}>
 
@@ -78,7 +86,7 @@ export default async function Page({ params }) {
 
                             </div>
                             <div className={visualizar.busqueda}>
-                                <p>Sexo: {mascota.sexo}</p>
+                                <p>Sexo: {mascota.sexo.sexo}</p>
 
                             </div>
                             <div className={visualizar.busqueda}>
@@ -98,36 +106,40 @@ export default async function Page({ params }) {
                         {mascota.adopcion && (
                             <div className={visualizar.contenedorAdoptante}>
                                 <div className={visualizar.perfil}>
-                                <Image
-                                    src={"/images/adoptante1.jpg"}
-                                    alt='mascota.png'
-                                    width={200}
-                                    height={200}
-                                />
-                            </div>
+                                    <Image
+                                        src={"/images/adoptante1.jpg"}
+                                        alt='mascota.png'
+                                        width={200}
+                                        height={200}
+                                    />
+                                </div>
                                 <div className={visualizar.informacion}>
-                                <h3>Persona adoptante</h3>
-                                <p>id: {mascota.adopcion.adoptante.id}</p>
-                                <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
-                                <p>correo: {mascota.adopcion.adoptante.correo}</p>
+                                    <h3>Persona adoptante</h3>
+                                    <p>id: {mascota.adopcion.adoptante.id}</p>
+                                    <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
+                                    <p>correo: {mascota.adopcion.adoptante.correo}</p>
 
-                            </div>
+                                </div>
 
                             </div>
                         )}
-                        {userType == 2 || 3 ? (<EstadoAdopcion userId={mascota.adopcion.adoptante.id} adopcionId={mascota.adopcion.id} estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />)
-                            :
-                            mascota.adoptante.id == adoptante ? (
-                                <div className={proceso.buton}>
-                                    <button className="btn btn-primary btn-lg">Cancelar adopcion</button>
-                                </div>
-                            ) : (
 
-                                < div className={rescate.buton}>
-                                    <Adoptar mascotaId={mascota.id} adoptanteId={adoptante} />
-                                </div>
-                            )
-                        }
+                        {userType == (2 || 3) ? (
+                            <EstadoAdopcion
+                                userId={mascota.adopcion.adoptante.id}
+                                adopcionId={mascota.adopcion.id}
+                                estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />
+
+                        ) : mascota.adopcion && mascota.adopcion.adoptante.id == userId ? (
+                            <div className={proceso.buton}>
+                                <button className="btn btn-primary btn-lg">Cancelar adopcion</button>
+                            </div>
+                        ) : (
+
+                            < div className={rescate.buton}>
+                                <Adoptar mascotaId={mascota.id} adoptanteId={userId} />
+                            </div>
+                        )}
 
                         <br />
                         <div className={rescate.contenedordatos}>
