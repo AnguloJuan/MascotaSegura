@@ -37,7 +37,7 @@ model refugio {
   municipio municipio  @relation(fields: [idMunicipio], references: [id])
   adopcion  adopcion[]
   espacio   espacios[]
-  mascotas mascota[]
+  mascotas  mascota[]
 }
 
 model adoptante {
@@ -93,14 +93,6 @@ model historialAdoptivo {
   motivo     String?     @default("Sin motivo específico")
 }
 
-model cartilla {
-  id        Int   @id @default(autoincrement())
-  cartilla  Bytes
-  idMascota Int   @unique
-
-  mascota mascota @relation(fields: [idMascota], references: [id])
-}
-
 model sexo {
   id   Int    @id
   sexo String
@@ -114,19 +106,19 @@ model mascota {
   edad          Int?
   meses         Int?
   raza          String?  @default("Desconocida")
-  maltratado    Boolean
+  maltratado    Boolean  @default(false)
   fechaRegistro DateTime @default(now())
-  perfil        String?
+  imagen        String?
   idRefugio     Int?
-  idHistorial   Int
-  idCartilla    Int
+  idHistorial   Int?
+  cartilla      Boolean  @default(false)
+  motivo        String?
   idSexo        Int
   idTamano      Int?     @default(1)
   idEspecie     Int
 
-  refugio refugio? @relation(fields: [idRefugio], references: [id])
+  refugio           refugio?           @relation(fields: [idRefugio], references: [id])
   historialAdoptivo historialAdoptivo? @relation("historialMascota")
-  cartilla          cartilla?
   sexo              sexo               @relation(fields: [idSexo], references: [id])
   tamano            tamano?            @relation(fields: [idTamano], references: [id])
   especie           especie            @relation(fields: [idEspecie], references: [id])

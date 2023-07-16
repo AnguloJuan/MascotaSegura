@@ -1,10 +1,12 @@
-export function Especies({ handleChange, especies }) {
+export function Especies({ handleChange, especies, required, value }) {
     return (
         <>
             <select
                 id="especies"
                 onChange={handleChange}
                 name="especie"
+                required={required}
+                value={value}
                 className="form-select">
                 <option value="">Selecciona Especie</option>
                 {especies.map((especie) => (
@@ -34,13 +36,15 @@ export function Raza({ handleChange, razas }) {
         </>
     )
 }
-export function Sexos({ handleChange }) {
+export function Sexos({ handleChange, required, value }) {
     return (
         <>
             <select
                 id="sexo"
                 onChange={handleChange}
                 name="sexo"
+                required={required}
+                value={value}
                 className="form-select">
                 <option value="">Selecciona Sexo</option>
                 <option value={1}>Macho</option>
@@ -49,4 +53,44 @@ export function Sexos({ handleChange }) {
         </>
     )
 }
-
+export function Tamanos({ handleChange, required, value }) {
+    return (
+        <>
+            <select
+                id="tamano"
+                onChange={handleChange}
+                name="tamano"
+                required={required}
+                value={value}
+                className="form-select">
+                <option value="">Selecciona el tamaño</option>
+                <option value={1}>No especificado</option>
+                <option value={2}>Diminuto</option>
+                <option value={3}>Pequeño</option>
+                <option value={4}>Mediano</option>
+                <option value={5}>Grande</option>
+                <option value={6}>Enorme</option>
+            </select>
+        </>
+    )
+}
+export function Estados({ handleChange, estados, value }) {
+    return (
+        <>
+            <label htmlFor="estado">Estado:</label>
+            <select
+                id="estado"
+                onChange={handleChange}
+                value={value ? value : 0}
+                name="estado"
+                className="form-select">
+                <option value="">Selecciona Estado</option>
+                {estados.map((estado) => (
+                    <option key={estado.id} value={estado.id}>
+                        {estado.nombre}
+                    </option>
+                ))}
+            </select>
+        </>
+    )
+}

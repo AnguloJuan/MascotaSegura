@@ -14,7 +14,6 @@ export async function GetMascota(mascotaId) {
                     estadoAdopcion: true,
                 },
             },
-            cartilla: true,
             especie: true,
             historialAdoptivo: true,
             sexo: true,
