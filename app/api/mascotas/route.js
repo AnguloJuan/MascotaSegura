@@ -88,7 +88,7 @@ export async function PUT(req) {
         const mascota = formData.get("mascota");
         const image = formData.get("image");
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
-        const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
+        const { id, nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
 
         let uniqueName;
         if (image) {
@@ -99,11 +99,11 @@ export async function PUT(req) {
             writeFile(filePath, buffer);
             console.log(uniqueName);
         }
-        let mascotaCreada
+        
         try {
-            mascotaCreada = await prisma.mascota.create({
+            await prisma.mascota.update({
                 data: {
-                    nombre,
+                    nombre: nombre ? ,
                     especie: { connect: { id: parseInt(especie) }, },
                     raza,
                     edad: parseInt(edad),
@@ -115,8 +115,11 @@ export async function PUT(req) {
                     imagen: uniqueName,
                     refugio: { connect: { id: idRefugio } },
                 },
+                where: {
+                    id
+                }
             });
-            return NextResponse.json({ message: "mascota registrada", mascotaCreada }, { status: 200 });
+            return NextResponse.json({ message: "mascota registrada" }, { status: 200 });
         } catch (error) {
             console.log(error);
             return NextResponse.json({ message: "fallo al registrar mascota" }, { status: 500 });

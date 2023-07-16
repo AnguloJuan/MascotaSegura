@@ -1,6 +1,5 @@
 "use client"
 import InputLabel from "@/components/Input";
-import visualizar from "./mascota.module.css"
 import listaMascotas from "./mascota.module.css";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -85,35 +84,47 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            {mascotas.length !== 0 ?
-            (mascotas.map((mascota) => (
-                <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
-                    <div className={listaMascotas.tarjeta}>
-                        <div className={listaMascotas.imagen}>
-                            <Image
-                                src={"/images/perro1.jpg"}
-                                alt='logo.png'
-                                width={300}
-                                height={300}
-                                loading="lazy"
-                                color="white"
-                            />
-                        </div>
-                        <div className={listaMascotas.datos}>
-                            <p>id: {mascota.id}</p>
-                            <p>Nombre: {mascota.nombre}</p>
-                            <p>Edad: {mascota.edad}</p>
-                            <p>Sexo: {mascota.sexo.sexo}</p>
-                        </div>
-                    </div>
-                </Link>
-            ))) : (
-                <center><h3 className="mt-3">No se encontraron resultados</h3></center>
-            )
-            }
+            {mascotas.length !== 0 ? (
+                <div className="d-flex flex-wrap">
+                    {mascotas.map((mascota) => (
+                        <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
+                            <div className={listaMascotas.tarjeta}>
+                                <div className={listaMascotas.imagen}>
+                                    {mascota.imagen ? (
+                                        <Image
+                                            src={`/images/mascotas/${mascota.imagen}`}
+                                            alt='default.png'
+                                            width={300}
+                                            height={300}
+                                            loading="lazy"
+                                            color="white"
+                                            className="bg-white rounded bg-opacity-25"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={"/images/dogIcon.png"}
+                                            alt='default.png'
+                                            width={300}
+                                            height={300}
+                                            loading="lazy"
+                                            color="white"
+                                            className="bg-white rounded bg-opacity-25"
+                                        />
+                                    )}
+                                </div>
+                                <div className={listaMascotas.datos}>
+                                    <p>id: {mascota.id}</p>
+                                    <p>Nombre: {mascota.nombre}</p>
+                                    <p>Edad: {mascota.edad}</p>
+                                    <p>Sexo: {mascota.sexo.sexo}</p>
+                                </div>
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            ) : (<center><h3 className="mt-3">No se encontraron resultados</h3></center>)}
         </>
     );
 }

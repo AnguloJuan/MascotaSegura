@@ -1,9 +1,4 @@
 import { getPrisma } from "@/app/lib/prisma";
-import listaMascotas from "./mascota.module.css";
-import InputLabel from "@/components/Input";
-import Link from "next/link";
-import visualizar from "./mascota.module.css"
-import Image from "next/image";
 import ListaMascota from "./listaMascota";
 import { GetUser } from "@/app/lib/user";
 
@@ -30,10 +25,8 @@ export default async function Adopcion() {
     //const edades = await prisma.edades.findMany();
     return (
         <>
-            <div>
-                <center><h2>Lista de mascotas</h2></center>
-                <ListaMascota inicialMascotas={mascotas} especies={especies} razas={razas} userType={user.idTipoUsuario} />
-            </div>
+            <center><h2>Lista de mascotas</h2></center>
+            <ListaMascota inicialMascotas={mascotas} especies={especies} razas={razas} userType={user.idTipoUsuario} />
         </>
     )
 }

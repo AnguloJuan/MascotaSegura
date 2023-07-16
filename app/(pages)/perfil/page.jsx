@@ -2,12 +2,49 @@ import InputLabel from "@/components/Input";
 import perfilAdoptador from "./perfil.module.css";
 import { GetUser } from "../../lib/user";
 import { getPrisma } from "@/app/lib/prisma";
+import { Estados } from "@/components/Selects";
+import { Municipios } from "@/components/SelectsClient";
+import Perfil from "./perfil";
 
 const prisma = getPrisma();
 
-export default function Perfil() {
+export default async function PerfilPage() {
     const user = GetUser();
     const userType = user.idTipoUsuario;
+    const userMunicipio = user.idMunicipio;
+    let userEstado;
+    let props;
+    if (userType == 1) {
+        userEstado = await prisma.municipio.findUnique({
+            select: {
+                idEstado: true,
+            },
+            where: {
+                id: userMunicipio,
+            }
+        });
+        const estados = await prisma.estado.findMany();
+        const municipios = await prisma.municipio.findMany({
+            where: {
+                idEstado: userEstado.idEstado,
+            },
+        });
+        const adopciones = await prisma.adopcion.findMany({
+            where: {
+                idAdoptante: user.id,
+            },
+            include: {
+                mascota: {
+                    include: {
+                        especie: true,
+                    },
+                },
+            }
+        });
+
+        props = { estados, municipios, userMunicipio, userEstado }
+    }
+    props = { user, userType };
     return (
         userType == 1 ? (<>
             <div className={perfilAdoptador}>
@@ -18,22 +55,23 @@ export default function Perfil() {
                     <InputLabel id={"apellido"} label={"Apellido"} placeholder={"Apellido"} value={user.apellido} disabled />
                     <InputLabel id={"correo"} label={"Correo electronico"} placeholder={"Correo electrónico"} value={user.correo} disabled />
                     <InputLabel id={"numero"} label={"Numero de telefono"} placeholder={"Numero de telefono"} value={user.telefono} disabled />
-                    <InputLabel id={"ubicacion"} label={"Ubicacion"} placeholder={"Ubicacion"} disabled />
+                    <Perfil estados={estados} municipios={municipios} props={props} />
                 </div>
-                <h3>Mascota adoptada</h3>
-                <div className={perfilAdoptador.container}>
-                    <div className={perfilAdoptador.fotoPerfil}></div>
-                    <div className={perfilAdoptador.datosMascotas}>
-                        <p>Nombre</p>
-                        <p>Especie</p>
-                        <p>Raza</p>
-                    </div>
-
-                </div>
-                <div className="contenedor-btn">
-                    <button type="submit" className="btn btn-primary">Guardar</button>
-                    <button type="submit" className="btn btn-danger">Eliminar cuenta</button>
-                </div>
+                {adopciones == [] && (
+                    <>
+                        <h3>Mascota adoptada</h3>
+                        {adopciones.map((adopcion) => (
+                            <div className={perfilAdoptador.container} key={adopcion.id}>
+                                <div className={perfilAdoptador.fotoPerfil}></div>
+                                <div className={perfilAdoptador.datosMascotas}>
+                                    <p>Nombre: {adopcion.mascota.nombre}</p>
+                                    <p>Especie: {adopcion.mascota.especie.especie}</p>
+                                    <p>Raza: {adopcion.mascota.raza}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
 
         </>

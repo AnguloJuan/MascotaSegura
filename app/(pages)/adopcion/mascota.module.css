@@ -7,20 +7,19 @@
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  justify-content: space-around;
 }
 
 
 .busqueda {
+  display: contents;
   flex: 1;
   margin-right: 10px;
 }
 
 .inputlabel {
   margin-right: 5px;
-
-
   width: 100%;
-
 }
 
 .visualizar {
@@ -107,13 +106,13 @@
 
 
 .datos {
-  font-weight: bold;
-  margin-top: 5px;
-  margin-left: 20px;
-  margin-right: 20px;
-
+  width: inherit;
+  position: absolute;
+  
   align-items: end;
-  color: white;
-  position: relative;
+  font-weight: bold;
   text-align: left;
+  color: white;
+  background: linear-gradient(0deg, black, transparent);
+  padding-left: 20px;
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Menu() {
-    const user = await GetUser();
+    const user = GetUser();
     return (
         <nav className={menu.menu}>
             <ul>

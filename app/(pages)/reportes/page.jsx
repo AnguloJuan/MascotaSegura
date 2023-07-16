@@ -6,9 +6,8 @@ import actualizar from "./reporte.module.css";
 import InputLabel from "@/components/Input";
 import { getPrisma } from "@/app/lib/prisma";
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient()//getPrisma();
+const prisma = getPrisma();
 
 let reportes;
 
