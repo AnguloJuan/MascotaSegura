@@ -1,15 +1,15 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 import { v4 as uuid } from 'uuid';
-import { writeFile } from "fs/promises";
+import { writeFile, unlink } from "fs/promises";
 import path from "path";
 
 const prisma = getPrisma();
 
-export async function GET(request) {
+export async function GET(req) {
     try {
         let mascotas;
-        const search = request.nextUrl.searchParams.get('search');
+        const search = req.nextUrl.searchParams.get('search');
         //console.log(search);
         const { id, nombre, especie, raza, edad, sexo, userType } = JSON.parse(search);
         //console.log({ id, nombre, especie, raza, edad, sexo });
@@ -47,16 +47,15 @@ export async function POST(req) {
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
 
         let uniqueName;
-        if (image) {
+        if (image !== "null") {
             const bytes = await image.arrayBuffer();
             const buffer = Buffer.from(bytes);
             uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
             const filePath = path.join(process.cwd(), "public/images/mascotas", uniqueName);
             writeFile(filePath, buffer);
-            console.log(uniqueName);
         }
         try {
-            await prisma.mascota.create({
+            const id = await prisma.mascota.create({
                 data: {
                     nombre,
                     especie: { connect: { id: parseInt(especie) }, },
@@ -70,8 +69,11 @@ export async function POST(req) {
                     imagen: uniqueName,
                     refugio: { connect: { id: idRefugio } },
                 },
+                select: {
+                    id: true,
+                }
             });
-            return NextResponse.json({ message: "mascota registrada" }, { status: 200 });
+            return NextResponse.json({ message: "mascota registrada", id }, { status: 200 });
         } catch (error) {
             console.log(error);
             return NextResponse.json({ message: "fallo al registrar mascota" }, { status: 500 });
@@ -86,46 +88,95 @@ export async function PUT(req) {
     try {
         const formData = await req.formData();
         const mascota = formData.get("mascota");
+        const mascotaInit = formData.get("mascotaInicial");
         const image = formData.get("image");
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
-        const { id, nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
+        const mascotaInitParsed = JSON.parse(mascotaInit.substring(mascotaInit.indexOf('{'), mascotaInit.lastIndexOf('}') + 1));
+        const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, estadoAdopcion } = mascotaParsed;
 
         let uniqueName;
-        if (image) {
+        if (image !== "null") {
             const bytes = await image.arrayBuffer();
             const buffer = Buffer.from(bytes);
             uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
             const filePath = path.join(process.cwd(), "public/images/mascotas", uniqueName);
             writeFile(filePath, buffer);
-            console.log(uniqueName);
+
+            if (mascotaInitParsed.imagen) {
+                const oldFilePath = path.join(process.cwd(), "public/images/mascotas", mascotaInitParsed.imagen);
+
+                // Elimina la imagen anterior utilizando fs/promises
+                await unlink(oldFilePath);
+            }
         }
-        
+
         try {
             await prisma.mascota.update({
-                data: {
-                    nombre: nombre ? ,
-                    especie: { connect: { id: parseInt(especie) }, },
-                    raza,
-                    edad: parseInt(edad),
-                    sexo: { connect: { id: parseInt(sexo) } },
-                    tamano: { connect: { id: parseInt(tamano) } },
-                    maltratado,
-                    motivo: motivo,
-                    cartilla,
-                    imagen: uniqueName,
-                    refugio: { connect: { id: idRefugio } },
-                },
                 where: {
-                    id
-                }
+                    id: mascotaInitParsed.id
+                },
+                data: {
+                    nombre: nombre !== mascotaInitParsed.nombre ? nombre : undefined,
+                    especie: especie !== mascotaInitParsed.especie.id ? { connect: { id: parseInt(especie) } } : undefined,
+                    raza: raza !== mascotaInitParsed.raza ? raza : undefined,
+                    edad: edad !== mascotaInitParsed.edad ? parseInt(edad) : undefined,
+                    sexo: sexo !== mascotaInitParsed.sexo.id ? { connect: { id: parseInt(sexo) } } : undefined,
+                    tamano: tamano !== mascotaInitParsed.idTamano ? { connect: { id: parseInt(tamano) } } : undefined,
+                    maltratado: maltratado !== mascotaInitParsed.maltratado ? maltratado : undefined,
+                    motivo: motivo !== mascotaInitParsed.motivo ? motivo : undefined,
+                    cartilla: cartilla !== mascotaInitParsed.cartilla ? cartilla : undefined,
+                    imagen: image !== "null" ? uniqueName : undefined,
+                },
             });
-            return NextResponse.json({ message: "mascota registrada" }, { status: 200 });
+            if (estadoAdopcion !== null) {
+                try {
+                    await prisma.adopcion.update({
+                        where: { id: mascotaInitParsed.id },
+                        data: {
+                            estadoAdopcion: estadoAdopcion !== mascotaInitParsed.adopcion.estadoAdopcion.estadoAdopcion ? { connect: { id: parseInt(estadoAdopcion) } } : undefined
+                        },
+                    });
+                } catch (error) {
+                    console.error('Error occurred while updating adopcion', error);
+                    NextResponse.json({ error: 'Failed to update adopcion' }, { staus: 500 });
+                }
+            }
+
+            return NextResponse.json({ message: "mascota modificada" }, { status: 200 });
         } catch (error) {
             console.log(error);
-            return NextResponse.json({ message: "fallo al registrar mascota" }, { status: 500 });
+            return NextResponse.json({ message: "fallo al modificar mascota" }, { status: 500 });
         }
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: "fallo al registrar mascota" }, { status: 500 });
+        return NextResponse.json({ message: "fallo al modificar mascota" }, { status: 500 });
+    }
+}
+
+export async function DELETE(req) {
+    const id = req.nextUrl.searchParams.get('id');
+    try {
+        const imagenPath = await prisma.mascota.findUnique({
+            where: {
+                id: parseInt(id)
+            },
+            select: {
+                imagen: true,
+            }
+        });
+        if (imagenPath.imagen !== null) {
+            const oldFilePath = path.join(process.cwd(), "public/images/mascotas", imagenPath.imagen);
+            await unlink(oldFilePath);
+        }
+
+        await prisma.mascota.delete({
+            where: {
+                id: parseInt(id)
+            }
+        });
+        return NextResponse.json({ message: "Mascota eliminada" }, { status: 200 });
+    } catch (error) {
+        console.log(error);
+        NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
     }
 }

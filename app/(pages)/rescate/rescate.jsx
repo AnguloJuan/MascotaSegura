@@ -54,7 +54,7 @@ export default function Rescate({ especies, idRefugio }) {
 
     const uploadToServer = async (e) => {
         e.preventDefault();
-        if (!mascota.nombre || !mascota.especie || !mascota.sexo || !mascota.tamano || !(mascota.edad < 0)) {
+        if (!mascota.nombre || !mascota.especie || !mascota.sexo || !mascota.tamano || mascota.edad < 0) {
             setFieldsDialog(true);
         } else {
             const body = new FormData();
@@ -66,7 +66,7 @@ export default function Rescate({ especies, idRefugio }) {
             });
             if (response.status == 200) {
                 setRegistradoDialog(true);
-                response.json().then(res => router.replace(`/adopcion/mascota/${res.mascotaCreada.id}`))
+                response.json().then(response => router.replace(`/adopcion/mascota/${parseInt(response.id.id)}`))
             } else {
                 response.json().then(res => console.log(res.message))
                 setErrorDialog(true);
@@ -92,7 +92,7 @@ export default function Rescate({ especies, idRefugio }) {
                                 src={"/images/dogIcon.png"}
                                 alt="upload image" />
                         )}
-                        <input id="perfil" type="file" name="perfil" onChange={uploadToClient} className="form-control" />
+                        <input id="perfil" type="file" name="perfil" onChange={uploadToClient} accept="image/*, .jpg, .png, .svg, .webp, .jfif" className="form-control" />
                     </div>
                     <div className={rescate.informacion}>
                         <div className="input mb-3">

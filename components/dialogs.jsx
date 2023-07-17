@@ -31,14 +31,14 @@ export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun
         </button>
       )}
       {confirmar && (
-        <>
+        <div className='d-flex justify-content-around'>
           <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={handleClose}>
             Cancelar
           </button>
-          <button id={`btnConfirmar${id}`} className="btn btn-primary" onClick={handleConfirm}>
+          <button id={`btnConfirmar${id}`} className="btn btn-danger" onClick={handleConfirm}>
             Confirmar
           </button>
-        </>
+        </div>
       )}
     </dialog>
   );

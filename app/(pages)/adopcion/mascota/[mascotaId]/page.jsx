@@ -120,13 +120,7 @@ export default async function Page({ params }) {
                                 </div>
                             )}
 
-                            {userType == (2 || 3) && mascota.adopcion ? (
-                                <EstadoAdopcion
-                                    userId={mascota.adopcion.adoptante.id}
-                                    adopcionId={mascota.adopcion.id}
-                                    estadoAdopcion={mascota.adopcion.estadoAdopcion.estadoAdopcion} />
-
-                            ) : mascota.adopcion && mascota.adopcion.adoptante.id == userId ? (
+                            {mascota.adopcion && mascota.adopcion.adoptante.id == userId ? (
                                 <div className={proceso.buton}>
                                     <button className="btn btn-primary btn-lg">Cancelar adopcion</button>
                                 </div>
