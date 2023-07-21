@@ -1,59 +1,116 @@
-.listaEmpleados {
-    display: flex;
-    flex-direction: column;
-  }
- 
-  
-  .contenedor {
-    display: flex;
-    align-items: center;
-    margin-bottom: 5px;
-  }
- 
-  
-  .busqueda {
-    flex: 1;
-    margin-right: 10px;
-  }
-  
-  
-  .contenedor button {
-    margin-top: 35px;
-    align-items: center;
-  }
+.listaAdoptante {
+  display: flex;
+  flex-direction: column;
+}
 
 
- 
-  
-  .contenedor button {
-    margin-left: 10px;
-   
-    background-color: green;
-  }
-  .container {
-    width: 300px;
-    height: 300px;
-    text-align: center;
-    margin: 10px;
-    display: inline-block;
-    padding: 10px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
- 
-    .imagen {
-      width: 150px;
-      height: 150px;
-      margin: 0 auto;
-      border-radius: 10%;
-    }
+.contenedor {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
 
-   
-    .datos {
-      font-weight: bold;
-      margin-top: 5px;
-      align-items:end;
-      color: white;
+.busqueda {
+  flex: 1;
+  margin-right: 10px;
+}
 
-    }
+.inputlabel {
+  margin-right: 5px;
+  width: 100%;
+}
+
+.contenedor button {
+  margin-left: 10px;
+
+  background-color: green;
+}
+
+.contenedorAdoptante {
+  display: flex;
+  align-items: center;
+}
+
+.perfil {
+  width: 200px;
+  height: 200px;
+  background-color: rgb(237 237 237);
+  margin-right: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.informacion {
+  font-family: Arial, sans-serif;
+}
+
+.botones {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+.botones button {
+  margin: 0 15px;
+  background-color: blue;
+  border: 10px;
+}
+
+.contenedorMascota {
+  display: flex;
+  align-items: center;
+  background-color: rgb(221, 212, 212);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.fotoPerfil {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #4a3333;
+  margin-right: 20px;
+}
+
+.datosMascota {
+  font-family: Arial, sans-serif;
+}
+
+.tarjeta {
+  width: 320px;
+  height: 320px;
+  text-align: center;
+  margin: 8px;
+  display: flex;
+  /* padding: 10px; */
+  /* align-items: center; */
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.tarjeta a {
+  text-decoration: none;
+}
+
+.imagen {
+  /* width: 150px;
+  height: 150px; */
+  border-radius: 8px;
+}
+
+.datos {
+  font-weight: bold;
+  background: linear-gradient(0deg, black, transparent);
+
+  margin-top: 20px;
+  padding-left: 16px;
+  padding-bottom: 4px;
+  width: 100%;
+  /* margin-right: 20px; */
+  position: relative;
+  transform: translate(0, -100%);
+
+  align-items: end;
+  color: white;
+  text-decoration: none;
+  text-align: left;
+}
