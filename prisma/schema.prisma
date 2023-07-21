@@ -49,16 +49,15 @@ model adoptante {
   contrasena           String
   fechaRegistro        DateTime @default(now())
   idMunicipio          Int
-  idHistorialAdoptante Int?
   idTipoUsuario        Int
   imagen               String?
 
-  municipio         municipio          @relation(fields: [idMunicipio], references: [id])
-  historialAdoptivo historialAdoptivo? @relation("historialAdoptante", fields: [idHistorialAdoptante], references: [id])
-  tipoUsuario       tipoUsuario        @relation(fields: [idTipoUsuario], references: [id])
+  municipio         municipio           @relation(fields: [idMunicipio], references: [id])
+  historialAdoptivo historialAdoptivo[]
+  tipoUsuario       tipoUsuario         @relation(fields: [idTipoUsuario], references: [id])
   adopcion          adopcion[]
-  reportador        reporte[]          @relation("reportador")
-  reportado         reporte[]          @relation("reportado")
+  reportador        reporte[]           @relation("reportador")
+  reportado         reporte[]           @relation("reportado")
 }
 
 model empleado {
@@ -87,12 +86,12 @@ model tipoUsuario {
 
 model historialAdoptivo {
   id          Int @id @default(autoincrement())
-  idMascota   Int @unique
+  idMascota   Int
   idAdoptante Int
 
-  mascota    mascota     @relation("historialMascota", fields: [idMascota], references: [id])
-  adoptantes adoptante[] @relation("historialAdoptante")
-  motivo     String?     @default("Sin motivo específico")
+  mascota   mascota   @relation(fields: [idMascota], references: [id])
+  adoptante adoptante @relation(fields: [idAdoptante], references: [id])
+  motivo    String?   @default("Sin motivo específico")
 }
 
 model sexo {
@@ -112,18 +111,17 @@ model mascota {
   fechaRegistro DateTime @default(now())
   imagen        String?
   idRefugio     Int?
-  idHistorial   Int?
   cartilla      Boolean  @default(false)
   motivo        String?
   idSexo        Int
   idTamano      Int?     @default(1)
   idEspecie     Int
 
-  refugio           refugio?           @relation(fields: [idRefugio], references: [id])
-  historialAdoptivo historialAdoptivo? @relation("historialMascota")
-  sexo              sexo               @relation(fields: [idSexo], references: [id])
-  tamano            tamano?            @relation(fields: [idTamano], references: [id])
-  especie           especie            @relation(fields: [idEspecie], references: [id])
+  refugio           refugio?            @relation(fields: [idRefugio], references: [id])
+  historialAdoptivo historialAdoptivo[]
+  sexo              sexo                @relation(fields: [idSexo], references: [id])
+  tamano            tamano?             @relation(fields: [idTamano], references: [id])
+  especie           especie             @relation(fields: [idEspecie], references: [id])
   adopcion          adopcion?
   victima           reporte[]
 }

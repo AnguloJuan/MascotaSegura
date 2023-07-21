@@ -43,6 +43,8 @@ export async function POST(req) {
         const image = formData.get("image");
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
+        
+        const razaCase = raza.toLowerCase();
 
         let uniqueName;
         if (image !== "null") {
@@ -57,7 +59,7 @@ export async function POST(req) {
                 data: {
                     nombre,
                     especie: { connect: { id: parseInt(especie) }, },
-                    raza,
+                    raza: razaCase,
                     edad: parseInt(edad),
                     sexo: { connect: { id: parseInt(sexo) } },
                     tamano: { connect: { id: parseInt(tamano) } },
@@ -91,6 +93,8 @@ export async function PUT(req) {
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
         const mascotaInitParsed = JSON.parse(mascotaInit.substring(mascotaInit.indexOf('{'), mascotaInit.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, estadoAdopcion } = mascotaParsed;
+        
+        const razaCase = raza.toLowerCase();
 
         let uniqueName;
         if (image !== "null") {
@@ -116,7 +120,7 @@ export async function PUT(req) {
                 data: {
                     nombre: nombre !== mascotaInitParsed.nombre ? nombre : undefined,
                     especie: especie !== mascotaInitParsed.especie.id ? { connect: { id: parseInt(especie) } } : undefined,
-                    raza: raza !== mascotaInitParsed.raza ? raza : undefined,
+                    raza: razaCase !== mascotaInitParsed.raza ? razaCase : undefined,
                     edad: edad !== mascotaInitParsed.edad ? parseInt(edad) : undefined,
                     sexo: sexo !== mascotaInitParsed.sexo.id ? { connect: { id: parseInt(sexo) } } : undefined,
                     tamano: tamano !== mascotaInitParsed.idTamano ? { connect: { id: parseInt(tamano) } } : undefined,
@@ -126,12 +130,13 @@ export async function PUT(req) {
                     imagen: image !== "null" ? uniqueName : undefined,
                 },
             });
+
             if (estadoAdopcion !== null) {
                 try {
                     await prisma.adopcion.update({
-                        where: { id: mascotaInitParsed.id },
+                        where: { idMascota: mascotaInitParsed.id },
                         data: {
-                            estadoAdopcion: estadoAdopcion !== mascotaInitParsed.adopcion.estadoAdopcion.estadoAdopcion ? { connect: { id: parseInt(estadoAdopcion) } } : undefined
+                            estadoAdopcion: estadoAdopcion !== mascotaInitParsed.adopcion.estadoAdopcion.id ? { connect: { id: parseInt(estadoAdopcion) } } : undefined
                         },
                     });
                 } catch (error) {
@@ -188,6 +193,6 @@ export async function DELETE(req) {
         return NextResponse.json({ message: "Mascota eliminada" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
+        NextResponse.json({ error: 'Ocurrio al eliminar la mascota' }, { staus: 500 });
     }
 }

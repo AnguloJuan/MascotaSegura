@@ -4,24 +4,25 @@ import { Dialog } from "@/components/dialogs";
 import { useRouter } from 'next/navigation';
 
 export default function Adoptar({ mascotaId, adoptanteId }) {
-    const [isAdoptar, setIsAdoptar] = useState(false);
-    const [isAdopcionProcesada, setIsAdopcionProcesada] = useState(false);
-    const [isAdopcionExistente, setIsAdopcionExistente] = useState(false);
-    const [isErrorServidor, setIsErrorServidor] = useState(false);
-    const [adoptado, setAdoptado] = useState(false);
+    const [isAdoptarDialog, setIsAdoptarDialog] = useState(false);
+    const [isAdopcionProcesadaDialog, setIsAdopcionProcesadaDialog] = useState(false);
+    const [isAdopcionExistenteDialog, setIsAdopcionExistenteDialog] = useState(false);
+    const [isErrorServidorDialog, setIsErrorServidorDialog] = useState(false);
+    const [adoptando, setAdoptando] = useState(false);
     const router = useRouter();
 
     const handleAdoptarDialog = () => {
-        setIsAdoptar(true);
+        setIsAdoptarDialog(true);
     };
 
     const handleAdoptar = async () => {
-        setIsAdoptar(false);
-
+        setAdoptando(true);
+        setIsAdoptarDialog(false);
+        
         try {
 
             // Make an HTTP POST request to the sign-in API route
-            const response = await fetch('/api/adopcion', {
+            const response = await fetch('/api/estadoAdopcion', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -30,29 +31,30 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
             });
 
             if (response.ok) {
-                setIsAdopcionProcesada(true);
-                setAdoptado(false);
+                setIsAdopcionProcesadaDialog(true);
                 router.replace("/perfil");
             } else {
                 response.json().then((response) => console.log(response.error));
+                setAdoptando(false);
 
                 if (response.status === 400) {
-                    setIsAdopcionExistente(true);
+                    setIsAdopcionExistenteDialog(true);
                 }
                 if (response.status === 500) {
                     console.error('An error occurred', error);
-                    setIsErrorServidor(true);
+                    setIsErrorServidorDialog(true);
                 }
             }
         } catch (error) {
             console.error('An error occurred', error);
-            setIsErrorServidor(true);
+            setIsErrorServidorDialog(true);
+            setAdoptando(false);
         }
     };
 
     return (
         <>
-            <button onClick={handleAdoptarDialog} className="btn btn-primary" disabled={adoptado}>
+            <button onClick={handleAdoptarDialog} className="btn btn-primary btn-lg" disabled={adoptando}>
                 Adoptar
             </button>
             
@@ -60,8 +62,8 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
                 id={"confirmarAdopcion"}
                 confirmar
                 fun={handleAdoptar}
-                isOpen={isAdoptar}
-                onClose={() => setIsAdoptar(false)}
+                isOpen={isAdoptarDialog}
+                onClose={() => setIsAdoptarDialog(false)}
             >
                 <h1>Confirmar adopción</h1>
                 <p>Estas a punto de adoptar una mascota</p>
@@ -71,8 +73,8 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
             </Dialog>
             <Dialog
                 id={"adopcionProcesada"}
-                isOpen={isAdopcionProcesada}
-                onClose={() => setIsAdopcionProcesada(false)}
+                isOpen={isAdopcionProcesadaDialog}
+                onClose={() => setIsAdopcionProcesadaDialog(false)}
             >
                 <h1>Adopción en proceso</h1>
                 <p>Proceda a recoger a la mascota en la sucursal que pertenece</p>
@@ -80,16 +82,16 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
             </Dialog>
             <Dialog
                 id={"adopcionExistente"}
-                isOpen={isAdopcionExistente}
-                onClose={() => setIsAdopcionExistente(false)}
+                isOpen={isAdopcionExistenteDialog}
+                onClose={() => setIsAdopcionExistenteDialog(false)}
             >
                 <h1>Error: Adopción existente</h1>
                 <p>Ya se ha registrado una adopción con esta mascota</p>
             </Dialog>
             <Dialog
                 id={"errorServidor"}
-                isOpen={isErrorServidor}
-                onClose={() => setIsErrorServidor(false)}
+                isOpen={isErrorServidorDialog}
+                onClose={() => setIsErrorServidorDialog(false)}
             >
                 <h1>Error de servidor</h1>
                 <p>Ocurrió un error de servidor</p>
