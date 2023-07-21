@@ -21,7 +21,7 @@ export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun
 
   return (
     <dialog id={id} ref={dialogRef}>
-      <button id={`btnCerrar${id}`} className="btn cerrar-dialog" onClick={handleClose}>
+      <button id={`btnCerrar${id}`} className="btn cerrar-dialog text-black" onClick={handleClose}>
         X
       </button>
       {children}

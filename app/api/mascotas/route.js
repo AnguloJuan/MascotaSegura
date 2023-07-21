@@ -10,9 +10,7 @@ export async function GET(req) {
     try {
         let mascotas;
         const search = req.nextUrl.searchParams.get('search');
-        //console.log(search);
         const { id, nombre, especie, raza, edad, sexo, userType } = JSON.parse(search);
-        //console.log({ id, nombre, especie, raza, edad, sexo });
         try {
             mascotas = await prisma.mascota.findMany({
                 include: {
@@ -25,7 +23,7 @@ export async function GET(req) {
                     raza: raza ? { equals: raza } : undefined,
                     edad: edad ? { equals: parseInt(edad) } : undefined,
                     idSexo: sexo ? { equals: parseInt(sexo) } : undefined,
-                    adopcion: userType === (0 || 1) ? { is: null } : undefined, // Excluir mascotas en adopción si el usuario es adoptante o sin registro
+                    adopcion: (userType === 0 || userType === 1) ? { is: null } : undefined, // Excluir mascotas en adopción si el usuario es adoptante o sin registro
                 },
             });
         } catch (error) {
@@ -156,6 +154,19 @@ export async function PUT(req) {
 export async function DELETE(req) {
     const id = req.nextUrl.searchParams.get('id');
     try {
+        const adopcion = await prisma.mascota.findUnique({
+            include: {
+                adopcion: true
+            },
+            where: {
+                id: parseInt(id)
+            }
+        });
+        console.log(adopcion);
+        if (adopcion.adopcion.length !== 0) {
+            return NextResponse.json({ message: 'Adopcion encontrada' }, { status: 409 });
+        }
+        
         const imagenPath = await prisma.mascota.findUnique({
             where: {
                 id: parseInt(id)

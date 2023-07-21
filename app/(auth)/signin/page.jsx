@@ -40,7 +40,7 @@ export default function SignIn() {
     const handleSignIn = async (e) => {
         e.preventDefault();
 
-        if (!firstName || !lastName || !email || !telefono || !selectedMunicipio || !password) {
+        if (!firstName || !lastName || !email || !telefono || isNaN(telefono) || !selectedMunicipio || !password) {
             setIsFieldsFilled(true);
         } else {
             try {
@@ -101,26 +101,6 @@ export default function SignIn() {
                 .then((data) => setMunicipios(data.municipios))
                 .catch((error) => console.error('Error fetching municipios:', error));
         }
-
-        // Define an async function to wrap your code
-        /*async function fetchData() {
-            console.log(selectedEstado);
-            try {
-                const response = await fetch(`/api/municipios?estado=${selectedEstado}`);
-                if (response.ok) {
-                    const data = await response.json();
-                    // Process the data
-                } else {
-                    throw new Error('Error fetching estados: ' + response.status);
-                }
-            } catch (error) {
-                console.error(error);
-                // Handle the error gracefully (display an error message, etc.)
-            }
-        }
-
-        // Call the async function
-        fetchData();*/
     }, [selectedEstado]);
 
 

@@ -18,6 +18,7 @@ export async function GetMascota(mascotaId) {
             historialAdoptivo: true,
             sexo: true,
             refugio: true,
+            tamano: true,
         }
     });
 

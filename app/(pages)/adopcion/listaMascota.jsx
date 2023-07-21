@@ -52,24 +52,24 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
         <>
             <div>
                 <div className={listaMascotas.contenedor}>
-                    <InputLabel id={"idMascota"} name={"id"} type={"number"} label={"ID de la mascota"} placeholder={"Id de la Mascota"} onChange={handleInputChange} />
+                    <InputLabel id={"nombre"} name={"nombre"} label={"Nombre"} placeholder={"Nombre"} onChange={handleInputChange} />
                     <button className="btn btn-success btn-lg" onClick={fetchMascotas} >Buscar</button>
                 </div>
 
-                <div className={listaMascotas.contenedor}>
+                <div className={`${listaMascotas.contenedor} gap-3 d-flex`}>
                     <div className={listaMascotas.busqueda}>
-                        <InputLabel id={"nombre"} name={"nombre"} label={"Nombre"} placeholder={"Nombre"} onChange={handleInputChange} />
+                        <InputLabel id={"idMascota"} name={"id"} type={"number"} label={"ID de la mascota"} placeholder={"Id de la Mascota"} onChange={handleInputChange} />
                     </div>
                     <div className={`${listaMascotas.busqueda} `}>
-                        <div className="input mb-3">
+                        <div className="input mb-3 mt-3">
                             <label htmlFor="especies" className="form-label">Especie</label>
                             <Especies handleChange={handleInputChange} especies={especies} />
                         </div>
                     </div>
                 </div>
-                <div className={listaMascotas.contenedor}>
+                <div className={`${listaMascotas.contenedor} gap-3 d-flex`}>
                     <div className={listaMascotas.busqueda}>
-                        <div className="input mb-3">
+                        <div className="input mb-3 mt-3">
                             <label htmlFor="razas" className="form-label">Raza</label>
                             <Raza handleChange={handleInputChange} razas={razas} />
                         </div>
@@ -78,7 +78,7 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
                         <InputLabel id={"edad"} name={"edad"} type={"number"} label={"Edad"} placeholder={"Edad"} onChange={handleInputChange} />
                     </div>
                     <div className={listaMascotas.busqueda}>
-                        <div className="input mb-3">
+                        <div className="input mb-3 mt-3">
                             <label htmlFor="sexo" className="form-label">Sexo</label>
                             <Sexos handleChange={handleInputChange} />
                         </div>

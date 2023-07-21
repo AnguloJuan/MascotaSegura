@@ -5,26 +5,25 @@
 body {
     display: flex;
     margin: 0;
-    
+
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-style: normal;
 }
 
-main{
+main {
     width: 100%;
     padding: 16px;
 }
 
-.input{
+.input {
     width: 100%;
-    margin: 1rem;
 
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-input{
+input {
     width: auto;
     padding: 8px 12px;
 
@@ -33,7 +32,15 @@ input{
     border-radius: 8px;
 }
 
-button{
+select {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
     margin: 1rem 0;
     padding: 1rem 2rem;
 
@@ -44,7 +51,7 @@ button{
     font-weight: bold;
 }
 
-.cerrar-dialog{
+.cerrar-dialog {
     float: right;
     -webkit-text-stroke-width: thick;
 }

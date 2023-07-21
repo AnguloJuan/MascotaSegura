@@ -77,7 +77,6 @@ export function Tamanos({ handleChange, required, value }) {
 export function Estados({ handleChange, estados, value }) {
     return (
         <>
-            <label htmlFor="estado">Estado:</label>
             <select
                 id="estado"
                 onChange={handleChange}

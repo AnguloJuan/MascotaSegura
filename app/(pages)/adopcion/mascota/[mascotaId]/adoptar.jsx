@@ -1,12 +1,15 @@
 "use client"
 import { useState } from 'react';
 import { Dialog } from "@/components/dialogs";
+import { useRouter } from 'next/navigation';
 
 export default function Adoptar({ mascotaId, adoptanteId }) {
     const [isAdoptar, setIsAdoptar] = useState(false);
     const [isAdopcionProcesada, setIsAdopcionProcesada] = useState(false);
     const [isAdopcionExistente, setIsAdopcionExistente] = useState(false);
     const [isErrorServidor, setIsErrorServidor] = useState(false);
+    const [adoptado, setAdoptado] = useState(false);
+    const router = useRouter();
 
     const handleAdoptarDialog = () => {
         setIsAdoptar(true);
@@ -28,6 +31,8 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
 
             if (response.ok) {
                 setIsAdopcionProcesada(true);
+                setAdoptado(false);
+                router.replace("/perfil");
             } else {
                 response.json().then((response) => console.log(response.error));
 
@@ -47,7 +52,7 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
 
     return (
         <>
-            <button onClick={handleAdoptarDialog} className="btn btn-primary">
+            <button onClick={handleAdoptarDialog} className="btn btn-primary" disabled={adoptado}>
                 Adoptar
             </button>
             
@@ -60,7 +65,7 @@ export default function Adoptar({ mascotaId, adoptanteId }) {
             >
                 <h1>Confirmar adopción</h1>
                 <p>Estas a punto de adoptar una mascota</p>
-                <p>Ten en mente que esta acción impactará en la vida del mascota y la tuya</p>
+                <p>Ten en mente que esta acción impactará en la vida de la mascota y la tuya</p>
                 <br />
                 <p>¿Estás seguro que deseas adoptar?</p>
             </Dialog>

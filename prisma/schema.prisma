@@ -51,6 +51,7 @@ model adoptante {
   idMunicipio          Int
   idHistorialAdoptante Int?
   idTipoUsuario        Int
+  imagen               String?
 
   municipio         municipio          @relation(fields: [idMunicipio], references: [id])
   historialAdoptivo historialAdoptivo? @relation("historialAdoptante", fields: [idHistorialAdoptante], references: [id])
@@ -71,6 +72,7 @@ model empleado {
   NIP           String
   fechaRegistro DateTime @default(now())
   idTipoUsuario Int
+  imagen        String?
 
   tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
 }
@@ -148,6 +150,7 @@ model reporte {
   idReportado  Int?
   idMascota    Int?
   idMunicipio  Int
+  imagen       String?
 
   reportador adoptante? @relation("reportador", fields: [idReportador], references: [id])
   reportado  adoptante? @relation("reportado", fields: [idReportado], references: [id])

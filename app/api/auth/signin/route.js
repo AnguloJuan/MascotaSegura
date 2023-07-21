@@ -26,6 +26,7 @@ export async function POST(request) {
         //const hashedPassword = await bcrypt.hash(password, 10);
 
         let user;
+        const date = new Date().toISOString();
         // Create the user in the database
         try {
             
@@ -38,7 +39,7 @@ export async function POST(request) {
                     telefono: numTelefono,
                     contrasena: password,
                     tipoUsuario: { connect: { id: 1 } },
-                    fechaRegistro: new Date().toISOString(),
+                    fechaRegistro: date,
                 },
             });
         } catch (e) {

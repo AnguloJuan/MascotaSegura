@@ -62,7 +62,7 @@ DELETE FROM adopcion;
 -- Borrar datos de la tabla adoptante
 DELETE FROM adoptante;
 -- Borrar datos de la tabla cartilla
-DELETE FROM cartilla;
+--DELETE FROM cartilla;
 -- Borrar datos de la tabla empleado
 DELETE FROM empleado;
 -- Borrar datos de la tabla especie
@@ -89,6 +89,7 @@ INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(1,'Aceptado');
 INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(2,'Denegado');
 INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(3,'Procesando');
 INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(4,'Cancelado');
+INSERT INTO estadoAdopcion (id, estadoAdopcion) VALUES(5,'Devuelto');
 
 -------Tabla adoptantes-----
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, idHistorialAdoptante, idTipoUsuario) VALUES (1, 1, 'Juan', 'Pérez', 'juan.perez@example.com', '6122881676', 'contraseña123', 1, 1);
@@ -116,7 +117,6 @@ INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, cont
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, fechaRegistro, idHistorialAdoptante, idTipoUsuario) VALUES (22, 4, 'Isabel', 'Vargas', 'isabel.vargas@example.com', '6128765434', 'securepass123', '2023-05-30 11:15:00', 22, 1);
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, fechaRegistro, idHistorialAdoptante, idTipoUsuario) VALUES (23, 1, 'Jorge', 'Ramírez', 'jorge.ramirez@example.com', '6123456783', 'mypassword123', '2023-06-04 16:30:00', 23, 1);
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, fechaRegistro, idHistorialAdoptante, idTipoUsuario) VALUES (24, 3, 'Marcela', 'Ríos', 'marcela.rios@example.com', '6129876545', 'password12345', '2023-06-09 13:45:00', 24, 1);
-
 
 ------ Empleados----
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (1, 1, 'Luis ', 'Ortega', 'empleado2@example.com', 'password2', '987654321', 'DEF456', 2);
@@ -335,5 +335,5 @@ INSERT INTO empleado
 (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
 VALUES (11, 1, "Juan Antonio", "Angulo Murillo", "correo1@correo.com", "1234", 6121373459, 6789, CURRENT_DATE, 3);
 /*DELETE FROM empleado WHERE id = 11;*/
---UPDATE empleado SET idTipoUsuario = 3 WHERE id = 9;
+--UPDATE empleado SET idTipoUsuario = 3 WHERE id = 1;
 --DELETE FROM mascota WHERE id = 63;

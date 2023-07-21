@@ -6,7 +6,6 @@ export function Municipios({ handleChange, municipiosInicial, selectedEstado, va
     const [municipios, setMunicipios] = useState([]);
     useEffect(() => {
         if (municipiosInicial) {
-            console.log(municipiosInicial);
             setMunicipios(municipiosInicial);
         }
     }, []);
@@ -23,7 +22,6 @@ export function Municipios({ handleChange, municipiosInicial, selectedEstado, va
 
     return (
         <>
-            <label htmlFor="municipio">Municipio:</label>
             <select
                 id="municipio"
                 onChange={handleChange}
