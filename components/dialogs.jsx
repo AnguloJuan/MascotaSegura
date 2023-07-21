@@ -21,21 +21,21 @@ export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun
 
   return (
     <dialog id={id} ref={dialogRef}>
-      <button id={`btnCerrar${id}`} className="btn cerrar-dialog text-black" onClick={handleClose}>
+      <button type='button' id={`btnCerrar${id}`} className="btn cerrar-dialog text-black" onClick={handleClose}>
         X
       </button>
       {children}
       {okDialog && (
-        <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={handleClose}>
+        <button id={`btnCerrar${id}`} type='button' className="btn btn-primary" onClick={handleClose}>
           Ok
         </button>
       )}
       {confirmar && (
         <div className='d-flex justify-content-around'>
-          <button id={`btnCerrar${id}`} className="btn btn-primary" onClick={handleClose}>
+          <button id={`btnCerrar${id}`} type='button' className="btn btn-primary" onClick={handleClose}>
             Cancelar
           </button>
-          <button id={`btnConfirmar${id}`} className="btn btn-danger" onClick={handleConfirm}>
+          <button id={`btnConfirmar${id}`} type='button' className="btn btn-danger" onClick={handleConfirm}>
             Confirmar
           </button>
         </div>

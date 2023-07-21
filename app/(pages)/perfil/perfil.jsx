@@ -290,6 +290,7 @@ export default function Perfil({ props }) {
                     <h1>Error al eliminar cuenta</h1>
                     <p>Se ha encontrado que tiene al menos una mascota adoptada</p>
                     <p>No puede eliminar la cuenta si ha adoptado a una mascota</p>
+                    <p>Cancele la adopción y devuelva la mascota al refugio si quiere eliminar la cuenta</p>
                 </Dialog>
             </>
 

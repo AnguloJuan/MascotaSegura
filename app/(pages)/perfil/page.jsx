@@ -1,9 +1,6 @@
-import InputLabel from "@/components/Input";
 import perfilAdoptador from "./perfil.module.css";
 import { GetUser } from "../../lib/user";
 import { getPrisma } from "@/app/lib/prisma";
-import { Estados } from "@/components/Selects";
-import { Municipios } from "@/components/SelectsClient";
 import Perfil from "./perfil";
 import LogoutPage from "../logout/page";
 import Link from "next/link";
@@ -42,6 +39,7 @@ export default async function PerfilPage() {
                         especie: true,
                     },
                 },
+                estadoAdopcion: true
             }
         });
 
@@ -58,28 +56,34 @@ export default async function PerfilPage() {
                             {props.adopciones.map((adopcion) => (
                                 <Link key={adopcion.id} href={`/adopcion/mascota/${adopcion.mascota.id}`} className="link-dark link-underline-opacity-0">
                                     <div className={`${perfilAdoptador.container} rounded border bg-body-secondary pl-1`}>
-                                        <div className={`${perfilAdoptador.fotoPerfil} ms-3`}>
-                                            {adopcion.mascota.imagen ? (
-                                                <Image
-                                                    width={100}
-                                                    height={100}
-                                                    src={`/images/adoptantes/${adopcion.mascota.imagen}`}
-                                                    alt={`ImagenAdoptante${adopcion.mascota.id}`}
-                                                    className="rounded-circle" />
-                                            ) : (
-                                                <Image
-                                                    width={100}
-                                                    height={100}
-                                                    src={"/images/dogIcon.png"}
-                                                    alt="DefaultIcon"
-                                                    className="rounded-circle" />
-                                            )}
-                                        </div>
+                                        <div className="d-flex flex-column">
+                                            <span className="mt-1 ms-3 fw-light">Id: {adopcion.mascota.id}</span>
 
-                                        <div className={perfilAdoptador.datosMascotas}>
-                                            <p>Nombre: {adopcion.mascota.nombre}</p>
-                                            <p>Especie: {adopcion.mascota.especie.especie}</p>
-                                            <p>Raza: {adopcion.mascota.raza}</p>
+                                            <div className="d-flex">
+                                                <div className={`${perfilAdoptador.fotoPerfil} ms-3`}>
+                                                    {adopcion.mascota.imagen ? (
+                                                        <Image
+                                                            width={100}
+                                                            height={100}
+                                                            src={`/images/adoptantes/${adopcion.mascota.imagen}`}
+                                                            alt={`ImagenAdoptante${adopcion.mascota.id}`}
+                                                            className="rounded-circle" />
+                                                    ) : (
+                                                        <Image
+                                                            width={100}
+                                                            height={100}
+                                                            src={"/images/dogIcon.png"}
+                                                            alt="DefaultIcon"
+                                                            className="rounded-circle" />
+                                                    )}
+                                                </div>
+
+                                                <div className={perfilAdoptador.datosMascotas}>
+                                                    <p>Nombre: {adopcion.mascota.nombre}</p>
+                                                    <p>Especie: {adopcion.mascota.especie.especie}</p>
+                                                    <p>Estado adopción: {adopcion.estadoAdopcion.estadoAdopcion}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </Link>
