@@ -1,57 +1,52 @@
-import InputLabel from "@/components/Input";
-import perfilAdoptador from "./perfil.module.css";
-import { GetUser } from "../../lib/user";
+import RedirectUser from "@/app/(pages)/redirectUser";
 import { getPrisma } from "@/app/lib/prisma";
-import { Estados } from "@/components/Selects";
-import { Municipios } from "@/components/SelectsClient";
-import Perfil from "./perfil";
-import LogoutPage from "../logout/page";
-import Link from "next/link";
-import Image from "next/image";
+import PerfilPage from "./perfil";
+import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
 
-export default async function PerfilPage() {
-    const user = GetUser();
-    const userType = user.idTipoUsuario;
-    const userMunicipio = user.idMunicipio;
-    let userEstado;
-    let props;
-    if (userType == 1) {
-        userEstado = await prisma.municipio.findUnique({
-            select: {
-                idEstado: true,
-            },
-            where: {
-                id: userMunicipio,
-            }
-        });
-        const estados = await prisma.estado.findMany();
-        const municipios = await prisma.municipio.findMany({
-            where: {
-                idEstado: userEstado.idEstado,
-            },
-        });
-        const adopciones = await prisma.adopcion.findMany({
-            where: {
-                idAdoptante: user.id,
-            },
-            include: {
-                mascota: {
-                    include: {
-                        especie: true,
-                    },
+export default async function Page({ params }) {
+    const userType = GetUser().idTipoUsuario;
+    const { adoptanteId } = params;
+    const adoptante = await prisma.adoptante.findUnique({
+        where: {
+            id: parseInt(adoptanteId),
+        }
+    });
+    const adoptanteMunicipio = adoptante.idMunicipio;
+    const estados = await prisma.estado.findMany();
+    const adoptanteEstado = await prisma.municipio.findUnique({
+        select: {
+            idEstado: true,
+        },
+        where: {
+            id: adoptanteMunicipio,
+        }
+    });
+    const municipios = await prisma.municipio.findMany({
+        where: {
+            idEstado: adoptanteEstado.idEstado,
+        },
+    });
+    const adopciones = await prisma.adopcion.findMany({
+        where: {
+            idAdoptante: adoptante.id,
+        },
+        include: {
+            mascota: {
+                include: {
+                    especie: true,
                 },
-            }
-        });
+            },
+        }
+    });
 
-        props = { user, userType, estados, municipios, userMunicipio, userEstado, adopciones }
-    } else props = { user, userType };
+    const props = { adoptante, estados, municipios, adoptanteEstado, adoptanteMunicipio, adopciones, userType }
     return (
-        userType == 0 ? <LogoutPage /> : (
+        userType == 0 ? <RedirectUser /> : (
             <>
-                <Perfil props={props} />
-                {userType == 1 && props.adopciones.length !== 0 && (
+                <PerfilPage props={props} />
+                {props.adopciones.length !== 0 && (
                     <>
                         <h3>Mascota adoptada</h3>
                         <div className="d-flex flex-column gap-3">

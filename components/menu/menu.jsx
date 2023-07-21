@@ -36,7 +36,7 @@ function MenuType({ user }) {
                 <>
                     <Option url={"/rescate"} text={"RESCATE"} iconUrl={"/images/menu/rescate.png"} />
                     <Option url={"/adopcion"} text={"MASCOTAS"} iconUrl={"/images/menu/adopcion.png"} />
-                    <Option url={"/adoptadores"} text={"ADOPTADORES"} iconUrl={"/images/menu/adoptadores.png"} />
+                    <Option url={"/adoptantes"} text={"ADOPTANTES"} iconUrl={"/images/menu/adoptantes.png"} />
                     <Option url={"/empleados"} text={"EMPLEADOS"} iconUrl={"/images/menu/empleados.png"} />
                     <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                     <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfilAdmin.png"} />

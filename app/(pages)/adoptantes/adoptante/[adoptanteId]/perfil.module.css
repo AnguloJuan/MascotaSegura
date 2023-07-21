@@ -1,0 +1,57 @@
+.inputlabel {
+  margin-right: 5px;
+  width: 100%;
+
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  background-color: rgb(221, 212, 212);
+  border-radius: 10px 10px 10px 10px;
+}
+
+.perfil {
+  width: fit-content;
+  height: 250px;
+  background-color: antiquewhite;
+  margin-right: 8px;
+  border-radius: 8px 8px 8px 8px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.fotoPerfil {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 20px;
+}
+
+.datosMascota {
+  font-family: Arial, sans-serif;
+}
+
+
+
+
+
+
+
+.contenedor-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contenedor-btn button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 100px;
+}
