@@ -83,13 +83,13 @@ export default async function ReportePage({ params }) {
                             </div>
                             <div className="input mb-3 mt-3">
                                 <label htmlFor="descripcion" className="form-label">Descripción</label>
-                                <textarea name="descripcion" id="descripcion" rows="5" readOnly
+                                <textarea name="descripcion" id="descripcion" rows="5" disabled
                                     value={reporte.descripcion} className="form-control"></textarea>
                             </div>
 
-                            <EstadosReporte value={reporte.estadoReporte.id} />
+                            <EstadosReporte value={reporte.estadoReporte.id} disabled />
 
-                            {reporte.reportador.id == user.id && (
+                            {reporte.reportador && reporte.reportador.id == user.id && (
                                 <center className="my-3">
                                     <EliminarReporte props={props} />
                                 </center>

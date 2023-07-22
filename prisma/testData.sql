@@ -119,7 +119,7 @@ INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, cont
 INSERT INTO adoptante (id, idMunicipio, nombre, apellido, correo, telefono, contrasena, fechaRegistro, idHistorialAdoptante, idTipoUsuario) VALUES (24, 3, 'Marcela', 'Ríos', 'marcela.rios@example.com', '6129876545', 'password12345', '2023-06-09 13:45:00', 24, 1);
 
 ------ Empleados----
-INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (1, 1, 'Luis ', 'Ortega', 'empleado2@example.com', 'password2', '987654321', 'DEF456', 2);
+INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (1, 1, 'Luis ', 'Ortega', 'empleado2@example.com', 'password2', '987654321', 'DEF456', 3);
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (2, 2, 'Manuel', 'Diaz', 'empleado3@example.com', 'password3', '555555555', 'GHI789', 2);
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (3, 4, 'Juan', 'Lopez', 'empleado4@example.com', 'password4', '999999999', 'JKL012', 2);
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (4, 1, 'Jose', 'Torres', 'empleado5@example.com', 'password5', '111111111', 'MNO345', 2);
@@ -131,7 +131,7 @@ INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telef
 
 --estadoReporte--
 INSERT INTO estadoReporte (id, estado) VALUES (1, 'Reportado');
-INSERT INTO estadoReporte (id, estado) VALUES (2, 'En proceso');
+INSERT INTO estadoReporte (id, estado) VALUES (2, 'En investigación');
 INSERT INTO estadoReporte (id, estado) VALUES (3, 'Confirmado');
 INSERT INTO estadoReporte (id, estado) VALUES (4, 'Resuelto');
 INSERT INTO estadoReporte (id, estado) VALUES (5, 'Falso');

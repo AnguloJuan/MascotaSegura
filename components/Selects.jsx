@@ -74,7 +74,7 @@ export function Tamanos({ handleChange, required, value }) {
         </>
     )
 }
-export function EstadosReporte({ handleChange, required, value }) {
+export function EstadosReporte({ handleChange, required, value, disabled }) {
     return (
         <>
             <select
@@ -83,6 +83,7 @@ export function EstadosReporte({ handleChange, required, value }) {
                 name="estadoReporte"
                 required={required}
                 value={value}
+                disabled={disabled}
                 className="form-select">
                 <option value="">Selecciona el estado del reporte</option>
                 <option value={1}>Reportado</option>
