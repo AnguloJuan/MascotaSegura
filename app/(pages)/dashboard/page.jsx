@@ -3,38 +3,60 @@ import { AdopcionesPorMes, Espacios, PorcentajeEspecie, ReportesPorMunicipio } f
 import dashboard from "./dashboard.module.css";
 import { getPrisma } from "@/app/lib/prisma";
 import Link from "next/link";
+import Image from "next/image";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = getPrisma();
+//const prisma = getPrisma();
+const prisma = new PrismaClient()
 
-async function getEspacios() {
-    const espacios = await prisma.espacios.findMany({
-        where: { idRefugio: 1 },
-        include: {
-            especie: true,
-        },
-    });
-    return espacios.map((espacio) => ({
-        especie: espacio.especie.especie,
-        espacioTotal: espacio.espacioTotal,
-        espacioDisponible: espacio.espacioDisponible,
-    }));
+async function getEspecies() {
+    const cantidadMascotasPorEspecie = await prisma.mascota.groupBy({
+        by: ['idEspecie'],
+        _count: true,
+      });
+    
+      const resultado = await Promise.all(
+        cantidadMascotasPorEspecie.map(async (item) => {
+          const especie = await prisma.especie.findUnique({
+            where: { id: item.idEspecie },
+            select: { especie: true },
+          });
+          return {
+            idEspecie: item.idEspecie,
+            especie: especie.especie,
+            cantidad: item._count,
+          };
+        })
+      );
+    
+      return resultado;
 }
 
 async function getPorcentajeEspecie() {
-    const espacios = await prisma.espacios.findMany({
-        where: { idRefugio: 1 },
-        include: {
-            especie: true,
-        },
-    });
-
-    const totalEspacios = espacios.reduce((acc, espacio) => acc + (espacio.espacioTotal - espacio.espacioDisponible), 0);
-
-    return espacios.map((espacio) => ({
-        especie: espacio.especie.especie,
-        cantidad: (espacio.espacioTotal - espacio.espacioDisponible),
-        porcentaje: (((espacio.espacioTotal - espacio.espacioDisponible) / totalEspacios) * 100).toFixed(2),
-    }));
+    const cantidadMascotasPorEspecie = await prisma.mascota.groupBy({
+        by: ['idEspecie'],
+        _count: true,
+      });
+    
+      const totalMascotas = await prisma.mascota.count();
+    
+      const resultado = await Promise.all(
+        cantidadMascotasPorEspecie.map(async (item) => {
+          const especie = await prisma.especie.findUnique({
+            where: { id: item.idEspecie },
+            select: { especie: true },
+          });
+          const porcentaje = ((item._count / totalMascotas) * 100).toFixed(2);
+          return {
+            idEspecie: item.idEspecie,
+            especie: especie.especie,
+            cantidad: item._count,
+            porcentaje: porcentaje,
+          };
+        })
+      );
+      
+      return resultado;
 }
 
 async function getMascotasAdoptadas() {
@@ -164,7 +186,7 @@ async function getAdoptantesPorMes() {
 }
 
 export default async function Dashboard() {
-    const espacios = await getEspacios();
+    const espacios = await getEspecies();
     const porcentaje = await getPorcentajeEspecie();
     const mascotasAdoptadas = await getMascotasAdoptadas();
     const mascotasRescatadas = await getMascotasRescatadas();
@@ -175,59 +197,67 @@ export default async function Dashboard() {
     const adoptantesPorMes = await getAdoptantesPorMes();
 
     return (
-        <div className={dashboard}>
-            <Link href={"reportes"}>Reportes Generales</Link>
+        <>
+            <div className={dashboard}>
 
-            <h1>Reportes del generales</h1>
+                <h1>Reportes del generales</h1>
+                <div className="btn p-0 w-100 btn-primary">
+                    <Link href={"/reportes"} className="link-light link-underline-opacity-0 w-100 p-2 d-flex align-items-center">
+                        <div className="bg-white rounded p-1">
+                            <Image
+                                src={"/images/defaultReporte.png"}
+                                alt="reportes"
+                                width={30}
+                                height={30} />
+                        </div>
+                        <span className="fw-bold ms-3">Lista de reportes</span>
+                    </Link>
+                </div>
+                <h2>Reportes de adopciones</h2>
 
-            <h2>Reportes de adopciones</h2>
-
-            <div className={dashboard.adopciones}>
-                <div className={dashboard.tarjetas}>
-                    <div>
-                        <p>Cantidad de mascotas adoptadas: </p>
-                        <h3>{mascotasAdoptadas}</h3>
+                <div className={dashboard.adopciones}>
+                    <div className={dashboard.tarjetas}>
+                        <div>
+                            <p>Cantidad de mascotas adoptadas: </p>
+                            <h3>{mascotasAdoptadas}</h3>
+                        </div>
+                        <div>
+                            <p>Cantidad de mascotas refugiadas: </p>
+                            <h3>{mascotasRescatadas}</h3>
+                        </div>
                     </div>
-                    <div>
-                        <p>Cantidad de mascotas refugiadas: </p>
-                        <h3>{mascotasRescatadas}</h3>
+                    <div className={dashboard.canva}>
+                        <AdopcionesPorMes adopciones={adopcionesPorMes} adoptantes={adoptantesPorMes} />
                     </div>
                 </div>
-                <div className={dashboard.canva}>
-                    <AdopcionesPorMes adopciones={adopcionesPorMes} adoptantes={adoptantesPorMes} />
+
+                <h2>Espacios</h2>
+                <div className={dashboard.espacios}>
+                    <div className={dashboard.canva}>
+                        <PorcentajeEspecie data={porcentaje} />
+                    </div>
+                    <div className={dashboard.canva}>
+                        <Espacios data={espacios} />
+                    </div>
+                </div>
+
+                <h2>Reportes de maltrato</h2>
+                <div className={dashboard.reportes}>
+                    <div className={dashboard.tarjetas}>
+                        <div>
+                            <p>Cantidad de reportes: </p>
+                            <h3>{reportes}</h3>
+                        </div>
+                        <div>
+                            <p>Cantidad de reportes anonimos: </p>
+                            <h3>{reportesAnonimos}</h3>
+                        </div>
+                    </div>
+                    <div className={dashboard.canva}>
+                        <ReportesPorMunicipio className={dashboard.reportesM} data={reportesPorMunicipio} />
+                    </div>
                 </div>
             </div>
-
-            <h2>Espacios</h2>
-            <div className={dashboard.espacios}>
-                <div className={dashboard.canva}>
-                    <PorcentajeEspecie data={porcentaje} />
-                </div>
-                <div className={dashboard.canva}>
-                    <Espacios data={espacios} />
-                </div>
-            </div>
-
-            <h2>Reportes de maltrato</h2>
-            <div className={dashboard.reportes}>
-                <div className={dashboard.tarjetas}>
-                    <div>
-                        <p>Cantidad de reportes: </p>
-                        <h3>{reportes}</h3>
-                    </div>
-                    <div>
-                        <p>Cantidad de reportes anonimos: </p>
-                        <h3>{reportesAnonimos}</h3>
-                    </div>
-                </div>
-                <div className={dashboard.canva}>
-                    <ReportesPorMunicipio className={dashboard.reportesM} data={reportesPorMunicipio} />
-                </div>
-            </div>
-
-
-        </div>
-
-
+        </>
     )
 }

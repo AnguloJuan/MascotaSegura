@@ -26,7 +26,7 @@ export default function Rescate({ especies, idRefugio }) {
     const [registradoDialog, setRegistradoDialog] = useState(false);
     const [errorDialog, setErrorDialog] = useState(false);
     const router = useRouter();
-    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setMascota((prevCriteria) => ({ ...prevCriteria, [name]: value }));
@@ -122,11 +122,15 @@ export default function Rescate({ especies, idRefugio }) {
                         <Tamanos handleChange={handleInputChange} required={true} />
                     </div>
                 </div>
-                <div className={rescate.cartilla}>
-                    <p>Ha sido maltratado?</p>
-                    <input type="checkbox" name="maltratado" id="maltratado" value={false} onChange={handleTernary} className="form-check-input" />
-                    <p>Cuenta con cartilla de vacunación?</p>
-                    <input type="checkbox" name="cartilla" id="cartilla" value={false} onChange={handleTernary} className="form-check-input" />
+                <div className={`${rescate.cartilla} d-flex flex-row gap-4`}>
+                    <div className="d-flex flex-column align-items-center">
+                        <p>Ha sido maltratado?</p>
+                        <input type="checkbox" name="maltratado" id="maltratado" value={false} onChange={handleTernary} className="form-check-input" />
+                    </div>
+                    <div className="d-flex flex-column align-items-center">
+                        <p>Cuenta con cartilla de vacunación?</p>
+                        <input type="checkbox" name="cartilla" id="cartilla" value={false} onChange={handleTernary} className="form-check-input" />
+                    </div>
                 </div>
                 <div className={rescate.contendor}>
                 </div>
@@ -137,7 +141,7 @@ export default function Rescate({ especies, idRefugio }) {
                 </div>
 
 
-                <div className={rescate.buton}>
+                <div className={`${rescate.buton} my-4`}>
                     <button
                         className="btn btn-primary"
                         type="submit"

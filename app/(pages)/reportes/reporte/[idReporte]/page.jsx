@@ -41,7 +41,6 @@ export default async function ReportePage({ params }) {
     const month = pad(new Date(reporte.fechaCreada).getMonth(), 2);
     const year = new Date(reporte.fechaCreada).getFullYear();
     const date = `${year}-${month}-${day}`;
-    console.log(reporte);
 
     const props = { reporte, user, userType, estados, municipios, date }
     return (
