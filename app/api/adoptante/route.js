@@ -169,9 +169,9 @@ export async function DELETE(req) {
             }
         });
 
-        return NextResponse.json({ message: "Mascota eliminada" }, { status: 200 });
+        return NextResponse.json({ message: "Adoptante eliminada" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
+        NextResponse.json({ error: 'Fallo al eliminar el adoptante' }, { staus: 500 });
     }
 }
