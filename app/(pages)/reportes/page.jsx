@@ -6,58 +6,35 @@ import actualizar from "./reporte.module.css";
 import InputLabel from "@/components/Input";
 import { getPrisma } from "@/app/lib/prisma";
 import Link from "next/link";
+import ListaReportes from "./listaReportes";
 
 const prisma = getPrisma();
 
-let reportes;
-
-export async function GetReportes() {
-    if (!reportes) {
-        reportes = await prisma.reporte.findMany({
-            include:{
-                reportado: true,
-                municipio: {
-                    include:{
-                        estado: true,
-                    }
+export default async function listareportes() {
+    const reportes = await prisma.reporte.findMany({
+        include: {
+            reportado: true,
+            municipio: {
+                include: {
+                    estado: true,
                 }
             }
-        });
-    }
+        }
+    });
+    const estados = await prisma.estado.findMany();
 
-    return reportes;
-}
+    const props = { reportes, estados };
 
-export default async function listareportes() {
-    const reportes = await GetReportes();
     return (
         <>
             <Link href={"/dashboard"}>Dashboard</Link>
-            <div className={maltrato}>
-                <div className={maltrato.busqueda}>
-                    <InputLabel id={"reporte"} label={"Id del reporte"} placeholder={"nombre"} />
-                    <button type="submit">Buscar</button>
-                </div>
-                <div className={maltrato.busquedaAvanzada}>
-                    <InputLabel id={"nombre"} label={"Nombre de reporte"} placeholder={"nombre"} />
-                    <InputLabel id={"nombre"} label={"Nombre de usuario"} placeholder={"nombre"} />
-                </div>
 
-                {reportes.map((reporte) => (
-                    <Link key={reporte.id} href={`/adopcion/reporte/${reporte.id}`}>
-                        <div className={maltrato.containerReportes}>
-                            <div className={maltrato.profilepicture}></div>
-                            <div className={maltrato.profiledata}>
-                                <p>Id: {reporte.id}</p>
-                                <p>Fecha reporteda: {reporte.fechaCreacion}</p>
-                                <p>Ubicación: {reporte.municipio.estado.nombre}{reporte.municipio.nombre}</p>
-                                <p>Descripción: {reporte.descripcion}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
+            <center><h1>Lista de reportes</h1></center>
+            <center><Link href={"reportes/reportar"} className="btn btn-success border rounded mt-4 mb-2 d-flex align-items-center">
+                <span className="f-bold fs-4 mx-2">+</span>Agregar nuevo empleado
+            </Link></center>
 
-            </div>
+            <ListaReportes props={props} />
         </>
     )
 }

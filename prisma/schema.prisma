@@ -41,16 +41,16 @@ model refugio {
 }
 
 model adoptante {
-  id                   Int      @id @default(autoincrement())
-  nombre               String
-  apellido             String
-  correo               String   @unique
-  telefono             BigInt
-  contrasena           String
-  fechaRegistro        DateTime @default(now())
-  idMunicipio          Int
-  idTipoUsuario        Int
-  imagen               String?
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  apellido      String
+  correo        String   @unique
+  telefono      BigInt
+  contrasena    String
+  fechaRegistro DateTime @default(now())
+  idMunicipio   Int
+  idTipoUsuario Int
+  imagen        String?
 
   municipio         municipio           @relation(fields: [idMunicipio], references: [id])
   historialAdoptivo historialAdoptivo[]
@@ -140,6 +140,12 @@ model adopcion {
   estadoAdopcion estadoAdopcion @relation(fields: [idEstadoAdopcion], references: [id])
 }
 
+model estadoReporte {
+  id      Int       @id
+  estado  String
+  reporte reporte[]
+}
+
 model reporte {
   id           Int      @id @default(autoincrement())
   descripcion  String
@@ -150,10 +156,12 @@ model reporte {
   idMunicipio  Int
   imagen       String?
 
-  reportador adoptante? @relation("reportador", fields: [idReportador], references: [id])
-  reportado  adoptante? @relation("reportado", fields: [idReportado], references: [id])
-  mascota    mascota?   @relation(fields: [idMascota], references: [id])
-  municipio  municipio  @relation(fields: [idMunicipio], references: [id])
+  reportador      adoptante?     @relation("reportador", fields: [idReportador], references: [id])
+  reportado       adoptante?     @relation("reportado", fields: [idReportado], references: [id])
+  mascota         mascota?       @relation(fields: [idMascota], references: [id])
+  municipio       municipio      @relation(fields: [idMunicipio], references: [id])
+  estadoReporte   estadoReporte? @relation(fields: [estadoReporteId], references: [id])
+  estadoReporteId Int @default(1)
 }
 
 model especie {

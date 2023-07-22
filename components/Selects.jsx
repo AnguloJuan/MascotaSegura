@@ -74,6 +74,26 @@ export function Tamanos({ handleChange, required, value }) {
         </>
     )
 }
+export function EstadosReporte({ handleChange, required, value }) {
+    return (
+        <>
+            <select
+                id="estadoReporte"
+                onChange={handleChange}
+                name="estadoReporte"
+                required={required}
+                value={value}
+                className="form-select">
+                <option value="">Selecciona el estado del reporte</option>
+                <option value={1}>Reportado</option>
+                <option value={2}>Confirmado</option>
+                <option value={3}>En proceso</option>
+                <option value={4}>Resuelto</option>
+                <option value={5}>Falso</option>
+            </select>
+        </>
+    )
+}
 export function Estados({ handleChange, estados, value }) {
     return (
         <>

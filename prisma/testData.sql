@@ -128,6 +128,13 @@ INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telef
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (7, 4, 'Maria', 'Macias', 'empleado8@example.com', 'password8', '444444444', 'VWX234', 2);
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (8, 5, 'Melissa', 'Murillo', 'empleado9@example.com', 'password9', '666666666', 'YZA567', 2);
 INSERT INTO empleado (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, idTipoUsuario) VALUES (9, 2, 'Kevin', 'Lopez', 'empleado10@example.com', 'password10', '777777777', 'BCD890', 2);
+
+--estadoReporte--
+INSERT INTO estadoReporte (id, estado) VALUES (1, 'Reportado');
+INSERT INTO estadoReporte (id, estado) VALUES (2, 'En proceso');
+INSERT INTO estadoReporte (id, estado) VALUES (3, 'Confirmado');
+INSERT INTO estadoReporte (id, estado) VALUES (4, 'Resuelto');
+INSERT INTO estadoReporte (id, estado) VALUES (5, 'Falso');
 ----Reportes-----
 INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, descripcion) VALUES (2, 2, 1, 2, 2, 'Perro se encuentra desnutrido en tal zona');
 INSERT INTO reporte (id, idReportador, idReportado, idMascota, idMunicipio, descripcion) VALUES (3, 3, 2, 3, 3, 'Gato perdido cerca del parque');
