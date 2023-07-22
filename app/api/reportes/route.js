@@ -6,55 +6,63 @@ import path from "path";
 import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
-const SECRET_KEY = process.env.SECRET_KEY;
 
-export async function POST(request) {
-    const { firstName, lastName, email, telefono, NIP, tipoEmpleado, password } = await request.json();
-    const numTelefono = parseInt(telefono);
-
+export async function POST(req) {
     try {
-        // Check if the email is already registered
-        const existingUser = await prisma.reporte.findUnique({ where: { correo: email } });
-
-        if (existingUser) {
-            return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
+        const formData = await req.formData();
+        const reporte = formData.get("reporte");
+        const userType = formData.get("userType");
+        const image = formData.get("image");
+        const reporteParsed = JSON.parse(reporte.substring(reporte.indexOf('{'), reporte.lastIndexOf('}') + 1));
+        const { descripcion, municipio } = reporteParsed;
+        let nombre, correo, idReportador;
+        if (userType != 1) {
+            ({ nombre, correo } = reporteParsed);
+        } else {
+            idReportador = reporteParsed.idReportador
         }
 
-        if (!SECRET_KEY) {
-            return NextResponse.json({ message: 'Llave secreta no encontrada' }, { status: 500 })
+        let uniqueName;
+        if (image != "null") {
+            const bytes = await image.arrayBuffer();
+            const buffer = Buffer.from(bytes);
+            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
+            const filePath = path.join(process.cwd(), "public/images/reportes", uniqueName);
+            writeFile(filePath, buffer);
         }
-
-        // Hash the password
-        //const hashedPassword = await bcrypt.hash(password, 10);
-
-        let user;
-        const date = new Date().toISOString();
-        const idRefugio = GetUser().idRefugio;
-
-        // Create the user in the database
         try {
-            user = await prisma.reporte.create({
-                data: {
-                    idRefugio: parseInt(idRefugio),
-                    nombre: firstName,
-                    apellido: lastName,
-                    correo: email,
-                    telefono: numTelefono,
-                    contrasena: password,
-                    NIP: NIP,
-                    tipoUsuario: { connect: { id: parseInt(tipoEmpleado) } },
-                    fechaRegistro: date,
-                },
-            });
-        } catch (e) {
-            console.log(e);
+            const date = new Date().toISOString();
+            let reporte
+            if (userType != 1) {
+                reporte = await prisma.reporte.create({
+                    data: {
+                        descripcion: descripcion,
+                        fechaCreada: date,
+                        municipio: { connect: { id: parseInt(municipio) } },
+                        imagen: image != "null" ? uniqueName : undefined,
+                        nombre,
+                        correo,
+                    }
+                });
+            } else {
+                reporte = await prisma.reporte.create({
+                    data: {
+                        descripcion: descripcion,
+                        fechaCreada: date,
+                        reportador: { connect: { id: parseInt(idReportador) } },
+                        municipio: { connect: { id: parseInt(municipio) } },
+                        imagen: image != "null" ? uniqueName : undefined
+                    }
+                });
+            }
+            return NextResponse.json({ message: "reporte registrado", reporte }, { status: 200 });
+        } catch (error) {
+            console.log(error);
+            return NextResponse.json({ message: "fallo al registrar reporte" }, { status: 500 });
         }
-        BigInt.prototype.toJSON = function () { return this.toString() }
-
-        return NextResponse.json({ message: 'User registered', user }, { status: 201 });
     } catch (error) {
         console.log(error);
-        return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
+        return NextResponse.json({ message: "fallo al registrar mascota" }, { status: 500 });
     }
 }
 

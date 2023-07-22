@@ -155,13 +155,15 @@ model reporte {
   idMascota    Int?
   idMunicipio  Int
   imagen       String?
+  nombre       String?
+  correo       String?
 
   reportador      adoptante?     @relation("reportador", fields: [idReportador], references: [id])
   reportado       adoptante?     @relation("reportado", fields: [idReportado], references: [id])
   mascota         mascota?       @relation(fields: [idMascota], references: [id])
   municipio       municipio      @relation(fields: [idMunicipio], references: [id])
   estadoReporte   estadoReporte? @relation(fields: [estadoReporteId], references: [id])
-  estadoReporteId Int @default(1)
+  estadoReporteId Int            @default(1)
 }
 
 model especie {

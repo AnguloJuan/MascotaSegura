@@ -95,7 +95,7 @@ export async function PUT(req) {
                     },
                     data: {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
-                        telefono: telefono !== userInitParsed.telefono ? telefono : undefined,
+                        telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
                         imagen: image !== "null" ? uniqueName : undefined,
                     }
@@ -109,7 +109,7 @@ export async function PUT(req) {
                         nombre: nombre !== userInitParsed.nombre ? nombre : undefined,
                         apellido: apellido !== userInitParsed.apellido ? apellido : undefined,
                         correo: correo !== userInitParsed.correo ? correo : undefined,
-                        telefono: telefono !== userInitParsed.telefono ? telefono : undefined,
+                        telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
                         imagen: image !== "null" ? uniqueName : undefined,
                     }

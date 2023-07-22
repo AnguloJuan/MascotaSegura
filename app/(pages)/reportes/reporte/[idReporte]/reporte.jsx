@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Estados, EstadosReporte } from "@/components/Selects";
 import { Municipios } from "@/components/SelectsClient";
+import Link from "next/link";
 
 export default function Reporte({ props }) {
     const [reporte, setReporte] = useState({
@@ -166,7 +167,7 @@ export default function Reporte({ props }) {
 
                         <EstadosReporte handleChange={handleInputChange} value={reporte.estadoReporte} />
 
-                        <center>
+                        <center className="my-3">
                             <button
                                 className="btn btn-primary m-2 btn-lg"
                                 type="submit"
@@ -174,6 +175,53 @@ export default function Reporte({ props }) {
                                 onClick={modifyReporte}>Guardar</button>
                             <button type="submit" className="btn btn-danger btn-lg" onClick={warning} >Eliminar reporte</button>
                         </center>
+
+                        {props.reporte.idReportador ? (
+                            <>
+                                {/* Muestra adoptante */}
+                                <div className="border p-2 rounded mb-4">
+                                    <Link
+                                        href={`/adoptantes/adoptante/${props.reporte.reportador.id}`}
+                                        className="link-dark link-underline-opacity-0">
+
+                                        <div className={"d-flex align-items-center"}>
+                                            <div className={"rounded my-2 bg-body-light"}>
+                                                {props.reporte.reportador.imagen ? (
+                                                    <Image
+                                                        src={`/images/adoptantes/${props.reporte.reportador.imagen}`}
+                                                        alt='userImage'
+                                                        width={200}
+                                                        height={200}
+                                                    />
+                                                ) : (
+                                                    <Image
+                                                        src={"/images/defaultUser.png"}
+                                                        alt='defaultUser.png'
+                                                        width={200}
+                                                        height={200}
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className={"d-flex flex-column justify-content-between"}>
+                                                <h3>Persona reportante</h3>
+                                                <p>id: {props.reporte.reportador.id}</p>
+                                                <p>Nombre: {props.reporte.reportador.nombre}</p>
+                                                <p>correo: {props.reporte.reportador.correo}</p>
+                                            </div>
+                                        </div>
+                                    </Link>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                                <div className={"d-flex flex-column justify-content-between border rounded p-4"}>
+                                    <h3>Persona reportante</h3>
+                                    <p>Nombre: {props.reporte.nombre}</p>
+                                    <p>correo: {props.reporte.correo}</p>
+                                </div>
+
+                            </>
+                        )}
                     </div>
                 </div>
             </form>
