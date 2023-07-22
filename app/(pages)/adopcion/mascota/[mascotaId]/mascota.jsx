@@ -259,7 +259,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
                             <div className={visualizar.contenedordatos}>
                                 <p>Anteriores adopciones</p>
                                 <p>Motivos de abandono</p>
-                                {mascotaInicial.motivo && <p className="border rounded">- {historial.motivo}</p>}
+                                {mascotaInicial.motivo && <p className="border rounded">- {mascotaInicial.motivo}</p>}
 
                                 {mascotaInicial.historialAdoptivo.length !== 0 && (
                                     mascotaInicial.historialAdoptivo.map((historial) => (

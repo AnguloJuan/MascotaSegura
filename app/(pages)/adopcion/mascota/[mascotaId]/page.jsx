@@ -111,7 +111,7 @@ export default async function Page({ params }) {
                             <div className={visualizar.contenedordatos}>
                                 <p>Anteriores adopciones</p>
                                 <p>Motivos de abandono</p>
-                                {mascota.motivo && <p className="border rounded">- {historial.motivo}</p>}
+                                {mascota.motivo && <p className="border rounded">- {mascota.motivo}</p>}
 
                                 {mascota.historialAdoptivo.length !== 0 && (
                                     mascota.historialAdoptivo.map((historial) => (
