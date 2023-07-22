@@ -94,7 +94,7 @@ export function EstadosReporte({ handleChange, required, value }) {
         </>
     )
 }
-export function Estados({ handleChange, estados, value }) {
+export function Estados({ handleChange, estados, value, disabled }) {
     return (
         <>
             <select
@@ -102,6 +102,7 @@ export function Estados({ handleChange, estados, value }) {
                 onChange={handleChange}
                 value={value ? value : 0}
                 name="estado"
+                disabled={disabled}
                 className="form-select">
                 <option value="">Selecciona Estado</option>
                 {estados.map((estado) => (

@@ -114,7 +114,7 @@ export default function ListaReportes({ props }) {
                                 </div>
                                 <div className={maltrato.profiledata}>
                                     <p className="text-secondary fw-lighter pt-3">Id: {reporte.id}</p>
-                                    <p>Fecha reportada: {reporte.fechaCreacion}</p>
+                                    <p>Fecha reportada: {new Date(reporte.fechaCreada).toLocaleString()}</p>
                                     <p>Ubicación: {reporte.municipio.estado.nombre}, {reporte.municipio.nombre}</p>
                                     <p>Descripción: {reporte.descripcion}</p>
                                 </div>

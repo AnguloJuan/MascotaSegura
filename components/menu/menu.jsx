@@ -45,6 +45,7 @@ function MenuType({ user }) {
             ) : (<>
                 <Option url={"/logout"} text={"INICIAR SESIÓN"} iconUrl={"/images/menu/perfil.png"} />
                 <Option url={"/adopcion"} text={"MASCOTAS"} iconUrl={"/images/menu/adopcion.png"} />
+                <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
             </>
             )
     )

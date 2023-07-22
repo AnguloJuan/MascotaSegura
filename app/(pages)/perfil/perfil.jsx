@@ -229,12 +229,14 @@ export default function Perfil({ props }) {
                             label={"Correo electronico"}
                             placeholder={"Correo electrónico"}
                             onChange={handleInputChange}
+                            name={"correo"}
                             value={user.correo} />
                         <InputLabel
-                            id={"numero"}
+                            id={"telefono"}
                             label={"Numero de telefono"}
                             placeholder={"Numero de telefono"}
                             onChange={handleInputChange}
+                            name={"telefono"}
                             value={user.telefono} />
                         <div className={perfilAdoptador.datosperfil}>
                             <div className="input mb-3 mt-3">
@@ -327,7 +329,8 @@ export default function Perfil({ props }) {
                                 id={"numero"}
                                 label={"Numero de telefono"}
                                 placeholder={"Numero de telefono"}
-                                name={"telefono"} value={user.telefono}
+                                name={"telefono"}
+                                value={user.telefono}
                                 onChange={handleInputChange} />
                             <InputLabel id={"NIP"} label={"NIP"} name={"nip"} value={props.user.NIP} disabled />
                             <InputLabel

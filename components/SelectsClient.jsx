@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export function Municipios({ handleChange, municipiosInicial, selectedEstado, value }) {
+export function Municipios({ handleChange, municipiosInicial, selectedEstado, value, disabled }) {
     const [municipios, setMunicipios] = useState([]);
     useEffect(() => {
         if (municipiosInicial) {
@@ -28,7 +28,7 @@ export function Municipios({ handleChange, municipiosInicial, selectedEstado, va
                 value={value ? value : 0}
                 name="municipio"
                 className="form-select"
-                disabled={selectedEstado == 0 ? true : false}>
+                disabled={(selectedEstado == 0 || disabled) ? true : false}>
 
                 <option value="">Selecciona Municipio</option>
                 {/* Render municipio options based on selected estado */}
