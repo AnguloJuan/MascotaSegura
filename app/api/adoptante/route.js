@@ -1,8 +1,5 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
-import { v4 as uuid } from 'uuid';
-import { writeFile, unlink } from "fs/promises";
-import path from "path";
 import jwt from 'jsonwebtoken';
 
 const prisma = getPrisma();
@@ -69,23 +66,6 @@ export async function PUT(req) {
             }
         }
 
-        //replacing image
-        let uniqueName;
-        if (image !== "null") {
-            const bytes = await image.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-            const filePath = path.join(process.cwd(), "public/images/adoptantes", uniqueName);
-            writeFile(filePath, buffer);
-
-            if (userInitParsed.imagen) {
-                const oldFilePath = path.join(process.cwd(), "public/images/adoptantes", userInitParsed.imagen);
-
-                // Elimina la imagen anterior utilizando fs/promises
-                await unlink(oldFilePath);
-            }
-        }
-
         let userToken;
         try {
             if (userType == 1) {
@@ -97,7 +77,7 @@ export async function PUT(req) {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
                         telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
-                        imagen: image !== "null" ? uniqueName : undefined,
+                        imagen: image !== userInitParsed.imagen ? image : undefined,
                     }
                 });
             } else if (userType == 3) {
@@ -111,7 +91,7 @@ export async function PUT(req) {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
                         telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
-                        imagen: image !== "null" ? uniqueName : undefined,
+                        imagen: image !== userInitParsed ? image : undefined,
                     }
                 });
             }
@@ -146,20 +126,6 @@ export async function DELETE(req) {
         });
         if (adopcion.adopcion.length !== 0) {
             return NextResponse.json({ message: 'Adopcion encontrada' }, { status: 409 });
-        }
-
-        //delete image
-        const imagenPath = await prisma.adoptante.findUnique({
-            where: {
-                id: parseInt(id)
-            },
-            select: {
-                imagen: true,
-            }
-        });
-        if (imagenPath.imagen !== null) {
-            const oldFilePath = path.join(process.cwd(), "public/images/adoptantes", imagenPath.imagen);
-            await unlink(oldFilePath);
         }
 
         //delete user

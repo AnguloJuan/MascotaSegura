@@ -98,7 +98,7 @@ export default function ListaReportes({ props }) {
                                         <Image
                                             width={100}
                                             height={100}
-                                            src={`/images/reportes/${reporte.imagen}`}
+                                            src={reporte.imagen}
                                             alt={`ImagenReporte${reporte.id}`}
                                             loading="lazy"
                                             className="rounded-circle" />

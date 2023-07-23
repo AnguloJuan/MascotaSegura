@@ -86,7 +86,7 @@ export default function ListaEmpleados({ props }) {
                                 <div className={listaEmpleados.imagen}>
                                     {empleado.imagen ? (
                                         <Image
-                                            src={`/images/empleados/${empleado.imagen}`}
+                                            src={empleado.imagen}
                                             alt={`Imagen Adoptante${empleado.id}`}
                                             width={300}
                                             height={300}

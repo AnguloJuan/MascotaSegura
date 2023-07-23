@@ -107,7 +107,7 @@ export default function ListaAdoptantes({ props }) {
                                 <div className={listaAdoptantes.imagen}>
                                     {adoptante.imagen ? (
                                         <Image
-                                            src={`/images/adoptantes/${adoptante.imagen}`}
+                                            src={adoptante.imagen}
                                             alt={`Imagen Adoptante${adoptante.id}`}
                                             width={300}
                                             height={300}

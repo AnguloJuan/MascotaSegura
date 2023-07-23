@@ -57,7 +57,7 @@ export default async function ReportePage({ params }) {
                                         <Image
                                             width={250}
                                             height={250}
-                                            src={`/images/reportes/${props.reporte.imagen}`}
+                                            src={props.reporte.imagen}
                                             alt={`ImagenReporte${props.reporte.id}`}
                                             className="rounded-top" />
                                     ) : (

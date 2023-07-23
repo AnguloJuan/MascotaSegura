@@ -69,7 +69,18 @@ export default function Reportar({ props }) {
             const body = new FormData();
             body.set("reporte", JSON.stringify(reporte));
             body.set("userType", JSON.stringify(userType));
-            body.set("image", image);
+
+            //subir imagen a cloudinary
+            body.set("file", image);
+            body.set("upload_preset", 'mascotaSegura');
+
+            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                method: 'POST',
+                body
+            }).then(r => r.json());
+
+            body.set("image", data.secure_url);
+
             const response = await fetch("/api/reportes", {
                 method: "POST",
                 body

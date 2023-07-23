@@ -1,9 +1,5 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
-import { v4 as uuid } from 'uuid';
-import { writeFile, unlink } from "fs/promises";
-import path from "path";
-import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
 
@@ -22,14 +18,6 @@ export async function POST(req) {
             idReportador = reporteParsed.idReportador
         }
 
-        let uniqueName;
-        if (image != "null") {
-            const bytes = await image.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-            const filePath = path.join(process.cwd(), "public/images/reportes", uniqueName);
-            writeFile(filePath, buffer);
-        }
         try {
             const date = new Date().toISOString();
             let reporte
@@ -39,7 +27,7 @@ export async function POST(req) {
                         descripcion: descripcion,
                         fechaCreada: date,
                         municipio: { connect: { id: parseInt(municipio) } },
-                        imagen: image != "null" ? uniqueName : undefined,
+                        imagen: image ? image : undefined,
                         nombre,
                         correo,
                     }
@@ -51,7 +39,7 @@ export async function POST(req) {
                         fechaCreada: date,
                         reportador: { connect: { id: parseInt(idReportador) } },
                         municipio: { connect: { id: parseInt(municipio) } },
-                        imagen: image != "null" ? uniqueName : undefined
+                        imagen: image ? image : undefined
                     }
                 });
             }
@@ -113,22 +101,6 @@ export async function PUT(req) {
 
         const { descripcion, municipio, estadoReporte } = reporteParsed;
 
-        let uniqueName;
-        if (image !== "null") {
-            const bytes = await image.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-            const filePath = path.join(process.cwd(), "public/images/reportes", uniqueName);
-            writeFile(filePath, buffer);
-
-            if (reporteInitParsed.imagen) {
-                const oldFilePath = path.join(process.cwd(), "public/images/reportes", reporteInitParsed.imagen);
-
-                // Elimina la imagen anterior utilizando fs/promises
-                await unlink(oldFilePath);
-            }
-        }
-
         try {
             await prisma.reporte.update({
                 where: {
@@ -138,7 +110,7 @@ export async function PUT(req) {
                     descripcion: descripcion !== reporteInitParsed.descripcion ? descripcion : undefined,
                     municipio: municipio !== reporteInitParsed.municipio ? { connect: { id: parseInt(municipio) } } : undefined,
                     estadoReporte: estadoReporte !== reporteInitParsed.estadoReporte ? { connect: { id: parseInt(estadoReporte) } } : undefined,
-                    imagen: image !== "null" ? uniqueName : undefined
+                    imagen: image !== reporteInitParsed.imagen ? image : undefined
                 }
             });
 
@@ -157,19 +129,6 @@ export async function DELETE(req) {
     const id = req.nextUrl.searchParams.get('id');
 
     try {
-        //delete image
-        const imagenPath = await prisma.reporte.findUnique({
-            where: {
-                id: parseInt(id)
-            },
-            select: {
-                imagen: true,
-            }
-        });
-        if (imagenPath.imagen !== null) {
-            const oldFilePath = path.join(process.cwd(), "public/images/reportes", imagenPath.imagen);
-            await unlink(oldFilePath);
-        }
 
         //delete user
         await prisma.reporte.delete({

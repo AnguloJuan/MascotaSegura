@@ -99,26 +99,11 @@ export async function PUT(req) {
         const { correo, telefono } = userParsed;
         let nombre, apellido, NIP, fechaRegistro, tipoEmpleado;
         let date;
-        let image, uniqueName;
+        let image;
         if (userType == 3) {
             ({ nombre, apellido, NIP, fechaRegistro, tipoEmpleado } = userParsed);
             date = new Date(Date.parse(fechaRegistro)).toISOString();
-
             image = formData.get("image");
-            if (image !== "null") {
-                const bytes = await image.arrayBuffer();
-                const buffer = Buffer.from(bytes);
-                uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-                const filePath = path.join(process.cwd(), "public/images/empleados", uniqueName);
-                writeFile(filePath, buffer);
-
-                if (userInitParsed.imagen) {
-                    const oldFilePath = path.join(process.cwd(), "public/images/empleados", userInitParsed.imagen);
-
-                    // Elimina la imagen anterior utilizando fs/promises
-                    await unlink(oldFilePath);
-                }
-            }
         }
 
         //validate correo
@@ -154,7 +139,7 @@ export async function PUT(req) {
                         NIP: NIP !== userInitParsed.NIP ? NIP : undefined,
                         fechaRegistro: fechaRegistro !== userInitParsed.fechaRegistro ? date : undefined,
                         idTipoUsuario: tipoEmpleado !== userInitParsed.idTipoUsuario ? parseInt(tipoEmpleado) : undefined,
-                        imagen: image !== "null" ? uniqueName : undefined
+                        imagen: image !== userInitParsed.imagen ? image : undefined
                     }
                 })
             );

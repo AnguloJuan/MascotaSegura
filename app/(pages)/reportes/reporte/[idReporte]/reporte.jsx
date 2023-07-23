@@ -65,7 +65,18 @@ export default function Reporte({ props }) {
             const body = new FormData();
             body.set("reporte", JSON.stringify(reporte));
             body.set("reporteInit", JSON.stringify(props.reporte));
-            body.set("image", image);
+
+            //subir imagen a cloudinary
+            body.set("file", image);
+            body.set("upload_preset", 'mascotaSegura');
+
+            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                method: 'POST',
+                body
+            }).then(r => r.json());
+
+            body.set("image", data.secure_url);
+
             const response = await fetch("/api/reportes", {
                 method: "PUT",
                 body
@@ -123,7 +134,7 @@ export default function Reporte({ props }) {
                                     <Image
                                         width={250}
                                         height={250}
-                                        src={`/images/reportes/${props.reporte.imagen}`}
+                                        src={props.reporte.imagen}
                                         alt={`ImagenReporte${props.reporte.id}`}
                                         className="rounded-top" />
                                 ) : (
@@ -188,7 +199,7 @@ export default function Reporte({ props }) {
                                             <div className={"rounded my-2 bg-body-light"}>
                                                 {props.reporte.reportador.imagen ? (
                                                     <Image
-                                                        src={`/images/adoptantes/${props.reporte.reportador.imagen}`}
+                                                        src={props.reporte.reportador.imagen}
                                                         alt='userImage'
                                                         width={200}
                                                         height={200}

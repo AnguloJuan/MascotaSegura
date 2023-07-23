@@ -82,7 +82,18 @@ export default function MascotaPage({ especies, mascotaInicial }) {
             BigInt.prototype.toJSON = function () { return this.toString() }
             body.set("mascota", JSON.stringify(mascota));
             body.set("mascotaInicial", JSON.stringify(mascotaInicial));
-            body.set("image", image);
+
+            //subir imagen a cloudinary
+            body.set("file", image);
+            body.set("upload_preset", 'mascotaSegura');
+
+            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                method: 'POST',
+                body
+            }).then(r => r.json());
+
+            body.set("image", data.secure_url);
+
             const response = await fetch("/api/mascotas", {
                 method: "PUT",
                 body
@@ -134,7 +145,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
                             <Image
                                 width={200}
                                 height={200}
-                                src={`/images/mascotas/${mascotaInicial.imagen}`}
+                                src={mascotaInicial.imagen}
                                 alt={`ImagenMascota${mascota.id}`} />
                         ) : (
                             <Image
@@ -229,7 +240,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
                                     <div className={visualizar.perfil}>
                                         {mascotaInicial.adopcion.adoptante.imagen ? (
                                             <Image
-                                                src={`/images/adoptantes/${mascotaInicial.adopcion.adoptante.imagen}`}
+                                                src={mascotaInicial.adopcion.adoptante.imagen}
                                                 alt='userImage'
                                                 width={200}
                                                 height={200}

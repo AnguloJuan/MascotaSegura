@@ -65,7 +65,7 @@ export default async function PerfilPage() {
                                                         <Image
                                                             width={100}
                                                             height={100}
-                                                            src={`/images/adoptantes/${adopcion.mascota.imagen}`}
+                                                            src={adopcion.mascota.imagen}
                                                             alt={`ImagenAdoptante${adopcion.mascota.id}`}
                                                             className="rounded-circle" />
                                                     ) : (

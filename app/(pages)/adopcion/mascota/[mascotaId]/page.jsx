@@ -34,7 +34,7 @@ export default async function Page({ params }) {
                             <div className={`${visualizar.perfil}`}>
                                 {mascota.imagen ? (
                                     <Image
-                                        src={`/images/mascotas/${mascota.imagen}`}
+                                        src={mascota.imagen}
                                         alt='mascota.png'
                                         width={200}
                                         height={200}

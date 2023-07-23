@@ -1,8 +1,5 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
-import { v4 as uuid } from 'uuid';
-import { writeFile, unlink } from "fs/promises";
-import path from "path";
 
 const prisma = getPrisma();
 
@@ -43,17 +40,9 @@ export async function POST(req) {
         const image = formData.get("image");
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
-        
+
         const razaCase = raza.toLowerCase();
 
-        let uniqueName;
-        if (image !== "null") {
-            const bytes = await image.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-            const filePath = path.join(process.cwd(), "public/images/mascotas", uniqueName);
-            writeFile(filePath, buffer);
-        }
         try {
             const id = await prisma.mascota.create({
                 data: {
@@ -66,7 +55,7 @@ export async function POST(req) {
                     maltratado,
                     motivo: motivo,
                     cartilla,
-                    imagen: uniqueName,
+                    imagen: image,
                     refugio: { connect: { id: idRefugio } },
                 },
                 select: {
@@ -93,24 +82,8 @@ export async function PUT(req) {
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
         const mascotaInitParsed = JSON.parse(mascotaInit.substring(mascotaInit.indexOf('{'), mascotaInit.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, estadoAdopcion } = mascotaParsed;
-        
+
         const razaCase = raza.toLowerCase();
-
-        let uniqueName;
-        if (image !== "null") {
-            const bytes = await image.arrayBuffer();
-            const buffer = Buffer.from(bytes);
-            uniqueName = `${uuid()}.${image.name.split('.').pop()}`;
-            const filePath = path.join(process.cwd(), "public/images/mascotas", uniqueName);
-            writeFile(filePath, buffer);
-
-            if (mascotaInitParsed.imagen) {
-                const oldFilePath = path.join(process.cwd(), "public/images/mascotas", mascotaInitParsed.imagen);
-
-                // Elimina la imagen anterior utilizando fs/promises
-                await unlink(oldFilePath);
-            }
-        }
 
         try {
             await prisma.mascota.update({
@@ -127,7 +100,7 @@ export async function PUT(req) {
                     maltratado: maltratado !== mascotaInitParsed.maltratado ? maltratado : undefined,
                     motivo: motivo !== mascotaInitParsed.motivo ? motivo : undefined,
                     cartilla: cartilla !== mascotaInitParsed.cartilla ? cartilla : undefined,
-                    imagen: image !== "null" ? uniqueName : undefined,
+                    imagen: image !== mascotaInitParsed.imagen ? image : undefined,
                 },
             });
 
@@ -170,19 +143,6 @@ export async function DELETE(req) {
         console.log(adopcion);
         if (adopcion.adopcion.length !== 0) {
             return NextResponse.json({ message: 'Adopcion encontrada' }, { status: 409 });
-        }
-        
-        const imagenPath = await prisma.mascota.findUnique({
-            where: {
-                id: parseInt(id)
-            },
-            select: {
-                imagen: true,
-            }
-        });
-        if (imagenPath.imagen !== null) {
-            const oldFilePath = path.join(process.cwd(), "public/images/mascotas", imagenPath.imagen);
-            await unlink(oldFilePath);
         }
 
         await prisma.mascota.delete({

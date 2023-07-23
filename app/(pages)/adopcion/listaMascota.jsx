@@ -94,7 +94,7 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
                                 <div className={listaMascotas.imagen}>
                                     {mascota.imagen ? (
                                         <Image
-                                            src={`/images/mascotas/${mascota.imagen}`}
+                                            src={mascota.imagen}
                                             alt='default.png'
                                             width={300}
                                             height={300}

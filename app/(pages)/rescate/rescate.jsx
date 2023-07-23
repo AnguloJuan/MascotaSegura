@@ -59,7 +59,18 @@ export default function Rescate({ especies, idRefugio }) {
         } else {
             const body = new FormData();
             body.set("mascota", JSON.stringify(mascota));
-            body.set("image", image);
+
+            //subir imagen a cloudinary
+            body.set("file", image);
+            body.set("upload_preset", 'mascotaSegura');
+
+            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                method: 'POST',
+                body
+            }).then(r => r.json());
+
+            body.set("image", data.secure_url);
+
             const response = await fetch("/api/mascotas", {
                 method: "POST",
                 body

@@ -80,7 +80,18 @@ export default function PerfilPage({ props }) {
                 body.set("userType", JSON.stringify(props.userType));
                 body.set("user", JSON.stringify(adoptante));
                 body.set("userInit", JSON.stringify(props.adoptante));
-                body.set("image", image);
+                
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
+
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
+
+                body.set("image", data.secure_url);
+
                 const response = await fetch("/api/adoptante", {
                     method: "PUT",
                     body
@@ -138,7 +149,7 @@ export default function PerfilPage({ props }) {
                             <Image
                                 width={200}
                                 height={200}
-                                src={`/images/adoptantes/${props.adoptante.imagen}`}
+                                src={props.adoptante.imagen}
                                 alt={`ImagenAdoptante${props.adoptante.id}`} />
                         ) : (
                             <Image

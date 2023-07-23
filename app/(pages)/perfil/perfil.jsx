@@ -99,7 +99,18 @@ export default function Perfil({ props }) {
                 body.set("user", JSON.stringify(user));
                 body.set("userType", JSON.stringify(userType));
                 body.set("userInit", JSON.stringify(props.user));
-                body.set("image", image);
+
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
+
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
+
+                body.set("image", data.secure_url);
+
                 const response = await fetch("/api/adoptante", {
                     method: "PUT",
                     body
@@ -143,7 +154,19 @@ export default function Perfil({ props }) {
             body.set("user", JSON.stringify(user));
             body.set("userType", JSON.stringify(userType));
             body.set("userInit", JSON.stringify(props.user));
-            userType == 3 && body.set("image", image);
+            if (userType == 3) {
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
+
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
+
+                body.set("image", data.secure_url);
+            }
+
             const response = await fetch("/api/empleado", {
                 method: "PUT",
                 body
@@ -206,7 +229,7 @@ export default function Perfil({ props }) {
                                 <Image
                                     width={200}
                                     height={200}
-                                    src={`/images/adoptantes/${props.user.imagen}`}
+                                    src={props.user.imagen}
                                     alt={`ImagenAdoptante${props.user.id}`} />
                             ) : (
                                 <Image
@@ -307,7 +330,7 @@ export default function Perfil({ props }) {
                                     <Image
                                         width={200}
                                         height={200}
-                                        src={`/images/empleados/${props.user.imagen}`}
+                                        src={props.user.imagen}
                                         alt={`ImagenEmpleado${props.user.id}`} />
                                 ) : (
                                     <Image
@@ -386,7 +409,7 @@ export default function Perfil({ props }) {
                                     <Image
                                         width={200}
                                         height={200}
-                                        src={`/images/empleados/${props.user.imagen}`}
+                                        src={props.user.imagen}
                                         alt={`ImagenEmpleado${props.user.id}`} />
                                 ) : (
                                     <Image
