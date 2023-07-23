@@ -20,9 +20,9 @@ export default function EstadoAdopcion({ userId, adopcionId, estadoAdopcion }) {
         } else {
             try {
                 console.log(JSON.stringify(parseInt(estado) ));
-                // Make an HTTP POST request to the API endpoint
+                // Make an HTTP PUT request to the API endpoint
                 const response = await fetch('/api/estadoAdopcion', {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },

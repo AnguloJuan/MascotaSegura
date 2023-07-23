@@ -7,7 +7,7 @@ const prisma = getPrisma();
 const SECRET_KEY = process.env.SECRET_KEY;
 
 export async function POST(request) {
-    const { firstName, lastName, email, telefono, municipios, password } = await request.json();
+    const { firstName, lastName, email, telefono, selectedMunicipio, password } = await request.json();
     const numTelefono = parseInt(telefono);
 
     try {
@@ -26,19 +26,20 @@ export async function POST(request) {
         //const hashedPassword = await bcrypt.hash(password, 10);
 
         let user;
+        const date = new Date().toISOString();
         // Create the user in the database
         try {
             
             user = await prisma.adoptante.create({
                 data: {
-                    municipio: { connect: { id: 1 } },
+                    municipio: { connect: { id: parseInt(selectedMunicipio) } },
                     nombre: firstName,
                     apellido: lastName,
                     correo: email,
                     telefono: numTelefono,
                     contrasena: password,
                     tipoUsuario: { connect: { id: 1 } },
-                    fechaRegistro: new Date().toISOString(),
+                    fechaRegistro: date,
                 },
             });
         } catch (e) {

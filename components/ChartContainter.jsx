@@ -2,30 +2,37 @@
 import { Chart } from "chart.js/auto";
 import { useEffect, useRef } from "react";
 
+let espacios, porcentajeEspecie, reportesMunicipio, adopcionMes;
+
 export function Espacios({ data }) {
     const chartRef = useRef();
 
     useEffect(() => {
         const ctx = chartRef.current.getContext("2d");
 
-        new Chart(ctx, {
+        if (espacios) {
+            espacios.destroy();
+        }
+        espacios = new Chart(ctx, {
             type: "bar",
             data: {
-                labels: data.map((espacio) => espacio.especie),
+                labels: data.map((especie) => especie.especie),
                 datasets: [
                     {
                         label: "Espacio Ocupado",
-                        data: data.map((espacio) => (espacio.espacioTotal - espacio.espacioDisponible)),
-                        backgroundColor: "#FF6384",
+                        data: data.map((cantidad) => cantidad.cantidad),
+                        backgroundColor: [
+                            "#FF6384",
+                            "#36A2EB",
+                            "#FFCE56",
+                            "#1F6384",
+                            "#36A2EB",
+                            "#FECE56",
+                            "#8c5dff",
+                            "#f33d67",
+                            "#00F060",
+                        ],
                         borderColor: "#FF6384",
-                        borderWidth: 1,
-                        stack: 'Stack 0',
-                    },
-                    {
-                        label: "Espacio Disponible",
-                        data: data.map((espacio) => espacio.espacioDisponible),
-                        backgroundColor: "#36A2EB",
-                        borderColor: "#36A2EB",
                         borderWidth: 1,
                         stack: 'Stack 0',
                     },
@@ -62,18 +69,26 @@ export function PorcentajeEspecie({ data }) {
     useEffect(() => {
         const ctx = chartRef.current.getContext("2d");
 
-        new Chart(ctx, {
+        if (porcentajeEspecie) {
+            porcentajeEspecie.destroy();
+        }
+        porcentajeEspecie = new Chart(ctx, {
             type: "doughnut",
             data: {
-                labels: data.map((espacio) => espacio.especie),
+                labels: data.map((especie) => especie.especie),
                 datasets: [
                     {
-                        data: data.map((espacio) => espacio.porcentaje),
+                        data: data.map((especie) => especie.porcentaje),
                         backgroundColor: [
                             "#FF6384",
                             "#36A2EB",
                             "#FFCE56",
-                            // Add more colors for additional "especies"
+                            "#1F6384",
+                            "#36A2EB",
+                            "#FECE56",
+                            "#8c5dff",
+                            "#f33d67",
+                            "#00F060",
                         ],
                     },
                 ],
@@ -82,8 +97,8 @@ export function PorcentajeEspecie({ data }) {
                     title: {
                         display: true,
                         text: 'Porcentaje de espacio disponible por especie',
-                        font: { 
-                            weight: 'bold' ,
+                        font: {
+                            weight: 'bold',
                             size: 16,
                         }
                     },
@@ -101,7 +116,10 @@ export function ReportesPorMunicipio({ data }) {
     useEffect(() => {
         const ctx = chartRef.current.getContext("2d");
 
-        new Chart(ctx, {
+        if (reportesMunicipio) {
+            reportesMunicipio.destroy();
+        }
+        reportesMunicipio = new Chart(ctx, {
             type: "pie",
             data: {
                 labels: data.map((reporte) => reporte.municipio),
@@ -109,30 +127,38 @@ export function ReportesPorMunicipio({ data }) {
                     {
                         data: data.map((reporte) => reporte.count),
                         backgroundColor: [
+                            "#1F6384",
+                            "#36A2EB",
+                            "#FECE56",
+                            "#8c5dff",
+                            "#f33d67",
+                            "#00F060",
                             "#FF6384",
                             "#36A2EB",
                             "#FFCE56",
-                            "#8c5dff",
-                            "#ff3d67",
                         ],
                         hoverBackgroundColor: [
+                            "#1F6384",
+                            "#36A2EB",
+                            "#FECE56",
+                            "#8c5dff",
+                            "#f33d67",
+                            "#00F060",
                             "#FF6384",
                             "#36A2EB",
                             "#FFCE56",
-                            "#8c5dff",
-                            "#ff3d67",
                         ],
                     },
                 ],
-            },options:{
+            }, options: {
                 plugins: {
                     title: {
                         display: true,
                         text: 'Cantidad de reportes por municipio',
-                        font: { 
+                        font: {
                             weight: 'bold',
                             size: 16,
-                         }
+                        }
                     },
                 },
             }
@@ -208,7 +234,10 @@ export function AdopcionesPorMes({ adopciones, adoptantes }) {
 
     useEffect(() => {
         const ctx = chartRef.current.getContext("2d");
-        new Chart(ctx, {
+        if (adopcionMes) {
+            adopcionMes.destroy();
+        }
+        adopcionMes = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['January',

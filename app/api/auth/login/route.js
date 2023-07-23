@@ -16,7 +16,6 @@ export async function POST(request) {
     try {
         //find either adoptante or empleado
         let user = await prisma.adoptante.findUnique({ where: { correo: email } });
-        console.log(user);
         if (!user) {
             user = await prisma.empleado.findUnique({ where: { correo: email } });
             if (!user) {

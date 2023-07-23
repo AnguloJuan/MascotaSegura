@@ -6,21 +6,19 @@
 .contenedor {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+  justify-content: space-between;
 }
 
 
 .busqueda {
+  display: contents;
   flex: 1;
   margin-right: 10px;
 }
 
 .inputlabel {
   margin-right: 5px;
-
-
   width: 100%;
-
 }
 
 .visualizar {
@@ -43,7 +41,7 @@
 .perfil {
   width: 200px;
   height: 200px;
-  background-color: red;
+  background-color: rgb(237 237 237);
   margin-right: 10px;
   margin-bottom: 20px;
   border-radius: 10px 10px 10px 10px;
@@ -102,18 +100,18 @@
   width: 150px;
   height: 150px;
   border-radius: 10%;
-  filter: brightness(0.7);
+  filter: brightness(0.9);
 }
 
 
 .datos {
-  font-weight: bold;
-  margin-top: 5px;
-  margin-left: 20px;
-  margin-right: 20px;
-
+  width: inherit;
+  position: absolute;
+  
   align-items: end;
-  color: white;
-  position: relative;
+  font-weight: bold;
   text-align: left;
+  color: white;
+  background: linear-gradient(0deg, black, transparent);
+  padding-left: 20px;
 }

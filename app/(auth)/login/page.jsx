@@ -86,7 +86,7 @@ export default function LogIn() {
                 onClose={() => setIsLoginFailed(false)}
             >
                 <h1>Error</h1>
-                <p>Error al iniciar sesion</p>
+                <p>Error al iniciar sesión</p>
                 <p>Correo o contraseña incorrectos</p>
                 <p>Asegurese de ingresar bien los datos</p>
             </Dialog>

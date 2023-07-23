@@ -1,64 +1,49 @@
-import maltrato from "./reporte.module.css";
 import registro from "./reporte.module.css";
-
 import actualizar from "./reporte.module.css";
-
 import InputLabel from "@/components/Input";
 import { getPrisma } from "@/app/lib/prisma";
 import Link from "next/link";
-import { PrismaClient } from "@prisma/client";
+import ListaReportes from "./listaReportes";
+import Image from "next/image";
 
-const prisma = new PrismaClient()//getPrisma();
-
-let reportes;
-
-export async function GetReportes() {
-    if (!reportes) {
-        reportes = await prisma.reporte.findMany({
-            include:{
-                reportado: true,
-                municipio: {
-                    include:{
-                        estado: true,
-                    }
-                }
-            }
-        });
-    }
-
-    return reportes;
-}
+const prisma = getPrisma();
 
 export default async function listareportes() {
-    const reportes = await GetReportes();
+    const reportes = await prisma.reporte.findMany({
+        include: {
+            reportado: true,
+            municipio: {
+                include: {
+                    estado: true,
+                }
+            }
+        }
+    });
+    const estados = await prisma.estado.findMany();
+
+    const props = { reportes, estados };
+
     return (
         <>
-            <Link href={"/dashboard"}>Dashboard</Link>
-            <div className={maltrato}>
-                <div className={maltrato.busqueda}>
-                    <InputLabel id={"reporte"} label={"Id del reporte"} placeholder={"nombre"} />
-                    <button type="submit">Buscar</button>
-                </div>
-                <div className={maltrato.busquedaAvanzada}>
-                    <InputLabel id={"nombre"} label={"Nombre de reporte"} placeholder={"nombre"} />
-                    <InputLabel id={"nombre"} label={"Nombre de usuario"} placeholder={"nombre"} />
-                </div>
 
-                {reportes.map((reporte) => (
-                    <Link key={reporte.id} href={`/adopcion/reporte/${reporte.id}`}>
-                        <div className={maltrato.containerReportes}>
-                            <div className={maltrato.profilepicture}></div>
-                            <div className={maltrato.profiledata}>
-                                <p>Id: {reporte.id}</p>
-                                <p>Fecha reporteda: {reporte.fechaCreacion}</p>
-                                <p>Ubicación: {reporte.municipio.estado.nombre}{reporte.municipio.nombre}</p>
-                                <p>Descripción: {reporte.descripcion}</p>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-
+            <center><h1>Lista de reportes</h1></center>
+            <div className="btn p-0 w-100 btn-primary">
+                <Link href={"/dashboard"} className="link-light link-underline-opacity-0 w-100 p-2 d-flex align-items-center">
+                    <div className="bg-white rounded">
+                        <Image
+                            src={"/images/menu/reportes.png"}
+                            alt="Dashboard"
+                            width={30}
+                            height={30} />
+                    </div>
+                    <span className="fw-bold ms-3">Dashboard</span>
+                </Link>
             </div>
+            <center><Link href={"reportes/reportar"} className="btn btn-danger border rounded mt-4 mb-2 d-flex align-items-center">
+                <span className="fw-bold fs-4 mx-2">!</span>Reportar un caso
+            </Link></center>
+
+            <ListaReportes props={props} />
         </>
     )
 }

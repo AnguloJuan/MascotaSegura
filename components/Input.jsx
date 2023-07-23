@@ -1,14 +1,10 @@
-export default function Input({ id, type, label, placeholder, onChange, value, disabled }) {
+export default function Input({ id, type, name, label, placeholder, onChange, value, disabled, required }) {
     return (
         id !== "" ? (
             <>
-                <div className="input mb-3">
+                <div className="input mb-3 mt-3">
                     <label htmlFor={id} className="form-label">{label}</label>
-                    {disabled ? (
-                        <input type={type} className="form-control" id={id} placeholder={placeholder} onChange={onChange} value={value} disabled />
-                    ) : (
-                        <input type={type} className="form-control" id={id} placeholder={placeholder} onChange={onChange} value={value} />
-                    )}
+                    <input id={id} type={type} name={name} placeholder={placeholder} onChange={onChange} value={value} className="form-control" required={required} disabled={disabled} />
                 </div>
             </>) : <></>
     )

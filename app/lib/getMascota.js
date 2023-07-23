@@ -1,28 +1,26 @@
 const { getPrisma } = require("./prisma");
 
 const prisma = getPrisma();
-let mascota;
 
 export async function GetMascota(mascotaId) {
-    if (!mascota) {
-        mascota = await prisma.mascota.findUnique({
-            where: {
-                id: parseInt(mascotaId),
-            },
-            include: {
-                adopcion: {
-                    include: {
-                        adoptante: true,
-                        refugio: true,
-                        estadoAdopcion: true,
-                    },
+    const mascota = await prisma.mascota.findUnique({
+        where: {
+            id: parseInt(mascotaId),
+        },
+        include: {
+            adopcion: {
+                include: {
+                    adoptante: true,
+                    estadoAdopcion: true,
                 },
-                cartilla: true,
-                especie: true,
-                historialAdoptivo: true,
-            }
-        });
-    }
+            },
+            especie: true,
+            historialAdoptivo: true,
+            sexo: true,
+            refugio: true,
+            tamano: true,
+        }
+    });
 
     return mascota;
 }

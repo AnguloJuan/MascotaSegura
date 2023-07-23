@@ -4,168 +4,194 @@
 generator client {
   provider = "prisma-client-js"
 }
+
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
-model estado{
-  id Int @id @default(autoincrement())
-  nombre String
+model estado {
+  id        Int         @id @default(autoincrement())
+  nombre    String
   municipio municipio[]
 }
 
-model municipio{
-  id Int @id @default(autoincrement())
-  nombre String
-  estado estado @relation(fields: [idEstado], references: [id])
+model municipio {
+  id       Int    @id @default(autoincrement())
+  nombre   String
   idEstado Int
+
+  estado    estado      @relation(fields: [idEstado], references: [id])
   adoptante adoptante[]
-  refugio refugio[]
+  refugio   refugio[]
+  reporte   reporte[]
+}
+
+model refugio {
+  id          Int      @id @default(autoincrement())
+  nombre      String?
+  espacios    Int?
+  fechaCreada DateTime @default(now())
+  idMunicipio Int
+
+  municipio municipio  @relation(fields: [idMunicipio], references: [id])
+  adopcion  adopcion[]
+  espacio   espacios[]
+  mascotas  mascota[]
+}
+
+model adoptante {
+  id            Int      @id @default(autoincrement())
+  nombre        String
+  apellido      String
+  correo        String   @unique
+  telefono      BigInt
+  contrasena    String
+  fechaRegistro DateTime @default(now())
+  idMunicipio   Int
+  idTipoUsuario Int
+  imagen        String?
+
+  municipio         municipio           @relation(fields: [idMunicipio], references: [id])
+  historialAdoptivo historialAdoptivo[]
+  tipoUsuario       tipoUsuario         @relation(fields: [idTipoUsuario], references: [id])
+  adopcion          adopcion[]
+  reportador        reporte[]           @relation("reportador")
+  reportado         reporte[]           @relation("reportado")
+}
+
+model empleado {
+  id            Int      @id @default(autoincrement())
+  idRefugio     Int
+  nombre        String
+  apellido      String
+  correo        String   @unique
+  contrasena    String
+  telefono      BigInt
+  NIP           String
+  fechaRegistro DateTime @default(now())
+  idTipoUsuario Int
+  imagen        String?
+
+  tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
+}
+
+model tipoUsuario {
+  id      Int    @id
+  usuario String
+
+  empleado  empleado[]
+  adoptante adoptante[]
+}
+
+model historialAdoptivo {
+  id          Int @id @default(autoincrement())
+  idMascota   Int
+  idAdoptante Int
+
+  mascota   mascota   @relation(fields: [idMascota], references: [id])
+  adoptante adoptante @relation(fields: [idAdoptante], references: [id])
+  motivo    String?   @default("Sin motivo específico")
+}
+
+model sexo {
+  id   Int    @id
+  sexo String
+
+  mascota mascota[]
+}
+
+model mascota {
+  id            Int      @id @default(autoincrement())
+  nombre        String?
+  edad          Int?
+  meses         Int?
+  raza          String?  @default("Desconocida")
+  maltratado    Boolean  @default(false)
+  fechaRegistro DateTime @default(now())
+  imagen        String?
+  idRefugio     Int?
+  cartilla      Boolean  @default(false)
+  motivo        String?
+  idSexo        Int
+  idTamano      Int?     @default(1)
+  idEspecie     Int
+
+  refugio           refugio?            @relation(fields: [idRefugio], references: [id])
+  historialAdoptivo historialAdoptivo[]
+  sexo              sexo                @relation(fields: [idSexo], references: [id])
+  tamano            tamano?             @relation(fields: [idTamano], references: [id])
+  especie           especie             @relation(fields: [idEspecie], references: [id])
+  adopcion          adopcion?
+  victima           reporte[]
+}
+
+model adopcion {
+  id               Int      @id @default(autoincrement())
+  fechaCreada      DateTime @default(now())
+  idAdoptante      Int
+  idMascota        Int      @unique
+  idRefugio        Int
+  idEstadoAdopcion Int
+
+  adoptante      adoptante      @relation(fields: [idAdoptante], references: [id])
+  mascota        mascota        @relation(fields: [idMascota], references: [id])
+  refugio        refugio        @relation(fields: [idRefugio], references: [id])
+  estadoAdopcion estadoAdopcion @relation(fields: [idEstadoAdopcion], references: [id])
+}
+
+model estadoReporte {
+  id      Int       @id
+  estado  String
   reporte reporte[]
 }
 
-model refugio{
-  id Int @id @default(autoincrement())
-  nombre String?
-  municipio  municipio @relation(fields: [idMunicipio], references: [id])
-  idMunicipio Int
-  espacios Int?
-  fechaCreada DateTime @default(now())
-  adopcion adopcion[]
-  espacio espacios[]
-}
-
-model adoptante{
-  id Int @id @default(autoincrement())
-  municipio municipio @relation(fields: [idMunicipio], references: [id])
-  idMunicipio Int
-  nombre String
-  apellido String
-  correo String @unique
-  telefono BigInt
-  contrasena String
-  fechaRegistro DateTime @default(now())
-  historialAdoptivo historialAdoptivo? @relation("historialAdoptante", fields: [idHistorialAdoptante], references: [id])
-  idHistorialAdoptante Int?
-  adopcion adopcion[]
-  reportador reporte[] @relation("reportador")
-  reportado reporte[] @relation("reportado")
-  tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
-  idTipoUsuario Int
-  municipios String?
-}
-
-model empleado{
-  id Int @id @default(autoincrement())
-  idRefugio Int
-  nombre String
-  apellido String
-  correo String @unique
-  contrasena String
-  telefono BigInt
-  NIP String
-  fechaRegistro DateTime @default(now())
-  tipoUsuario tipoUsuario @relation(fields: [idTipoUsuario], references: [id])
-  idTipoUsuario Int
-}
-
-model tipoUsuario{
-  id Int @id
-  usuario String
-  empleado empleado[]
-  adoptante adoptante[]
-}
-
-model historialAdoptivo{
- id Int @id @default(autoincrement())
- mascota mascota @relation("historialMascota", fields: [idMascota], references: [id])
- adoptantes adoptante[] @relation("historialAdoptante")
- motivo String? @default("Sin motivo específico")
- idAdoptante Int
- idMascota Int @unique
-}
-
-model cartilla{
-  id Int @id @default(autoincrement())
-  mascota mascota @relation(fields: [idMascota], references: [id])
-  idMascota Int @unique
-  cartilla Bytes
-}
-
-model mascota{
-  id Int @id @default(autoincrement())
-  idRefugio Int
-  idHistorial Int
-  idCartilla Int
-  nombre String?
-  edad Int?
-  sexo String
-  tamano tamano? @relation(fields: [idTamano], references: [id])
-  idTamano Int? @default(1)
-  especie especie @relation(fields: [idEspecie], references: [id])
-  idEspecie Int
-  raza String? @default("Desconocida")
-  maltratado Boolean
-  fechaRegistro DateTime @default(now())
-  historialAdoptivo historialAdoptivo? @relation("historialMascota")
-  cartilla cartilla?
-  adopcion adopcion?
-  victima reporte[]
-}
-
-model adopcion{
-  id Int @id @default(autoincrement())
-  adoptante adoptante @relation(fields: [idAdoptante], references: [id])
-  idAdoptante Int
-  mascota mascota @relation(fields: [idMascota], references: [id])
-  idMascota Int @unique
-  refugio refugio @relation(fields: [idRefugio], references: [id])
-  idRefugio Int
-  fechaCreada DateTime @default(now())
-  estadoAdopcion estadoAdopcion @relation(fields: [idEstadoAdopcion], references: [id])
-  idEstadoAdopcion Int
-}
-
-model reporte{
-  id Int @id @default(autoincrement())
-  reportador adoptante? @relation("reportador", fields: [idReportador], references: [id])
-  reportado adoptante? @relation("reportado", fields: [idReportado], references: [id])
+model reporte {
+  id           Int      @id @default(autoincrement())
+  descripcion  String
+  fechaCreada  DateTime @default(now())
   idReportador Int?
-  idReportado Int?
-  mascota mascota? @relation(fields: [idMascota], references: [id])
-  idMascota Int?
-  municipio municipio @relation(fields: [idMunicipio], references: [id])
-  idMunicipio Int
-  descripcion String
-  fechaCreada DateTime @default(now())
+  idReportado  Int?
+  idMascota    Int?
+  idMunicipio  Int
+  imagen       String?
+  nombre       String?
+  correo       String?
+
+  reportador      adoptante?     @relation("reportador", fields: [idReportador], references: [id])
+  reportado       adoptante?     @relation("reportado", fields: [idReportado], references: [id])
+  mascota         mascota?       @relation(fields: [idMascota], references: [id])
+  municipio       municipio      @relation(fields: [idMunicipio], references: [id])
+  estadoReporte   estadoReporte? @relation(fields: [estadoReporteId], references: [id])
+  estadoReporteId Int            @default(1)
 }
 
-model especie{
-  id Int @id
-  especie String
-  mascota mascota[]
+model especie {
+  id       Int        @id
+  especie  String
+  mascota  mascota[]
   espacios espacios[]
 }
 
-model espacios{
-  id Int @id
-  espacioTotal Int
+model espacios {
+  id                Int @id
+  espacioTotal      Int
   espacioDisponible Int
+  idEspecie         Int
+  idRefugio         Int
+
   especie especie @relation(fields: [idEspecie], references: [id])
-  idEspecie Int
   refugio refugio @relation(fields: [idRefugio], references: [id])
-  idRefugio Int
 }
 
-model estadoAdopcion{
-  id Int @id
+model estadoAdopcion {
+  id             Int        @id
   estadoAdopcion String
-  adopcion adopcion[]
+  adopcion       adopcion[]
 }
 
-model tamano{
-  id Int @id
-  tamano String
+model tamano {
+  id      Int       @id
+  tamano  String
   mascota mascota[]
 }

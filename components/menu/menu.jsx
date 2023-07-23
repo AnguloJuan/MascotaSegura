@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Menu() {
-    const user = await GetUser();
+    const user = GetUser();
     return (
         <nav className={menu.menu}>
             <ul>
@@ -36,7 +36,7 @@ function MenuType({ user }) {
                 <>
                     <Option url={"/rescate"} text={"RESCATE"} iconUrl={"/images/menu/rescate.png"} />
                     <Option url={"/adopcion"} text={"MASCOTAS"} iconUrl={"/images/menu/adopcion.png"} />
-                    <Option url={"/adoptadores"} text={"ADOPTADORES"} iconUrl={"/images/menu/adoptadores.png"} />
+                    <Option url={"/adoptantes"} text={"ADOPTANTES"} iconUrl={"/images/menu/adoptantes.png"} />
                     <Option url={"/empleados"} text={"EMPLEADOS"} iconUrl={"/images/menu/empleados.png"} />
                     <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
                     <Option url={"/perfil"} text={"PERFIL"} iconUrl={"/images/menu/perfilAdmin.png"} />
@@ -44,6 +44,8 @@ function MenuType({ user }) {
                 </>
             ) : (<>
                 <Option url={"/logout"} text={"INICIAR SESIÓN"} iconUrl={"/images/menu/perfil.png"} />
+                <Option url={"/adopcion"} text={"MASCOTAS"} iconUrl={"/images/menu/adopcion.png"} />
+                <Option url={"/reportes"} text={"REPORTES"} iconUrl={"/images/menu/reportes.png"} />
             </>
             )
     )

@@ -5,14 +5,14 @@ const prisma = getPrisma();
 
 export async function GET() {
     try {
-        let municipios
+        let estados
         try {
-            municipios = await prisma.municipio.findMany();
+            estados = await prisma.estado.findMany();
         } catch (error) {
             console.log(error);
         }
-        return NextResponse.json({ municipios }, { status: 200 });
+        return NextResponse.json({ estados }, { status: 200 });
     } catch (error) {
-        NextResponse.json({ error: 'Failed to fetch municipios' }, { staus: 500 });
+        NextResponse.json({ error: 'Failed to fetch estados' }, { staus: 500 });
     }
 }
