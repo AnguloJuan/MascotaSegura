@@ -26,19 +26,19 @@ export default function Perfil({ props }) {
         nombre: props.user.nombre,
         apellido: props.user.apellido,
         correo: props.user.correo,
-        telefono: props.user.telefono,
+        telefono: parseInt(props.user.telefono),
         fechaRegistro: date,
         estado: props.userEstado.idEstado,
         municipio: props.userMunicipio,
 
     } : props.user.idTipoUsuario == 2 ? {
         correo: props.user.correo,
-        telefono: props.user.telefono,
+        telefono: parseInt(props.user.telefono),
     } : {
         nombre: props.user.nombre,
         apellido: props.user.apellido,
         correo: props.user.correo,
-        telefono: props.user.telefono,
+        telefono: parseInt(props.user.telefono),
         NIP: props.user.NIP,
         fechaRegistro: date,
         tipoEmpleado: props.user.idTipoUsuario,
@@ -100,16 +100,20 @@ export default function Perfil({ props }) {
                 body.set("userType", JSON.stringify(userType));
                 body.set("userInit", JSON.stringify(props.user));
 
-                //subir imagen a cloudinary
-                body.set("file", image);
-                body.set("upload_preset", 'mascotaSegura');
+                if (image) {
+                    //subir imagen a cloudinary
+                    body.set("file", image);
+                    body.set("upload_preset", 'mascotaSegura');
 
-                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                    method: 'POST',
-                    body
-                }).then(r => r.json());
+                    const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                        method: 'POST',
+                        body
+                    }).then(r => r.json());
 
-                body.set("image", data.secure_url);
+                    body.set("image", data.secure_url);
+                } else {
+                    body.set("image", null);
+                }
 
                 const response = await fetch("/api/adoptante", {
                     method: "PUT",
@@ -155,16 +159,20 @@ export default function Perfil({ props }) {
             body.set("userType", JSON.stringify(userType));
             body.set("userInit", JSON.stringify(props.user));
             if (userType == 3) {
-                //subir imagen a cloudinary
-                body.set("file", image);
-                body.set("upload_preset", 'mascotaSegura');
+                if (image) {
+                    //subir imagen a cloudinary
+                    body.set("file", image);
+                    body.set("upload_preset", 'mascotaSegura');
 
-                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                    method: 'POST',
-                    body
-                }).then(r => r.json());
+                    const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                        method: 'POST',
+                        body
+                    }).then(r => r.json());
 
-                body.set("image", data.secure_url);
+                    body.set("image", data.secure_url);
+                } else {
+                    body.set("image", null);
+                }
             }
 
             const response = await fetch("/api/empleado", {

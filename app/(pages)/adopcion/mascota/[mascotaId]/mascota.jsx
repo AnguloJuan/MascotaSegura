@@ -83,16 +83,20 @@ export default function MascotaPage({ especies, mascotaInicial }) {
             body.set("mascota", JSON.stringify(mascota));
             body.set("mascotaInicial", JSON.stringify(mascotaInicial));
 
-            //subir imagen a cloudinary
-            body.set("file", image);
-            body.set("upload_preset", 'mascotaSegura');
+            if (image) {
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
 
-            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                method: 'POST',
-                body
-            }).then(r => r.json());
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
 
-            body.set("image", data.secure_url);
+                body.set("image", data.secure_url);
+            } else {
+                body.set("image", null);
+            }
 
             const response = await fetch("/api/mascotas", {
                 method: "PUT",
@@ -206,8 +210,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
                             className="form-select mb-4">
                             <option value="3">Procesando</option>
                             <option value="1">Aceptado</option>
-                            <option value="2">Denegado</option>
-                            <option value="4">Cancelado</option>
+                            <option value="2">Cancelado</option>
                         </select>
                     </>
                 )}

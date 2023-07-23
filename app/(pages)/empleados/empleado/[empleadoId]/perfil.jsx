@@ -11,7 +11,7 @@ export default function PerfilPage({ props }) {
         nombre: props.empleado.nombre,
         apellido: props.empleado.apellido,
         correo: props.empleado.correo,
-        telefono: props.empleado.telefono,
+        telefono: parseInt(props.empleado.telefono),
         NIP: props.empleado.NIP,
         fechaRegistro: props.date,
         tipoEmpleado: props.empleado.idTipoUsuario,
@@ -54,16 +54,20 @@ export default function PerfilPage({ props }) {
             body.set("userType", JSON.stringify(props.userType));
             body.set("userInit", JSON.stringify(props.empleado));
 
-            //subir imagen a cloudinary
-            body.set("file", image);
-            body.set("upload_preset", 'mascotaSegura');
-
-            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                method: 'POST',
-                body
-            }).then(r => r.json());
-
-            body.set("image", data.secure_url);
+            if (image) {
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
+    
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
+    
+                body.set("image", data.secure_url);
+            } else {
+                body.set("image", null);
+            }
 
             const response = await fetch("/api/empleado", {
                 method: "PUT",

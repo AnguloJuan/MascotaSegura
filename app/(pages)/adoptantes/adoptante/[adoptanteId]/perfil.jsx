@@ -6,7 +6,6 @@ import { Municipios } from "@/components/SelectsClient";
 import { useState } from "react";
 import { Dialog } from "@/components/dialogs";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function PerfilPage({ props }) {
@@ -25,7 +24,7 @@ export default function PerfilPage({ props }) {
         nombre: props.adoptante.nombre,
         apellido: props.adoptante.apellido,
         correo: props.adoptante.correo,
-        telefono: props.adoptante.telefono,
+        telefono: parseInt(props.adoptante.telefono),
         fechaRegistro: date,
         estado: props.adoptanteEstado.idEstado,
         municipio: props.adoptanteMunicipio,
@@ -39,6 +38,7 @@ export default function PerfilPage({ props }) {
     const [adopcionDialog, setAdopcionDialog] = useState(false);
     const [deletedDialog, setDeletedDialog] = useState(false);
     const [warningDialog, setWarningDialog] = useState(false);
+    //const [processDialog, setProcessDialog] = useState(false);
     const [image, setImage] = useState(null);
     const [createObjectURL, setCreateObjectURL] = useState(null);
     const router = useRouter();
@@ -80,17 +80,21 @@ export default function PerfilPage({ props }) {
                 body.set("userType", JSON.stringify(props.userType));
                 body.set("user", JSON.stringify(adoptante));
                 body.set("userInit", JSON.stringify(props.adoptante));
-                
-                //subir imagen a cloudinary
-                body.set("file", image);
-                body.set("upload_preset", 'mascotaSegura');
 
-                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                    method: 'POST',
-                    body
-                }).then(r => r.json());
-
-                body.set("image", data.secure_url);
+                if (image) {
+                    //subir imagen a cloudinary
+                    body.set("file", image);
+                    body.set("upload_preset", 'mascotaSegura');
+    
+                    const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                        method: 'POST',
+                        body
+                    }).then(r => r.json());
+    
+                    body.set("image", data.secure_url);
+                } else {
+                    body.set("image", null);
+                }
 
                 const response = await fetch("/api/adoptante", {
                     method: "PUT",
@@ -177,6 +181,7 @@ export default function PerfilPage({ props }) {
                         id={"numero"}
                         label={"Numero de telefono"}
                         placeholder={"Numero de telefono"}
+                        name={"telefono"}
                         onChange={handleInputChange}
                         value={adoptante.telefono} />
                     <div className={perfilAdoptador.datosperfil}>
@@ -197,44 +202,50 @@ export default function PerfilPage({ props }) {
             </form>
 
             <Dialog id={"errorCorreo"} isOpen={errorCorreoDialog} onClose={() => setErrorCorreoDialog(false)}>
-                <h1>Error de correo</h1>
+                <h2>Error de correo</h2>
                 <p>No se puedieron guardar los cambios porque ya se existe una cuenta con ese correo</p>
             </Dialog>
             <Dialog id={"invalidField"} isOpen={invalidFieldsDialog} onClose={() => setInvalidFieldsDialog(false)}>
-                <h1>Error valores invalidos</h1>
+                <h2>Error valores invalidos</h2>
                 <p>No se pueden modificar datos con valores invalidos</p>
                 <p>El campo correo, y telefono no puede quedar vacio</p>
                 <p>El campo estado y municipio debe haber seleccionado una opción</p>
             </Dialog>
             <Dialog id={"unmodified"} isOpen={unmodifiedDialog} onClose={() => setUnmodifiedDialog(false)}>
-                <h1>Error de modificación</h1>
+                <h2>Error de modificación</h2>
                 <p>No se ha registrado ningun cambio</p>
             </Dialog>
             <Dialog id={"modified"} isOpen={modifiedDialog} onClose={() => setModifiedDialog(false)}>
-                <h1>Se han guardado los cambios</h1>
+                <h2>Se han guardado los cambios</h2>
                 <p>Los cambios han sido guardados correctamente en la base de datos</p>
             </Dialog>
             <Dialog id={"error"} isOpen={errorDialog} onClose={() => setErrorDialog(false)}>
-                <h1>Error de servidor</h1>
+                <h2>Error de servidor</h2>
                 <p>Ha ocurrido un error en el servidor</p>
                 <p>Vuelva a intentarlo más tarde</p>
             </Dialog>
             <Dialog id={"adopcion"} isOpen={adopcionDialog} onClose={() => setAdopcionDialog(false)}>
-                <h1>Error al eliminar cuenta</h1>
+                <h2>Error al eliminar cuenta</h2>
                 <p>Se ha encontrado que tiene al menos una mascota adoptada</p>
                 <p>No puede eliminar la cuenta si ha adoptado a una mascota</p>
                 <p>Cancele la adopción y devuelva la mascota al refugio para que pueda eliminar la cuenta</p>
             </Dialog>
             <Dialog id={"deleted"} isOpen={deletedDialog} onClose={() => setDeletedDialog(false)}>
-                <h1>Adoptante Eliminado</h1>
+                <h2>Adoptante Eliminado</h2>
                 <p>Se ha eliminado el adoptante de la pagina</p>
                 <p>Sera redirigido a la pagina adoptantes</p>
             </Dialog>
             <Dialog id={"warning"} isOpen={warningDialog} onClose={() => setWarningDialog(false)} fun={deleteAdoptante} confirmar={true}>
-                <h1>Advertencia</h1>
+                <h2>Advertencia</h2>
                 <p>Estas apunto de eliminar a un adoptante de la pagina<br />Esta acción sera irreversible</p>
                 <p>Haga clic en confirmar para continuar</p>
             </Dialog>
+            {/*
+            <Dialog id={"process"} isOpen={processDialog} onClose={() => setProcessDialog(false)}>
+                <h2>Procesando</h2>
+                <p>Espera un momento en lo que se procesan los cambios</p>
+            </Dialog>
+             */}
         </>
     )
 }

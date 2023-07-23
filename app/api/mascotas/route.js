@@ -55,7 +55,7 @@ export async function POST(req) {
                     maltratado,
                     motivo: motivo,
                     cartilla,
-                    imagen: image,
+                    imagen: image != "null" ? image : "",
                     refugio: { connect: { id: idRefugio } },
                 },
                 select: {
@@ -100,7 +100,7 @@ export async function PUT(req) {
                     maltratado: maltratado !== mascotaInitParsed.maltratado ? maltratado : undefined,
                     motivo: motivo !== mascotaInitParsed.motivo ? motivo : undefined,
                     cartilla: cartilla !== mascotaInitParsed.cartilla ? cartilla : undefined,
-                    imagen: image !== mascotaInitParsed.imagen ? image : undefined,
+                    imagen: (image != "null" && image !== mascotaInitParsed.imagen) ? image : undefined,
                 },
             });
 

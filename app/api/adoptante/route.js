@@ -77,7 +77,7 @@ export async function PUT(req) {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
                         telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
-                        imagen: image !== userInitParsed.imagen ? image : undefined,
+                        imagen: (image != "null" && image !== userInitParsed.imagen) ? image : undefined,
                     }
                 });
             } else if (userType == 3) {
@@ -91,7 +91,7 @@ export async function PUT(req) {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
                         telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         idMunicipio: municipio !== userInitParsed.idMunicipio ? parseInt(municipio) : undefined,
-                        imagen: image !== userInitParsed ? image : undefined,
+                        imagen: (image != "null" && image !== userInitParsed.imagen) ? image : undefined,
                     }
                 });
             }

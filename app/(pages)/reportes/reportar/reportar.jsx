@@ -70,16 +70,20 @@ export default function Reportar({ props }) {
             body.set("reporte", JSON.stringify(reporte));
             body.set("userType", JSON.stringify(userType));
 
-            //subir imagen a cloudinary
-            body.set("file", image);
-            body.set("upload_preset", 'mascotaSegura');
-
-            const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
-                method: 'POST',
-                body
-            }).then(r => r.json());
-
-            body.set("image", data.secure_url);
+            if (image) {
+                //subir imagen a cloudinary
+                body.set("file", image);
+                body.set("upload_preset", 'mascotaSegura');
+    
+                const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                    method: 'POST',
+                    body
+                }).then(r => r.json());
+    
+                body.set("image", data.secure_url);
+            } else {
+                body.set("image", null);
+            }
 
             const response = await fetch("/api/reportes", {
                 method: "POST",

@@ -27,7 +27,7 @@ export async function POST(req) {
                         descripcion: descripcion,
                         fechaCreada: date,
                         municipio: { connect: { id: parseInt(municipio) } },
-                        imagen: image ? image : undefined,
+                        imagen: image != "null" ? image : "",
                         nombre,
                         correo,
                     }
@@ -39,7 +39,7 @@ export async function POST(req) {
                         fechaCreada: date,
                         reportador: { connect: { id: parseInt(idReportador) } },
                         municipio: { connect: { id: parseInt(municipio) } },
-                        imagen: image ? image : undefined
+                        imagen: image != "null" ? image : "",
                     }
                 });
             }
@@ -110,7 +110,7 @@ export async function PUT(req) {
                     descripcion: descripcion !== reporteInitParsed.descripcion ? descripcion : undefined,
                     municipio: municipio !== reporteInitParsed.municipio ? { connect: { id: parseInt(municipio) } } : undefined,
                     estadoReporte: estadoReporte !== reporteInitParsed.estadoReporte ? { connect: { id: parseInt(estadoReporte) } } : undefined,
-                    imagen: image !== reporteInitParsed.imagen ? image : undefined
+                    imagen: (image != "null" && image !== reporteInitParsed.imagen) ? image : undefined,
                 }
             });
 

@@ -1,8 +1,5 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
-import { v4 as uuid } from 'uuid';
-import { writeFile, unlink } from "fs/promises";
-import path from "path";
 import jwt from 'jsonwebtoken';
 import { GetUser } from "@/app/lib/user";
 
@@ -139,7 +136,7 @@ export async function PUT(req) {
                         NIP: NIP !== userInitParsed.NIP ? NIP : undefined,
                         fechaRegistro: fechaRegistro !== userInitParsed.fechaRegistro ? date : undefined,
                         idTipoUsuario: tipoEmpleado !== userInitParsed.idTipoUsuario ? parseInt(tipoEmpleado) : undefined,
-                        imagen: image !== userInitParsed.imagen ? image : undefined
+                        imagen: (image != "null" && image !== userInitParsed.imagen) ? image : undefined,
                     }
                 })
             );
@@ -161,19 +158,6 @@ export async function DELETE(req) {
     const id = req.nextUrl.searchParams.get('id');
 
     try {
-        //delete image
-        const imagenPath = await prisma.empleado.findUnique({
-            where: {
-                id: parseInt(id)
-            },
-            select: {
-                imagen: true,
-            }
-        });
-        if (imagenPath.imagen !== null) {
-            const oldFilePath = path.join(process.cwd(), "public/images/empleados", imagenPath.imagen);
-            await unlink(oldFilePath);
-        }
 
         //delete user
         await prisma.empleado.delete({
