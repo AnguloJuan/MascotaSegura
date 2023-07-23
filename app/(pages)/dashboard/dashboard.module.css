@@ -1,28 +1,17 @@
-.dashboard{
-    display: flex;   
+.dashboard {
+    display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
 }
-.dashboard div{
-    width: 500px;
-}
 
-.adopciones, .espacios, .reportes{
+.tarjetas {
     display: flex;
-    align-items: center;
     justify-content: space-around;
-}
-.adopciones div, .espacios div, .reportes div{
-    width: 100%;
+    gap: 1.5rem;
 }
 
-.tarjetas{
-    display: flex;
-    flex-direction: column;
-}
-
-.tarjetas div{
+.tarjetas div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,28 +21,29 @@
     padding: 1rem;
     margin: 1rem 0;
     width: 200px;
+    height: 120px;
+    justify-content: center;
 }
 
-.tarjetas p{
+.tarjetas p {
     margin: 0;
 }
 
-.dashboard canvas{
-    display: initial;
-}
-.canva{
+.canva {
     padding: 1rem;
     box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
 }
-.espacios{
-    gap: 1rem;
+
+.reportesM {
+    width: 300px;
 }
 
-.espacios canvas, .reportes canvas{
-    width: 300px;
+.porcentaje {
+    width: 330px;
+    width: 330px;
+}
+
+.cantidad{
+    width: 400px;
     height: 300px;
-}
-
-.reportesM{
-    width: 300px;
 }

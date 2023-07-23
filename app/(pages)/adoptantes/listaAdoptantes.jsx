@@ -83,9 +83,6 @@ export default function ListaAdoptantes({ props }) {
                 </div>
                 <div className={listaAdoptantes.contenedor}>
                     <div className={listaAdoptantes.busqueda}>
-                        <InputLabel id={"edad"} label={"Edad"} placeholder={"edad"} name={"edad"} onChange={handleInputChange} />
-                    </div>
-                    <div className={listaAdoptantes.busqueda}>
                         <div className="input mb-3 mt-3">
                             <label htmlFor="estados" className="form-label">Estado</label>
                             <Estados estados={props.estados} handleChange={handleEstadoChange} value={searchCriteria.estado} />

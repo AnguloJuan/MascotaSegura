@@ -19,7 +19,7 @@ export function Espacios({ data }) {
                 labels: data.map((especie) => especie.especie),
                 datasets: [
                     {
-                        label: "Espacio Ocupado",
+                        label: "Set de datos",
                         data: data.map((cantidad) => cantidad.cantidad),
                         backgroundColor: [
                             "#FF6384",
@@ -42,7 +42,7 @@ export function Espacios({ data }) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Espacios disponibles en el refugio',
+                        text: 'Cantidad de mascotas por especie',
                         font: {
                             weight: 'bold',
                             size: 16,
@@ -96,7 +96,7 @@ export function PorcentajeEspecie({ data }) {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Porcentaje de espacio disponible por especie',
+                        text: 'Porcentaje cantidad total de mascotas por especie',
                         font: {
                             weight: 'bold',
                             size: 16,

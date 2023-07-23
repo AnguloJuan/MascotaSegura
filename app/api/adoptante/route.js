@@ -20,7 +20,6 @@ export async function GET(req) {
                     correo: correo ? { contains: correo } : undefined,
                     id: id ? { equals: parseInt(id) } : undefined,
                     telefono: telefono ? { equals: parseInt(telefono) } : undefined,
-                    edad: edad ? { equals: parseInt(edad) } : undefined,
                     // Comprobamos si se proporciona el municipio o el estado para filtrar en consecuencia
                     AND: [
                         municipio

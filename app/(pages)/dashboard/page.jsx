@@ -13,50 +13,50 @@ async function getEspecies() {
     const cantidadMascotasPorEspecie = await prisma.mascota.groupBy({
         by: ['idEspecie'],
         _count: true,
-      });
-    
-      const resultado = await Promise.all(
+    });
+
+    const resultado = await Promise.all(
         cantidadMascotasPorEspecie.map(async (item) => {
-          const especie = await prisma.especie.findUnique({
-            where: { id: item.idEspecie },
-            select: { especie: true },
-          });
-          return {
-            idEspecie: item.idEspecie,
-            especie: especie.especie,
-            cantidad: item._count,
-          };
+            const especie = await prisma.especie.findUnique({
+                where: { id: item.idEspecie },
+                select: { especie: true },
+            });
+            return {
+                idEspecie: item.idEspecie,
+                especie: especie.especie,
+                cantidad: item._count,
+            };
         })
-      );
-    
-      return resultado;
+    );
+
+    return resultado;
 }
 
 async function getPorcentajeEspecie() {
     const cantidadMascotasPorEspecie = await prisma.mascota.groupBy({
         by: ['idEspecie'],
         _count: true,
-      });
-    
-      const totalMascotas = await prisma.mascota.count();
-    
-      const resultado = await Promise.all(
+    });
+
+    const totalMascotas = await prisma.mascota.count();
+
+    const resultado = await Promise.all(
         cantidadMascotasPorEspecie.map(async (item) => {
-          const especie = await prisma.especie.findUnique({
-            where: { id: item.idEspecie },
-            select: { especie: true },
-          });
-          const porcentaje = ((item._count / totalMascotas) * 100).toFixed(2);
-          return {
-            idEspecie: item.idEspecie,
-            especie: especie.especie,
-            cantidad: item._count,
-            porcentaje: porcentaje,
-          };
+            const especie = await prisma.especie.findUnique({
+                where: { id: item.idEspecie },
+                select: { especie: true },
+            });
+            const porcentaje = ((item._count / totalMascotas) * 100).toFixed(2);
+            return {
+                idEspecie: item.idEspecie,
+                especie: especie.especie,
+                cantidad: item._count,
+                porcentaje: porcentaje,
+            };
         })
-      );
-      
-      return resultado;
+    );
+
+    return resultado;
 }
 
 async function getMascotasAdoptadas() {
@@ -198,7 +198,7 @@ export default async function Dashboard() {
 
     return (
         <>
-            <div className={dashboard}>
+            <div>
 
                 <h1>Reportes del generales</h1>
                 <div className="btn p-0 w-100 btn-primary">
@@ -213,9 +213,8 @@ export default async function Dashboard() {
                         <span className="fw-bold ms-3">Lista de reportes</span>
                     </Link>
                 </div>
-                <h2>Reportes de adopciones</h2>
-
-                <div className={dashboard.adopciones}>
+                <h2 className="mb-2 mt-4">Reportes de adopciones</h2>
+                <div className={"d-flex flex-column align-items-center"}>
                     <div className={dashboard.tarjetas}>
                         <div>
                             <p>Cantidad de mascotas adoptadas: </p>
@@ -226,23 +225,23 @@ export default async function Dashboard() {
                             <h3>{mascotasRescatadas}</h3>
                         </div>
                     </div>
-                    <div className={dashboard.canva}>
+                    <div className={`${dashboard.canva} w-75`}>
                         <AdopcionesPorMes adopciones={adopcionesPorMes} adoptantes={adoptantesPorMes} />
                     </div>
                 </div>
 
-                <h2>Espacios</h2>
-                <div className={dashboard.espacios}>
-                    <div className={dashboard.canva}>
+                <h2 className="mt-4 mb-2">Cantidad de mascotas</h2>
+                <div className={`${dashboard.espacios} d-flex flex-column align-items-center gap-3`}>
+                    <div className={`${dashboard.canva} porcentaje w-50`}>
                         <PorcentajeEspecie data={porcentaje} />
                     </div>
-                    <div className={dashboard.canva}>
+                    <div className={`${dashboard.canva} cantidad w-75`}>
                         <Espacios data={espacios} />
                     </div>
                 </div>
 
-                <h2>Reportes de maltrato</h2>
-                <div className={dashboard.reportes}>
+                <h2 className="mb-2 mt-4">Reportes de maltrato</h2>
+                <div className={"d-flex flex-column align-items-center"}>
                     <div className={dashboard.tarjetas}>
                         <div>
                             <p>Cantidad de reportes: </p>
@@ -253,7 +252,7 @@ export default async function Dashboard() {
                             <h3>{reportesAnonimos}</h3>
                         </div>
                     </div>
-                    <div className={dashboard.canva}>
+                    <div className={`${dashboard.canva} w-75`}>
                         <ReportesPorMunicipio className={dashboard.reportesM} data={reportesPorMunicipio} />
                     </div>
                 </div>
