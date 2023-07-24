@@ -6,8 +6,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { PrismaClient } from "@prisma/client";
 
-//const prisma = getPrisma();
-const prisma = new PrismaClient()
+const prisma = getPrisma();
+//const prisma = new PrismaClient()
+
+export const metadata = {
+    title: 'Dashboard',
+}
 
 async function getEspecies() {
     const cantidadMascotasPorEspecie = await prisma.mascota.groupBy({

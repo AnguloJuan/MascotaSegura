@@ -39,6 +39,9 @@ export default function ListaEmpleados({ props }) {
     // Function to handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if (name == 'id' && value < 0) {
+            return;
+        }
         setSearchCriteria((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
 
@@ -51,7 +54,8 @@ export default function ListaEmpleados({ props }) {
                 </Link></center>
                 <div className={listaEmpleados.contenedor}>
                     <div className={listaEmpleados.busqueda}>
-                        <InputLabel id={"empleado"} label={"ID del empleado"} placeholder={"Id empleado"} name={"id"} onChange={handleInputChange} />
+                        <InputLabel id={"empleado"} type={"number"} label={"ID del empleado"} placeholder={"Id empleado"} 
+                        name={"id"} value={searchCriteria.id} onChange={handleInputChange} />
                     </div>
                     <button
                         className="btn btn-lg btn-success"

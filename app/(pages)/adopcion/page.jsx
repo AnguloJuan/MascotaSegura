@@ -4,6 +4,10 @@ import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Mascotas',
+}
+
 export default async function Adopcion() {
     const user = GetUser();
     const mascotas = await prisma.mascota.findMany({
@@ -22,7 +26,7 @@ export default async function Adopcion() {
         },
         distinct: "raza",
     });
-    //const edades = await prisma.edades.findMany();
+
     return (
         <>
             <center><h2>Lista de mascotas</h2></center>

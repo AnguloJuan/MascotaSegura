@@ -11,6 +11,10 @@ import Cancelar from "./cancelarAdopcion";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Mascota',
+}
+
 export default async function Page({ params }) {
     const { mascotaId } = params;
     const mascota = await GetMascota(mascotaId);

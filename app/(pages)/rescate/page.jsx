@@ -5,6 +5,10 @@ import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Rescate',
+}
+
 export default async function RescatePage() {
     const especies = await prisma.especie.findMany();
     const user = GetUser();

@@ -46,6 +46,9 @@ export default function PerfilPage({ props }) {
     const handleInputChange = (e) => {
         setUnmodified(false);
         const { name, value } = e.target;
+        if (name == 'telefono' && value < 0) {
+            return;
+        }
         setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
     const handleEstadoChange = (e) => {
@@ -179,6 +182,7 @@ export default function PerfilPage({ props }) {
                         value={adoptante.correo} />
                     <InputLabel
                         id={"numero"}
+                        type={"number"}
                         label={"Numero de telefono"}
                         placeholder={"Numero de telefono"}
                         name={"telefono"}

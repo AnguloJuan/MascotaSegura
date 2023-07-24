@@ -61,6 +61,7 @@ export async function GET(req) {
         let empleados;
         const search = req.nextUrl.searchParams.get('search');
         const { id, nombre, tipoEmpleado, userId } = JSON.parse(search);
+
         try {
             empleados = await prisma.empleado.findMany({
                 where: {
@@ -75,6 +76,7 @@ export async function GET(req) {
         } catch (error) {
             console.log(error);
         }
+
         BigInt.prototype.toJSON = function () { return this.toString() }
         return NextResponse.json({ empleados }, { status: 200 });
     } catch (error) {

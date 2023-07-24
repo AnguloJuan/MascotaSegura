@@ -16,6 +16,7 @@ export default function ListaAdoptantes({ props }) {
         edad: "",
         estado: 0,
         municipio: 0,
+        adopcion: "",
     });
 
     const [adoptantes, setAdoptantes] = useState([]);
@@ -46,6 +47,9 @@ export default function ListaAdoptantes({ props }) {
     // Function to handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if ((name == 'telefono' || name == 'id') && value < 0) {
+            return;
+        }
         setSearchCriteria((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
     const handleEstadoChange = (e) => {
@@ -67,7 +71,8 @@ export default function ListaAdoptantes({ props }) {
                         <InputLabel id={"nombre"} label={"Nombre"} placeholder={"Nombre"} name={"nombre"} onChange={handleInputChange} />
                     </div>
                     <div className={listaAdoptantes.busqueda}>
-                        <InputLabel id={"correo"} label={"Correo Electronico"} placeholder={"correo electronico"} name={"correo"} onChange={handleInputChange} />
+                        <InputLabel id={"correo"} label={"Correo Electronico"} placeholder={"correo electronico"} 
+                        name={"correo"} onChange={handleInputChange} />
                     </div>
                     <button
                         className="btn btn-lg btn-success"
@@ -75,23 +80,38 @@ export default function ListaAdoptantes({ props }) {
                 </div>
                 <div className={listaAdoptantes.contenedor}>
                     <div className={listaAdoptantes.busqueda}>
-                        <InputLabel id={"adoptante"} label={"ID del adoptante"} placeholder={"Id adoptante"} name={"id"} onChange={handleInputChange} />
+                        <InputLabel id={"adoptante"} label={"ID del adoptante"} placeholder={"Id adoptante"} type={"number"}
+                        name={"id"} value={searchCriteria.id} onChange={handleInputChange} />
                     </div>
                     <div className={listaAdoptantes.busqueda}>
-                        <InputLabel id={"numero"} label={"Numero de telefono"} placeholder={"Numero telefono"} name={"telefono"} onChange={handleInputChange} />
+                        <InputLabel id={"numero"} label={"Numero de telefono"} placeholder={"Numero telefono"} name={"telefono"}
+                        type={"number"} value={searchCriteria.telefono} onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className={listaAdoptantes.contenedor}>
                     <div className={listaAdoptantes.busqueda}>
-                        <div className="input mb-3 mt-3">
+                        <div className="input my-1">
                             <label htmlFor="estados" className="form-label">Estado</label>
                             <Estados estados={props.estados} handleChange={handleEstadoChange} value={searchCriteria.estado} />
                         </div>
                     </div>
                     <div className={listaAdoptantes.busqueda}>
-                        <div className="input mb-3 mt-3">
+                        <div className="input my-1">
                             <label htmlFor="municipios" className="form-label">Municipio</label>
                             <Municipios selectedEstado={searchCriteria.estado} value={searchCriteria.municipio} handleChange={handleInputChange} />
+                        </div>
+                    </div>
+                    <div className={listaAdoptantes.busqueda}>
+                        <div className="input my-1">
+                            < label htmlFor="adopcion" className="mb-1">Adopción</label>
+                            <select id="adopcion"
+                                name="adopcion"
+                                onChange={handleInputChange}
+                                className="form-select">
+                                <option value="">Cualquiera</option>
+                                <option value="conAdopcion">Con adopción</option>
+                                <option value="sinAdopcion">Sin adopción</option>
+                            </select>
                         </div>
                     </div>
                 </div>

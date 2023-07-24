@@ -3,8 +3,13 @@ import form from "./form.module.css"
 import 'bootstrap/dist/css/bootstrap.css'
 
 export const metadata = {
-  title: 'Mascota Segura',
-  description: '',
+  title: {
+    template: '%s | MascotaSegura',
+    default: 'MascotaSegura', // a default is required when creating a template
+  },
+  icons: {
+    icon: '/images/logo.png',
+  },
 }
 
 export default function RootLayout({ children }) {

@@ -5,6 +5,10 @@ import { GetUser } from "@/app/lib/user";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Empleado',
+}
+
 export default async function Page({ params }) {
     const userType = GetUser().idTipoUsuario;
     const { empleadoId } = params;

@@ -1,7 +1,7 @@
 "use client"
 import InputLabel from "@/components/Input";
 import listaMascotas from "./mascota.module.css";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Especies, Raza, Sexos } from "@/components/Selects";
@@ -15,6 +15,7 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
         edad: "",
         sexo: "",
         userType: 0,
+        adoptado: "",
     });
 
     const [mascotas, setMascotas] = useState([]);
@@ -45,6 +46,9 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
     // Function to handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if ((name == 'edad' || name == 'id') && value < 0) {
+            return;
+        }
         setSearchCriteria((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
 
@@ -58,10 +62,26 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
 
                 <div className={`${listaMascotas.contenedor} gap-3 d-flex`}>
                     <div className={listaMascotas.busqueda}>
-                        <InputLabel id={"idMascota"} name={"id"} type={"number"} label={"ID de la mascota"} placeholder={"Id de la Mascota"} onChange={handleInputChange} />
+                        <InputLabel id={"idMascota"} name={"id"} type={"number"} label={"ID de la mascota"} 
+                        placeholder={"Id de la Mascota"} value={searchCriteria.id} onChange={handleInputChange} />
                     </div>
+                    {(userType == 2 || userType == 3) &&
+                        <div className={`${listaMascotas.busqueda} `}>
+                            <div className="input my-1">
+                                < label htmlFor="adoptado" className="mb-1">Adoptado</label>
+                                <select id="adoptado"
+                                    name="adoptado"
+                                    onChange={handleInputChange}
+                                    className="form-select">
+                                    <option value="">Cualquiera</option>
+                                    <option value="adoptado">Adoptado</option>
+                                    <option value="noAdoptado">No adoptado</option>
+                                </select>
+                            </div>
+                        </div>
+                    }
                     <div className={`${listaMascotas.busqueda} `}>
-                        <div className="input mb-3 mt-3">
+                        <div className="input my-1">
                             <label htmlFor="especies" className="form-label">Especie</label>
                             <Especies handleChange={handleInputChange} especies={especies} />
                         </div>
@@ -69,62 +89,65 @@ export default function ListaMascota({ inicialMascotas, especies, razas, edades,
                 </div>
                 <div className={`${listaMascotas.contenedor} gap-3 d-flex`}>
                     <div className={listaMascotas.busqueda}>
-                        <div className="input mb-3 mt-3">
+                        <div className="input my-1">
                             <label htmlFor="razas" className="form-label">Raza</label>
                             <Raza handleChange={handleInputChange} razas={razas} />
                         </div>
                     </div>
                     <div className={listaMascotas.busqueda}>
-                        <InputLabel id={"edad"} name={"edad"} type={"number"} label={"Edad"} placeholder={"Edad"} onChange={handleInputChange} />
+                        <InputLabel id={"edad"} name={"edad"} type={"number"} label={"Edad"} placeholder={"Edad"}
+                            value={searchCriteria.edad} onChange={handleInputChange} />
                     </div>
                     <div className={listaMascotas.busqueda}>
-                        <div className="input mb-3 mt-3">
+                        <div className="input my-1">
                             <label htmlFor="sexo" className="form-label">Sexo</label>
                             <Sexos handleChange={handleInputChange} />
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
-            {mascotas.length !== 0 ? (
-                <div className="d-flex flex-wrap">
-                    {mascotas.map((mascota) => (
-                        <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
-                            <div className={listaMascotas.tarjeta}>
-                                <div className={listaMascotas.imagen}>
-                                    {mascota.imagen ? (
-                                        <Image
-                                            src={mascota.imagen}
-                                            alt='default.png'
-                                            width={300}
-                                            height={300}
-                                            loading="lazy"
-                                            color="white"
-                                            className="bg-white rounded bg-opacity-25"
-                                        />
-                                    ) : (
-                                        <Image
-                                            src={"/images/dogIcon.png"}
-                                            alt='default.png'
-                                            width={300}
-                                            height={300}
-                                            loading="lazy"
-                                            color="white"
-                                            className="bg-white rounded bg-opacity-25"
-                                        />
-                                    )}
+            <Suspense fallback={<center><h3 className="mt-3"></h3></center>}>
+                {mascotas.length !== 0 ? (
+                    <div className="d-flex flex-wrap">
+                        {mascotas.map((mascota) => (
+                            <Link key={mascota.id} href={`/adopcion/mascota/${mascota.id}`}>
+                                <div className={listaMascotas.tarjeta}>
+                                    <div className={listaMascotas.imagen}>
+                                        {mascota.imagen ? (
+                                            <Image
+                                                src={mascota.imagen}
+                                                alt='default.png'
+                                                width={300}
+                                                height={300}
+                                                loading="lazy"
+                                                color="white"
+                                                className="bg-white rounded bg-opacity-25"
+                                            />
+                                        ) : (
+                                            <Image
+                                                src={"/images/dogIcon.png"}
+                                                alt='default.png'
+                                                width={300}
+                                                height={300}
+                                                loading="lazy"
+                                                color="white"
+                                                className="bg-white rounded bg-opacity-25"
+                                            />
+                                        )}
+                                    </div>
+                                    <div className={listaMascotas.datos}>
+                                        <p>id: {mascota.id}</p>
+                                        <p>Nombre: {mascota.nombre}</p>
+                                        <p>Edad: {mascota.edad}</p>
+                                        <p>Sexo: {mascota.sexo.sexo}</p>
+                                    </div>
                                 </div>
-                                <div className={listaMascotas.datos}>
-                                    <p>id: {mascota.id}</p>
-                                    <p>Nombre: {mascota.nombre}</p>
-                                    <p>Edad: {mascota.edad}</p>
-                                    <p>Sexo: {mascota.sexo.sexo}</p>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            ) : (<center><h3 className="mt-3">No se encontraron resultados</h3></center>)}
+                            </Link>
+                        ))}
+                    </div>
+                ) : (<center><h3 className="mt-3">No se encontraron resultados</h3></center>)}
+            </Suspense>
         </>
     );
 }

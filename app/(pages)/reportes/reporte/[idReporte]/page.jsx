@@ -1,5 +1,4 @@
 import { getPrisma } from "@/app/lib/prisma";
-import Link from "next/link";
 import style from "../../reporte.module.css";
 import Image from "next/image";
 import Reporte from "./reporte";
@@ -9,6 +8,10 @@ import { Municipios } from "@/components/SelectsClient";
 import EliminarReporte from "./deleteReporte";
 
 const prisma = getPrisma();
+
+export const metadata = {
+    title: 'Reporte',
+}
 
 export default async function ReportePage({ params }) {
     const { idReporte } = params;

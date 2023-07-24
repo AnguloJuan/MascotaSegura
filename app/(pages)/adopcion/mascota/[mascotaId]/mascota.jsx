@@ -43,6 +43,9 @@ export default function MascotaPage({ especies, mascotaInicial }) {
     const handleInputChange = (e) => {
         setUnmodified(false);
         const { name, value } = e.target;
+        if (name == 'edad' && value < 0) {
+            return;
+        }
         setMascota((prevMascota) => ({ ...prevMascota, [name]: value }));
     };
     const handleTernary = (e) => {
