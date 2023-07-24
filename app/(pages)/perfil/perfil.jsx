@@ -64,6 +64,9 @@ export default function Perfil({ props }) {
     const handleInputChange = (e) => {
         setUnmodified(false);
         const { name, value } = e.target;
+        if (name == 'telefono' && value < 0) {
+            return;
+        }
         setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
     const handleEstadoChange = (e) => {
@@ -358,6 +361,7 @@ export default function Perfil({ props }) {
                                 onChange={handleInputChange} />
                             <InputLabel
                                 id={"numero"}
+                                type={"number"}
                                 label={"Numero de telefono"}
                                 placeholder={"Numero de telefono"}
                                 name={"telefono"}
@@ -444,6 +448,7 @@ export default function Perfil({ props }) {
                                 onChange={handleInputChange} />
                             <InputLabel
                                 id={"numero"}
+                                type={"number"}
                                 label={"Numero de telefono"}
                                 placeholder={"Numero de telefono"}
                                 name={"telefono"} value={user.telefono}

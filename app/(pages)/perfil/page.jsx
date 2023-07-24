@@ -8,6 +8,10 @@ import Image from "next/image";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Perfil',
+}
+
 export default async function PerfilPage() {
     const user = GetUser();
     const userType = user.idTipoUsuario;

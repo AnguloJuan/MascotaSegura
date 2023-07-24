@@ -7,7 +7,7 @@ export async function GET(req) {
     try {
         let mascotas;
         const search = req.nextUrl.searchParams.get('search');
-        const { id, nombre, especie, raza, edad, sexo, userType } = JSON.parse(search);
+        const { id, nombre, especie, raza, edad, sexo, userType, adoptado } = JSON.parse(search);
         try {
             mascotas = await prisma.mascota.findMany({
                 include: {
@@ -20,7 +20,9 @@ export async function GET(req) {
                     raza: raza ? { equals: raza } : undefined,
                     edad: edad ? { equals: parseInt(edad) } : undefined,
                     idSexo: sexo ? { equals: parseInt(sexo) } : undefined,
-                    adopcion: (userType === 0 || userType === 1) ? { is: null } : undefined, // Excluir mascotas en adopción si el usuario es adoptante o sin registro
+                    adopcion: (userType === 0 || userType === 1) ? { is: null }// Excluir mascotas en adopción si el usuario es adoptante o sin registro
+                        : ((userType == 2 || userType == 3) && adoptado === 'adoptado') ? { isNot: null }
+                            : adoptado === 'noAdoptado' ? { is: null } : undefined,
                 },
             });
         } catch (error) {

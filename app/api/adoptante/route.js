@@ -9,17 +9,16 @@ export async function GET(req) {
     try {
         let adoptantes;
         const search = req.nextUrl.searchParams.get('search');
-        const { id, nombre, correo, telefono, edad, estado, municipio } = JSON.parse(search);
+        const { id, nombre, correo, telefono, adopcion, estado, municipio } = JSON.parse(search);
         try {
             adoptantes = await prisma.adoptante.findMany({
-                include: {
-                    municipio: true,
-                },
                 where: {
                     nombre: nombre ? { contains: nombre } : undefined,
                     correo: correo ? { contains: correo } : undefined,
                     id: id ? { equals: parseInt(id) } : undefined,
                     telefono: telefono ? { equals: parseInt(telefono) } : undefined,
+                    adopcion: adopcion === 'conAdopcion' ? { some: {} } : undefined,
+                    NOT: adopcion === 'sinAdopcion' ? { adopcion: { some: {} } } : undefined,
                     // Comprobamos si se proporciona el municipio o el estado para filtrar en consecuencia
                     AND: [
                         municipio

@@ -31,6 +31,9 @@ export default function PerfilPage({ props }) {
     const handleInputChange = (e) => {
         setUnmodified(false);
         const { name, value } = e.target;
+        if (name == 'telefono' && value < 0) {
+            return;
+        }
         setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
     //actualizacion de imagen
@@ -58,12 +61,12 @@ export default function PerfilPage({ props }) {
                 //subir imagen a cloudinary
                 body.set("file", image);
                 body.set("upload_preset", 'mascotaSegura');
-    
+
                 const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
                     method: 'POST',
                     body
                 }).then(r => r.json());
-    
+
                 body.set("image", data.secure_url);
             } else {
                 body.set("image", null);
@@ -149,6 +152,7 @@ export default function PerfilPage({ props }) {
                             onChange={handleInputChange} />
                         <InputLabel
                             id={"numero"}
+                            type={"number"}
                             label={"Numero de telefono"}
                             placeholder={"Numero de telefono"}
                             name={"telefono"} value={empleado.telefono}

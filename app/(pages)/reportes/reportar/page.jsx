@@ -4,6 +4,10 @@ import Reportar from "./reportar";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Reportar',
+}
+
 export default async function ReportarPage() {
     const user = GetUser();
     const estados = await prisma.estado.findMany();

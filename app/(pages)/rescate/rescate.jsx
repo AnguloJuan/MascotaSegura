@@ -29,6 +29,9 @@ export default function Rescate({ especies, idRefugio }) {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if (name == 'edad' && value < 0) {
+            return;
+        }
         setMascota((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
 
@@ -124,7 +127,8 @@ export default function Rescate({ especies, idRefugio }) {
 
                 <div className={rescate.contenedor}>
                     <div className={rescate.busqueda}>
-                        <InputLabel id={"edad"} type={"number"} label={"Edad"} placeholder={"edad"} name={"edad"} onChange={handleInputChange} />
+                        <InputLabel id={"edad"} type={"number"} label={"Edad"} placeholder={"edad"} name={"edad"}
+                        value={mascota.edad} onChange={handleInputChange} />
                     </div>
 
                     <div className={rescate.busqueda}>

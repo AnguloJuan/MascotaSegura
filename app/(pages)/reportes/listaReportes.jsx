@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 export default function ListaReportes({ props }) {
     const [searchCriteria, setSearchCriteria] = useState({
-        id: 0,
+        id: "",
         estado: 0,
         municipio: 0,
         estadoReporte: 0,
@@ -44,6 +44,9 @@ export default function ListaReportes({ props }) {
     // Function to handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+        if (name == 'id' && value < 0) {
+            return;
+        }
         setSearchCriteria((prevCriteria) => ({ ...prevCriteria, [name]: value }));
     };
     const handleEstadoChange = (e) => {
@@ -61,7 +64,8 @@ export default function ListaReportes({ props }) {
             <div className={maltrato}>
                 <div className={maltrato.contenedor}>
                     <div className={maltrato.busqueda}>
-                        <InputLabel id={"reporte"} label={"ID del reporte"} placeholder={"Id reporte"} name={"id"} onChange={handleInputChange} />
+                        <InputLabel id={"reporte"} label={"ID del reporte"} placeholder={"Id reporte"} type={"number"}
+                        name={"id"} value={searchCriteria.id} onChange={handleInputChange} />
                     </div>
                     <button
                         className="btn btn-lg btn-success"

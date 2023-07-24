@@ -8,6 +8,10 @@ import Image from "next/image";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Adoptante',
+}
+
 export default async function Page({ params }) {
     const userType = GetUser().idTipoUsuario;
     const { adoptanteId } = params;

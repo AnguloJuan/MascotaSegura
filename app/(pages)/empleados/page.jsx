@@ -1,7 +1,12 @@
 import { getPrisma } from "@/app/lib/prisma";
 import { GetUser } from "@/app/lib/user";
 import ListaEmpleados from "./listaEmpleados";
+
 const prisma = getPrisma();
+
+export const metadata = {
+  title: 'Empleados',
+}
 
 export default async function adoptantes() {
   const user = GetUser();

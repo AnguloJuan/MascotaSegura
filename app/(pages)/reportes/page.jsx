@@ -8,6 +8,10 @@ import Image from "next/image";
 
 const prisma = getPrisma();
 
+export const metadata = {
+    title: 'Reportes',
+}
+
 export default async function listareportes() {
     const reportes = await prisma.reporte.findMany({
         include: {
