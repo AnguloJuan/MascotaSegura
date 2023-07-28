@@ -6,10 +6,13 @@ import { GetUser } from "@/app/lib/user";
 const prisma = getPrisma();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-export async function POST(request) {
-    const { firstName, lastName, email, telefono, NIP, tipoEmpleado, password } = await request.json();
+export async function POST(req) {
+    const formData = await req.formData();
+    const empleado = formData.get("empleado");
+    const image = formData.get("image");
+    const empleadoParsed = JSON.parse(empleado.substring(empleado.indexOf('{'), empleado.lastIndexOf('}') + 1));
+    const { firstName, lastName, email, telefono, NIP, tipoEmpleado, password } = empleadoParsed;
     const numTelefono = parseInt(telefono);
-
     try {
         // Check if the email is already registered
         const existingUser = await prisma.empleado.findUnique({ where: { correo: email } });
@@ -28,28 +31,29 @@ export async function POST(request) {
         let user;
         const date = new Date().toISOString();
         const idRefugio = GetUser().idRefugio;
-
-        // Create the user in the database
-        try {
-            user = await prisma.empleado.create({
-                data: {
-                    idRefugio: parseInt(idRefugio),
-                    nombre: firstName,
-                    apellido: lastName,
-                    correo: email,
-                    telefono: numTelefono,
-                    contrasena: password,
-                    NIP: NIP,
-                    tipoUsuario: { connect: { id: parseInt(tipoEmpleado) } },
-                    fechaRegistro: date,
-                },
-            });
-        } catch (e) {
-            console.log(e);
-        }
-        BigInt.prototype.toJSON = function () { return this.toString() }
-
-        return NextResponse.json({ message: 'User registered', user }, { status: 201 });
+        
+                // Create the user in the database
+                try {
+                    user = await prisma.empleado.create({
+                        data: {
+                            idRefugio: parseInt(idRefugio),
+                            nombre: firstName,
+                            apellido: lastName,
+                            correo: email,
+                            telefono: numTelefono,
+                            contrasena: password,
+                            NIP: NIP,
+                            tipoUsuario: { connect: { id: parseInt(tipoEmpleado) } },
+                            fechaRegistro: date,
+                            imagen: image != "null" ? image : "",
+                        },
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+                BigInt.prototype.toJSON = function () { return this.toString() }
+        
+                return NextResponse.json({ message: 'User registered', user }, { status: 201 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })

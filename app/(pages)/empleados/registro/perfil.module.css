@@ -1,0 +1,12 @@
+.perfil {
+  width: 360px;
+  height: 260px;
+  background-color: antiquewhite;
+  margin-right: 8px;
+  border-radius: 8px 8px 8px 8px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
