@@ -4,7 +4,7 @@ import dashboard from "./dashboard.module.css";
 import { getPrisma } from "@/app/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
+//import { PrismaClient } from "@prisma/client";
 
 const prisma = getPrisma();
 //const prisma = new PrismaClient()
@@ -121,13 +121,7 @@ async function getReportesCount() {
 
 async function getReportesAnonimosCount() {
     const count = await prisma.reporte.count({
-        where: {
-            OR: [
-                { idReportador: null },
-                { idReportado: null },
-                { idMascota: null },
-            ],
-        },
+        where: { idReportador: null },
     });
     return count;
 }
@@ -196,6 +190,7 @@ export default async function Dashboard() {
     const mascotasRescatadas = await getMascotasRescatadas();
     const reportes = await getReportesCount();
     const reportesAnonimos = await getReportesAnonimosCount();
+    const reportesTotales = await prisma.reporte.count();
     const reportesPorMunicipio = await getReportesPorMunicipio();
     const adopcionesPorMes = await getAdopcionesPorMes();
     const adoptantesPorMes = await getAdoptantesPorMes();
@@ -254,6 +249,10 @@ export default async function Dashboard() {
                         <div>
                             <p>Cantidad de reportes anonimos: </p>
                             <h3>{reportesAnonimos}</h3>
+                        </div>
+                        <div>
+                            <p>Reportes totales: </p>
+                            <h3>{reportesTotales}</h3>
                         </div>
                     </div>
                     <div className={`${dashboard.canva} w-75`}>
