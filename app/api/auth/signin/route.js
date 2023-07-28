@@ -6,8 +6,12 @@ import { getPrisma } from '@/app/lib/prisma';
 const prisma = getPrisma();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-export async function POST(request) {
-    const { firstName, lastName, email, telefono, selectedMunicipio, password } = await request.json();
+export async function POST(req) {
+    const formData = await req.formData();
+    const user = formData.get("user");
+    const image = formData.get("image");
+    const userParsed = JSON.parse(user.substring(user.indexOf('{'), user.lastIndexOf('}') + 1));
+    const { firstName, lastName, email, telefono, selectedMunicipio, password } = userParsed;
     const numTelefono = parseInt(telefono);
 
     try {
@@ -29,7 +33,7 @@ export async function POST(request) {
         const date = new Date().toISOString();
         // Create the user in the database
         try {
-            
+
             user = await prisma.adoptante.create({
                 data: {
                     municipio: { connect: { id: parseInt(selectedMunicipio) } },
@@ -40,6 +44,7 @@ export async function POST(request) {
                     contrasena: password,
                     tipoUsuario: { connect: { id: 1 } },
                     fechaRegistro: date,
+                    imagen: image != "null" ? image : "",
                 },
             });
         } catch (e) {

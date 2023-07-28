@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import perfil from "../form.module.css";
 
 
 export default function SignIn() {
@@ -24,6 +25,9 @@ export default function SignIn() {
     const [isFieldsFilled, setIsFieldsFilled] = useState(false);
     const [isRegistrado, setIsRegistrado] = useState(false);
 
+    const [image, setImage] = useState(null);
+    const [createObjectURL, setCreateObjectURL] = useState(null);
+
     const handleEstadoChange = (event) => {
         setSelectedEstado(event.target.value);
         // Reset selected municipio when estado changes
@@ -37,6 +41,15 @@ export default function SignIn() {
         setSelectedMunicipio(event.target.value);
     };
 
+    const uploadToClient = (event) => {
+        if (event.target.files && event.target.files[0]) {
+            const i = event.target.files[0];
+
+            setImage(i);
+            setCreateObjectURL(URL.createObjectURL(i));
+        }
+    };
+
     const handleSignIn = async (e) => {
         e.preventDefault();
 
@@ -44,13 +57,29 @@ export default function SignIn() {
             setIsFieldsFilled(true);
         } else {
             try {
+                const body = new FormData();
+                const user = { firstName, lastName, email, telefono, selectedMunicipio, password };
+                body.set("user", JSON.stringify(user));
+                
+                if (image) {
+                    //subir imagen a cloudinary
+                    body.set("file", image);
+                    body.set("upload_preset", 'mascotaSegura');
+
+                    const data = await fetch('https://api.cloudinary.com/v1_1/dyvwujin9/image/upload', {
+                        method: 'POST',
+                        body
+                    }).then(r => r.json());
+
+                    body.set("image", data.secure_url);
+                } else {
+                    body.set("image", null);
+                }
+
                 // Make an HTTP POST request to the sign-in API route
                 const response = await fetch('/api/auth/signin', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ firstName, lastName, email, telefono, selectedMunicipio, password }),
+                    body,
                 });
                 if (response.ok) {
                     if (hasCookie('token')) {
@@ -67,13 +96,15 @@ export default function SignIn() {
                     // Handle sign-in error
                     console.error('Sign-in failed');
                     response.json().then(
-                        response => console.log(response.message)
+                        response => console.error(response.message)
                     )
                     if (response.status == 409) {
                         setIsErrorEmail(true);
                     }
                     if (response.status == 500) {
-                        console.error('An error occurred', message);
+                        response.json().then(
+                            response => console.error(response.message)
+                        )
                         setIsErrorServidor(true);
                     }
                 }
@@ -108,15 +139,23 @@ export default function SignIn() {
         <>
             <form onSubmit={handleSignIn} >
                 <h1>Crear cuenta</h1>
-                <>
-                    <Image
-                        src={"/images/logo.png"}
-                        alt='logo.png'
-                        width={300}
-                        height={187}
-                        priority={true}
-                    />
-                </>
+                <label htmlFor="perfil">Imagen de perfil <span className="fw-light text-secondary">(Opcional)</span></label>
+                <div className={perfil.perfil}>
+                    {image ? (
+                        <Image
+                            width={200}
+                            height={200}
+                            src={createObjectURL}
+                            alt="upload image" />
+                    ) : (
+                        <Image
+                            width={200}
+                            height={200}
+                            src={"/images/defaultUser.png"}
+                            alt="upload image" />
+                    )}
+                    <input id="perfil" type="file" name="perfil" onChange={uploadToClient} accept="image/*, .jpg, .png, .svg, .webp, .jfif" className="form-control" />
+                </div>
 
                 <Input id={"name"} type={"text"} label={"Nombre"} placeholder={"Nombre"}
                     onChange={(e) => setFirstName(e.target.value)} />
