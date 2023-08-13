@@ -1,22 +1,31 @@
 //import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getPrisma } from '@/app/lib/prisma';
 
 const prisma = getPrisma();
 const SECRET_KEY = process.env.SECRET_KEY;
 
-export async function POST(req) {
-    const formData = await req.formData();
-    const user = formData.get("user");
-    const image = formData.get("image");
-    const userParsed = JSON.parse(user.substring(user.indexOf('{'), user.lastIndexOf('}') + 1));
-    const { firstName, lastName, email, telefono, selectedMunicipio, password } = userParsed;
-    const numTelefono = parseInt(telefono);
+type adoptante = {
+    nombre: string;
+    apellido: string;
+    correo: string;
+    telefono: bigint;
+    contrasena: string;
+    municipio: number;
+}
 
+export async function POST(req: NextRequest) {
+    const formData = await req.formData();
+    const user = formData.get("user") as string;
+    const image = formData.get("image");
+    if (!user) return NextResponse.json({ message: 'Error, user from request form data was not found' }, { status: 500 });
+    const userParsed = JSON.parse(user.substring(user.indexOf('{'), user.lastIndexOf('}') + 1));
+    const { nombre, apellido, correo, telefono, municipio, contrasena }: adoptante = userParsed;
+    
     try {
         // Check if the email is already registered
-        const existingUser = await prisma.adoptante.findUnique({ where: { correo: email } });
+        const existingUser = await prisma.adoptante.findUnique({ where: { correo: correo } });
 
         if (existingUser) {
             return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
@@ -36,12 +45,12 @@ export async function POST(req) {
 
             user = await prisma.adoptante.create({
                 data: {
-                    municipio: { connect: { id: parseInt(selectedMunicipio) } },
-                    nombre: firstName,
-                    apellido: lastName,
-                    correo: email,
-                    telefono: numTelefono,
-                    contrasena: password,
+                    municipio: { connect: { id: municipio } },
+                    nombre: nombre,
+                    apellido: apellido,
+                    correo: correo,
+                    telefono: telefono,
+                    contrasena: contrasena,
                     tipoUsuario: { connect: { id: 1 } },
                     fechaRegistro: date,
                     imagen: image != "null" ? image : "",

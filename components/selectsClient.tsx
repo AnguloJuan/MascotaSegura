@@ -1,9 +1,17 @@
 "use client"
 
+import { municipio } from "@prisma/client";
+import React from "react";
 import { useEffect, useState } from "react";
 
-export function Municipios({ handleChange, municipiosInicial, selectedEstado, value, disabled }) {
-    const [municipios, setMunicipios] = useState([]);
+export function Municipios({ handleChange, municipiosInicial, selectedEstado, value, disabled }: {
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    municipiosInicial?: Array<municipio>,
+    selectedEstado: number,
+    value: number,
+    disabled?: boolean
+}) {
+    const [municipios, setMunicipios] = useState(Array<municipio>);
     useEffect(() => {
         if (municipiosInicial) {
             setMunicipios(municipiosInicial);
@@ -27,7 +35,7 @@ export function Municipios({ handleChange, municipiosInicial, selectedEstado, va
                 onChange={handleChange}
                 value={value ? value : 0}
                 name="municipio"
-                className="form-select"
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer"
                 disabled={(selectedEstado == 0 || disabled) ? true : false}>
 
                 <option value="">Selecciona Municipio</option>

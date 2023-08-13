@@ -1,4 +1,11 @@
-export function Especies({ handleChange, especies, required, value }) {
+import { especie, estado } from "@prisma/client"
+
+export function Especies({ handleChange, especies, required, value }: {
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    especies: Array<especie>,
+    required?: boolean,
+    value?: string
+}) {
     return (
         <>
             <select
@@ -7,7 +14,7 @@ export function Especies({ handleChange, especies, required, value }) {
                 name="especie"
                 required={required}
                 value={value}
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona Especie</option>
                 {especies.map((especie) => (
                     <option key={especie.id} value={especie.id}>
@@ -18,14 +25,21 @@ export function Especies({ handleChange, especies, required, value }) {
         </>
     )
 }
-export function Raza({ handleChange, razas }) {
+type raza = {
+    id: number,
+    raza: string,
+}
+export function Raza({ handleChange, razas }: {
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    razas: Array<raza>,
+}) {
     return (
         <>
             <select
                 id="razas"
                 onChange={handleChange}
                 name="raza"
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona Raza</option>
                 {razas.map((raza) => (
                     <option key={raza.id} value={raza.raza}>
@@ -36,7 +50,11 @@ export function Raza({ handleChange, razas }) {
         </>
     )
 }
-export function Sexos({ handleChange, required, value }) {
+export function Sexos({ handleChange, required, value }:{
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    required?: boolean,
+    value?: number,
+}) {
     return (
         <>
             <select
@@ -45,7 +63,7 @@ export function Sexos({ handleChange, required, value }) {
                 name="sexo"
                 required={required}
                 value={value}
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona Sexo</option>
                 <option value={1}>Macho</option>
                 <option value={2}>Hembra</option>
@@ -53,7 +71,11 @@ export function Sexos({ handleChange, required, value }) {
         </>
     )
 }
-export function Tamanos({ handleChange, required, value }) {
+export function Tamanos({ handleChange, required, value }:{
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    required?: boolean,
+    value: number,
+}) {
     return (
         <>
             <select
@@ -62,7 +84,7 @@ export function Tamanos({ handleChange, required, value }) {
                 name="tamano"
                 required={required}
                 value={value}
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona el tamaño</option>
                 <option value={1}>No especificado</option>
                 <option value={2}>Diminuto</option>
@@ -74,7 +96,12 @@ export function Tamanos({ handleChange, required, value }) {
         </>
     )
 }
-export function EstadosReporte({ handleChange, required, value, disabled }) {
+export function EstadosReporte({ handleChange, required, value, disabled }:{
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    required?: boolean,
+    value: number,
+    disabled?: boolean
+}) {
     return (
         <>
             <select
@@ -84,7 +111,7 @@ export function EstadosReporte({ handleChange, required, value, disabled }) {
                 required={required}
                 value={value}
                 disabled={disabled}
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona el estado del reporte</option>
                 <option value={1}>Reportado</option>
                 <option value={2}>Confirmado</option>
@@ -95,7 +122,12 @@ export function EstadosReporte({ handleChange, required, value, disabled }) {
         </>
     )
 }
-export function Estados({ handleChange, estados, value, disabled }) {
+export function Estados({ handleChange, estados, value, disabled }: {
+    handleChange: React.ChangeEventHandler<HTMLSelectElement>,
+    estados: Array<estado>,
+    value: number,
+    disabled?: boolean
+}) {
     return (
         <>
             <select
@@ -104,7 +136,7 @@ export function Estados({ handleChange, estados, value, disabled }) {
                 value={value ? value : 0}
                 name="estado"
                 disabled={disabled}
-                className="form-select">
+                className="rounded py-1.5 px-3 border-2 border-gray-400 border-opacity-75 focus:border-cyan-400 focus:border-opacity-100 focus:outline-0 focus:shadow-lg focus:ring-2 transition-color transition ease-in cursor-pointer">
                 <option value="">Selecciona Estado</option>
                 {estados.map((estado) => (
                     <option key={estado.id} value={estado.id}>
