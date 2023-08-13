@@ -1,7 +1,18 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, LegacyRef } from 'react';
 
-export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun }) {
-  const dialogRef = useRef(null);
+interface Dialog {
+  id: string,
+  children: React.ReactNode,
+  onClose: Function,
+  isOpen: boolean,
+  fun?: Function,
+  okDialog?: boolean,
+  confirmar?: boolean,
+}
+
+export function Dialog(props: Dialog) {
+  const { id, children, isOpen, onClose, okDialog, confirmar, fun } = props;
+  const dialogRef: LegacyRef<HTMLDialogElement> = useRef(null);
 
   useEffect(() => {
     if (isOpen && dialogRef.current) {
@@ -16,7 +27,7 @@ export function Dialog({ id, children, isOpen, onClose, okDialog, confirmar, fun
   };
 
   const handleConfirm = () => {
-    fun();
+    fun ? fun() : undefined;
   };
 
   return (

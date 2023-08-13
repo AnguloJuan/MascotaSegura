@@ -1,9 +1,9 @@
 "use client"
-import Input from "@/components/Input";
+import Input from "@/components/input";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import { Dialog } from "@/components/dialogs";
 
@@ -14,7 +14,7 @@ export default function LogIn() {
     const [isFieldsFilled, setIsFieldsFilled] = useState(false);
     const [isLoginFailed, setIsLoginFailed] = useState(false);
 
-    const handleLogIn = async (e) => {
+    const handleLogIn = async (e: FormEvent) => {
         e.preventDefault();
 
         if (!email || !password) {
@@ -52,8 +52,8 @@ export default function LogIn() {
 
     return (
         <>
-            <form onSubmit={handleLogIn}>
-                <h1>Iniciar sesión</h1>
+            <form onSubmit={handleLogIn} className="flex flex-col">
+                <h1 className="font-medium text-2xl text-center mb-4">Iniciar sesión</h1>
                 <>
                     <Image
                         src={"/images/logo.png"}
@@ -64,14 +64,15 @@ export default function LogIn() {
                     />
                 </>
                 <Input id={"email"} type={"email"} label={"Correo electrónico"} placeholder={"Correo electrónico"}
-                    onChange={(e) => setEmail(e.target.value)} />
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} />
 
                 <Input id={"password"} type={"password"} label={"Contraseña"} placeholder={"Contraseña"}
-                    onChange={(e) => setPassword(e.target.value)} />
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} />
 
-                <button type="submit" className="btn btn-primary mb-3">Iniciar sesión</button>
-                <Link href={"/signin"}>Crear cuenta</Link>
+                <button type="submit" className="py-2 px-4 my-3 bg-blue-500 hover:bg-blue-600 text-white rounded items-center">Iniciar sesión</button>
+                <Link href={"/signin"} className="my-3 text-center text-blue-500 self-center w-fit px-2">Crear cuenta</Link>
             </form>
+
             <Dialog
                 id={"errorCampos"}
                 isOpen={isFieldsFilled}

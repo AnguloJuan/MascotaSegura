@@ -1,6 +1,4 @@
-import "@/styles/styles.css"
-import form from "./form.module.css"
-import 'bootstrap/dist/css/bootstrap.css'
+import "@/styles/globals.css"
 
 export const metadata = {
   title: {
@@ -12,10 +10,10 @@ export const metadata = {
   },
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={form.form}>
+      <body className={'p-6 flex flex-col items-center '}>
         {children}
       </body>
     </html>
