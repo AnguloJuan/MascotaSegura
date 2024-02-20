@@ -342,5 +342,10 @@ INSERT INTO empleado
 (id, idRefugio, nombre, apellido, correo, contrasena, telefono, NIP, fechaRegistro, idTipoUsuario)
 VALUES (11, 1, "Juan Antonio", "Angulo Murillo", "correo1@correo.com", "1234", 6121373459, 6789, CURRENT_DATE, 3);
 /*DELETE FROM empleado WHERE id = 11;*/
---UPDATE empleado SET idTipoUsuario = 3 WHERE id = 1;
---DELETE FROM mascota WHERE id = 63;
+--UPDATE adoptante SET imagen = "https://res.cloudinary.com/dyvwujin9/image/upload/v1708396284/mascotaSegura/28f7ae06-6c5d-47d9-b02d-e34ba578e5d4.png" WHERE id = 28;
+--DELETE FROM mascota WHERE id = 67;
+
+UPDATE adoptante SET imagen = NULL WHERE id = 28;
+UPDATE mascota SET imagen = NULL WHERE id IN (64, 67);
+UPDATE reporte SET imagen = NULL WHERE id IN (6, 36, 40, 42);
+UPDATE empleado SET imagen = "https://res.cloudinary.com/dyvwujin9/image/upload/v1708396284/mascotaSegura/f8e1057a-d4d0-4906-8c61-05cda646b90e" WHERE id = 1;
