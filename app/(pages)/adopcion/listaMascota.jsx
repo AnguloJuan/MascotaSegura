@@ -65,7 +65,7 @@ export default function ListaMascota({
 	};
 
 	return (
-		<section className="relative w-full overflow-y-auto">
+		<section className="relative w-full">
 			<div
 				className={`fixed h-screen top-0 -z-1 ${
 					openFilter ? 'left-[240px]' : '-left-full'
@@ -154,7 +154,7 @@ export default function ListaMascota({
 
 			<Suspense fallback={<Loading />}>
 				{mascotas.length !== 0 ? (
-					<div className="flex flex-wrap justify-center gap-6 mt-3">
+					<div className="flex flex-wrap justify-center gap-6 mt-5">
 						<Each
 							of={mascotas}
 							render={(item, index) => (
