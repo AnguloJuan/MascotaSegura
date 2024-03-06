@@ -56,7 +56,7 @@ export default async function Menu() {
 			{user.idTipoUsuario === 0 ? (
 				<Link
 					href={'/login'}
-					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[#7266f5] 
+					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[--hoverPrimaryColor] 
 				px-3 py-2 rounded-xl transition-colors duration-500"
 				>
 					<IconUser size={25} />
@@ -65,7 +65,7 @@ export default async function Menu() {
 			) : (
 				<Link
 					href={'/logout'}
-					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[#7266f5] 
+					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[--hoverPrimaryColor] 
 		px-3 py-2 rounded-xl transition-colors duration-500"
 				>
 					<IconTransferOut size={25} />

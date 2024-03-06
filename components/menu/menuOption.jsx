@@ -9,7 +9,7 @@ export default function Option({ url, text, icon }) {
 	return (
 		<li>
 			<Link href={url} className={'group flex flex-col items-center'}>
-				<div className="flex gap-3 text-white font-semibold text-2xl self-start">
+				<div className="flex items-center gap-3 text-white font-semibold text-2xl self-start">
 					{icon}
 					<span className="">{text}</span>
 				</div>

@@ -4,6 +4,7 @@
 
 :root {
 	--primaryColor: #4844f8;
+	--hoverPrimaryColor: #7266f5;
 }
 
 * {
@@ -11,7 +12,7 @@
 	margin: 0;
 	box-sizing: border-box;
 }
-body {
+.body {
 	display: grid;
 	grid-template-columns: auto 1fr;
 }

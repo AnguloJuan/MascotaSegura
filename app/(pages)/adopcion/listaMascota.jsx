@@ -2,7 +2,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
 import listaMascotas from './mascota.module.css';
-import InputLabel from '@/components/Input';
+import InputLabel from '@/components/Inputs';
 import Loading from './loading';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
