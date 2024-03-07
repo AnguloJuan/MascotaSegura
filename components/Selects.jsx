@@ -1,12 +1,6 @@
 import { Each } from './Each';
 
-export function Especies({
-	handleChange,
-	especies,
-	required,
-	value,
-	className,
-}) {
+export function Especies({ onChange, especies, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="especies" className="font-bold">
@@ -14,7 +8,7 @@ export function Especies({
 			</label>
 			<select
 				id="especies"
-				onChange={handleChange}
+				onChange={onChange}
 				name="especie"
 				required={required}
 				value={value}
@@ -30,7 +24,7 @@ export function Especies({
 		</div>
 	);
 }
-export function Raza({ handleChange, razas }) {
+export function Raza({ onChange, razas, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="raza" className="font-bold">
@@ -38,7 +32,7 @@ export function Raza({ handleChange, razas }) {
 			</label>
 			<select
 				id="razas"
-				onChange={handleChange}
+				onChange={onChange}
 				name="raza"
 				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
 			>
@@ -55,7 +49,7 @@ export function Raza({ handleChange, razas }) {
 		</div>
 	);
 }
-export function Sexos({ handleChange, required, value, className }) {
+export function Sexos({ onChange, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="sexo" className="font-bold">
@@ -63,7 +57,7 @@ export function Sexos({ handleChange, required, value, className }) {
 			</label>
 			<select
 				id="sexo"
-				onChange={handleChange}
+				onChange={onChange}
 				name="sexo"
 				required={required}
 				value={value}
@@ -76,7 +70,7 @@ export function Sexos({ handleChange, required, value, className }) {
 		</div>
 	);
 }
-export function Tamanos({ handleChange, required, value, className }) {
+export function Tamanos({ onChange, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="tamano" className="font-bold">
@@ -84,7 +78,7 @@ export function Tamanos({ handleChange, required, value, className }) {
 			</label>
 			<select
 				id="tamano"
-				onChange={handleChange}
+				onChange={onChange}
 				name="tamano"
 				required={required}
 				value={value}
@@ -102,7 +96,7 @@ export function Tamanos({ handleChange, required, value, className }) {
 	);
 }
 export function EstadosReporte({
-	handleChange,
+	onChange,
 	required,
 	value,
 	className,
@@ -115,12 +109,12 @@ export function EstadosReporte({
 			</label>
 			<select
 				id="estadoReporte"
-				onChange={handleChange}
+				onChange={onChange}
 				name="estadoReporte"
 				required={required}
 				value={value}
 				disabled={disabled}
-				cclassName={`outline outline-2 p-2 rounded-lg max-w-md`}
+				cclassName={`outline outline-2 p-2 rounded-lg max-w-md ${className}`}
 			>
 				<option value="">Selecciona el estado del reporte</option>
 				<option value={1}>Reportado</option>
@@ -132,7 +126,7 @@ export function EstadosReporte({
 		</div>
 	);
 }
-export function Estados({ handleChange, estados, value, className, disabled }) {
+export function Estados({ onChange, estados, value, className, disabled }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="estado" className="font-bold">
@@ -140,7 +134,7 @@ export function Estados({ handleChange, estados, value, className, disabled }) {
 			</label>
 			<select
 				id="estado"
-				onChange={handleChange}
+				onChange={onChange}
 				value={value ? value : 0}
 				name="estado"
 				disabled={disabled}

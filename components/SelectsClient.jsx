@@ -5,7 +5,7 @@ import { Select } from './Selects';
 import { Each } from './Each';
 
 export function Municipios({
-	handleChange,
+	onChange,
 	municipiosInicial,
 	selectedEstado,
 	value,
@@ -33,7 +33,7 @@ export function Municipios({
 			<Select
 				id="municipio"
 				label="Municipio"
-				onChange={handleChange}
+				onChange={onChange}
 				value={value ? value : 0}
 				disabled={selectedEstado == 0 || disabled ? true : false}
 			>

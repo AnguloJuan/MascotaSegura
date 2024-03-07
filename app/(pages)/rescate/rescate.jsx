@@ -142,21 +142,21 @@ export default function Rescate({ especies, idRefugio }) {
 							required={true}
 						/>
 						<Input
-							id={'raza'}
-							label={'Raza'}
-							placeholder={'Raza'}
+							id="raza"
+							label="Raza"
+							placeholder="Raza"
 							name={'raza'}
 							onChange={handleInputChange}
 						/>
 					</div>
 				</div>
-				<div className="flex gap-6 flex-wrap">
+				<div className="flex gap-6">
 					<Input
-						id={'edad'}
-						type={'number'}
-						label={'Edad'}
-						placeholder={'edad'}
-						name={'edad'}
+						id="edad"
+						type="number"
+						label="Edad"
+						placeholder="Edad"
+						name="edad"
 						onChange={handleInputChange}
 					/>
 

@@ -2,11 +2,11 @@
 import { Suspense, useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
 import listaMascotas from './mascota.module.css';
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import Loading from './loading';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
-import { Especies, Raza, Sexos } from '@/components/Selects';
+import { Especies, Raza, Select, Sexos } from '@/components/Selects';
 
 export default function ListaMascota({
 	inicialMascotas,
@@ -41,7 +41,7 @@ export default function ListaMascota({
 		// Perform the API request to fetch the mascotas list
 		try {
 			const search = JSON.stringify(searchCriteria);
-			//console.log(search);
+			console.log(search);
 			const response = await fetch(`/api/mascotas?search=${search}`);
 			if (response.ok) {
 				const data = await response.json();
@@ -80,39 +80,19 @@ export default function ListaMascota({
 				<h2 className="text-3xl">Filtro</h2>
 				<div className="flex flex-col gap-4">
 					{(userType == 2 || userType == 3) && (
-						<div className="flex flex-col">
-							<label htmlFor="adoptado" className="mb-1">
-								Adoptado
-							</label>
-							<select
-								id="adoptado"
-								name="adoptado"
-								onChange={handleInputChange}
-								className="form-select"
-							>
-								<option value="">Cualquiera</option>
-								<option value="adoptado">Adoptado</option>
-								<option value="noAdoptado">No adoptado</option>
-							</select>
-						</div>
+						<Select id="adoptado" onChange={handleInputChange} label="Adoptado">
+							<option value="">Cualquiera</option>
+							<option value="adoptado">Adoptado</option>
+							<option value="noAdoptado">No adoptado</option>
+						</Select>
 					)}
-					<div className={`${listaMascotas.busqueda} `}>
-						<div className="flex flex-col">
-							<label htmlFor="especies" className="form-label">
-								Especie
-							</label>
-							<Especies handleChange={handleInputChange} especies={especies} />
-						</div>
-					</div>
+					<Especies handleChange={handleInputChange} especies={especies} />
 
 					<div className="flex flex-col">
-						<label htmlFor="razas" className="form-label">
-							Raza
-						</label>
 						<Raza handleChange={handleInputChange} razas={razas} />
 					</div>
 					<div className="flex flex-col">
-						<InputLabel
+						<Input
 							id={'edad'}
 							name={'edad'}
 							type={'number'}
@@ -123,21 +103,16 @@ export default function ListaMascota({
 						/>
 					</div>
 					<div className={listaMascotas.busqueda}>
-						<div className="flex flex-col">
-							<label htmlFor="sexo" className="font-bold">
-								Sexo
-							</label>
-							<Sexos handleChange={handleInputChange} />
-						</div>
+						<Sexos handleChange={handleInputChange} />
 					</div>
 				</div>
 			</div>
 			<div>
-				<div className={listaMascotas.contenedor}>
+				<div className="flex gap-5">
 					<button onClick={() => setOpenFilter(true)}>
 						<IconAdjustments size={34} />
 					</button>
-					<InputLabel
+					<Input
 						id={'nombre'}
 						name={'nombre'}
 						placeholder={'Nombre o ID'}
@@ -157,12 +132,8 @@ export default function ListaMascota({
 					<div className="flex flex-wrap justify-center gap-6 mt-5">
 						<Each
 							of={mascotas}
-							render={(item, index) => (
-								<CardMascota
-									href={`/adopcion/mascota/${item.id}`}
-									{...item}
-									key={index}
-								/>
+							render={(item) => (
+								<CardMascota href={`/adopcion/mascota/${item.id}`} {...item} />
 							)}
 						/>
 					</div>

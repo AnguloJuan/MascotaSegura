@@ -1,5 +1,5 @@
 'use client';
-import Input from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -62,6 +62,7 @@ export default function LogIn() {
 					label={'Correo electrónico'}
 					placeholder={'Correo electrónico'}
 					onChange={(e) => setEmail(e.target.value)}
+					className="w-full"
 				/>
 
 				<Input
@@ -70,6 +71,7 @@ export default function LogIn() {
 					label={'Contraseña'}
 					placeholder={'Contraseña'}
 					onChange={(e) => setPassword(e.target.value)}
+					className="w-full"
 				/>
 
 				<button

@@ -1,11 +1,11 @@
 'use client';
 import { Input } from '@/components/Inputs';
-// import listaAdoptantes from './adoptantes.module.css';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { Estados, Select } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
+import { Each } from '@/components/Each';
+import CardUser from '@/components/CardUser';
+import Button from '@/components/Button';
 
 export default function ListaAdoptantes({ props }) {
 	const [searchCriteria, setSearchCriteria] = useState({
@@ -65,33 +65,27 @@ export default function ListaAdoptantes({ props }) {
 	};
 
 	return (
-		<>
-			<div>
-				<center>
-					<h2>Lista de adoptantes</h2>
-				</center>
-				<div className="">
-					<div className="">
-						<Input
-							id={'nombre'}
-							label={'Nombre'}
-							placeholder={'Nombre'}
-							name={'nombre'}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="">
-						<Input
-							id={'correo'}
-							label={'Correo Electronico'}
-							placeholder={'correo electronico'}
-							name={'correo'}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<button className="" onClick={fetchAdoptantes}>
-						Buscar
-					</button>
+		<section>
+			<h2 className="text-5xl">Lista de adoptantes</h2>
+			<div className="w-full py-5">
+				<div className="flex justify-around items-end">
+					<Input
+						id={'nombre'}
+						label={'Nombre'}
+						placeholder={'Nombre'}
+						name={'nombre'}
+						onChange={handleInputChange}
+						className="w-[300px]"
+					/>
+					<Input
+						id={'correo'}
+						label={'Correo Electronico'}
+						placeholder={'correo electronico'}
+						name={'correo'}
+						onChange={handleInputChange}
+						className="w-[300px]"
+					/>
+					<Button onClick={fetchAdoptantes} text="Buscar" />
 				</div>
 				<div className="">
 					<div className="">
@@ -117,17 +111,17 @@ export default function ListaAdoptantes({ props }) {
 						/>
 					</div>
 				</div>
-				<div className="">
+				<div className="flex justify-around">
 					<Estados
 						estados={props.estados}
-						handleChange={handleEstadoChange}
+						onChange={handleEstadoChange}
 						value={searchCriteria.estado}
 					/>
 					<div className="">
 						<Municipios
 							selectedEstado={searchCriteria.estado}
 							value={searchCriteria.municipio}
-							handleChange={handleInputChange}
+							onChange={handleInputChange}
 						/>
 					</div>
 					<Select id="adopcion" onChange={handleInputChange} label="Adopcion">
@@ -138,48 +132,19 @@ export default function ListaAdoptantes({ props }) {
 				</div>
 			</div>
 			{adoptantes.length !== 0 ? (
-				<div className="d-flex flex-wrap">
-					{adoptantes.map((adoptante) => (
-						<div key={adoptante.id} className="">
-							<Link
-								href={`/adoptantes/adoptante/${adoptante.id}`}
-								className="link-underline-opacity-0"
-							>
-								<div className="">
-									{adoptante.imagen ? (
-										<Image
-											src={adoptante.imagen}
-											alt={`Imagen Adoptante${adoptante.id}`}
-											width={300}
-											height={300}
-											loading="lazy"
-											color="white"
-										/>
-									) : (
-										<Image
-											src={'/images/defaultUser.png'}
-											alt="logo.png"
-											width={300}
-											height={300}
-											loading="lazy"
-											color="white"
-										/>
-									)}
-								</div>
-								<div className="">
-									<p>Nombre: {adoptante.nombre}</p>
-									<p>id: {adoptante.id}</p>
-									<p>correo: {adoptante.correo}</p>
-								</div>
-							</Link>
-						</div>
-					))}
+				<div className="flex flex-wrap place-content-center gap-10">
+					<Each
+						of={adoptantes}
+						render={(adoptante, index) => (
+							<CardUser items={adoptante} key={index} />
+						)}
+					/>
 				</div>
 			) : (
 				<center>
 					<h3 className="mt-3">No se encontraron resultados</h3>
 				</center>
 			)}
-		</>
+		</section>
 	);
 }

@@ -1,4 +1,6 @@
 'use client';
+import CardReporte from '@/components/CardReporte';
+import { Each } from '@/components/Each';
 // import maltrato from './reporte.module.css';
 import { Input } from '@/components/Inputs';
 import { Estados, Select } from '@/components/Selects';
@@ -81,7 +83,7 @@ export default function ListaReportes({ props }) {
 				</div>
 				<div className="">
 					<Select
-						handleChange={handleInputChange}
+						onChange={handleInputChange}
 						value={searchCriteria.estadoReporte}
 						label="Estado del reporte"
 					>
@@ -94,56 +96,22 @@ export default function ListaReportes({ props }) {
 					</Select>
 					<Estados
 						estados={props.estados}
-						handleChange={handleEstadoChange}
+						onChange={handleEstadoChange}
 						value={searchCriteria.estado}
 					/>
 					<Municipios
 						selectedEstado={searchCriteria.estado}
 						value={searchCriteria.municipio}
-						handleChange={handleInputChange}
+						onChange={handleInputChange}
 					/>
 				</div>
 
-				{reportes.length !== 0 ? (
-					reportes.map((reporte) => (
-						<Link
-							key={reporte.id}
-							href={`/reportes/reporte/${reporte.id}`}
-							className="link-dark link-underline-opacity-0 pt-1"
-						>
-							<div className="">
-								<div className="">
-									<Image
-										width={100}
-										height={100}
-										src={reporte.imagen || '/images/defaultReporte.png'}
-										alt={`ImagenReporte${reporte.id}`}
-										loading="lazy"
-										className="rounded-circle"
-									/>
-								</div>
-								<div className="">
-									<p className="text-secondary fw-lighter pt-3">
-										Id: {reporte.id}
-									</p>
-									<p>
-										Fecha reportada:{' '}
-										{new Date(reporte.fechaCreada).toLocaleString()}
-									</p>
-									<p>
-										Ubicación: {reporte.municipio.estado.nombre},{' '}
-										{reporte.municipio.nombre}
-									</p>
-									<p>Descripción: {reporte.descripcion}</p>
-								</div>
-							</div>
-						</Link>
-					))
-				) : (
-					<center>
-						<h3 className="mt-3">No se encontraron resultados</h3>
-					</center>
-				)}
+				<Each
+					of={reportes}
+					render={(reporte, index) => (
+						<CardReporte {...reporte} key={reporte.id} />
+					)}
+				/>
 			</div>
 		</>
 	);

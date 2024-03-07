@@ -1,10 +1,12 @@
 'use client';
 import { Input } from '@/components/Inputs';
-import listaEmpleados from './empleados.module.css';
+// import listaEmpleados from './empleados.module.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Select } from '@/components/Selects';
+import { Each } from '@/components/Each';
+import CardUser from '@/components/CardUser';
+import Button from '@/components/Button';
 
 export default function ListaEmpleados({ props }) {
 	const [searchCriteria, setSearchCriteria] = useState({
@@ -49,9 +51,7 @@ export default function ListaEmpleados({ props }) {
 	return (
 		<section>
 			<div>
-				<center>
-					<h2>Lista de empleados</h2>
-				</center>
+				<h2 className="text-5xl">Lista de empleados</h2>
 				<center>
 					<Link
 						href={'empleados/registro'}
@@ -60,24 +60,21 @@ export default function ListaEmpleados({ props }) {
 						<span className="f-bold fs-4 mx-2">+</span>Agregar nuevo empleado
 					</Link>
 				</center>
-				<div className={listaEmpleados.contenedor}>
-					<div className={listaEmpleados.busqueda}>
-						<Input
-							id={'empleado'}
-							type={'number'}
-							label={'ID del empleado'}
-							placeholder={'Id empleado'}
-							name={'id'}
-							value={searchCriteria.id}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<button className="btn btn-lg btn-success" onClick={fetchEmpleado}>
-						Buscar
-					</button>
+				<div className="flex gap-5 items-end">
+					<Input
+						id={'empleado'}
+						type={'number'}
+						label={'ID del empleado'}
+						placeholder={'Id empleado'}
+						name={'id'}
+						value={searchCriteria.id}
+						onChange={handleInputChange}
+					/>
+
+					<Button onClick={fetchEmpleado} text="Buscar" />
 				</div>
-				<div className={listaEmpleados.contenedor}>
-					<div className={listaEmpleados.busqueda}>
+				<div className="">
+					<div className="">
 						<Input
 							id={'nombre'}
 							label={'Nombre'}
@@ -86,7 +83,7 @@ export default function ListaEmpleados({ props }) {
 							onChange={handleInputChange}
 						/>
 					</div>
-					<div className={listaEmpleados.busqueda}>
+					<div className="">
 						<Select
 							id="tipoEmpleado"
 							onChange={handleInputChange}
@@ -99,53 +96,14 @@ export default function ListaEmpleados({ props }) {
 					</div>
 				</div>
 			</div>
-
-			{empleados.length !== 0 ? (
-				<div className="d-flex flex-wrap">
-					{empleados.map((empleado) => (
-						<div
-							key={empleado.id}
-							className={`${listaEmpleados.tarjeta} bg-body-secondary rounded`}
-						>
-							<Link
-								href={`/empleados/empleado/${empleado.id}`}
-								className="link-underline-opacity-0"
-							>
-								<div className={listaEmpleados.imagen}>
-									{empleado.imagen ? (
-										<Image
-											src={empleado.imagen}
-											alt={`Imagen Adoptante${empleado.id}`}
-											width={300}
-											height={300}
-											loading="lazy"
-											color="white"
-										/>
-									) : (
-										<Image
-											src={'/images/defaultUser.png'}
-											alt="logo.png"
-											width={300}
-											height={300}
-											loading="lazy"
-											color="white"
-										/>
-									)}
-								</div>
-								<div className={`${listaEmpleados.datos} rounded-bottom`}>
-									<p>Nombre: {empleado.nombre}</p>
-									<p>id: {empleado.id}</p>
-									<p>correo: {empleado.correo}</p>
-								</div>
-							</Link>
-						</div>
-					))}
-				</div>
-			) : (
-				<center>
-					<h3 className="mt-3">No se encontraron resultados</h3>
-				</center>
-			)}
+			<div className="flex flex-wrap place-content-center gap-10">
+				<Each
+					of={empleados}
+					render={(empleado, index) => (
+						<CardUser items={empleado} key={index} />
+					)}
+				/>
+			</div>
 		</section>
 	);
 }
