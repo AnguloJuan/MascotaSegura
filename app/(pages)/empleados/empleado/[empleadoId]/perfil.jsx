@@ -1,5 +1,5 @@
 'use client';
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import perfilAdoptador from './perfil.module.css';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
@@ -151,28 +151,28 @@ export default function PerfilPage({ props }) {
 								className="form-control"
 							/>
 						</div>
-						<InputLabel
+						<Input
 							id={'nombre'}
 							label={'Nombre'}
 							name={'nombre'}
 							value={empleado.nombre}
 							onChange={handleInputChange}
 						/>
-						<InputLabel
+						<Input
 							id={'apellido'}
 							label={'Apellido'}
 							name={'apellido'}
 							value={empleado.apellido}
 							onChange={handleInputChange}
 						/>
-						<InputLabel
+						<Input
 							id={'correo'}
 							label={'Correo electronico'}
 							name={'correo'}
 							value={empleado.correo}
 							onChange={handleInputChange}
 						/>
-						<InputLabel
+						<Input
 							id={'numero'}
 							type={'number'}
 							label={'Numero de telefono'}
@@ -181,7 +181,7 @@ export default function PerfilPage({ props }) {
 							value={empleado.telefono}
 							onChange={handleInputChange}
 						/>
-						<InputLabel
+						<Input
 							id={'NIP'}
 							label={'NIP'}
 							name={'nip'}
@@ -189,7 +189,7 @@ export default function PerfilPage({ props }) {
 							value={empleado.NIP}
 							disabled
 						/>
-						<InputLabel
+						<Input
 							id={'fecRegistro'}
 							type={'date'}
 							label={'Fecha de registro'}

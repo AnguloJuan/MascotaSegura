@@ -14,11 +14,11 @@ export default function CardUser({ items }) {
 			<div className="para uppercase text-center leading-none z-40">
 				<h1 className="font-bold">{items.nombre} </h1>
 			</div>
-			<div className="img w-[180px] aspect-square bg-gray-100 z-40 rounded-md">
+			<div className="img w-[180px] overflow-hidden aspect-square bg-gray-100 z-40 rounded-md">
 				<img
 					src={items.imagen || '/images/defaultUser.png'}
 					alt={items.nombre}
-					className=""
+					className="object-cover aspect-square"
 				/>
 			</div>
 			<div className="z-40 flex flex-row justify-between items-end gap-10">

@@ -2,7 +2,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
 import listaMascotas from './mascota.module.css';
-import { Input } from '@/components/Inputs';
+import { Input, InputBuscar } from '@/components/Inputs';
 import Loading from './loading';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
@@ -41,7 +41,6 @@ export default function ListaMascota({
 		// Perform the API request to fetch the mascotas list
 		try {
 			const search = JSON.stringify(searchCriteria);
-			console.log(search);
 			const response = await fetch(`/api/mascotas?search=${search}`);
 			if (response.ok) {
 				const data = await response.json();
@@ -65,7 +64,7 @@ export default function ListaMascota({
 	};
 
 	return (
-		<section className="relative w-full">
+		<section className="relative">
 			<div
 				className={`fixed h-screen top-0 -z-1 ${
 					openFilter ? 'left-[240px]' : '-left-full'
@@ -107,24 +106,18 @@ export default function ListaMascota({
 					</div>
 				</div>
 			</div>
-			<div>
-				<div className="flex gap-5">
-					<button onClick={() => setOpenFilter(true)}>
-						<IconAdjustments size={34} />
-					</button>
-					<Input
-						id={'nombre'}
-						name={'nombre'}
-						placeholder={'Nombre o ID'}
-						onChange={handleInputChange}
-					/>
-					<button
-						className="bg-[--primaryColor] text-white px-3 py-2 rounded-lg"
-						onClick={fetchMascotas}
-					>
-						Buscar
-					</button>
-				</div>
+
+			<div className="flex gap-5">
+				<button onClick={() => setOpenFilter(true)}>
+					<IconAdjustments size={34} />
+				</button>
+				<InputBuscar
+					id={'nombre'}
+					name={'nombre'}
+					placeholder={'Nombre o ID'}
+					onChange={handleInputChange}
+					onClick={fetchMascotas}
+				/>
 			</div>
 
 			<Suspense fallback={<Loading />}>

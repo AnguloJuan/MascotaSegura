@@ -174,7 +174,7 @@ export function Select({
 				id={id}
 				onChange={onChange}
 				name={id}
-				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
+				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md bg-white ${className} `}
 				disabled={disabled}
 				required={required}
 				value={value}

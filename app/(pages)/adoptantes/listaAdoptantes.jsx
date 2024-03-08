@@ -1,5 +1,5 @@
 'use client';
-import { Input } from '@/components/Inputs';
+import { Input, InputBuscar } from '@/components/Inputs';
 import { useEffect, useState } from 'react';
 import { Estados, Select } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
@@ -65,71 +65,33 @@ export default function ListaAdoptantes({ props }) {
 	};
 
 	return (
-		<section>
-			<h2 className="text-5xl">Lista de adoptantes</h2>
-			<div className="w-full py-5">
-				<div className="flex justify-around items-end">
-					<Input
-						id={'nombre'}
-						label={'Nombre'}
-						placeholder={'Nombre'}
-						name={'nombre'}
-						onChange={handleInputChange}
-						className="w-[300px]"
-					/>
-					<Input
-						id={'correo'}
-						label={'Correo Electronico'}
-						placeholder={'correo electronico'}
-						name={'correo'}
-						onChange={handleInputChange}
-						className="w-[300px]"
-					/>
-					<Button onClick={fetchAdoptantes} text="Buscar" />
-				</div>
-				<div className="">
-					<div className="">
-						<Input
-							id={'adoptante'}
-							label={'ID del adoptante'}
-							placeholder={'Id adoptante'}
-							type={'number'}
-							name={'id'}
-							value={searchCriteria.id}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="">
-						<Input
-							id={'numero'}
-							label={'Numero de telefono'}
-							placeholder={'Numero telefono'}
-							name={'telefono'}
-							type={'number'}
-							value={searchCriteria.telefono}
-							onChange={handleInputChange}
-						/>
-					</div>
-				</div>
-				<div className="flex justify-around">
+		<section className="flex flex-col gap-5">
+			<h2 className="text-5xl mb-7">Lista de Adoptantes</h2>
+			<div className="sticky top-0 flex items-end justify-between gap-5 z-50 bg-white">
+				<div className="flex gap-5">
 					<Estados
 						estados={props.estados}
 						onChange={handleEstadoChange}
 						value={searchCriteria.estado}
 					/>
-					<div className="">
-						<Municipios
-							selectedEstado={searchCriteria.estado}
-							value={searchCriteria.municipio}
-							onChange={handleInputChange}
-						/>
-					</div>
+					<Municipios
+						selectedEstado={searchCriteria.estado}
+						value={searchCriteria.municipio}
+						onChange={handleInputChange}
+					/>
 					<Select id="adopcion" onChange={handleInputChange} label="Adopcion">
 						<option value="">Cualquiera</option>
 						<option value="conAdopcion">Con adopción</option>
 						<option value="sinAdopcion">Sin adopción</option>
 					</Select>
 				</div>
+				<InputBuscar
+					id={'buscar'}
+					placeholder={'Buscar'}
+					name={'buscar'}
+					onChange={handleInputChange}
+					onClick={fetchAdoptantes}
+				/>
 			</div>
 			{adoptantes.length !== 0 ? (
 				<div className="flex flex-wrap place-content-center gap-10">

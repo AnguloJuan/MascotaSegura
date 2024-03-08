@@ -1,12 +1,10 @@
 'use client';
-import { Input } from '@/components/Inputs';
+import { InputBuscar } from '@/components/Inputs';
 // import listaEmpleados from './empleados.module.css';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Select } from '@/components/Selects';
 import { Each } from '@/components/Each';
 import CardUser from '@/components/CardUser';
-import Button from '@/components/Button';
 
 export default function ListaEmpleados({ props }) {
 	const [searchCriteria, setSearchCriteria] = useState({
@@ -50,51 +48,24 @@ export default function ListaEmpleados({ props }) {
 
 	return (
 		<section>
-			<div>
-				<h2 className="text-5xl">Lista de empleados</h2>
-				<center>
-					<Link
-						href={'empleados/registro'}
-						className="btn btn-success border rounded mt-4 mb-2 d-flex align-items-center"
-					>
-						<span className="f-bold fs-4 mx-2">+</span>Agregar nuevo empleado
-					</Link>
-				</center>
-				<div className="flex gap-5 items-end">
-					<Input
-						id={'empleado'}
-						type={'number'}
-						label={'ID del empleado'}
-						placeholder={'Id empleado'}
-						name={'id'}
-						value={searchCriteria.id}
-						onChange={handleInputChange}
-					/>
-
-					<Button onClick={fetchEmpleado} text="Buscar" />
-				</div>
-				<div className="">
-					<div className="">
-						<Input
-							id={'nombre'}
-							label={'Nombre'}
-							placeholder={'Nombre'}
-							name={'nombre'}
-							onChange={handleInputChange}
-						/>
-					</div>
-					<div className="">
-						<Select
-							id="tipoEmpleado"
-							onChange={handleInputChange}
-							label="Tipo empleado"
-						>
-							<option value="">Selecciona el tipo empleado</option>
-							<option value={2}>Empleado</option>
-							<option value={3}>Administrador</option>
-						</Select>
-					</div>
-				</div>
+			<h2 className="text-5xl">Lista de empleados</h2>
+			<div className=" flex justify-between items-center sticky top-0 py-14 z-50">
+				<InputBuscar
+					id={'empleado'}
+					type={'number'}
+					placeholder={'Buscar'}
+					name={'id'}
+					value={searchCriteria.id}
+					onChange={handleInputChange}
+					className="rounded-r-none"
+					onClick={fetchEmpleado}
+				/>
+				<Link
+					href={'empleados/registro'}
+					className="bg-[--primaryColor] hover:bg-[--hoverPrimaryColor] min-h-max h-full border rounded px-4 py-1 text-white"
+				>
+					Nuevo empleado
+				</Link>
 			</div>
 			<div className="flex flex-wrap place-content-center gap-10">
 				<Each

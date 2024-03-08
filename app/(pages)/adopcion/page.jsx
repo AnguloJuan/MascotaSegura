@@ -31,7 +31,7 @@ export default async function Adopcion() {
 
 	return (
 		<>
-			<h2 className="text-7xl mb-8">Lista de mascotas</h2>
+			<h2 className="text-7xl mb-8">Lista de Mascotas</h2>
 			<Suspense fallback={<Loading />}>
 				<ListaMascota
 					inicialMascotas={mascotas}

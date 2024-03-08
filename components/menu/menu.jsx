@@ -33,7 +33,7 @@ export default async function Menu() {
 										text={'Rescate'}
 										icon={<IconHomeHeart />}
 									/>
-									{user.idTipoUsuario === 3 ? (
+									{user.idTipoUsuario !== 2 ? (
 										<>
 											<Option
 												url={'/adoptantes'}

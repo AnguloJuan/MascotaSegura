@@ -1,3 +1,5 @@
+import { IconSearch } from '@tabler/icons-react';
+
 export function Input({
 	id,
 	type = 'text',
@@ -11,25 +13,77 @@ export function Input({
 	className,
 }) {
 	return (
-		<div className="flex flex-col gap-1 h-max min-w-[100px] ">
+		<div className="flex flex-col gap-1 h-max min-w-[100px]">
 			{label && (
 				<label htmlFor={id} className="font-bold">
 					{label}
 					{required ? '*' : ''}
 				</label>
 			)}
-			<input
-				id={id}
-				type={type}
-				name={name || id}
-				placeholder={placeholder}
-				onChange={onChange}
-				value={value}
-				className={`py-2 px-4 rounded-lg border-black border-2 
+			<div className="flex border-black border-2 rounded-lg overflow-hidden">
+				<input
+					id={id}
+					type={type}
+					name={name || id}
+					placeholder={placeholder}
+					onChange={onChange}
+					value={value}
+					className={`py-2 px-4   
 				focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
-				required={required}
-				disabled={disabled}
-			/>
+					required={required}
+					disabled={disabled}
+				/>
+			</div>
+		</div>
+	);
+}
+
+export function InputBuscar({
+	id,
+	type = 'text',
+	label,
+	placeholder,
+	onChange,
+	name,
+	value,
+	disabled,
+	required = false,
+	className,
+	onClick,
+	btnText = 'Buscar',
+}) {
+	return (
+		<div className="flex flex-col gap-1 h-max min-w-[100px] max-w-max">
+			{label && (
+				<label htmlFor={id} className="font-bold">
+					{label}
+					{required ? '*' : ''}
+				</label>
+			)}
+			<div className="flex border-black border-2 rounded-lg overflow-hidden">
+				<input
+					id={id}
+					type={type}
+					name={name || id}
+					placeholder={placeholder}
+					onChange={onChange}
+					value={value}
+					className={`py-2 px-4   
+		focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
+					required={required}
+					disabled={disabled}
+				/>
+				<button
+					onClick={onClick}
+					className="flex place-items-center gap-2 min-h-max text-white px-5 md:px-3 
+					bg-[--primaryColor] hover:bg-[--hoverPrimaryColor]"
+				>
+					<span>
+						<IconSearch />
+					</span>
+					<h2 className="hidden md:block">{btnText}</h2>
+				</button>
+			</div>
 		</div>
 	);
 }

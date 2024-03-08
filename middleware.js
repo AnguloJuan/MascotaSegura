@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server';
 import { GetUser } from '@/app/lib/user';
 
 // This function can be marked `async` if using `await` inside
-export function middleware(req) {
-	const { idTipoUsuario } = GetUser();
+export async function middleware(req) {
+	const user = GetUser();
+	console.log(user);
 
-	if (idTipoUsuario !== 0) {
-		return NextResponse.next();
+	if (user.idTipoUsuario == 0) {
+		return NextResponse.redirect(new URL('/login', req.url));
 	}
-	return NextResponse.redirect(new URL('/login', req.url));
+	return NextResponse.next();
 }
 
 export const config = {
