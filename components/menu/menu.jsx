@@ -14,7 +14,7 @@ import {
 } from '@tabler/icons-react';
 
 export default async function Menu() {
-	const user = GetUser();
+	const user = GetUser;
 	return (
 		<aside className={`${menu.aside} py-9 z-50`}>
 			<nav className="flex flex-col gap-20">

@@ -2,59 +2,22 @@
 import { Input } from '@/components/Inputs';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import { Dialog } from '@/components/dialogs';
+import { AuthContext } from '@/context/AuthContext';
 
 export default function LogIn() {
-	const router = useRouter();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [isFieldsFilled, setIsFieldsFilled] = useState(false);
-	const [isLoginFailed, setIsLoginFailed] = useState(false);
-
-	const handleLogIn = async (e) => {
-		e.preventDefault();
-
-		if (!email || !password) {
-			setIsFieldsFilled(true);
-		} else {
-			try {
-				// Make an HTTP POST request to the log-in API route
-				const response = await fetch('/api/auth/login', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({ email, password }),
-				});
-
-				if (response.ok) {
-					if (hasCookie('token')) {
-						deleteCookie('token');
-					}
-					response
-						.json()
-						.then((response) => setCookie('token', response.token));
-
-					router.replace('/');
-				} else {
-					// Handle log-in error
-					console.error('Log-in failed');
-					setIsLoginFailed(true);
-				}
-			} catch (error) {
-				console.error('An error occurred', error);
-			}
-		}
-	};
+	const [isDialogUnfilledFields, setIsDialogUnfilledFields] = useState(false);
+	const [isDialogFailedLogin, setIsDialogFailedLogin] = useState(false);
+	const { logIn } = useContext(AuthContext);
+	
 
 	return (
 		<section className="grid place-content-center w-full h-screen">
-			<form
-				onSubmit={handleLogIn}
-				className="flex flex-col items-center gap-4 py-10 px-20 shadow-xl shadow-slate-400 "
-			>
+			<form className="flex flex-col items-center gap-4 py-10 px-20 shadow-xl shadow-slate-400 ">
 				<h1 className="text-6xl">Iniciar sesión</h1>
 				<Input
 					id={'email'}
@@ -75,7 +38,11 @@ export default function LogIn() {
 				/>
 
 				<button
-					type="submit"
+					type='button'
+					onClick={() => logIn(email, password, {
+						setIsDialogUnfilledFields,
+						setIsDialogFailedLogin,
+					})}
 					className="bg-[--primaryColor] w-full py-2 rounded-lg text-white font-bold hover:bg-[#7266f5] transition-colors"
 				>
 					Iniciar sesión
@@ -86,16 +53,16 @@ export default function LogIn() {
 			</form>
 			<Dialog
 				id={'errorCampos'}
-				isOpen={isFieldsFilled}
-				onClose={() => setIsFieldsFilled(false)}
+				isOpen={isDialogUnfilledFields}
+				onClose={() => setIsDialogUnfilledFields(false)}
 			>
 				<h1>Error</h1>
 				<p>Rellene todos los campos primero</p>
 			</Dialog>
 			<Dialog
 				id={'loginFailed'}
-				isOpen={isLoginFailed}
-				onClose={() => setIsLoginFailed(false)}
+				isOpen={isDialogFailedLogin}
+				onClose={() => setIsDialogFailedLogin(false)}
 			>
 				<h1>Error</h1>
 				<p>Error al iniciar sesión</p>
