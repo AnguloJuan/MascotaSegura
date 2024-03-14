@@ -1,12 +1,11 @@
 'use client';
-import Input from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import { Dialog } from '@/components/dialogs';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import perfil from '../form.module.css';
 
 export default function SignIn() {
 	const router = useRouter();
@@ -154,7 +153,7 @@ export default function SignIn() {
 					Imagen de perfil{' '}
 					<span className="fw-light text-secondary">(Opcional)</span>
 				</label>
-				<div className={perfil.perfil}>
+				<div>
 					{image ? (
 						<Image
 							width={200}
