@@ -1,6 +1,7 @@
 import '@/styles/styles.css';
 import Menu from '@/components/menu/menu';
 import { Poppins } from 'next/font/google';
+import { AuthProvider } from '@/context/AuthContext';
 
 const poppins = Poppins({
 	subsets: ['latin'],
@@ -21,9 +22,11 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`${poppins.className} body`}>
-				<Menu />
-				<div className="w-[240px]" />
-				<main className="px-10 py-6">{children}</main>
+				<AuthProvider>
+					<Menu />
+					<div className="w-[240px]" />
+					<main className="px-10 py-6">{children}</main>
+				</AuthProvider>
 			</body>
 		</html>
 	);
