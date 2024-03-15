@@ -37,9 +37,11 @@ const AuthProvider = ({ children }) => {
                     body: JSON.stringify({ email, password }),
                 });
 
-                if (response.status === 409) {
+                if (response.status != 200) {
                     setIsDialogFailedLogin(true);
-                } else
+                    return;
+                }
+
                 if (response.ok) {
                     response
                         .json()
@@ -51,29 +53,15 @@ const AuthProvider = ({ children }) => {
                                     (prevCriteria) => ({
                                         ...prevCriteria,
                                         id: user.id,
+                                        idRefugio: user.idTipoUsuario == 1 ? 0 : user.idRefugio,
                                         idTipoUsuario: user.idTipoUsuario,
                                         nombre: user.nombre,
                                         telefono: user.telefono,
                                         correo: user.correo,
                                         fechaRegistro: user.fechaRegistro,
-                                        municipio: user.municipio,
+                                        municipio: user.idTipoUsuario == 1 ? user.municipio : 0,
+                                        NIP: user.idTipoUsuario == 1 ? "" : user.NIP,
                                         imagen: user.imagen,
-                                        isSignedIn: true,
-                                    })
-                                )
-                            } else if (user.idTipoUsuario == 2 || user.idTipoUsuario == 3) {//empleado y administrador
-                                setUser(
-                                    (prevCriteria) => ({
-                                        ...prevCriteria,
-                                        id: user.id,
-                                        idRefugio: user.idRefugio,
-                                        idTipoUsuario: user.idTipoUsuario,
-                                        nombre: user.nombre,
-                                        telefono: user.telefono,
-                                        correo: user.correo,
-                                        fechaRegistro: user.fechaRegistro,
-                                        imagen: user.imagen,
-                                        NIP: user.NIP,
                                         isSignedIn: true,
                                     })
                                 )

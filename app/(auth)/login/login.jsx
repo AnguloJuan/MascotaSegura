@@ -13,7 +13,6 @@ export default function LogIn() {
 	const [isDialogUnfilledFields, setIsDialogUnfilledFields] = useState(false);
 	const [isDialogFailedLogin, setIsDialogFailedLogin] = useState(false);
 	const { logIn } = useContext(AuthContext);
-	
 
 	return (
 		<section className="grid place-content-center w-full h-screen">
