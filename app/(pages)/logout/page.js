@@ -1,14 +1,11 @@
-"use client"
-import { deleteCookie } from 'cookies-next';
-import { useRouter } from 'next/navigation';
+import LogoutContext from "./logoutContext";
+import { cookies } from "next/headers";
 
-export default function LogoutPage() {
-    const router = useRouter();
+async function deleteCookie() {
+  "use server";
+  cookies().delete("user");
+}
 
-    // Clear the authentication token from cookies or local storage
-    deleteCookie('token');
-    // Redirect the user to the login page
-    router.push('/login');
-
-    return null; // Render nothing on the logout page
+export default async function LogoutPage() {
+  return <LogoutContext deleteCookie={deleteCookie} />;
 }

@@ -1,9 +1,7 @@
 'use client';
 import { Input } from '@/components/Inputs';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
-import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import { Dialog } from '@/components/dialogs';
 import { AuthContext } from '@/context/AuthContext';
 

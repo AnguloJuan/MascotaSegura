@@ -14,7 +14,7 @@ import {
 } from '@tabler/icons-react';
 
 export default async function Menu() {
-	const user = GetUser;
+	const user = GetUser();
 	return (
 		<aside className={`${menu.aside} py-9 z-50`}>
 			<nav className="flex flex-col gap-20">
@@ -23,17 +23,17 @@ export default async function Menu() {
 					<Option url={'/adopcion'} text={'Adopción'} icon={<IconDog />} />
 					<Option url={'/reportes'} text={'Reportes'} icon={<IconReport />} />
 
-					{user.idTipoUsuario !== 0 ? (
+					{user.idTipoUsuario !== 0 && (
 						<>
 							<Option url={'/perfil'} text={'Perfil'} icon={<IconUser />} />
-							{user.idTipoUsuario !== 1 ? (
+							{user.idTipoUsuario !== 1 && (
 								<>
 									<Option
 										url={'/rescate'}
 										text={'Rescate'}
 										icon={<IconHomeHeart />}
 									/>
-									{user.idTipoUsuario !== 2 ? (
+									{user.idTipoUsuario !== 2 && (
 										<>
 											<Option
 												url={'/adoptantes'}
@@ -46,11 +46,11 @@ export default async function Menu() {
 												icon={<IconUsersGroup />}
 											/>
 										</>
-									) : null}
+									)}
 								</>
-							) : null}
+							)}
 						</>
-					) : null}
+					)}
 				</ul>
 			</nav>
 			{user.idTipoUsuario === 0 ? (
