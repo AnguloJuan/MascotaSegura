@@ -26,7 +26,7 @@ export function Input({
 					type={type}
 					name={name || id}
 					placeholder={placeholder}
-					onChange={onChange}
+					onChange={onChange ? onChange : () => { }}
 					value={value}
 					className={`py-2 px-4   
 				focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}

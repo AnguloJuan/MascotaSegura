@@ -1,5 +1,5 @@
 'use client';
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import perfilAdoptador from './perfil.module.css';
 import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
@@ -187,7 +187,7 @@ export default function PerfilPage({ props }) {
 							className="form-control"
 						/>
 					</div>
-					<InputLabel
+					<Input
 						id={'nombre'}
 						label={'Nombre'}
 						placeholder={'Nombre'}
@@ -195,7 +195,7 @@ export default function PerfilPage({ props }) {
 						value={adoptante.nombre}
 						onChange={handleInputChange}
 					/>
-					<InputLabel
+					<Input
 						id={'apellido'}
 						label={'Apellido'}
 						placeholder={'Apellido'}
@@ -203,14 +203,14 @@ export default function PerfilPage({ props }) {
 						value={adoptante.apellido}
 						onChange={handleInputChange}
 					/>
-					<InputLabel
+					<Input
 						id={'correo'}
 						label={'Correo electronico'}
 						placeholder={'Correo electrónico'}
 						onChange={handleInputChange}
 						value={adoptante.correo}
 					/>
-					<InputLabel
+					<Input
 						id={'numero'}
 						type={'number'}
 						label={'Numero de telefono'}
