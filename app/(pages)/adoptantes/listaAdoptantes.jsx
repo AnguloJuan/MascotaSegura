@@ -1,11 +1,10 @@
 'use client';
-import { Input, InputBuscar } from '@/components/Inputs';
+import { InputBuscar } from '@/components/Inputs';
 import { useEffect, useState } from 'react';
 import { Estados, Select } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
 import { Each } from '@/components/Each';
 import CardUser from '@/components/CardUser';
-import Button from '@/components/Button';
 
 export default function ListaAdoptantes({ props }) {
 	const [searchCriteria, setSearchCriteria] = useState({
@@ -37,7 +36,6 @@ export default function ListaAdoptantes({ props }) {
 			if (response.ok) {
 				const data = await response.json();
 				setAdoptantes(data.adoptantes);
-				//console.log(data.adoptantes);
 			} else {
 				console.error('Failed to fetch adoptantes');
 			}

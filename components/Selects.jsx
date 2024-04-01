@@ -12,7 +12,7 @@ export function Especies({ onChange, especies, required, value, className }) {
 				name="especie"
 				required={required}
 				value={value}
-				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
+				className={`outline outline-2 py-2 px-4 rounded-lg max-w-full ${className}`}
 			>
 				<option value="">Selecciona Especie</option>
 				{especies.map((especie) => (
@@ -179,15 +179,12 @@ export function Select({
 				required={required}
 				value={value}
 			>
+				<option value="">{placeholder || 'Selecciona una opcion'}</option>
 				{items ? (
 					<Each
 						of={items}
 						render={(item, index) => (
 							<>
-								<option value="">
-									{placeholder || 'Selecciona una opcion'}
-								</option>
-
 								<option key={index} value={index + 1}>
 									{item}
 								</option>

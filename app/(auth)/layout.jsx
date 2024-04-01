@@ -1,5 +1,4 @@
 import { AuthProvider } from '@/context/AuthContext';
-import '@/styles/styles.css';
 
 export const metadata = {
 	title: {

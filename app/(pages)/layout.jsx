@@ -1,33 +1,16 @@
-import '@/styles/styles.css';
 import Menu from '@/components/menu/menu';
-import { Poppins } from 'next/font/google';
 import { AuthProvider } from '@/context/AuthContext';
+import { Suspense } from 'react';
+import Loading from './loading';
 
-const poppins = Poppins({
-	subsets: ['latin'],
-	weight: '400',
-});
-
-export const metadata = {
-	title: {
-		template: '%s | MascotaSegura',
-		default: 'MascotaSegura', // a default is required when creating a template
-	},
-	icons: {
-		icon: '/images/logo.png',
-	},
-};
-
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
 	return (
-		<html lang="en">
-			<body className={`${poppins.className} body`}>
-				<AuthProvider>
-					<Menu />
-					<div className="w-[240px]" />
-					<main className="px-10 py-6">{children}</main>
-				</AuthProvider>
-			</body>
-		</html>
+		<AuthProvider>
+			<Menu />
+			<div className="w-[240px]" />
+			<Suspense fallback={<Loading />}>
+				<main className="px-10 py-6">{children}</main>
+			</Suspense>
+		</AuthProvider>
 	);
 }

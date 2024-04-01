@@ -1,4 +1,6 @@
-import { IconSearch } from '@tabler/icons-react';
+'use client';
+import { IconFileUpload, IconSearch } from '@tabler/icons-react';
+import { useState } from 'react';
 
 export function Input({
 	id,
@@ -11,29 +13,28 @@ export function Input({
 	disabled,
 	required = false,
 	className,
+	readOnly = false,
 }) {
 	return (
-		<div className="flex flex-col gap-1 h-max min-w-[100px]">
+		<div className="flex flex-col gap-1">
 			{label && (
 				<label htmlFor={id} className="font-bold">
 					{label}
 					{required ? '*' : ''}
 				</label>
 			)}
-			<div className="flex border-black border-2 rounded-lg overflow-hidden">
-				<input
-					id={id}
-					type={type}
-					name={name || id}
-					placeholder={placeholder}
-					onChange={onChange}
-					value={value}
-					className={`py-2 px-4   
-				focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
-					required={required}
-					disabled={disabled}
-				/>
-			</div>
+			<input
+				id={id}
+				type={type}
+				name={name || id}
+				placeholder={placeholder}
+				onChange={onChange}
+				value={value}
+				className={`py-2 px-4 focu:outline outline-[--primaryColor] outline-offset-4 border-black border-2 rounded-lg ${className}`}
+				required={required}
+				disabled={disabled}
+				readOnly={readOnly}
+			/>
 		</div>
 	);
 }
@@ -53,14 +54,14 @@ export function InputBuscar({
 	btnText = 'Buscar',
 }) {
 	return (
-		<div className="flex flex-col gap-1 h-max min-w-[100px] max-w-max">
+		<div className="flex flex-col gap-1">
 			{label && (
 				<label htmlFor={id} className="font-bold">
 					{label}
 					{required ? '*' : ''}
 				</label>
 			)}
-			<div className="flex border-black border-2 rounded-lg overflow-hidden">
+			<div className="flex border-black w-max border-2 rounded-lg overflow-hidden">
 				<input
 					id={id}
 					type={type}
@@ -103,24 +104,55 @@ export function Checkbox({ text, id, value, onChange }) {
 		</div>
 	);
 }
-export function InputFile({
-	id,
-	onChange,
-	accept,
-	required = false,
-	className,
-}) {
+export function InputFile({ id, accept, required = false, className }) {
+	const [image, setImage] = useState(null);
+	const [createObjectURL, setCreateObjectURL] = useState(null);
+	const uploadToClient = (event) => {
+		event.preventDefault();
+		const files = event.target.files || event.dataTransfer.files;
+		if (files && files[0]) {
+			const i = files[0];
+			setImage(i);
+			setCreateObjectURL(URL.createObjectURL(i));
+		}
+	};
+
 	return (
-		<input
-			id={id}
-			type="file"
-			name={id}
-			onChange={onChange}
-			accept={accept}
-			className={`flex h-10 w-max rounded-md border border-black bg-white px-3 py-2 text-sm 
-            text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm 
-			file:font-medium ${className}`}
-			required={required}
-		/>
+		<div>
+			<label
+				htmlFor={id}
+				className={`relative grid place-items-center h-80 w-80 border-dashed border-2
+			 border-black rounded-lg cursor-pointer ${className}`}
+				onDrop={uploadToClient}
+				onDragOver={(event) => {
+					event.preventDefault();
+				}}
+			>
+				{createObjectURL ? (
+					<img
+						src={createObjectURL}
+						alt="imagen de usuario"
+						className="absolute top-0 left-0 w-full h-full object-cover"
+					/>
+				) : (
+					<div className="flex flex-col justify-center items-center ">
+						<IconFileUpload size={128} stroke={1} />
+						<span>Click para subir una imagen</span>
+						<span>o</span>
+						<span>Arrastre una imagen</span>
+					</div>
+				)}
+
+				<input
+					id={id}
+					type="file"
+					name={id}
+					onChange={uploadToClient}
+					accept={accept}
+					className={`hidden`}
+					required={required}
+				/>
+			</label>
+		</div>
 	);
 }

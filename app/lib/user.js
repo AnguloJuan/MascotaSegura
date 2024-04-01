@@ -7,7 +7,7 @@ const anonUser = {
 	idTipoUsuario: 0,
 };
 
-export function GetUser() {
+export async function GetUser() {
 	const cookiesManager = cookies();
 	const token = cookiesManager.get('user');
 

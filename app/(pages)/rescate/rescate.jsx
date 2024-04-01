@@ -19,8 +19,7 @@ export default function Rescate({ especies, idRefugio }) {
 		cartilla: false,
 		idRefugio: idRefugio,
 	});
-	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
+
 	const [fieldsDialog, setFieldsDialog] = useState(false);
 	const [registradoDialog, setRegistradoDialog] = useState(false);
 	const [errorDialog, setErrorDialog] = useState(false);
@@ -46,15 +45,6 @@ export default function Rescate({ especies, idRefugio }) {
 				? (mascota.cartilla = false)
 				: (mascota.cartilla = true);
 			setMascota((prevCriteria) => ({ ...prevCriteria, cartilla: value }));
-		}
-	};
-
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
 		}
 	};
 
@@ -109,24 +99,17 @@ export default function Rescate({ especies, idRefugio }) {
 	};
 
 	return (
-		<section>
+		<>
 			<form className="flex flex-col gap-6">
-				<div className="flex gap-6">
-					<div>
-						<img
-							src={createObjectURL || '/images/dogIcon.png'}
-							alt="upload image"
-							className=" object-contain aspect-video object-top"
-						/>
-
+				<div className="grid grid-cols-2 min-h-[300px] gap-6">
+					<div className="grid place-content-center">
 						<InputFile
 							id="perfil"
-							onChange={uploadToClient}
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 							required
 						/>
 					</div>
-					<div className="w-full">
+					<div className="flex flex-col justify-center gap-7">
 						<Input
 							id="nombre"
 							label="Nombre"
@@ -135,11 +118,13 @@ export default function Rescate({ especies, idRefugio }) {
 							name="nombre"
 							onChange={handleInputChange}
 							required
+							className="w-full"
 						/>
 						<Especies
 							especies={especies}
 							handleChange={handleInputChange}
 							required={true}
+							className="w-full"
 						/>
 						<Input
 							id="raza"
@@ -147,6 +132,7 @@ export default function Rescate({ especies, idRefugio }) {
 							placeholder="Raza"
 							name={'raza'}
 							onChange={handleInputChange}
+							className="w-full"
 						/>
 					</div>
 				</div>
@@ -252,6 +238,6 @@ export default function Rescate({ especies, idRefugio }) {
 				<p>Ha ocurrido un error en el servidor</p>
 				<p>Vuelva a intentarlo más tarde</p>
 			</Dialog>
-		</section>
+		</>
 	);
 }

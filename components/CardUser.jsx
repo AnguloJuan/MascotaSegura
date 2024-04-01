@@ -10,7 +10,7 @@ export default function CardUser({ items }) {
 			<span className="absolute top-2 left-2 bg-[--primaryColor] text-white px-4 py-1 rounded-full">
 				{items.id}
 			</span>
-			<div className="absolute rounded-full bg-gray-500 z-20 left-1/2 top-[44%] h-[110%] w-[110%] -translate-x-1/2"></div>
+			<div className="absolute rounded-full bg-[--primaryColor] z-20 left-1/2 top-[44%] h-[110%] w-[110%] -translate-x-1/2"></div>
 			<div className="para uppercase text-center leading-none z-40">
 				<h1 className="font-bold">{items.nombre} </h1>
 			</div>

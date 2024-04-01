@@ -1,15 +1,19 @@
 'use client';
-import { Input } from '@/components/Inputs';
-import perfilAdoptador from './perfil.module.css';
-import { Estados } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Input, InputFile } from '@/components/Inputs';
+// import { Estados } from '@/components/Selects';
+// import { Municipios } from '@/components/SelectsClient';
 import { useState } from 'react';
-import { Dialog } from '@/components/dialogs';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { setCookie } from 'cookies-next';
+import { IconMenuDeep } from '@tabler/icons-react';
+import Popover from '@/components/Popover';
 
 export default function Perfil({ props }) {
+	console.log(props);
+	const dataUser = JSON.parse(props.user.value);
+	const { imagen, nombre, apellido, correo, telefono, id } = dataUser;
+	// console.log(dataUser);
+
 	//formatting date
 	function pad(num, size) {
 		num = num.toString();
@@ -21,34 +25,9 @@ export default function Perfil({ props }) {
 	const year = new Date(props.user.fechaRegistro).getFullYear();
 	const date = `${year}-${month}-${day}`;
 
-	const [user, setUser] = useState(
-		props.userType == 1
-			? {
-					nombre: props.user.nombre,
-					apellido: props.user.apellido,
-					correo: props.user.correo,
-					telefono: parseInt(props.user.telefono),
-					fechaRegistro: date,
-					estado: props.userEstado.idEstado,
-					municipio: props.userMunicipio,
-			  }
-			: props.user.idTipoUsuario == 2
-			? {
-					correo: props.user.correo,
-					telefono: parseInt(props.user.telefono),
-			  }
-			: {
-					nombre: props.user.nombre,
-					apellido: props.user.apellido,
-					correo: props.user.correo,
-					telefono: parseInt(props.user.telefono),
-					NIP: props.user.NIP,
-					fechaRegistro: date,
-					tipoEmpleado: props.user.idTipoUsuario,
-			  }
-	);
 	const router = useRouter();
 	const userType = props.userType;
+
 	const [unmodified, setUnmodified] = useState(true);
 
 	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
@@ -64,655 +43,50 @@ export default function Perfil({ props }) {
 	const [createObjectURL, setCreateObjectURL] = useState(null);
 	//const date =  new Date(Date.parse(props.user.fechaRegistro)).toLocaleDateString("es-mx", { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric'});
 
-	const handleInputChange = (e) => {
-		setUnmodified(false);
-		const { name, value } = e.target;
-		if (name == 'telefono' && value < 0) {
-			return;
-		}
-		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
-	};
-	const handleEstadoChange = (e) => {
-		setUnmodified(false);
-		const { name, value } = e.target;
-		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
-		// Reset selected municipio when estado user
-		setUser((prevCriteria) => ({ ...prevCriteria, municipio: 0 }));
-		e.target.value
-			? (document.getElementById('municipio').disabled = false)
-			: (document.getElementById('municipio').disabled = true);
-	};
-
-	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
-	};
-
-	const modifyAdoptante = async (e) => {
-		e.preventDefault();
-		if (
-			!user.correo ||
-			!user.telefono ||
-			!user.municipio ||
-			isNaN(user.telefono)
-		) {
-			setInvalidFieldsDialog(true);
-		} else {
-			try {
-				const body = new FormData();
-				BigInt.prototype.toJSON = function () {
-					return this.toString();
-				};
-				body.set('user', JSON.stringify(user));
-				body.set('userType', JSON.stringify(userType));
-				body.set('userInit', JSON.stringify(props.user));
-
-				if (image) {
-					//subir imagen a cloudinary
-					body.set('file', image);
-					body.set('upload_preset', 'mascotaSegura');
-
-					const data = await fetch(
-						'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-						{
-							method: 'POST',
-							body,
-						}
-					).then((r) => r.json());
-
-					body.set('image', data.secure_url);
-				} else {
-					body.set('image', null);
-				}
-
-				const response = await fetch('/api/adoptante', {
-					method: 'PUT',
-					body,
-				});
-				if (response.status == 200) {
-					setModifiedDialog(true);
-					response
-						.json()
-						.then((response) => setCookie('token', response.token));
-					router.refresh();
-					setUnmodified(true);
-				} else {
-					response.json().then((res) => console.log(res.message));
-					setErrorDialog(true);
-				}
-			} catch (error) {
-				console.log(error);
-				setErrorDialog(true);
-			}
-		}
-	};
-
-	const modifyEmpleado = async (e) => {
-		e.preventDefault();
-		//field validation
-		if (userType == 2) {
-			if (!user.correo || !user.telefono) {
-				setInvalidFieldsDialog(true);
-				return;
-			}
-		} else if (userType == 3) {
-			if (
-				!user.nombre ||
-				!user.apellido ||
-				!user.correo ||
-				!user.telefono ||
-				!user.fechaRegistro
-			) {
-				setInvalidFieldsDialog(true);
-				return;
-			}
-		}
-
-		try {
-			const body = new FormData();
-			BigInt.prototype.toJSON = function () {
-				return this.toString();
-			};
-			body.set('user', JSON.stringify(user));
-			body.set('userType', JSON.stringify(userType));
-			body.set('userInit', JSON.stringify(props.user));
-			if (userType == 3) {
-				if (image) {
-					//subir imagen a cloudinary
-					body.set('file', image);
-					body.set('upload_preset', 'mascotaSegura');
-
-					const data = await fetch(
-						'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-						{
-							method: 'POST',
-							body,
-						}
-					).then((r) => r.json());
-
-					body.set('image', data.secure_url);
-				} else {
-					body.set('image', null);
-				}
-			}
-
-			const response = await fetch('/api/empleado', {
-				method: 'PUT',
-				body,
-			});
-			if (response.status == 200) {
-				setModifiedDialog(true);
-				response.json().then((response) => setCookie('token', response.token));
-				router.refresh();
-			} else {
-				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
-				setUnmodified(true);
-			}
-		} catch (error) {
-			console.log(error);
-			setErrorDialog(true);
-		}
-	};
-
-	const deleteAdoptante = async (e) => {
-		setWarningDialog(false);
-		const id = props.user.id;
-		const userType = props.userType;
-		const params = JSON.stringify({ id, userType });
-		const response = await fetch(`/api/adoptante?params=${params}`, {
-			method: 'DELETE',
-		});
-		if (response.status == 200) {
-			setDeletedDialog(true);
-			router.replace('/login');
-		} else if (response.status == 409) {
-			setAdopcionDialog(true);
-		} else {
-			response.json().then((res) => console.log(res.message));
-			setErrorDialog(true);
-		}
-	};
-	const warning = (e) => {
-		e.preventDefault();
-		setWarningDialog(true);
-	};
-
-	return userType == 1 ? (
+	return (
 		<>
-			{/* Perfil adoptante */}
-			<form className="m-3">
-				<h1>Perfil</h1>
-				<div className={perfilAdoptador.datosperfil}>
-					<div className={perfilAdoptador.perfil}>
-						{image ? (
-							<Image
-								width={200}
-								height={200}
-								src={createObjectURL}
-								alt="UploadedImage"
-							/>
-						) : props.user.imagen ? (
-							<Image
-								width={200}
-								height={200}
-								src={props.user.imagen}
-								alt={`ImagenAdoptante${props.user.id}`}
-							/>
-						) : (
-							<Image
-								width={200}
-								height={200}
-								src={'/images/defaultUser.png'}
-								alt="DefaultIcon"
-							/>
-						)}
-						<input
+			<div className="flex py-8 justify-between">
+				<div className="flex gap-8">
+					{imagen ? (
+						<img
+							src={imagen}
+							alt=""
+							loading="lazy"
+							className="size-32 object-cover rounded-full"
+						/>
+					) : (
+						<InputFile
 							id="perfil"
-							type="file"
 							name="perfil"
-							onChange={uploadToClient}
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							className="form-control"
 						/>
-					</div>
-					<Input
-						id={'nombre'}
-						label={'Nombre'}
-						placeholder={'Nombre'}
-						value={user.nombre}
-						disabled
-					/>
-					<Input
-						id={'apellido'}
-						label={'Apellido'}
-						placeholder={'Apellido'}
-						value={user.apellido}
-						disabled
-					/>
-					<Input
-						id={'correo'}
-						label={'Correo electronico'}
-						placeholder={'Correo electrónico'}
-						onChange={handleInputChange}
-						name={'correo'}
-						value={user.correo}
-					/>
-					<Input
-						id={'telefono'}
-						label={'Numero de telefono'}
-						placeholder={'Numero de telefono'}
-						onChange={handleInputChange}
-						name={'telefono'}
-						value={user.telefono}
-					/>
-					<div className={perfilAdoptador.datosperfil}>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="estado" className="form-label">
-								Estado
-							</label>
-							<Estados
-								handleChange={handleEstadoChange}
-								estados={props.estados}
-								value={user.estado}
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="municipio" className="form-label">
-								Municipio
-							</label>
-							<Municipios
-								handleChange={handleInputChange}
-								municipiosInicial={props.municipios}
-								selectedEstado={user.estado}
-								value={user.municipio}
-							/>
-						</div>
-					</div>
-					<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
-						<button
-							type="submit"
-							className="btn btn-primary btn-lg"
-							onClick={modifyAdoptante}
-							disabled={unmodified}
-						>
-							Guardar
-						</button>
-						<button
-							type="submit"
-							className="btn btn-danger btn-lg"
-							onClick={warning}
-						>
-							Eliminar cuenta
-						</button>
+					)}
+					<div className="">
+						<h2 className="text-3xl">
+							{nombre} {apellido}
+						</h2>
+						<h2 className="text-lg">{correo}</h2>
+						<h2 className="text-lg">{telefono}</h2>
 					</div>
 				</div>
-			</form>
-
-			<Dialog
-				id={'errorCorreo'}
-				isOpen={errorCorreoDialog}
-				onClose={() => setErrorCorreoDialog(false)}
-			>
-				<h1>Error de correo</h1>
-				<p>
-					No se puedieron guardar los cambios porque ya se existe una cuenta con
-					ese correo
-				</p>
-			</Dialog>
-			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h1>Error valores invalidos</h1>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>El campo correo, y telefono no puede quedar vacio</p>
-				<p>El campo estado y municipio debe haber seleccionado una opción</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h1>Error de modificación</h1>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h1>Se han guardado los cambios</h1>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'deleted'}
-				isOpen={deletedDialog}
-				onClose={() => setDeletedDialog(false)}
-			>
-				<h1>Cuenta eliminada</h1>
-				<p>Se ha eliminado su cuenta de la pagina</p>
-				<p>Sera redirigido a la pagina Inicar sesión</p>
-			</Dialog>
-			<Dialog
-				id={'warning'}
-				isOpen={warningDialog}
-				onClose={() => setWarningDialog(false)}
-				fun={deleteAdoptante}
-				confirmar={true}
-			>
-				<h1>Advertencia</h1>
-				<p>
-					Estas apunto de eliminar su cuenta de la pagina
-					<br />
-					Esta acción sera irreversible
-				</p>
-				<p>Haga clic en confirmar para continuar</p>
-			</Dialog>
-			<Dialog
-				id={'adopcion'}
-				isOpen={adopcionDialog}
-				onClose={() => setAdopcionDialog(false)}
-			>
-				<h1>Error al eliminar cuenta</h1>
-				<p>Se ha encontrado que tiene al menos una mascota adoptada</p>
-				<p>No puede eliminar la cuenta si ha adoptado a una mascota</p>
-				<p>
-					Cancele la adopción y devuelva la mascota al refugio si quiere
-					eliminar la cuenta
-				</p>
-			</Dialog>
-		</>
-	) : userType == 2 ? (
-		<>
-			<form className="m-3">
-				<div className="perfilEmpleado">
-					<h1>Perfil</h1>
-					<div className="datos-empleado">
-						<div className={perfilAdoptador.perfil}>
-							{props.user.imagen ? (
-								<Image
-									width={200}
-									height={200}
-									src={props.user.imagen}
-									alt={`ImagenEmpleado${props.user.id}`}
-								/>
-							) : (
-								<Image
-									width={200}
-									height={200}
-									src={'/images/defaultUser.png'}
-									alt="DefaultIcon"
-								/>
-							)}
-						</div>
-						<Input
-							id={'nombre'}
-							label={'Nombre'}
-							name={'nombre'}
-							value={props.user.nombre}
-							disabled
-						/>
-						<Input
-							id={'apellido'}
-							label={'Apellido'}
-							name={'apellido'}
-							value={props.user.apellido}
-							disabled
-						/>
-						<Input
-							id={'correo'}
-							label={'Correo electronico'}
-							name={'correo'}
-							value={user.correo}
-							onChange={handleInputChange}
-						/>
-						<Input
-							id={'numero'}
-							type={'number'}
-							label={'Numero de telefono'}
-							placeholder={'Numero de telefono'}
-							name={'telefono'}
-							value={user.telefono}
-							onChange={handleInputChange}
-						/>
-						<Input
-							id={'NIP'}
-							label={'NIP'}
-							name={'nip'}
-							value={props.user.NIP}
-							disabled
-						/>
-						<Input
-							id={'fecRegistro'}
-							type={'text'}
-							label={'Fecha de registro'}
-							name={'fechaRegistro'}
-							disabled
-							value={new Date(
-								Date.parse(props.user.fechaRegistro)
-							).toLocaleDateString('es-mx', {
-								weekday: 'long',
-								year: 'numeric',
-								month: 'short',
-								day: 'numeric',
-							})}
-						/>
-						<Input
-							id={'tipoEmpleado'}
-							label={'Tipo empleado'}
-							name={'tipoEmpleado'}
-							value={'Empleado'}
-							disabled
-						/>
-						<button
-							className="btn btn-primary m-2"
-							type="submit"
-							disabled={unmodified}
-							onClick={modifyEmpleado}
-						>
-							Guardar
-						</button>
-					</div>
+				<div>
+					<Popover
+						options={[
+							{
+								element: 'Actualizar Mis Datos',
+								action: () => console.log('eliminar'),
+							},
+							{
+								element: 'Eliminar Mi Cuenta',
+								action: () => console.log('eliminar'),
+								className: 'bg-red-600 hover:bg-red-500',
+							},
+						]}
+					>
+						<IconMenuDeep size={30} />
+					</Popover>
 				</div>
-			</form>
-
-			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h1>Error valores invalidos</h1>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>El campo correo, y telefono no puede quedar vacio</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h1>Error de modificación</h1>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h1>Se han guardado los cambios</h1>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
+			</div>
 		</>
-	) : (
-		userType == 3 && (
-			<>
-				<form className="m-3">
-					<div className="perfilEmpleado">
-						<h1>Perfil</h1>
-						<div className="datos-empleado">
-							<div className={perfilAdoptador.perfil}>
-								{image ? (
-									<Image
-										width={200}
-										height={200}
-										src={createObjectURL}
-										alt="UploadedImage"
-									/>
-								) : props.user.imagen ? (
-									<Image
-										width={200}
-										height={200}
-										src={props.user.imagen}
-										alt={`ImagenEmpleado${props.user.id}`}
-									/>
-								) : (
-									<Image
-										width={200}
-										height={200}
-										src={'/images/defaultUser.png'}
-										alt="DefaultIcon"
-									/>
-								)}
-								<input
-									id="perfil"
-									type="file"
-									name="perfil"
-									onChange={uploadToClient}
-									accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-									className="form-control"
-								/>
-							</div>
-
-							<Input
-								id={'nombre'}
-								label={'Nombre'}
-								name={'nombre'}
-								value={user.nombre}
-								onChange={handleInputChange}
-							/>
-							<Input
-								id={'apellido'}
-								label={'Apellido'}
-								name={'apellido'}
-								value={user.apellido}
-								onChange={handleInputChange}
-							/>
-							<Input
-								id={'correo'}
-								label={'Correo electronico'}
-								name={'correo'}
-								value={user.correo}
-								onChange={handleInputChange}
-							/>
-							<Input
-								id={'numero'}
-								type={'number'}
-								label={'Numero de telefono'}
-								placeholder={'Numero de telefono'}
-								name={'telefono'}
-								value={user.telefono}
-								onChange={handleInputChange}
-							/>
-							<Input
-								id={'NIP'}
-								label={'NIP'}
-								name={'nip'}
-								value={user.NIP}
-								onChange={handleInputChange}
-								disabled
-							/>
-							<Input
-								id={'fecRegistro'}
-								type={'date'}
-								label={'Fecha de registro'}
-								name={'fechaRegistro'}
-								value={user.fechaRegistro}
-								onChange={handleInputChange}
-								disabled
-							/>
-							<Input
-								id={'tipoEmpleado'}
-								label={'Tipo empleado'}
-								name={'tipoEmpleado'}
-								value={'Administrador'}
-								disabled
-							/>
-							<center>
-								<button
-									className="btn btn-primary m-2 btn-lg"
-									type="submit"
-									disabled={unmodified}
-									onClick={modifyEmpleado}
-								>
-									Guardar
-								</button>
-							</center>
-						</div>
-					</div>
-				</form>
-
-				<Dialog
-					id={'invalidField'}
-					isOpen={invalidFieldsDialog}
-					onClose={() => setInvalidFieldsDialog(false)}
-				>
-					<h1>Error valores invalidos</h1>
-					<p>No se pueden modificar datos con valores invalidos</p>
-					<p>Los campos no pueden quedar vacios</p>
-				</Dialog>
-				<Dialog
-					id={'unmodified'}
-					isOpen={unmodifiedDialog}
-					onClose={() => setUnmodifiedDialog(false)}
-				>
-					<h1>Error de modificación</h1>
-					<p>No se ha registrado ningun cambio</p>
-				</Dialog>
-				<Dialog
-					id={'modified'}
-					isOpen={modifiedDialog}
-					onClose={() => setModifiedDialog(false)}
-				>
-					<h1>Se han guardado los cambios</h1>
-					<p>
-						Los cambios han sido guardados correctamente en la base de datos
-					</p>
-				</Dialog>
-				<Dialog
-					id={'error'}
-					isOpen={errorDialog}
-					onClose={() => setErrorDialog(false)}
-				>
-					<h1>Error de servidor</h1>
-					<p>Ha ocurrido un error en el servidor</p>
-					<p>Vuelva a intentarlo más tarde</p>
-				</Dialog>
-			</>
-		)
 	);
 }

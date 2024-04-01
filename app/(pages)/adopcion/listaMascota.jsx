@@ -3,7 +3,6 @@ import { Suspense, useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
 import listaMascotas from './mascota.module.css';
 import { Input, InputBuscar } from '@/components/Inputs';
-import Loading from './loading';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
 import { Especies, Raza, Select, Sexos } from '@/components/Selects';
@@ -120,22 +119,20 @@ export default function ListaMascota({
 				/>
 			</div>
 
-			<Suspense fallback={<Loading />}>
-				{mascotas.length !== 0 ? (
-					<div className="flex flex-wrap justify-center gap-6 mt-5">
-						<Each
-							of={mascotas}
-							render={(item) => (
-								<CardMascota href={`/adopcion/mascota/${item.id}`} {...item} />
-							)}
-						/>
-					</div>
-				) : (
-					<center>
-						<h3 className="mt-3">No se encontraron resultados</h3>
-					</center>
-				)}
-			</Suspense>
+			{mascotas.length !== 0 ? (
+				<div className="flex flex-wrap justify-center gap-6 mt-5">
+					<Each
+						of={mascotas}
+						render={(item) => (
+							<CardMascota href={`/adopcion/mascota/${item.id}`} {...item} />
+						)}
+					/>
+				</div>
+			) : (
+				<center>
+					<h3 className="mt-3">No se encontraron resultados</h3>
+				</center>
+			)}
 		</section>
 	);
 }

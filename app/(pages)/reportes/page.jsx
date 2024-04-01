@@ -29,9 +29,7 @@ export default async function page() {
 
 	return (
 		<>
-			<center>
-				<h1>Lista de reportes</h1>
-			</center>
+			<h1 className="text-7xl">Lista de reportes</h1>
 			<div className="btn p-0 w-100 btn-primary">
 				<Link
 					href={'/dashboard'}
@@ -56,7 +54,6 @@ export default async function page() {
 					<span className="fw-bold fs-4 mx-2">!</span>Reportar un caso
 				</Link>
 			</center>
-
 			<ListaReportes props={props} />
 		</>
 	);
