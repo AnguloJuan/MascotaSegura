@@ -23,18 +23,20 @@ export function Input({
 					{required ? '*' : ''}
 				</label>
 			)}
-			<input
-				id={id}
-				type={type}
-				name={name || id}
-				placeholder={placeholder}
-				onChange={onChange}
-				value={value}
-				className={`py-2 px-4 focu:outline outline-[--primaryColor] outline-offset-4 border-black border-2 rounded-lg ${className}`}
-				required={required}
-				disabled={disabled}
-				readOnly={readOnly}
-			/>
+			<div className="flex border-black border-2 rounded-lg overflow-hidden">
+				<input
+					id={id}
+					type={type}
+					name={name || id}
+					placeholder={placeholder}
+					onChange={onChange}
+					value={value}
+					className={`py-2 px-4   
+				focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
+					required={required}
+					disabled={disabled}
+				/>
+			</div>
 		</div>
 	);
 }

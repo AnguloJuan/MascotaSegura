@@ -11,6 +11,7 @@ export async function GetUser() {
 	const cookiesManager = cookies();
 	const token = cookiesManager.get('user');
 
+	if (!token) return anonUser;
 	if (token.value !== '') {
 		try {
 			// Verify and decode the JWT token

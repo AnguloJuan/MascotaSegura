@@ -1,7 +1,7 @@
 'use client';
 import rescate from './rescate.module.css';
 import visualizar from '../../mascota.module.css';
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import { Especies, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';
@@ -206,11 +206,11 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 							</label>
 							<Especies
 								especies={especies}
-								handleChange={handleInputChange}
+								onChange={handleInputChange}
 								value={mascota.especie}
 							/>
 						</div>
-						<InputLabel
+						<Input
 							id={'raza'}
 							label={'Raza'}
 							placeholder={'Raza'}
@@ -223,7 +223,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 
 				<div className={rescate.contenedor}>
 					<div className={rescate.busqueda}>
-						<InputLabel
+						<Input
 							id={'edad'}
 							type={'number'}
 							label={'Edad'}
@@ -238,14 +238,14 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 						<label htmlFor="sexo" className="form-label">
 							Sexo
 						</label>
-						<Sexos handleChange={handleInputChange} value={mascota.sexo} />
+						<Sexos onChange={handleInputChange} value={mascota.sexo} />
 					</div>
 
 					<div className={rescate.busqueda}>
 						<label htmlFor="tamano" className="form-label">
 							Tamaño
 						</label>
-						<Tamanos handleChange={handleInputChange} value={mascota.tamano} />
+						<Tamanos onChange={handleInputChange} value={mascota.tamano} />
 					</div>
 				</div>
 				<div className={rescate.cartilla}>
