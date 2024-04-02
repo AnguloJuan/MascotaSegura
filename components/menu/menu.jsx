@@ -1,5 +1,4 @@
 import { GetUser } from '@/app/lib/user';
-import menu from './menu.module.css';
 import Option from './menuOption';
 import Link from 'next/link';
 import {
@@ -16,7 +15,7 @@ import {
 export default async function Menu() {
 	const user = GetUser();
 	return (
-		<aside className={`${menu.aside} py-9 z-50`}>
+		<aside className={`bg-[--primaryColor] h-screen min-w-min px-5 py-9 z-50`}>
 			<nav className="flex flex-col gap-20">
 				<Logo />
 				<ul className="flex flex-col gap-3 px-4">

@@ -6,11 +6,14 @@ import Loading from './loading';
 export default async function RootLayout({ children }) {
 	return (
 		<AuthProvider>
-			<Menu />
-			<div className="w-[240px]" />
-			<Suspense fallback={<Loading />}>
-				<main className="px-10 py-6">{children}</main>
-			</Suspense>
+			<main className="flex h-screen overflow-hidden">
+				<Menu />
+				<Suspense fallback={<Loading />}>
+					<section className="px-10 py-6 overflow-y-auto w-full">
+						{children}
+					</section>
+				</Suspense>
+			</main>
 		</AuthProvider>
 	);
 }
