@@ -23,7 +23,7 @@ export default function CardMascota({ href, src, id, nombre, edad, sexo }) {
 						</div>
 						<div className="flex gap-1">
 							<h2 className="font-bold">Sexo:</h2>
-							<span>{sexo.sexo}</span>
+							{/* <span>{sexo.sexo}</span> */}
 						</div>
 					</div>
 				</div>

@@ -10,17 +10,17 @@ const anonUser = {
 };
 
 export async function GET(req) {
-  const token = req.cookies.get('user');
-  
-  if (!token) {
-    return NextResponse.json({ user: anonUser }, { status: 200 });
-  }
-  
-  try {
-    const user = jwt.verify(token.value, SECRET_KEY);
-    return NextResponse.json({ user }, { status: 200 });
-  } catch (err) {
-    console.log(err);
-    return NextResponse.json({ user: null }, { status: 200 });
-  }
+	const token = req.cookies.get('user');
+
+	if (!token) {
+		return NextResponse.json({ user: anonUser }, { status: 200 });
+	}
+
+	try {
+		const user = jwt.verify(token.value, SECRET_KEY);
+		return NextResponse.json({ user }, { status: 200 });
+	} catch (err) {
+		console.log(err);
+		return NextResponse.json({ user: null }, { status: 200 });
+	}
 }
