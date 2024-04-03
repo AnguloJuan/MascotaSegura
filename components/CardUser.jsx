@@ -1,9 +1,14 @@
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function CardUser({ items }) {
+	// Get the current url
+	const route = usePathname();
+	const url = route.includes('empleados') ? `/empleados/empleado/${items.id}` : `/adoptantes/adoptante/${items.id}`;
+	
 	return (
 		<Link
-			href={`/empleados/empleado/${items.id}`}
+			href={url}
 			className="max-w-[300px] w-full rounded-md shadow-lg shadow-zinc-600 overflow-hidden relative 
             shrink-0 py-8 px-6 bg-zinc-100 flex flex-col items-center justify-center gap-3 transition-all duration-300 group"
 		>
