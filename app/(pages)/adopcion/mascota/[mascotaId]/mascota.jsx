@@ -1,6 +1,5 @@
 'use client';
 import rescate from './rescate.module.css';
-import visualizar from '../../mascota.module.css';
 import { Input } from '@/components/Inputs';
 import { Especies, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
@@ -153,8 +152,8 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 		<>
 			<form>
 				<h3>Id: {mascotaInicial.id}</h3>
-				<div className={rescate.contenedorAdoptante}>
-					<div className={rescate.perfil}>
+				<div className="">
+					<div className="">
 						{image ? (
 							<Image
 								width={200}
@@ -162,19 +161,12 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 								src={createObjectURL}
 								alt="UploadedImage"
 							/>
-						) : mascotaInicial.imagen ? (
-							<Image
-								width={200}
-								height={200}
-								src={mascotaInicial.imagen}
-								alt={`ImagenMascota${mascota.id}`}
-							/>
 						) : (
 							<Image
 								width={200}
 								height={200}
-								src={'/images/dogIcon.png'}
-								alt="DefaultIcon"
+								src={mascotaInicial.imagen || '/images/dogIcon.png'}
+								alt={`ImagenMascota${mascota.id}`}
 							/>
 						)}
 						<input
@@ -186,7 +178,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 							className="form-control"
 						/>
 					</div>
-					<div className={rescate.informacion}>
+					<div className="">
 						<div className="input mb-3">
 							<label htmlFor="nombre" className="form-label">
 								Nombre

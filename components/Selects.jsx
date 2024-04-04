@@ -3,9 +3,6 @@ import { Each } from './Each';
 export function Especies({ onChange, especies, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
-			<label htmlFor="especies" className="font-bold">
-				Especie {required ? '*' : ''}
-			</label>
 			<select
 				id="especies"
 				onChange={onChange}

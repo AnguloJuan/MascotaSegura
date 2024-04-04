@@ -1,7 +1,6 @@
 'use client';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
-import listaMascotas from './mascota.module.css';
 import { Input, InputBuscar } from '@/components/Inputs';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
@@ -65,8 +64,8 @@ export default function ListaMascota({
 	return (
 		<section className="relative">
 			<div
-				className={`fixed h-screen top-0 -z-1 ${
-					openFilter ? 'left-[240px]' : '-left-full'
+				className={`fixed h-screen top-0 -z-10 ${
+					openFilter ? 'left-0' : '-left-full'
 				}  bg-white z-50 px-12 py-6 shadow-2xl transition-[left] duration-500`}
 			>
 				<button
@@ -100,7 +99,7 @@ export default function ListaMascota({
 							onChange={handleInputChange}
 						/>
 					</div>
-					<div className={listaMascotas.busqueda}>
+					<div className="contents">
 						<Sexos handleChange={handleInputChange} />
 					</div>
 				</div>

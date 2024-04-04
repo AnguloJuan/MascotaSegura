@@ -1,8 +1,6 @@
 import { GetMascota } from '@/app/lib/getMascota';
 import Adoptar from './adoptar';
 import { GetUser } from '@/app/lib/user';
-import visualizar from '../../mascota.module.css';
-import Image from 'next/image';
 import { getPrisma } from '@/app/lib/prisma';
 import MascotaPage from './mascota';
 import Cancelar from './cancelarAdopcion';
@@ -22,87 +20,49 @@ export default async function Page({ params }) {
             id: mascota.idRefugio,
         }
     })*/
-	const user = GetUser();
+	const user = await GetUser();
 	const userId = user.id;
 	const userType = user.idTipoUsuario;
 	return (
 		<>
 			<center>
-				<h1>Información de la mascota</h1>
+				<h1 className="text-5xl">Información de la mascota</h1>
 			</center>
-
 			{userType == 2 || userType == 3 ? (
 				<MascotaPage especies={especies} mascotaInicial={mascota} />
 			) : (
-				<div className="mt-2 mx-2 p-3 border rounded">
-					<div className={visualizar.contenedorAdoptante}>
-						<div className={`${visualizar.perfil}`}>
-							{mascota.imagen ? (
-								<Image
-									src={mascota.imagen}
-									alt="mascota.png"
-									width={200}
-									height={200}
-								/>
-							) : (
-								<Image
-									src={'/images/dogIcon.png'}
-									alt="mascota.png"
-									width={200}
-									height={200}
-									objectFit="cover"
-								/>
-							)}
-						</div>
-
-						<div className={`${visualizar.informacion} mx-2`}>
-							<p>Nombre: {mascota.nombre}</p>
-							<p>Especie: {mascota.especie.especie}</p>
-							<p>Raza: {mascota.raza}</p>
-						</div>
+				<div
+					className={`relative flex flex-col justify-end pt-3 overflow-hidden border rounded-lg bg-contain h-full w-full bg-no-repeat bg-center`}
+					style={{
+						backgroundImage: `url(${mascota.imagen || '/images/dogIcon.png'})`,
+					}}
+				>
+					<span className="absolute top-3 left-3 bg-[--primaryColor] p-2 rounded-lg text-3xl text-white">
+						{mascota.nombre}
+					</span>
+					<div className="absolute flex flex-col gap-1 top-3 right-3 *:min-w-max *:bg-[--primaryColor] *:p-2 *:rounded-lg text-2xl text-white *:text-center">
+						<span>
+							{mascota.cartilla
+								? 'Con cartilla de vacunación'
+								: 'Sin cartilla de vacunación'}
+						</span>
+						<span>
+							{mascota.maltratado
+								? 'Ha sido maltratado'
+								: 'No ha sido maltratado'}
+						</span>
 					</div>
-					<div
-						className={`${visualizar.contenedor} my-2 justify-space-between`}
-					>
-						<p>Edad: {mascota.edad}</p>
-						<p>Sexo: {mascota.sexo.sexo}</p>
-						<p>Tamaño: {mascota.tamano.tamano}</p>
-					</div>
-
-					<div
-						className={`${visualizar.contendor} d-flex justify-content-around mb-2`}
-					>
-						<div className="d-flex gap-1">
-							<p>Ha sido maltratado? {mascota.maltratado ? 'Sí' : 'No'}</p>
-							<input
-								type="checkbox"
-								name="maltratado"
-								id="maltratado"
-								checked={mascota.maltratado}
-								className="form-check-input"
-								disabled
-							/>
-						</div>
-						<div className="d-flex gap-1">
-							<p className={visualizar.cartilla}>
-								{' '}
-								Cuenta con cartilla de vacunación:{' '}
-								{mascota.cartilla ? 'Sí' : 'No'}{' '}
-							</p>
-							<input
-								type="checkbox"
-								name="cartilla"
-								id="cartilla"
-								checked={mascota.cartilla}
-								className="form-check-input"
-								disabled
-							/>
+					<div className="flex flex-col gap-5 bg-[--primaryColor] p-3 text-2xl text-white">
+						<div className="flex justify-center gap-4 ">
+							<p>{mascota.especie.especie}</p>-<p>{mascota.raza}</p>-
+							<p>{mascota.edad} años</p>-<p>{mascota.sexo.sexo}</p>-
+							<p>{mascota.tamano.tamano}</p>
 						</div>
 					</div>
 					{/* Muestra adoptante 
                         {mascota.adopcion && (
-                            <div className={visualizar.contenedorAdoptante}>
-                                <div className={visualizar.perfil}>
+                            <div className={edorAdoptante}>
+                                <div className={}>
                                     <Image
                                         src={"/images/adoptante1.jpg"}
                                         alt='mascota.png'
@@ -110,7 +70,7 @@ export default async function Page({ params }) {
                                         height={200}
                                     />
                                 </div>
-                                <div className={visualizar.informacion}>
+                                <div className={acion}>
                                     <h3>Persona adoptante</h3>
                                     <p>id: {mascota.adopcion.adoptante.id}</p>
                                     <p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
@@ -131,7 +91,7 @@ export default async function Page({ params }) {
 					mascota.adopcion.estadoAdopcion.id == 3 &&
 					mascota.adopcion.adoptante.id == userId ? (
 						<>
-							<div className={visualizar.buton}>
+							<div className="">
 								<Cancelar
 									idAdopcion={mascota.adopcion.id}
 									idAdoptante={mascota.adopcion.adoptante.id}
@@ -141,15 +101,14 @@ export default async function Page({ params }) {
 						</>
 					) : (
 						!mascota.adopcion && (
-							<div className={`${visualizar.buton} my-2 mt-4 `}>
+							<div className="">
 								<Adoptar mascotaId={mascota.id} adoptanteId={userId} />
 							</div>
 						)
 					)}
 
-					<br />
 					{(mascota.motivo || mascota.historialAdoptivo.length !== 0) && (
-						<div className={visualizar.contenedordatos}>
+						<div className={edordatos}>
 							<p>Anteriores adopciones</p>
 							<p>Motivos de abandono</p>
 							{mascota.motivo && (

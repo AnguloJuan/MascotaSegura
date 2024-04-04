@@ -136,7 +136,7 @@ export default function Rescate({ especies, idRefugio }) {
 						/>
 					</div>
 				</div>
-				<div className="flex gap-6">
+				<div className="flex items-end gap-6">
 					<Input
 						id="edad"
 						type="number"

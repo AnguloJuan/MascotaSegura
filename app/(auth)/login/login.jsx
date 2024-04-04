@@ -22,7 +22,7 @@ export default function LogIn() {
 					label={'Correo electrónico'}
 					placeholder={'Correo electrónico'}
 					onChange={(e) => setEmail(e.target.value)}
-					className="w-full"
+					className="w-90"
 				/>
 
 				<Input
@@ -31,15 +31,17 @@ export default function LogIn() {
 					label={'Contraseña'}
 					placeholder={'Contraseña'}
 					onChange={(e) => setPassword(e.target.value)}
-					className="w-full"
+					className="w-90"
 				/>
 
 				<button
-					type='button'
-					onClick={() => logIn(email, password, {
-						setIsDialogUnfilledFields,
-						setIsDialogFailedLogin,
-					})}
+					type="button"
+					onClick={() =>
+						logIn(email, password, {
+							setIsDialogUnfilledFields,
+							setIsDialogFailedLogin,
+						})
+					}
 					className="bg-[--primaryColor] w-full py-2 rounded-lg text-white font-bold hover:bg-[#7266f5] transition-colors"
 				>
 					Iniciar sesión

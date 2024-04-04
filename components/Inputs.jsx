@@ -1,11 +1,15 @@
 'use client';
-import { IconFileUpload, IconSearch } from '@tabler/icons-react';
+import {
+	IconEye,
+	IconEyeClosed,
+	IconFileUpload,
+	IconSearch,
+} from '@tabler/icons-react';
 import { useState } from 'react';
 
 export function Input({
 	id,
 	type = 'text',
-	label,
 	placeholder,
 	onChange,
 	name,
@@ -15,28 +19,33 @@ export function Input({
 	className,
 	readOnly = false,
 }) {
+	const [isShowpassword, setIsShowPassword] = useState(false);
+
+	const handleType = (e) => {
+		e.preventDefault();
+		setIsShowPassword(!isShowpassword);
+	};
+
 	return (
-		<div className="flex flex-col gap-1">
-			{label && (
-				<label htmlFor={id} className="font-bold">
-					{label}
-					{required ? '*' : ''}
-				</label>
+		<div className="flex border-black border-2 rounded-lg overflow-hidden min-w-min w-full h-min">
+			<input
+				id={id}
+				type={type != 'password' ? type : isShowpassword ? 'text' : 'password'}
+				name={name}
+				placeholder={placeholder}
+				onChange={onChange}
+				value={value}
+				className={`py-2 px-4 w-full
+				outline-none  ${className}`}
+				required={required}
+				disabled={disabled}
+				readOnly={readOnly}
+			/>
+			{type == 'password' && (
+				<button className="mr-2" onClick={handleType}>
+					{isShowpassword ? <IconEye /> : <IconEyeClosed />}
+				</button>
 			)}
-			<div className="flex border-black border-2 rounded-lg overflow-hidden">
-				<input
-					id={id}
-					type={type}
-					name={name || id}
-					placeholder={placeholder}
-					onChange={onChange}
-					value={value}
-					className={`py-2 px-4   
-				focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
-					required={required}
-					disabled={disabled}
-				/>
-			</div>
 		</div>
 	);
 }
