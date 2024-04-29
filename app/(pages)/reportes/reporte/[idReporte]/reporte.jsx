@@ -1,5 +1,5 @@
 'use client';
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import style from '../../reporte.module.css';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
@@ -163,7 +163,7 @@ export default function Reporte({ props }) {
 								/>
 							</div>
 						</center>
-						<InputLabel
+						<Input
 							id={'fecRegistro'}
 							type={'date'}
 							label={'Fecha de registro'}
