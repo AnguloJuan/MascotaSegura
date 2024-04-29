@@ -15,7 +15,7 @@ export const metadata = {
 
 export default async function ReportePage({ params }) {
     const { idReporte } = params;
-    const user = GetUser();
+    const user = await GetUser();
     const userType = user.idTipoUsuario;
     const reporte = await prisma.reporte.findUnique({
         where: {

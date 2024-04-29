@@ -9,7 +9,7 @@ export const metadata = {
 }
 
 export default async function ReportarPage() {
-    const user = GetUser();
+    const user = await GetUser();
     const estados = await prisma.estado.findMany();
 
     const props = { user, estados }

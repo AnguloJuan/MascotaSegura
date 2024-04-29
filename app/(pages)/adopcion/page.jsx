@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function Adopcion() {
-	const user = GetUser();
+	const user = await GetUser();
 	const mascotas = await prisma.mascota.findMany({
 		include: {
 			sexo: true,
