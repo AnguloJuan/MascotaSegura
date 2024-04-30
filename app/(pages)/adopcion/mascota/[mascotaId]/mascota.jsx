@@ -26,6 +26,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 			? mascotaInicial.adopcion.estadoAdopcion.id
 			: null,
 		imagen: mascotaInicial.imagen,
+		adopcion: mascotaInicial.adopcion,
 	});
 
 	const [image, setImage] = useState(null);
@@ -351,7 +352,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 							idMascota={mascotaInicial.id}
 						/>
 
-						<DescargarDocumentoAdopcion mascota={mascota} />
+						<DescargarDocumentoAdopcion mascota={mascotaInicial} />
 
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (

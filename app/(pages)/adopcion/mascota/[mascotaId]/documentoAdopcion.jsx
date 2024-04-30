@@ -1,43 +1,49 @@
 import { useRef, useEffect, useState } from 'react';
 import jsPDF from 'jspdf';
+import convertDate from '@/app/lib/convertDate';
 
 export default function DescargarDocumentoAdopcion({ mascota }) {
-    const dialogRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        if (isOpen && dialogRef.current) {
-            dialogRef.current.showModal();
-        } else if (!isOpen && dialogRef.current) {
-            dialogRef.current.close();
-        }
-    }, [isOpen]);
-
     const generatePdf = () => {
         //generate pdf
+        const adoptante = mascota.adopcion.adoptante;
+        const fechaAdopcion = convertDate(mascota.adopcion.fechaCreada);
         const doc = new jsPDF();
-        doc.text('Documento de adopción', 10, 10);
-        doc.text('Datos del adoptante:', 10, 20);
-        doc.text('Nombre: ', 10, 30);
-        doc.text('Apellidos: ', 10, 40);
-        doc.text('DNI: ', 10, 50);
-        doc.text('Dirección: ', 10, 60);
-        doc.text('Teléfono: ', 10, 70);
-        doc.text('Email: ', 10, 80);
-        doc.text('Datos de la mascota:', 10, 20);
-        doc.text(`Nombre: ${mascota.nombre}`, 10, 10);
-        doc.text(`Edad: ${mascota.edad}`, 10, 20);
-        doc.text(`Especie: ${mascota.especie}`, 10, 30);
-        doc.text(`Raza: ${mascota.raza}`, 10, 40);
-        doc.text(`Sexo: ${mascota.sexo}`, 10, 50);
-        doc.text(`Tamaño: ${mascota.tamano}`, 10, 60);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(20);
+        doc.text('Documento de adopción', 60, 20);
+        
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('Datos del adoptante', 10, 30);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.text(`Nombre: ${adoptante.nombre}`, 10, 40);
+        doc.text(`Apellidos: ${adoptante.apellido}`, 10, 50);
+        doc.text(`Dirección: ${adoptante.municipio.nombre}, ${adoptante.municipio.estado.nombre}`, 10, 60);
+        doc.text(`Teléfono: ${adoptante.telefono}`, 10, 70);
+        doc.text(`Email: ${adoptante.correo}`, 10, 80);
+
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('Datos de la mascota:', 10, 100);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.text(`Nombre: ${mascota.nombre}`, 10, 110);
+        doc.text(`Edad: ${mascota.edad}`, 10, 120);
+        doc.text(`Especie: ${mascota.especie.especie}`, 10, 130);
+        doc.text(`Raza: ${mascota.raza}`, 10, 140);
+        doc.text(`Sexo: ${mascota.sexo.sexo}`, 10, 150);
+        doc.text(`Tamaño: ${mascota.tamano.tamano}`, 10, 160);
+        doc.text(`Fecha de adopción: ${fechaAdopcion}`, 10, 170);
+        doc.text('Firma del adoptante: __________________________', 10, 260);
         //Download the document
         // doc.save('documentoAdopcion.pdf');
         //print pdf
         doc.autoPrint();
         doc.output('dataurlnewwindow');
-
-        setIsOpen(false);
     };
 
     return (
