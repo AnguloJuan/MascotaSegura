@@ -37,8 +37,21 @@ export default function DescargarDocumentoAdopcion({ mascota }) {
         doc.text(`Raza: ${mascota.raza}`, 10, 140);
         doc.text(`Sexo: ${mascota.sexo.sexo}`, 10, 150);
         doc.text(`Tamaño: ${mascota.tamano.tamano}`, 10, 160);
+        doc.text(`Maltratado: ${mascota.maltratado ? 'Si' : 'No'}`, 10, 170);
+        doc.text(`Descripción: ${mascota.descripcion}`, 10, 180);
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.text('Compromiso del adoptante:', 10, 190);
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(12);
+        doc.text('Me comprometo a encargarme de esta mascota, cuidarloy quererlo, n\
+        atender todas sus necesidades, protegerlo y tener sus vacunas al dia')
+
         doc.text(`Fecha de adopción: ${fechaAdopcion}`, 10, 170);
-        doc.text('Firma del adoptante: __________________________', 10, 260);
+        doc.text('Firma del adoptante: ____________________', 10, 260);
+        doc.text('Firma del refugio: ____________________', 110, 260);
         //Download the document
         // doc.save('documentoAdopcion.pdf');
         //print pdf
