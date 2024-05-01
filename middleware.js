@@ -11,7 +11,7 @@ export async function middleware(request) {
 	if (user.idTipoUsuario == 0) return NextResponse.redirect(new URL('/login', request.url));
 	if (request.nextUrl.pathname.startsWith('/adoptantes') && user.idTipoUsuario !== 3) return NextResponse.redirect(new URL('/not-found', request.url));
 	if (request.nextUrl.pathname.startsWith('/empleados') && user.idTipoUsuario !== 3) return NextResponse.redirect(new URL('/not-found', request.url));
-	if (request.nextUrl.pathname.startsWith('/rescate') && (user.idTipoUsuario !== 3 || user.idTipoUsuario !== 2)) return NextResponse.redirect(new URL('/not-found', request.url));
+	if (request.nextUrl.pathname.startsWith('/rescate') && (user.idTipoUsuario === 0 || user.idTipoUsuario === 1)) return NextResponse.redirect(new URL('/not-found', request.url));
 	return NextResponse.next();
 }
 
