@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 export default async function adoptantes() {
-	const user = GetUser();
+	const user = await GetUser();
 	const adoptantes = await prisma.adoptante.findMany();
 	const estados = await prisma.estado.findMany();
 

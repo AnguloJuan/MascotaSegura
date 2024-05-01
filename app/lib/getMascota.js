@@ -10,7 +10,15 @@ export async function GetMascota(mascotaId) {
         include: {
             adopcion: {
                 include: {
-                    adoptante: true,
+                    adoptante: {
+                        include: {
+                            municipio:{
+                                include:{
+                                    estado:true,
+                                }
+                            }
+                        },
+                    },
                     estadoAdopcion: true,
                 },
             },

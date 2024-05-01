@@ -9,7 +9,7 @@ export const metadata = {
 }
 
 export default async function adoptantes() {
-  const user = GetUser();
+  const user = await GetUser();
   const empleados = await prisma.empleado.findMany({
     where: {
       NOT: {

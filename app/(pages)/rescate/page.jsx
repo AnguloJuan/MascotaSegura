@@ -11,7 +11,7 @@ export const metadata = {
 
 export default async function RescatePage() {
 	const especies = await prisma.especie.findMany();
-	const user = GetUser();
+	const user = await GetUser();
 	const idRefugio = user.idRefugio;
 	return (
 		<section className="flex flex-col gap-4">

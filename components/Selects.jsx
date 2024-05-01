@@ -3,6 +3,9 @@ import { Each } from './Each';
 export function Especies({ onChange, especies, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
+			<label htmlFor="especie" className="font-bold">
+				Especie
+			</label>
 			<select
 				id="especies"
 				onChange={onChange}
@@ -111,7 +114,7 @@ export function EstadosReporte({
 				required={required}
 				value={value}
 				disabled={disabled}
-				cclassName={`outline outline-2 p-2 rounded-lg max-w-md ${className}`}
+				className={`outline outline-2 p-2 rounded-lg max-w-md ${className}`}
 			>
 				<option value="">Selecciona el estado del reporte</option>
 				<option value={1}>Reportado</option>

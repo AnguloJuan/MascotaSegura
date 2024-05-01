@@ -1,5 +1,9 @@
 'use client';
+<<<<<<< HEAD
 // import InputLabel from '@/components/Inputs';
+=======
+import { Input } from '@/components/Inputs';
+>>>>>>> e4ab31600b783145e860bf2f4786ab33c822998b
 import style from '../../reporte.module.css';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
@@ -163,7 +167,11 @@ export default function Reporte({ props }) {
 								/>
 							</div>
 						</center>
+<<<<<<< HEAD
 						{/* <InputLabel
+=======
+						<Input
+>>>>>>> e4ab31600b783145e860bf2f4786ab33c822998b
 							id={'fecRegistro'}
 							type={'date'}
 							label={'Fecha de registro'}

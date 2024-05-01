@@ -64,9 +64,8 @@ export default function ListaMascota({
 	return (
 		<section className="relative">
 			<div
-				className={`fixed h-screen top-0 -z-10 ${
-					openFilter ? 'left-0' : '-left-full'
-				}  bg-white z-50 px-12 py-6 shadow-2xl transition-[left] duration-500`}
+				className={`fixed h-screen top-0 -z-10 ${openFilter ? 'left-0' : '-left-full'
+					}  bg-white z-50 px-12 py-6 shadow-2xl transition-[left] duration-500`}
 			>
 				<button
 					onClick={() => setOpenFilter(false)}
@@ -77,17 +76,21 @@ export default function ListaMascota({
 				<h2 className="text-3xl">Filtro</h2>
 				<div className="flex flex-col gap-4">
 					{(userType == 2 || userType == 3) && (
-						<Select id="adoptado" onChange={handleInputChange} label="Adoptado">
+						<Select id="adoptado" onChange={handleInputChange} value={searchCriteria.adoptado} label="Adoptado">
 							<option value="">Cualquiera</option>
 							<option value="adoptado">Adoptado</option>
 							<option value="noAdoptado">No adoptado</option>
 						</Select>
 					)}
-					<Especies handleChange={handleInputChange} especies={especies} />
-
 					<div className="flex flex-col">
-						<Raza handleChange={handleInputChange} razas={razas} />
+						<Especies onChange={handleInputChange} especies={especies} value={searchCriteria.especie} />
 					</div>
+					<div className="flex flex-col">
+						<Raza onChange={handleInputChange} razas={razas} />
+					</div>
+					<label htmlFor="Edad" className="font-bold">
+						Edad
+					</label>
 					<div className="flex flex-col">
 						<Input
 							id={'edad'}
@@ -100,7 +103,7 @@ export default function ListaMascota({
 						/>
 					</div>
 					<div className="contents">
-						<Sexos handleChange={handleInputChange} />
+						<Sexos onChange={handleInputChange} value={searchCriteria.sexo} />
 					</div>
 				</div>
 			</div>

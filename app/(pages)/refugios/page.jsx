@@ -1,4 +1,4 @@
-import InputLabel from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 import listaRefugios from './refugio.module.css';
 import lista from './refugio.module.css';
 import actualizar from './refugio.module.css';
@@ -10,19 +10,19 @@ export default function registrarRefugio() {
 				<h3>Refugios</h3>
 
 				<div className={listaRefugios.busqueda}>
-					<InputLabel
+					<Input
 						id={'nombre'}
 						label={'Nombre refugio'}
 						placeholder={'nombre'}
 					/>
 
-					<InputLabel id={'estado'} label={'Estado'} placeholder={'estado'} />
-					<InputLabel
+					<Input id={'estado'} label={'Estado'} placeholder={'estado'} />
+					<Input
 						id={'municipio'}
 						label={'Municipio'}
 						placeholder={'municipio'}
 					/>
-					<InputLabel
+					<Input
 						id={'ubicacion'}
 						label={'Ubicacion'}
 						placeholder={'ubicacion'}
@@ -45,18 +45,18 @@ export function actualizarRefugio() {
 				<h3>Informacion Refugio</h3>
 
 				<div className={actualizar.busqueda}>
-					<InputLabel
+					<Input
 						id={'nombre'}
 						label={'Nombre refugio'}
 						placeholder={'nombre'}
 					/>
-					<InputLabel id={'estado'} label={'Estado'} placeholder={'estado'} />
-					<InputLabel
+					<Input id={'estado'} label={'Estado'} placeholder={'estado'} />
+					<Input
 						id={'municipio'}
 						label={'Municipio'}
 						placeholder={'municipio'}
 					/>
-					<InputLabel
+					<Input
 						id={'ubicacion'}
 						label={'Ubicacion'}
 						placeholder={'ubicacion'}
@@ -80,12 +80,12 @@ export function ListaRefugios() {
 		<>
 			<div className={lista}>
 				<div className={lista.busqueda}>
-					<InputLabel id={'nombre'} label={'Nombre'} placeholder={'nombre'} />
+					<Input id={'nombre'} label={'Nombre'} placeholder={'nombre'} />
 					<button type="submit">Buscar</button>
 				</div>
 				<div className={lista.busquedaAvanzada}>
-					<InputLabel id={'estado'} label={'Estado'} placeholder={'Estado'} />
-					<InputLabel
+					<Input id={'estado'} label={'Estado'} placeholder={'Estado'} />
+					<Input
 						id={'municipio'}
 						label={'Municipio'}
 						placeholder={'Municipio'}

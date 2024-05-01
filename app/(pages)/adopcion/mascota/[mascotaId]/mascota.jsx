@@ -3,6 +3,7 @@ import rescate from './rescate.module.css';
 import { Input } from '@/components/Inputs';
 import { Especies, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
+import DescargarDocumentoAdopcion from './documentoAdopcion';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -25,6 +26,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 			? mascotaInicial.adopcion.estadoAdopcion.id
 			: null,
 		imagen: mascotaInicial.imagen,
+		adopcion: mascotaInicial.adopcion,
 	});
 
 	const [image, setImage] = useState(null);
@@ -316,8 +318,8 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 								href={`/adoptantes/adoptante/${mascotaInicial.adopcion.adoptante.id}`}
 								className="link-dark link-underline-opacity-0"
 							>
-								<div className={visualizar.contenedorAdoptante}>
-									<div className={visualizar.perfil}>
+								<div>
+									<div>
 										{mascotaInicial.adopcion.adoptante.imagen ? (
 											<Image
 												src={mascotaInicial.adopcion.adoptante.imagen}
@@ -334,7 +336,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 											/>
 										)}
 									</div>
-									<div className={visualizar.informacion}>
+									<div>
 										<h3>Persona adoptante</h3>
 										<p>id: {mascotaInicial.adopcion.adoptante.id}</p>
 										<p>Nombre: {mascotaInicial.adopcion.adoptante.nombre}</p>
@@ -350,26 +352,28 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 							idMascota={mascotaInicial.id}
 						/>
 
+						<DescargarDocumentoAdopcion mascota={mascotaInicial} />
+
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (
-							<div className={visualizar.contenedordatos}>
-								<p>Anteriores adopciones</p>
-								<p>Motivos de abandono</p>
-								{mascotaInicial.motivo && (
-									<p className="border rounded">- {mascotaInicial.motivo}</p>
-								)}
-
-								{mascotaInicial.historialAdoptivo.length !== 0 &&
-									mascotaInicial.historialAdoptivo.map(
-										(historial) =>
-											historial.motivo && (
-												<p key={historial.id} className="border rounded">
-													- {historial.motivo}
-												</p>
-											)
+								<div>
+									<p>Anteriores adopciones</p>
+									<p>Motivos de abandono</p>
+									{mascotaInicial.motivo && (
+										<p className="border rounded">- {mascotaInicial.motivo}</p>
 									)}
-							</div>
-						)}
+
+									{mascotaInicial.historialAdoptivo.length !== 0 &&
+										mascotaInicial.historialAdoptivo.map(
+											(historial) =>
+												historial.motivo && (
+													<p key={historial.id} className="border rounded">
+														- {historial.motivo}
+													</p>
+												)
+										)}
+								</div>
+							)}
 					</>
 				)}
 			</form>

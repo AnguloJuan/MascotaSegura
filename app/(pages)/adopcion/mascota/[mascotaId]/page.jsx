@@ -16,10 +16,10 @@ export default async function Page({ params }) {
 	const mascota = await GetMascota(mascotaId);
 	const especies = await prisma.especie.findMany();
 	/*const refugio = await prisma.refugio.findUnique({
-        where: {
-            id: mascota.idRefugio,
-        }
-    })*/
+		where: {
+			id: mascota.idRefugio,
+		}
+	})*/
 	const user = await GetUser();
 	const userId = user.id;
 	const userType = user.idTipoUsuario;
@@ -87,24 +87,23 @@ export default async function Page({ params }) {
 							{mascota.adopcion.estadoAdopcion.estadoAdopcion}
 						</p>
 					)}
+
 					{mascota.adopcion &&
-					mascota.adopcion.estadoAdopcion.id == 3 &&
-					mascota.adopcion.adoptante.id == userId ? (
-						<>
+						mascota.adopcion.estadoAdopcion.id == 3 &&
+						mascota.adopcion.adoptante.id == userId && (
 							<div className="">
 								<Cancelar
 									idAdopcion={mascota.adopcion.id}
 									idAdoptante={mascota.adopcion.adoptante.id}
 									idMascota={mascota.id}
 								/>
+								
 							</div>
-						</>
-					) : (
-						!mascota.adopcion && (
-							<div className="">
-								<Adoptar mascotaId={mascota.id} adoptanteId={userId} />
-							</div>
-						)
+						)}
+					{!mascota.adopcion && (
+						<div className="">
+							<Adoptar mascotaId={mascota.id} adoptanteId={userId} />
+						</div>
 					)}
 
 					{(mascota.motivo || mascota.historialAdoptivo.length !== 0) && (
