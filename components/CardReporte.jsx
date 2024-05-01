@@ -34,10 +34,10 @@ export default function CardReporte({
 			href={`/reportes/reporte/${id}`}
 			className="relative w-[350px] bg-white shadow-lg shadow-zinc-400 p-3 rounded-lg"
 		>
-			<span className="absolute top-2 left-2 bg-[--primaryColor] text-white px-4 py-1 rounded-full">
+			<span className="absolute top-2 left-2 bg-primary text-white px-4 py-1 rounded-full">
 				{id}
 			</span>
-			<span className="absolute top-2 right-2 bg-[--primaryColor] text-white px-4 py-1 rounded-full">
+			<span className="absolute top-2 right-2 bg-primary text-white px-4 py-1 rounded-full">
 				{`${date.day}/${monthMonth[date.month]}${
 					new Date().getFullYear() == date.year ? '' : `/${date.year}`
 				}`}

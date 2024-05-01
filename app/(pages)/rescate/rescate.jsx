@@ -199,12 +199,12 @@ export default function Rescate({ especies, idRefugio }) {
 						rows="4"
 						onChange={handleInputChange}
 						className="py-2 px-4 w-full rounded-lg border-black border-2 
-                        focu:outline outline-[--primaryColor] outline-offset-4 resize-none"
+                        focu:outline outline-prbg-primary outline-offset-4 resize-none"
 					></textarea>
 				</div>
 				<button
-					className="bg-[--primaryColor] text-2xl text-white w-max px-8 py-2 rounded-lg
-                     hover:bg-[--hoverPrimaryColor] transition-colors duration-500"
+					className="bg-primary text-2xl text-white w-max px-8 py-2 rounded-lg
+                     hover:bg-primaryHover transition-colors duration-500"
 					type="submit"
 					onClick={uploadToServer}
 				>

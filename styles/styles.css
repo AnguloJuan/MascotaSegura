@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--primaryColor: #4844f8;
-	--hoverPrimaryColor: #7266f5;
-}
-
 * {
 	padding: 0;
 	margin: 0;

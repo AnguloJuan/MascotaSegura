@@ -15,7 +15,7 @@ import {
 export default async function Menu() {
 	const user = await GetUser();
 	return (
-		<aside className={`bg-[--primaryColor] h-screen min-w-min px-5 py-9 z-50`}>
+		<aside className={`bg-primary h-screen min-w-min px-5 py-9 z-50`}>
 			<nav className="flex flex-col gap-20">
 				<Logo />
 				<ul className="flex flex-col gap-3 px-4">
@@ -55,7 +55,7 @@ export default async function Menu() {
 			{user.idTipoUsuario === 0 ? (
 				<Link
 					href={'/login'}
-					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[--hoverPrimaryColor] 
+					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-primaryHover 
 				px-3 py-2 rounded-xl transition-colors duration-500"
 				>
 					<IconUser size={25} />
@@ -64,7 +64,7 @@ export default async function Menu() {
 			) : (
 				<Link
 					href={'/logout'}
-					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-[--hoverPrimaryColor] 
+					className="absolute bottom-4 left-4 flex gap-2 items-center text-white hover:bg-primaryHover 
 		px-3 py-2 rounded-xl transition-colors duration-500"
 				>
 					<IconTransferOut size={25} />

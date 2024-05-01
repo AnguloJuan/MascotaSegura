@@ -1,10 +1,11 @@
 'use client';
-import { Input } from '@/components/Inputs';
-import { Dialog } from '@/components/dialogs';
-import Image from 'next/image';
+import Button from '@/components/Button';
+import { Each } from '@/components/Each';
+import { Input, InputFile } from '@/components/Inputs';
+import { Select } from '@/components/Selects';
+import Toast from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import registro from './perfil.module.css';
 
 export default function RegistroEmpleado() {
 	const router = useRouter();
@@ -16,12 +17,16 @@ export default function RegistroEmpleado() {
 	const [NIP, setNIP] = useState('');
 	const [tipoEmpleado, setTipoEmpleado] = useState(0);
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
+	const [toasts, setToasts] = useState([]);
 
-	const [isErrorEmail, setIsErrorEmail] = useState(false);
-	const [isErrorServidor, setIsErrorServidor] = useState(false);
-	const [isFieldsFilled, setIsFieldsFilled] = useState(false);
-	const [isRegistrado, setIsRegistrado] = useState(false);
+	const showToast = (message, type) => {
+		const id = Math.random();
+		setToasts((toasts) => [...toasts, { id, message, type }]);
+		setTimeout(() => removeToast(id), 5000);
+	};
+	const removeToast = (id) => {
+		setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
+	};
 
 	const uploadToClient = (event) => {
 		if (event.target.files && event.target.files[0]) {
@@ -43,7 +48,7 @@ export default function RegistroEmpleado() {
 			isNaN(telefono) ||
 			!password
 		) {
-			setIsFieldsFilled(true);
+			showToast('Se deben de llenar todos los espacios.', 'warning');
 		} else {
 			try {
 				const body = new FormData();
@@ -81,7 +86,8 @@ export default function RegistroEmpleado() {
 					body,
 				});
 				if (response.status == 201) {
-					setIsRegistrado(true);
+					showToast('Se a registrado con exito.', 'success');
+
 					response
 						.json()
 						.then((response) =>
@@ -92,7 +98,7 @@ export default function RegistroEmpleado() {
 					console.error('register failed');
 					response.json().then((response) => console.log(response.message));
 					if (response.status == 409) {
-						setIsErrorEmail(true);
+						showToast('Ya se registrado una cuenta con ese correo.', 'warning');
 					}
 					if (response.status == 500) {
 						response
@@ -100,154 +106,106 @@ export default function RegistroEmpleado() {
 							.then((response) =>
 								console.error('An error occurred', response.message)
 							);
-						setIsErrorServidor(true);
+						showToast('Ocurrió un error de servidor.', 'error');
 					}
 				}
 			} catch (error) {
-				console.error('An error occurred', message);
-				setIsErrorServidor(true);
+				showToast('Ocurrió un error de servidor.', 'error');
 			}
 		}
 	};
 
 	return (
 		<>
-			<form onSubmit={registrarEmpleado}>
-				<h1>Registro de empleado</h1>
+			<form onSubmit={registrarEmpleado} className="grid place-content-center">
 				<label htmlFor="perfil">
-					Imagen de perfil{' '}
-					<span className="fw-light text-secondary">(Opcional)</span>
+					Imagen de perfil
+					<span>(Opcional)</span>
 				</label>
-				<div className={registro.perfil}>
-					{image ? (
-						<Image
-							width={200}
-							height={200}
-							src={createObjectURL}
-							alt="upload image"
-						/>
-					) : (
-						<Image
-							width={200}
-							height={200}
-							src={'/images/defaultUser.png'}
-							alt="upload image"
-						/>
-					)}
-					<input
+				<div className="flex gap-8">
+					<InputFile
 						id="perfil"
-						type="file"
 						name="perfil"
 						onChange={uploadToClient}
 						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-						className="form-control"
 					/>
-				</div>
+					<div className="grid w-full place-content-center space-y-3 *:w-full">
+						<Select
+							id="tipoEmpleado"
+							onChange={(e) => setTipoEmpleado(e.target.value)}
+							name="tipoEmpleado"
+						>
+							<option value="">Selecciona el tipo empleado</option>
+							<option value={2}>Empleado</option>
+							<option value={3}>Administrador</option>
+						</Select>
+						<div className="flex gap-3">
+							<Input
+								id={'name'}
+								type={'text'}
+								placeholder={'Nombre'}
+								onChange={(e) => setFirstName(e.target.value)}
+							/>
 
-				<Input
-					id={'name'}
-					type={'text'}
-					label={'Nombre'}
-					placeholder={'Nombre'}
-					onChange={(e) => setFirstName(e.target.value)}
-				/>
-
-				<Input
-					id={'lastName'}
-					type={'text'}
-					label={'Apellidos'}
-					placeholder={'Apellidos'}
-					onChange={(e) => setLastName(e.target.value)}
-				/>
-
-				<Input
-					id={'telefono'}
-					type={'text'}
-					label={'Teléfono'}
-					placeholder={'Teléfono'}
-					onChange={(e) => setTelefono(e.target.value)}
-				/>
-
-				<Input
-					id={'email'}
-					type={'email'}
-					label={'Correo electrónico'}
-					placeholder={'Correo electrónico'}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-
-				<Input
-					id={'NIP'}
-					type={'text'}
-					label={'NIP'}
-					placeholder={'NIP'}
-					onChange={(e) => setNIP(e.target.value)}
-				/>
-
-				<Input
-					id={'password'}
-					type={'password'}
-					label={'Contraseña'}
-					placeholder={'Contraseña'}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-
-				<div className="input mb-3 mt-3">
-					<label htmlFor="tipoEmpleado" className="form-label">
-						Tipo empleado
-					</label>
-					<select
-						id="tipoEmpleado"
-						onChange={(e) => setTipoEmpleado(e.target.value)}
-						name="tipoEmpleado"
-						className="form-select"
-					>
-						<option value="">Selecciona el tipo empleado</option>
-						<option value={2}>Empleado</option>
-						<option value={3}>Administrador</option>
-					</select>
+							<Input
+								id={'lastName'}
+								type={'text'}
+								placeholder={'Apellidos'}
+								onChange={(e) => setLastName(e.target.value)}
+							/>
+						</div>
+						<div className="flex gap-3">
+							<Input
+								id={'NIP'}
+								type={'text'}
+								placeholder={'NIP'}
+								onChange={(e) => setNIP(e.target.value)}
+							/>
+							<Input
+								id={'telefono'}
+								type={'text'}
+								placeholder={'Teléfono'}
+								onChange={(e) => setTelefono(e.target.value)}
+							/>
+						</div>
+						<div className="flex gap-3">
+							<Input
+								id={'email'}
+								type={'email'}
+								placeholder={'Correo electrónico'}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							<Input
+								id={'password'}
+								type={'password'}
+								placeholder={'Contraseña'}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+						</div>
+					</div>
 				</div>
 
 				<center>
-					<button type="submit" className="btn btn-primary mb-3 btn-lg">
-						Registrar empleado
-					</button>
+					<Button type="submit" text={'Registrar empleado'} />
 				</center>
 				<br />
 			</form>
-			<Dialog
-				id={'errorEmail'}
-				isOpen={isErrorEmail}
-				onClose={() => setIsErrorEmail(false)}
-			>
-				<h1>Error al registrarse</h1>
-				<p>Ya se registrado una cuenta con ese correo</p>
-			</Dialog>
-			<Dialog
-				id={'errorServidor'}
-				isOpen={isErrorServidor}
-				onClose={() => setIsErrorServidor(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ocurrió un error de servidor</p>
-				<p>Vuelve a intentar más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'errorCampos'}
-				isOpen={isFieldsFilled}
-				onClose={() => setIsFieldsFilled(false)}
-			>
-				<h1>Error</h1>
-				<p>Rellene todos los campos primero</p>
-			</Dialog>
-			<Dialog
-				id={'registrado'}
-				isOpen={isRegistrado}
-				onClose={() => setIsRegistrado(false)}
-			>
-				<h1>Registro exitoso</h1>
-				<p>Espere un momento en lo que carga la pagina</p>
-			</Dialog>
+
+			{toasts && (
+				<div className="fixed bottom-3 right-2 flex flex-col-reverse gap-2">
+					<Each
+						of={toasts}
+						render={(toast, i) => (
+							<Toast
+								key={toast.id}
+								message={toast.message}
+								type={toast.type}
+								onClose={() => removeToast(toast.id)}
+							/>
+						)}
+					/>
+				</div>
+			)}
 		</>
 	);
 }

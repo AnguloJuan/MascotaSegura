@@ -42,11 +42,11 @@ export default function LogIn() {
 							setIsDialogFailedLogin,
 						})
 					}
-					className="bg-[--primaryColor] w-full py-2 rounded-lg text-white font-bold hover:bg-[#7266f5] transition-colors"
+					className="bg-primary w-full py-2 rounded-lg text-white font-bold hover:bg-primaryHover transition-colors"
 				>
 					Iniciar sesión
 				</button>
-				<Link href={'/signin'} className="text-[--primaryColor] max-w-max">
+				<Link href={'/signin'} className="text-primary max-w-max">
 					Crear cuenta
 				</Link>
 			</form>

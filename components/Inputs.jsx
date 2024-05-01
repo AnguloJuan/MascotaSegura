@@ -80,15 +80,14 @@ export function InputBuscar({
 					placeholder={placeholder}
 					onChange={onChange}
 					value={value}
-					className={`py-2 px-4   
-		focu:outline outline-[--primaryColor] outline-offset-4 ${className}`}
+					className={`py-2 px-4 focu:outline outline-primary outline-offset-4 ${className}`}
 					required={required}
 					disabled={disabled}
 				/>
 				<button
 					onClick={onClick}
 					className="flex place-items-center gap-2 min-h-max text-white px-5 md:px-3 
-					bg-[--primaryColor] hover:bg-[--hoverPrimaryColor]"
+					bg-primary hover:bg-primaryHover"
 				>
 					<span>
 						<IconSearch />
@@ -115,6 +114,7 @@ export function Checkbox({ text, id, value, onChange }) {
 		</div>
 	);
 }
+
 export function InputFile({ id, accept, required = false, className }) {
 	const [image, setImage] = useState(null);
 	const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -143,7 +143,7 @@ export function InputFile({ id, accept, required = false, className }) {
 					<img
 						src={createObjectURL}
 						alt="imagen de usuario"
-						className="absolute top-0 left-0 w-full h-full object-cover"
+						className="absolute inset-0 w-full h-full object-cover"
 					/>
 				) : (
 					<div className="flex flex-col justify-center items-center ">

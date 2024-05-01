@@ -1,13 +1,39 @@
 'use client';
-import { GetUser } from '@/app/lib/user';
-import { useEffect, useState } from 'react';
+import messages from '@/app/lib/messageToast';
+import Button from '@/components/Button';
+import { Each } from '@/components/Each';
+import Toast from '@/components/Toast';
+import { useState } from 'react';
 
 export default function Page() {
-	const [user, setUser] = useState(null);
-	useEffect(() => {
-		const userData = GetUser();
-		userData.then((res) => res.json()).then((data) => setUser(data));
-	}, []);
+	const [toasts, setToasts] = useState([]);
 
-	return <div>{user}</div>;
+	const showToast = (message, type) => {
+		setToasts((toasts) => [...toasts, { message, type }]);
+		setTimeout(() => removeToast(id), 5000);
+	};
+
+	const removeToast = (id) => {
+		setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
+	};
+
+	return (
+		<section>
+			<Button
+				text="Agregar toasts"
+				onClick={() => showToast('message', 'error')}
+			/>
+			<Each
+				of={toasts}
+				render={(toast) => (
+					<Toast
+						key={toast.id}
+						message={toast.message}
+						type={toast.type}
+						onClose={() => removeToast(toast.id)}
+					/>
+				)}
+			/>
+		</section>
+	);
 }

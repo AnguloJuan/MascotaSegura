@@ -61,8 +61,8 @@ export default function ListaEmpleados({ props }) {
 					onClick={fetchEmpleado}
 				/>
 				<Link
-					href={'empleados/registro'}
-					className="bg-[--primaryColor] hover:bg-[--hoverPrimaryColor] min-h-max h-full border rounded px-4 py-1 text-white"
+					href={'/empleados/registro'}
+					className="bg-primary hover:bg-primaryHover min-h-max h-full border rounded px-4 py-1 text-white"
 				>
 					Nuevo empleado
 				</Link>

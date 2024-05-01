@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Estados, EstadosReporte } from '@/components/Selects';
+import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
-import Input from '@/components/Inputs';
+import { Input } from '@/components/Inputs';
 
 export default function Reportar({ props }) {
 	const userType = props.user.idTipoUsuario;
