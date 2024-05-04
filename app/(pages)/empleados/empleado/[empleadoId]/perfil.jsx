@@ -1,12 +1,15 @@
 'use client';
-import { Input } from '@/components/Inputs';
-import perfilAdoptador from './perfil.module.css';
+import { Input, InputFile } from '@/components/Inputs';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Popover from '@/components/Popover';
+import { IconMenuDeep } from '@tabler/icons-react';
+import Button from '@/components/Button';
+import { useToast } from '@/components/Toast';
 
 export default function PerfilPage({ props }) {
+	const { addToast } = useToast();
 	const [empleado, setAdoptante] = useState({
 		nombre: props.empleado.nombre,
 		apellido: props.empleado.apellido,
@@ -17,16 +20,12 @@ export default function PerfilPage({ props }) {
 		tipoEmpleado: props.empleado.idTipoUsuario,
 	});
 	const [unmodified, setUnmodified] = useState(true);
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
 	const [modifiedDialog, setModifiedDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
-	const [errorCorreoDialog, setErrorCorreoDialog] = useState(false);
-	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const router = useRouter();
+	const [editar, setEditar] = useState(false);
+	const { nombre, apellido, correo, telefono, NIP } = empleado;
 
 	const handleInputChange = (e) => {
 		setUnmodified(false);
@@ -35,16 +34,6 @@ export default function PerfilPage({ props }) {
 			return;
 		}
 		setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
-	};
-	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
 	};
 
 	const modifyEmpleado = async (e) => {
@@ -83,15 +72,18 @@ export default function PerfilPage({ props }) {
 			});
 			if (response.status == 200) {
 				setModifiedDialog(true);
+				addToast(
+					'Los cambios han sido guardados correctamente en la base de datos.',
+					'success'
+				);
 				router.refresh();
 			} else {
 				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
+				addToast('Ha ocurrido un error en el servidor', 'error');
 				setUnmodified(true);
 			}
 		} catch (error) {
-			console.log(error);
-			setErrorDialog(true);
+			addToast('Ha ocurrido un error en el servidor', 'error');
 		}
 	};
 
@@ -101,11 +93,11 @@ export default function PerfilPage({ props }) {
 			method: 'DELETE',
 		});
 		if (response.status == 200) {
-			setDeletedDialog(true);
+			addToast('Se ha eliminado el empleado de la pagina', 'success');
 			router.replace('/empleados');
 		} else {
 			response.json().then((res) => console.log(res.message));
-			setErrorDialog(true);
+			addToast('Ha ocurrido un error en el servidor.', 'error');
 		}
 	};
 	const warning = (e) => {
@@ -115,62 +107,76 @@ export default function PerfilPage({ props }) {
 
 	return (
 		<>
-			<form className="m-3">
-				<div className="perfilEmpleado">
-					<h1>Perfil</h1>
-					<div className="datos-empleado">
-						<div className={perfilAdoptador.perfil}>
-							{image ? (
-								<Image
-									width={200}
-									height={200}
-									src={createObjectURL}
-									alt={`Uploaded Image`}
-								/>
-							) : props.empleado.imagen ? (
-								<Image
-									width={200}
-									height={200}
-									src={props.empleado.imagen}
-									alt={`ImagenEmpleado${props.empleado.id}`}
-								/>
-							) : (
-								<Image
-									width={200}
-									height={200}
-									src={'/images/defaultUser.png'}
-									alt="DefaultIcon"
-								/>
-							)}
-							<input
-								id="perfil"
-								type="file"
-								name="perfil"
-								onChange={uploadToClient}
-								accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-								className="form-control"
-							/>
-						</div>
+			{console.log(empleado)}
+			<div className="flex py-8 justify-between">
+				<div className="flex gap-8">
+					<img
+						src={props.empleado.imagen || '/images/defaultUser.png'}
+						alt={nombre}
+						loading="lazy"
+						className="size-32 object-cover rounded-full"
+					/>
+					<div>
+						<h2 className="text-4xl">
+							{nombre} {apellido}
+						</h2>
+						<h2 className="text-2xl">{correo}</h2>
+						<h2 className="text-lg">{telefono}</h2>
+						<h2 className="text-base">{NIP}</h2>
+					</div>
+				</div>
+				<Popover icon={<IconMenuDeep />}>
+					<button
+						className="bg-primary hover:bg-primaryHover w-full py-1 px-2 text-white rounded-lg"
+						onClick={() => setEditar(true)}
+					>
+						Editar Mi Cuenta
+					</button>
+					<button
+						className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg"
+						onClick={warning}
+					>
+						Eliminar Mi Cuenta
+					</button>
+				</Popover>
+			</div>
+			<Dialog
+				isOpen={editar}
+				onClose={() => setEditar(false)}
+				encabezado={'Editar Perfil'}
+			>
+				<form className="">
+					<div className="space-y-3">
+						<InputFile
+							id="perfil"
+							name="perfil"
+							onFileUpload={(image) => setImage(image)} //
+							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+							image={props.empleado.imagen}
+							className="mx-auto"
+						/>
 						<Input
 							id={'nombre'}
 							label={'Nombre'}
+							placeholder={'Nombre'}
 							name={'nombre'}
-							value={empleado.nombre}
-							onChange={handleInputChange}
+							value={nombre}
+							onChange={() => {}}
 						/>
 						<Input
 							id={'apellido'}
 							label={'Apellido'}
+							placeholder={'Apellido'}
 							name={'apellido'}
-							value={empleado.apellido}
-							onChange={handleInputChange}
+							onChange={() => {}}
+							value={apellido}
 						/>
 						<Input
 							id={'correo'}
 							label={'Correo electronico'}
-							name={'correo'}
-							value={empleado.correo}
-							onChange={handleInputChange}
+							placeholder={'Correo electrónico'}
+							onChange={() => {}}
+							value={correo}
 						/>
 						<Input
 							id={'numero'}
@@ -178,134 +184,48 @@ export default function PerfilPage({ props }) {
 							label={'Numero de telefono'}
 							placeholder={'Numero de telefono'}
 							name={'telefono'}
-							value={empleado.telefono}
-							onChange={handleInputChange}
+							onChange={() => {}}
+							value={telefono}
 						/>
 						<Input
 							id={'NIP'}
 							label={'NIP'}
 							name={'nip'}
 							onChange={handleInputChange}
-							value={empleado.NIP}
+							value={NIP}
 							disabled
 						/>
-						<Input
-							id={'fecRegistro'}
-							type={'date'}
-							label={'Fecha de registro'}
-							name={'fechaRegistro'}
-							value={empleado.fechaRegistro}
-							onChange={handleInputChange}
-							disabled
-						/>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="tipoEmpleado" className="form-label">
-								Tipo empleado
-							</label>
-							<select
-								id="tipoEmpleado"
-								onChange={handleInputChange}
-								name="tipoEmpleado"
-								className="form-select"
-								value={empleado.tipoEmpleado}
-							>
-								<option value="">Selecciona el tipo empleado</option>
-								<option value={2}>Empleado</option>
-								<option value={3}>Administrador</option>
-							</select>
+
+						<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
+							<Button
+								type="submit"
+								onClick={() => {}}
+								disabled={modifiedDialog}
+								text="Guardar"
+							/>
 						</div>
-
-						<center>
-							<button
-								className="btn btn-primary m-2 btn-lg"
-								type="submit"
-								disabled={unmodified}
-								onClick={modifyEmpleado}
-							>
-								Guardar
-							</button>
-							<button
-								type="submit"
-								className="btn btn-danger btn-lg"
-								onClick={warning}
-							>
-								Eliminar cuenta
-							</button>
-						</center>
 					</div>
-				</div>
-			</form>
+				</form>
+			</Dialog>
 
-			<Dialog
-				id={'errorCorreo'}
-				isOpen={errorCorreoDialog}
-				onClose={() => setErrorCorreoDialog(false)}
-			>
-				<h1>Error de correo</h1>
-				<p>
-					No se puedieron guardar los cambios porque ya se existe una cuenta con
-					ese correo
-				</p>
-			</Dialog>
-			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h1>Error valores invalidos</h1>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>El campo correo, y telefono no puede quedar vacio</p>
-				<p>El campo estado y municipio debe haber seleccionado una opción</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h1>Error de modificación</h1>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h1>Se han guardado los cambios</h1>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'deleted'}
-				isOpen={deletedDialog}
-				onClose={() => setDeletedDialog(false)}
-			>
-				<h1>Adoptante Eliminado</h1>
-				<p>Se ha eliminado el empleado de la pagina</p>
-				<p>Sera redirigido a la pagina empleados</p>
-			</Dialog>
 			<Dialog
 				id={'warning'}
 				isOpen={warningDialog}
 				onClose={() => setWarningDialog(false)}
 				fun={deleteEmpleado}
-				confirmar={true}
-			>
-				<h1>Advertencia</h1>
-				<p>
-					Estas apunto de eliminar a un empleado de la pagina
-					<br />
-					Esta accion sera irreversible
-				</p>
-				<p>Haga clic en confirmar para continuar</p>
-			</Dialog>
+				confirmar
+				encabezado="Advertencia"
+				contenido={
+					<>
+						<p>
+							Estas apunto de eliminar a un empleado de la pagina
+							<br />
+							Esta accion sera irreversible
+						</p>
+						<p>Haga clic en confirmar para continuar</p>
+					</>
+				}
+			/>
 		</>
 	);
 }

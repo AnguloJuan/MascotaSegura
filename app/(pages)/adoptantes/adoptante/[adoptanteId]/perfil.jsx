@@ -1,12 +1,15 @@
 'use client';
-import { Input } from '@/components/Inputs';
-import perfilAdoptador from './perfil.module.css';
+import { Input, InputFile } from '@/components/Inputs';
 import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/components/Toast';
+import Popover from '@/components/Popover';
+import { IconMenuDeep } from '@tabler/icons-react';
+import Button from '@/components/Button';
 
 export default function PerfilPage({ props }) {
 	//formatting date
@@ -30,18 +33,11 @@ export default function PerfilPage({ props }) {
 		municipio: props.adoptanteMunicipio,
 	});
 	const [unmodified, setUnmodified] = useState(true);
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
-	const [modifiedDialog, setModifiedDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
-	const [errorCorreoDialog, setErrorCorreoDialog] = useState(false);
-	const [adopcionDialog, setAdopcionDialog] = useState(false);
-	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
-	//const [processDialog, setProcessDialog] = useState(false);
+	const [editar, setEditar] = useState(false);
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const router = useRouter();
+	const { addToast } = useToast();
 
 	const handleInputChange = (e) => {
 		setUnmodified(false);
@@ -61,16 +57,6 @@ export default function PerfilPage({ props }) {
 			? (document.getElementById('municipio').disabled = false)
 			: (document.getElementById('municipio').disabled = true);
 	};
-	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
-	};
 
 	const modifyAdoptante = async (e) => {
 		e.preventDefault();
@@ -80,7 +66,7 @@ export default function PerfilPage({ props }) {
 			!adoptante.municipio ||
 			isNaN(adoptante.telefono)
 		) {
-			setInvalidFieldsDialog(true);
+			addToast('No se pueden modificar datos con valores invalidos', 'error');
 		} else {
 			try {
 				const body = new FormData();
@@ -114,15 +100,17 @@ export default function PerfilPage({ props }) {
 					body,
 				});
 				if (response.status == 200) {
-					setModifiedDialog(true);
+					addToast('Los cambios han sido guardados correctamente.', 'success');
+					setEditar(false);
+
 					setUnmodified(true);
 				} else {
 					response.json().then((res) => console.log(res.message));
-					setErrorDialog(true);
+					addToast('Ha ocurrido un error en el servidor', 'error');
 				}
 			} catch (error) {
 				console.log(error);
-				setErrorDialog(true);
+				addToast('Ha ocurrido un error en el servidor', 'error');
 			}
 		}
 	};
@@ -135,13 +123,16 @@ export default function PerfilPage({ props }) {
 			method: 'DELETE',
 		});
 		if (response.status == 200) {
-			setDeletedDialog(true);
+			addToast('Se ha eliminado el adoptante de la pagina', 'success');
 			router.replace('/adoptantes');
 		} else if (response.status == 409) {
-			setAdopcionDialog(true);
+			addToast(
+				'No puede eliminar la cuenta si ha adoptado a una mascota \n Cancele la adopción y devuelva la mascota al refugio para que pueda eliminar la cuenta',
+				'error'
+			);
 		} else {
 			response.json().then((res) => console.log(res.message));
-			setErrorDialog(true);
+			addToast('Ha ocurrido un error en el servidor', 'error');
 		}
 	};
 	const warning = (e) => {
@@ -151,206 +142,128 @@ export default function PerfilPage({ props }) {
 
 	return (
 		<>
-			{/* Perfil adoptante */}
-			<form className="m-3">
-				<h1>Perfil</h1>
-				<div className={perfilAdoptador.datosperfil}>
-					<div className={perfilAdoptador.perfil}>
-						{image ? (
-							<Image
-								width={200}
-								height={200}
-								src={createObjectURL}
-								alt="UploadedImage"
-							/>
-						) : props.adoptante.imagen ? (
-							<Image
-								width={200}
-								height={200}
-								src={props.adoptante.imagen}
-								alt={`ImagenAdoptante${props.adoptante.id}`}
-							/>
-						) : (
-							<Image
-								width={200}
-								height={200}
-								src={'/images/defaultUser.png'}
-								alt="DefaultIcon"
-							/>
-						)}
-						<input
-							id="perfil"
-							type="file"
-							name="perfil"
-							onChange={uploadToClient}
-							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							className="form-control"
+			<h3 className="text-6xl">Perfil</h3>
+			<>
+				<div className="flex py-8 justify-between">
+					<div className="flex gap-8">
+						<img
+							src={props.adoptante.imagen || '/images/defaultUser.png'}
+							alt=""
+							loading="lazy"
+							className="size-32 object-cover rounded-full"
 						/>
+						<div className="">
+							<h2 className="text-3xl">
+								{adoptante.nombre} {adoptante.apellido}
+							</h2>
+							<h2 className="text-lg">{adoptante.correo}</h2>
+							<h2 className="text-lg">{adoptante.telefono}</h2>
+						</div>
 					</div>
-					<Input
-						id={'nombre'}
-						label={'Nombre'}
-						placeholder={'Nombre'}
-						name={'nombre'}
-						value={adoptante.nombre}
-						onChange={handleInputChange}
-					/>
-					<Input
-						id={'apellido'}
-						label={'Apellido'}
-						placeholder={'Apellido'}
-						name={'apellido'}
-						value={adoptante.apellido}
-						onChange={handleInputChange}
-					/>
-					<Input
-						id={'correo'}
-						label={'Correo electronico'}
-						placeholder={'Correo electrónico'}
-						onChange={handleInputChange}
-						value={adoptante.correo}
-					/>
-					<Input
-						id={'numero'}
-						type={'number'}
-						label={'Numero de telefono'}
-						placeholder={'Numero de telefono'}
-						name={'telefono'}
-						onChange={handleInputChange}
-						value={adoptante.telefono}
-					/>
-					<div className={perfilAdoptador.datosperfil}>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="estado" className="form-label">
-								Estado
-							</label>
+					<Popover icon={<IconMenuDeep />}>
+						<button
+							className="bg-primary hover:bg-primaryHover w-full py-1 px-2 text-white rounded-lg"
+							onClick={() => setEditar(true)}
+						>
+							Editar Mi Cuenta
+						</button>
+						<button
+							className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg"
+							onClick={warning}
+						>
+							Eliminar Mi Cuenta
+						</button>
+					</Popover>
+				</div>
+			</>
+			<Dialog
+				isOpen={editar}
+				onClose={() => setEditar(false)}
+				encabezado={'Editar'}
+			>
+				<form className="">
+					<div className="space-y-3">
+						<InputFile
+							id="perfil"
+							name="perfil"
+							onFileUpload={(image) => setImage(image)}
+							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+							image={props.adoptante.imagen}
+							className="mx-auto"
+						/>
+						<Input
+							id={'nombre'}
+							label={'Nombre'}
+							placeholder={'Nombre'}
+							name={'nombre'}
+							value={adoptante.nombre}
+							onChange={handleInputChange}
+						/>
+						<Input
+							id={'apellido'}
+							label={'Apellido'}
+							placeholder={'Apellido'}
+							name={'apellido'}
+							value={adoptante.apellido}
+							onChange={handleInputChange}
+						/>
+						<Input
+							id={'correo'}
+							label={'Correo electronico'}
+							placeholder={'Correo electrónico'}
+							onChange={handleInputChange}
+							value={adoptante.correo}
+						/>
+						<Input
+							id={'numero'}
+							type={'number'}
+							label={'Numero de telefono'}
+							placeholder={'Numero de telefono'}
+							name={'telefono'}
+							onChange={handleInputChange}
+							value={adoptante.telefono}
+						/>
+						<div className="flex gap-5">
 							<Estados
-								handleChange={handleEstadoChange}
+								onChange={handleEstadoChange}
 								estados={props.estados}
 								value={adoptante.estado}
 							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="municipio" className="form-label">
-								Municipio
-							</label>
 							<Municipios
-								handleChange={handleInputChange}
+								onChange={handleInputChange}
 								municipiosInicial={props.municipios}
 								selectedEstado={adoptante.estado}
 								value={adoptante.municipio}
 							/>
 						</div>
+						<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
+							<Button
+								type="submit"
+								className="btn btn-primary btn-lg"
+								onClick={modifyAdoptante}
+								disabled={unmodified}
+								text="Guardar"
+							/>
+						</div>
 					</div>
-					<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
-						<button
-							type="submit"
-							className="btn btn-primary btn-lg"
-							onClick={modifyAdoptante}
-							disabled={unmodified}
-						>
-							Guardar
-						</button>
-						<button
-							type="submit"
-							className="btn btn-danger btn-lg"
-							onClick={warning}
-						>
-							Eliminar cuenta
-						</button>
-					</div>
-				</div>
-			</form>
-
-			<Dialog
-				id={'errorCorreo'}
-				isOpen={errorCorreoDialog}
-				onClose={() => setErrorCorreoDialog(false)}
-			>
-				<h2>Error de correo</h2>
-				<p>
-					No se puedieron guardar los cambios porque ya se existe una cuenta con
-					ese correo
-				</p>
+				</form>
 			</Dialog>
 			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h2>Error valores invalidos</h2>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>El campo correo, y telefono no puede quedar vacio</p>
-				<p>El campo estado y municipio debe haber seleccionado una opción</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h2>Error de modificación</h2>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h2>Se han guardado los cambios</h2>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h2>Error de servidor</h2>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'adopcion'}
-				isOpen={adopcionDialog}
-				onClose={() => setAdopcionDialog(false)}
-			>
-				<h2>Error al eliminar cuenta</h2>
-				<p>Se ha encontrado que tiene al menos una mascota adoptada</p>
-				<p>No puede eliminar la cuenta si ha adoptado a una mascota</p>
-				<p>
-					Cancele la adopción y devuelva la mascota al refugio para que pueda
-					eliminar la cuenta
-				</p>
-			</Dialog>
-			<Dialog
-				id={'deleted'}
-				isOpen={deletedDialog}
-				onClose={() => setDeletedDialog(false)}
-			>
-				<h2>Adoptante Eliminado</h2>
-				<p>Se ha eliminado el adoptante de la pagina</p>
-				<p>Sera redirigido a la pagina adoptantes</p>
-			</Dialog>
-			<Dialog
-				id={'warning'}
 				isOpen={warningDialog}
 				onClose={() => setWarningDialog(false)}
 				fun={deleteAdoptante}
-				confirmar={true}
-			>
-				<h2>Advertencia</h2>
-				<p>
-					Estas apunto de eliminar a un adoptante de la pagina
-					<br />
-					Esta acción sera irreversible
-				</p>
-				<p>Haga clic en confirmar para continuar</p>
-			</Dialog>
-			{/*
-            <Dialog id={"process"} isOpen={processDialog} onClose={() => setProcessDialog(false)}>
-                <h2>Procesando</h2>
-                <p>Espera un momento en lo que se procesan los cambios</p>
-            </Dialog>
-             */}
+				confirmar
+				encabezado={'Advertencia'}
+				contenido={
+					<>
+						<p>
+							Estas apunto de eliminar a un adoptante de la pagina <br />
+							Esta acción sera irreversible
+						</p>
+						<p>Haga clic en confirmar para continuar</p>
+					</>
+				}
+			/>
 		</>
 	);
 }

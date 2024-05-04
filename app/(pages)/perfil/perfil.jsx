@@ -1,67 +1,27 @@
 'use client';
+import Button from '@/components/Button';
 import { Input, InputFile } from '@/components/Inputs';
-// import { Estados } from '@/components/Selects';
-// import { Municipios } from '@/components/SelectsClient';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { setCookie } from 'cookies-next';
-import { IconMenuDeep } from '@tabler/icons-react';
 import Popover from '@/components/Popover';
+import { Dialog } from '@/components/dialogs';
+import { IconMenuDeep } from '@tabler/icons-react';
+import { useState } from 'react';
 
 export default function Perfil({ props }) {
-	console.log(props);
-	const dataUser = JSON.parse(props.user.value);
+	const dataUser = props.user;
 	const { imagen, nombre, apellido, correo, telefono, id } = dataUser;
-	// console.log(dataUser);
-
-	//formatting date
-	function pad(num, size) {
-		num = num.toString();
-		while (num.length < size) num = '0' + num;
-		return num;
-	}
-	const day = pad(new Date(props.user.fechaRegistro).getDay(), 2);
-	const month = pad(new Date(props.user.fechaRegistro).getMonth(), 2);
-	const year = new Date(props.user.fechaRegistro).getFullYear();
-	const date = `${year}-${month}-${day}`;
-
-	const router = useRouter();
-	const userType = props.userType;
-
-	const [unmodified, setUnmodified] = useState(true);
-
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
-	const [modifiedDialog, setModifiedDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
-	const [errorCorreoDialog, setErrorCorreoDialog] = useState(false);
-	const [adopcionDialog, setAdopcionDialog] = useState(false);
-	const [deletedDialog, setDeletedDialog] = useState(false);
-	const [warningDialog, setWarningDialog] = useState(false);
-
-	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
-	//const date =  new Date(Date.parse(props.user.fechaRegistro)).toLocaleDateString("es-mx", { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric'});
+	const [editar, setEditar] = useState(false);
 
 	return (
 		<>
 			<div className="flex py-8 justify-between">
 				<div className="flex gap-8">
-					{imagen ? (
-						<img
-							src={imagen}
-							alt=""
-							loading="lazy"
-							className="size-32 object-cover rounded-full"
-						/>
-					) : (
-						<InputFile
-							id="perfil"
-							name="perfil"
-							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-						/>
-					)}
-					<div className="">
+					<img
+						src={imagen || '/images/defaultUser.png'}
+						alt=""
+						loading="lazy"
+						className="size-32 object-cover rounded-full"
+					/>
+					<div>
 						<h2 className="text-3xl">
 							{nombre} {apellido}
 						</h2>
@@ -69,24 +29,85 @@ export default function Perfil({ props }) {
 						<h2 className="text-lg">{telefono}</h2>
 					</div>
 				</div>
-				<div>
-					<Popover
-						options={[
-							{
-								element: 'Actualizar Mis Datos',
-								action: () => console.log('eliminar'),
-							},
-							{
-								element: 'Eliminar Mi Cuenta',
-								action: () => console.log('eliminar'),
-								className: 'bg-red-600 hover:bg-red-500',
-							},
-						]}
+				<Popover icon={<IconMenuDeep />}>
+					<button
+						className="bg-primary hover:bg-primaryHover w-full py-1 px-2 text-white rounded-lg"
+						onClick={() => setEditar(true)}
 					>
-						<IconMenuDeep size={30} />
-					</Popover>
-				</div>
+						Editar Mi Cuenta
+					</button>
+					<button className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg">
+						Eliminar Mi Cuenta
+					</button>
+				</Popover>
 			</div>
+			<Dialog
+				isOpen={editar}
+				onClose={() => setEditar(false)}
+				encabezado={'Editar'}
+			>
+				<form className="">
+					<div className="space-y-3">
+						<InputFile
+							id="perfil"
+							name="perfil"
+							onFileUpload={(image) => {}} //setImage(image)
+							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+							image={imagen}
+							className="mx-auto"
+						/>
+						<Input
+							id={'nombre'}
+							label={'Nombre'}
+							placeholder={'Nombre'}
+							name={'nombre'}
+							value={nombre}
+							onChange={() => {}}
+						/>
+						<Input
+							id={'apellido'}
+							label={'Apellido'}
+							placeholder={'Apellido'}
+							name={'apellido'}
+							onChange={() => {}}
+							value={apellido}
+						/>
+						<Input
+							id={'correo'}
+							label={'Correo electronico'}
+							placeholder={'Correo electrónico'}
+							onChange={() => {}}
+							value={correo}
+						/>
+						<Input
+							id={'numero'}
+							type={'number'}
+							label={'Numero de telefono'}
+							placeholder={'Numero de telefono'}
+							name={'telefono'}
+							onChange={() => {}}
+							value={telefono}
+						/>
+						<div className="flex gap-5">
+							{/* <Estados onChange={() => {}} estados={} value={''} />
+							<Municipios
+								onChange={() => {}}
+								municipiosInicial={}
+								selectedEstado={adoptante.estado}
+								value={''}
+							/> */}
+						</div>
+						<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
+							<Button
+								type="submit"
+								onClick={() => {}}
+								disabled={true}
+								text="Guardar"
+							/>
+						</div>
+					</div>
+				</form>
+			</Dialog>
 		</>
 	);
 }

@@ -1,6 +1,6 @@
 'use client';
 import rescate from './rescate.module.css';
-import { Input } from '@/components/Inputs';
+import { Input, InputFile } from '@/components/Inputs';
 import { Especies, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import DescargarDocumentoAdopcion from './documentoAdopcion';
@@ -68,15 +68,6 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 	};
 
 	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
-	};
 
 	//registro de mascota
 	const uploadToServer = async (e) => {
@@ -156,36 +147,17 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 				<h3>Id: {mascotaInicial.id}</h3>
 				<div className="">
 					<div className="">
-						{image ? (
-							<Image
-								width={200}
-								height={200}
-								src={createObjectURL}
-								alt="UploadedImage"
-							/>
-						) : (
-							<Image
-								width={200}
-								height={200}
-								src={mascotaInicial.imagen || '/images/dogIcon.png'}
-								alt={`ImagenMascota${mascota.id}`}
-							/>
-						)}
-						<input
+						<InputFile
 							id="perfil"
 							type="file"
 							name="perfil"
-							onChange={uploadToClient}
+							onFileUpload={(i) => setImage(i)}
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							className="form-control"
 						/>
 					</div>
 					<div className="">
 						<div className="input mb-3">
-							<label htmlFor="nombre" className="form-label">
-								Nombre
-							</label>
-							<input
+							<Input
 								type="text"
 								placeholder="Nombre"
 								name="nombre"
@@ -195,9 +167,6 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 							/>
 						</div>
 						<div className="input mb-3">
-							<label htmlFor="especies" className="form-label">
-								Especie
-							</label>
 							<Especies
 								especies={especies}
 								onChange={handleInputChange}
@@ -356,24 +325,24 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (
-								<div>
-									<p>Anteriores adopciones</p>
-									<p>Motivos de abandono</p>
-									{mascotaInicial.motivo && (
-										<p className="border rounded">- {mascotaInicial.motivo}</p>
-									)}
+							<div>
+								<p>Anteriores adopciones</p>
+								<p>Motivos de abandono</p>
+								{mascotaInicial.motivo && (
+									<p className="border rounded">- {mascotaInicial.motivo}</p>
+								)}
 
-									{mascotaInicial.historialAdoptivo.length !== 0 &&
-										mascotaInicial.historialAdoptivo.map(
-											(historial) =>
-												historial.motivo && (
-													<p key={historial.id} className="border rounded">
-														- {historial.motivo}
-													</p>
-												)
-										)}
-								</div>
-							)}
+								{mascotaInicial.historialAdoptivo.length !== 0 &&
+									mascotaInicial.historialAdoptivo.map(
+										(historial) =>
+											historial.motivo && (
+												<p key={historial.id} className="border rounded">
+													- {historial.motivo}
+												</p>
+											)
+									)}
+							</div>
+						)}
 					</>
 				)}
 			</form>

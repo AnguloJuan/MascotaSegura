@@ -18,6 +18,7 @@ export function Input({
 	required = false,
 	className,
 	readOnly = false,
+	props,
 }) {
 	const [isShowpassword, setIsShowPassword] = useState(false);
 
@@ -27,7 +28,7 @@ export function Input({
 	};
 
 	return (
-		<div className="flex border-black border-2 rounded-lg overflow-hidden min-w-min w-full h-min">
+		<div className="flex border-black  border-2 rounded-lg overflow-hidden min-w-min w-full h-min">
 			<input
 				id={id}
 				type={type != 'password' ? type : isShowpassword ? 'text' : 'password'}
@@ -40,6 +41,7 @@ export function Input({
 				required={required}
 				disabled={disabled}
 				readOnly={readOnly}
+				{...props}
 			/>
 			{type == 'password' && (
 				<button className="mr-2" onClick={handleType}>
@@ -115,16 +117,22 @@ export function Checkbox({ text, id, value, onChange }) {
 	);
 }
 
-export function InputFile({ id, accept, required = false, className }) {
-	const [image, setImage] = useState(null);
+export function InputFile({
+	id,
+	accept,
+	required = false,
+	className,
+	onFileUpload,
+	image,
+}) {
 	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const uploadToClient = (event) => {
 		event.preventDefault();
 		const files = event.target.files || event.dataTransfer.files;
 		if (files && files[0]) {
 			const i = files[0];
-			setImage(i);
 			setCreateObjectURL(URL.createObjectURL(i));
+			onFileUpload(i);
 		}
 	};
 
@@ -139,9 +147,9 @@ export function InputFile({ id, accept, required = false, className }) {
 					event.preventDefault();
 				}}
 			>
-				{createObjectURL ? (
+				{createObjectURL || image ? (
 					<img
-						src={createObjectURL}
+						src={createObjectURL || image}
 						alt="imagen de usuario"
 						className="absolute inset-0 w-full h-full object-cover"
 					/>
@@ -160,7 +168,7 @@ export function InputFile({ id, accept, required = false, className }) {
 					name={id}
 					onChange={uploadToClient}
 					accept={accept}
-					className={`hidden`}
+					className="hidden"
 					required={required}
 				/>
 			</label>

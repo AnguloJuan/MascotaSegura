@@ -3,9 +3,6 @@ import { Each } from './Each';
 export function Especies({ onChange, especies, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
-			<label htmlFor="especie" className="font-bold">
-				Especie
-			</label>
 			<select
 				id="especies"
 				onChange={onChange}
@@ -126,7 +123,14 @@ export function EstadosReporte({
 		</div>
 	);
 }
-export function Estados({ onChange, estados, value, className, disabled }) {
+export function Estados({
+	onChange,
+	estados,
+	value,
+	className,
+	disabled,
+	...props
+}) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="estado" className="font-bold">
@@ -139,6 +143,7 @@ export function Estados({ onChange, estados, value, className, disabled }) {
 				name="estado"
 				disabled={disabled}
 				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
+				{...props}
 			>
 				<option value="">Selecciona Estado</option>
 				{estados.map((estado) => (
@@ -162,6 +167,7 @@ export function Select({
 	disabled = false,
 	required = false,
 	value,
+	...props
 }) {
 	return (
 		<div className="flex flex-col gap-1">
@@ -178,6 +184,7 @@ export function Select({
 				disabled={disabled}
 				required={required}
 				value={value}
+				{...props}
 			>
 				<option value="">{placeholder || 'Selecciona una opcion'}</option>
 				{items ? (

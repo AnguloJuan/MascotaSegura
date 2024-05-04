@@ -1,12 +1,12 @@
 'use client';
-import style from '../reporte.module.css';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
-import { Input } from '@/components/Inputs';
+import { Input, InputFile } from '@/components/Inputs';
+import Button from '@/components/Button';
+import Toast, { useToast } from '@/components/Toast';
 
 export default function Reportar({ props }) {
 	const userType = props.user.idTipoUsuario;
@@ -19,14 +19,10 @@ export default function Reportar({ props }) {
 		estado: 0,
 	});
 	const [unmodified, setUnmodified] = useState(true);
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
-	const [reportadoDialog, setReportadoDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const router = useRouter();
+	const { addToast } = useToast();
 
 	const handleInputChange = (e) => {
 		setUnmodified(false);
@@ -43,26 +39,16 @@ export default function Reportar({ props }) {
 			? (document.getElementById('municipio').disabled = false)
 			: (document.getElementById('municipio').disabled = true);
 	};
-	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
-	};
 
 	const reportar = async (e) => {
 		setWarningDialog(false);
 		setUnmodified(true);
 		if (!reporte.municipio || !reporte.descripcion) {
-			setInvalidFieldsDialog(true);
+			addToast('No se pueden dejar campos con datos vacios', 'warning');
 			return;
 		}
 		if (userType !== 1 && (!reporte.nombre || !reporte.correo)) {
-			setInvalidFieldsDialog(true);
+			addToast('No se pueden dejar campos con datos vacios', 'warning');
 			return;
 		}
 		try {
@@ -93,94 +79,37 @@ export default function Reportar({ props }) {
 				body,
 			});
 			if (response.status == 200) {
-				setReportadoDialog(true);
+				addToast(
+					'El reporte ha sido guardados correctamente en la base de datos',
+					'success'
+				);
 				response
 					.json()
 					.then((res) => router.replace(`/reportes/reporte/${res.reporte.id}`));
 			} else {
 				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
+				addToast('Ha ocurrido un error en el servidor', 'error');
 				setUnmodified(false);
 			}
 		} catch (error) {
-			console.log(error);
-			setErrorDialog(true);
+			addToast('Ha ocurrido un error en el servidor', 'error');
 			setUnmodified(false);
 		}
 	};
 
 	return (
 		<>
-			<form className="m-3">
-				<div className="perfilEmpleado">
-					<h1>Información del reporte</h1>
-					<div className="datos-reporte">
-						<center>
-							<div className={style.perfil}>
-								{image ? (
-									<Image
-										width={200}
-										height={200}
-										src={createObjectURL}
-										alt={`Uploaded Image`}
-										className="rounded-top"
-									/>
-								) : (
-									<Image
-										width={250}
-										height={250}
-										src={'/images/defaultReporte.png'}
-										alt="DefaultIcon"
-										className="rounded-top"
-									/>
-								)}
-								<input
-									id="perfil"
-									type="file"
-									name="perfil"
-									onChange={uploadToClient}
-									accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-									className="form-control"
-								/>
-							</div>
-						</center>
-
-						<div className="input mb-3 mt-3">
-							<label htmlFor="estado" className="form-label">
-								Estado
-							</label>
-							<Estados
-								handleChange={handleEstadoChange}
-								estados={props.estados}
-								value={reporte.estado}
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="municipio" className="form-label">
-								Municipio
-							</label>
-							<Municipios
-								handleChange={handleInputChange}
-								selectedEstado={reporte.estado}
-								value={reporte.municipio}
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="descripcion" className="form-label">
-								Descripción
-							</label>
-							<textarea
-								name="descripcion"
-								id="descripcion"
-								rows="5"
-								placeholder="Descripción"
-								onChange={handleInputChange}
-								value={reporte.descripcion}
-								className="form-control"
-								required
-							></textarea>
-						</div>
-
+			<h1 className="text-6xl">Información del reporte</h1>
+			<form className="space-y-3">
+				<div className="flex gap-9">
+					<InputFile
+						id="perfil"
+						type="file"
+						name="perfil"
+						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+						onFileUpload={(image) => setImage(image)}
+					/>
+					<div className="w-full space-y-3">
 						{userType !== 1 && (
 							<>
 								<Input
@@ -189,7 +118,7 @@ export default function Reportar({ props }) {
 									placeholder={'Nombre completo'}
 									value={reporte.nombre}
 									name={'nombre'}
-									onChange={handleInputChange}
+									onChange={(image) => setImage(image)}
 									required
 								/>
 
@@ -204,71 +133,58 @@ export default function Reportar({ props }) {
 								/>
 							</>
 						)}
-
-						<center>
-							<button
-								className="btn btn-danger m-2 btn-lg"
-								type="submit"
-								disabled={unmodified}
-								onClick={(e) => {
-									e.preventDefault(), setWarningDialog(true);
-								}}
-							>
-								Reportar
-							</button>
-						</center>
+						<div className="flex gap-3 ">
+							<Estados
+								onChange={handleEstadoChange}
+								estados={props.estados}
+								value={reporte.estado}
+							/>
+							<Municipios
+								onChange={handleInputChange}
+								selectedEstado={reporte.estado}
+								value={reporte.municipio}
+							/>
+						</div>
 					</div>
 				</div>
-			</form>
+				<textarea
+					name="descripcion"
+					id="descripcion"
+					rows="5"
+					placeholder="Descripción"
+					onChange={handleInputChange}
+					value={reporte.descripcion}
+					className="py-2 px-4 w-full rounded-lg border-black border-2 
+                        focu:outline outline-primary outline-offset-4 resize-none"
+					required
+				></textarea>
 
-			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h1>Error valores invalidos</h1>
-				<p>No se pueden dejar campos con datos con datos vacios</p>
-				<p>
-					En los campos estado, municipio debe haber seleccionado una opción
-				</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h1>Error de modificación</h1>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={reportadoDialog}
-				onClose={() => setReportadoDialog(false)}
-			>
-				<h1>Reporte registrado</h1>
-				<p>El reporte ha sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
+				<center>
+					<Button
+						type="submit"
+						disabled={unmodified}
+						onClick={(e) => {
+							e.preventDefault();
+							reportar();
+						}}
+						text={'Reportar'}
+					/>
+				</center>
+			</form>
 			<Dialog
 				id={'warning'}
 				isOpen={warningDialog}
 				onClose={() => setWarningDialog(false)}
 				fun={reportar}
 				confirmar={true}
-			>
-				<h1>Advertencia</h1>
-				<p>Estas por reportar un caso de maltrato animal</p>
-				<p>Se investigara y se llevaran acciones legales para este caso</p>
-				<p>Haga clic en confirmar para continuar</p>
-			</Dialog>
+				contenido={
+					<>
+						<p>Estas por reportar un caso de maltrato animal</p>
+						<p>Se investigara y se llevaran acciones legales para este caso</p>
+						<p>Haga clic en confirmar para continuar</p>
+					</>
+				}
+			/>
 		</>
 	);
 }

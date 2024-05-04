@@ -1,10 +1,5 @@
 'use client';
-<<<<<<< HEAD
-// import InputLabel from '@/components/Inputs';
-=======
-import { Input } from '@/components/Inputs';
->>>>>>> e4ab31600b783145e860bf2f4786ab33c822998b
-import style from '../../reporte.module.css';
+
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';
@@ -12,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Estados, EstadosReporte } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
 import Link from 'next/link';
+import { InputFile } from '@/components/Inputs';
 
 export default function Reporte({ props }) {
 	const [reporte, setReporte] = useState({
@@ -131,33 +127,8 @@ export default function Reporte({ props }) {
 					<h1>Información del reporte</h1>
 					<div className="datos-reporte">
 						<center>
-							<div className={style.perfil}>
-								{image ? (
-									<Image
-										width={200}
-										height={200}
-										src={createObjectURL}
-										alt={`Uploaded Image`}
-										className="rounded-top"
-									/>
-								) : props.reporte.imagen ? (
-									<Image
-										width={250}
-										height={250}
-										src={props.reporte.imagen}
-										alt={`ImagenReporte${props.reporte.id}`}
-										className="rounded-top"
-									/>
-								) : (
-									<Image
-										width={250}
-										height={250}
-										src={'/images/defaultReporte.png'}
-										alt="DefaultIcon"
-										className="rounded-top"
-									/>
-								)}
-								<input
+							<div className="">
+								<InputFile
 									id="perfil"
 									type="file"
 									name="perfil"
@@ -167,19 +138,6 @@ export default function Reporte({ props }) {
 								/>
 							</div>
 						</center>
-<<<<<<< HEAD
-						{/* <InputLabel
-=======
-						<Input
->>>>>>> e4ab31600b783145e860bf2f4786ab33c822998b
-							id={'fecRegistro'}
-							type={'date'}
-							label={'Fecha de registro'}
-							name={'fechaRegistro'}
-							value={reporte.fechaCreada}
-							onChange={handleInputChange}
-							disabled
-						/> */}
 
 						<div className="input mb-3 mt-3">
 							<label htmlFor="estado" className="form-label">
@@ -250,21 +208,15 @@ export default function Reporte({ props }) {
 									>
 										<div className={'d-flex align-items-center'}>
 											<div className={'rounded my-2 bg-body-light'}>
-												{props.reporte.reportador.imagen ? (
-													<Image
-														src={props.reporte.reportador.imagen}
-														alt="userImage"
-														width={200}
-														height={200}
-													/>
-												) : (
-													<Image
-														src={'/images/defaultUser.png'}
-														alt="defaultUser.png"
-														width={200}
-														height={200}
-													/>
-												)}
+												<Image
+													src={
+														props.reporte.reportador.imagen ||
+														'/images/defaultUser.png'
+													}
+													alt="userImage"
+													width={200}
+													height={200}
+												/>
 											</div>
 											<div
 												className={'d-flex flex-column justify-content-between'}

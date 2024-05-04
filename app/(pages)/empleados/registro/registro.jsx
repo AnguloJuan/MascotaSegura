@@ -1,9 +1,8 @@
 'use client';
 import Button from '@/components/Button';
-import { Each } from '@/components/Each';
 import { Input, InputFile } from '@/components/Inputs';
 import { Select } from '@/components/Selects';
-import Toast from '@/components/Toast';
+import Toast, { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -17,25 +16,7 @@ export default function RegistroEmpleado() {
 	const [NIP, setNIP] = useState('');
 	const [tipoEmpleado, setTipoEmpleado] = useState(0);
 	const [image, setImage] = useState(null);
-	const [toasts, setToasts] = useState([]);
-
-	const showToast = (message, type) => {
-		const id = Math.random();
-		setToasts((toasts) => [...toasts, { id, message, type }]);
-		setTimeout(() => removeToast(id), 5000);
-	};
-	const removeToast = (id) => {
-		setToasts((toasts) => toasts.filter((toast) => toast.id !== id));
-	};
-
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
-	};
+	const { addToast } = useToast();
 
 	const registrarEmpleado = async (e) => {
 		e.preventDefault();
@@ -48,7 +29,7 @@ export default function RegistroEmpleado() {
 			isNaN(telefono) ||
 			!password
 		) {
-			showToast('Se deben de llenar todos los espacios.', 'warning');
+			addToast('Se deben de llenar todos los campos.', 'warning');
 		} else {
 			try {
 				const body = new FormData();
@@ -86,7 +67,7 @@ export default function RegistroEmpleado() {
 					body,
 				});
 				if (response.status == 201) {
-					showToast('Se a registrado con exito.', 'success');
+					addToast('Se a registrado con exito.', 'success');
 
 					response
 						.json()
@@ -98,7 +79,7 @@ export default function RegistroEmpleado() {
 					console.error('register failed');
 					response.json().then((response) => console.log(response.message));
 					if (response.status == 409) {
-						showToast('Ya se registrado una cuenta con ese correo.', 'warning');
+						addToast('Ya se registrado una cuenta con ese correo.', 'warning');
 					}
 					if (response.status == 500) {
 						response
@@ -106,18 +87,21 @@ export default function RegistroEmpleado() {
 							.then((response) =>
 								console.error('An error occurred', response.message)
 							);
-						showToast('Ocurrió un error de servidor.', 'error');
+						addToast('Ocurrió un error de servidor.', 'error');
 					}
 				}
 			} catch (error) {
-				showToast('Ocurrió un error de servidor.', 'error');
+				addToast('Ocurrió un error de servidor.', 'error');
 			}
 		}
 	};
 
 	return (
 		<>
-			<form onSubmit={registrarEmpleado} className="grid place-content-center">
+			<form
+				onSubmit={registrarEmpleado}
+				className="grid place-content-center self-center"
+			>
 				<label htmlFor="perfil">
 					Imagen de perfil
 					<span>(Opcional)</span>
@@ -126,7 +110,7 @@ export default function RegistroEmpleado() {
 					<InputFile
 						id="perfil"
 						name="perfil"
-						onChange={uploadToClient}
+						onFileUpload={(image) => setImage(image)}
 						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 					/>
 					<div className="grid w-full place-content-center space-y-3 *:w-full">
@@ -188,24 +172,7 @@ export default function RegistroEmpleado() {
 				<center>
 					<Button type="submit" text={'Registrar empleado'} />
 				</center>
-				<br />
 			</form>
-
-			{toasts && (
-				<div className="fixed bottom-3 right-2 flex flex-col-reverse gap-2">
-					<Each
-						of={toasts}
-						render={(toast, i) => (
-							<Toast
-								key={toast.id}
-								message={toast.message}
-								type={toast.type}
-								onClose={() => removeToast(toast.id)}
-							/>
-						)}
-					/>
-				</div>
-			)}
 		</>
 	);
 }

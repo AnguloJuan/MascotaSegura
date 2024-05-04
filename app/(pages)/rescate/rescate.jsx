@@ -2,7 +2,7 @@
 
 import { Checkbox, Input, InputFile } from '@/components/Inputs';
 import { Especies, Select } from '@/components/Selects';
-import { Dialog } from '@/components/dialogs';
+import Toast, { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -20,9 +20,9 @@ export default function Rescate({ especies, idRefugio }) {
 		idRefugio: idRefugio,
 	});
 
-	const [fieldsDialog, setFieldsDialog] = useState(false);
-	const [registradoDialog, setRegistradoDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
+	const [image, setImage] = useState(null);
+
+	const { addToast } = useToast();
 	const router = useRouter();
 
 	const handleInputChange = (e) => {
@@ -57,7 +57,10 @@ export default function Rescate({ especies, idRefugio }) {
 			!mascota.tamano ||
 			mascota.edad < 0
 		) {
-			setFieldsDialog(true);
+			addToast(
+				'Rellena los campos obligatorios antes de registrar la mascota.',
+				'warning'
+			);
 		} else {
 			const body = new FormData();
 			body.set('mascota', JSON.stringify(mascota));
@@ -85,7 +88,7 @@ export default function Rescate({ especies, idRefugio }) {
 				body,
 			});
 			if (response.status == 200) {
-				setRegistradoDialog(true);
+				addToast('La mascota ha sido registrada en el sistema', 'success');
 				response
 					.json()
 					.then((response) =>
@@ -93,7 +96,7 @@ export default function Rescate({ especies, idRefugio }) {
 					);
 			} else {
 				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
+				addToast('Ha ocurrido un error en el servidor', 'error');
 			}
 		}
 	};
@@ -107,6 +110,7 @@ export default function Rescate({ especies, idRefugio }) {
 							id="perfil"
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 							required
+							onFileUpload={(image) => setImage(image)}
 						/>
 					</div>
 					<div className="flex flex-col justify-center gap-7">
@@ -211,33 +215,6 @@ export default function Rescate({ especies, idRefugio }) {
 					Registrar
 				</button>
 			</form>
-
-			<Dialog
-				id={'errorRellenado'}
-				isOpen={fieldsDialog}
-				onClose={() => setFieldsDialog(false)}
-			>
-				<h1>Error de rellenado</h1>
-				<p>Rellena los campos obligatorios antes de registrar la mascota</p>
-			</Dialog>
-			<Dialog
-				id={'registrado'}
-				isOpen={registradoDialog}
-				onClose={() => setRegistradoDialog(false)}
-			>
-				<h1>Mascota registrada</h1>
-				<p>La mascota ha sido registrada en el sistema</p>
-				<p>Espere un momento en lo que es redirigido a su perfil</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
 		</>
 	);
 }

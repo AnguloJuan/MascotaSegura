@@ -1,4 +1,3 @@
-import rescate from './rescate.module.css';
 import Rescate from './rescate';
 import { getPrisma } from '@/app/lib/prisma';
 import { GetUser } from '@/app/lib/user';

@@ -1,10 +1,9 @@
-import registro from './reporte.module.css';
-import actualizar from './reporte.module.css';
 import { Input } from '@/components/Inputs';
 import { getPrisma } from '@/app/lib/prisma';
 import Link from 'next/link';
 import ListaReportes from './listaReportes';
 import Image from 'next/image';
+import { IconChartPie, IconChartPieFilled } from '@tabler/icons-react';
 
 const prisma = getPrisma();
 
@@ -30,30 +29,21 @@ export default async function page() {
 	return (
 		<>
 			<h1 className="text-7xl">Lista de reportes</h1>
-			<div className="btn p-0 w-100 btn-primary">
+			<div className="flex justify-between py-5">
 				<Link
 					href={'/dashboard'}
-					className="link-light link-underline-opacity-0 w-100 p-2 d-flex align-items-center"
+					className="flex bg-primary hover:bg-primaryHover p-3 rounded-lg text-white"
 				>
-					<div className="bg-white rounded">
-						<Image
-							src={'/images/menu/reportes.png'}
-							alt="Dashboard"
-							width={30}
-							height={30}
-						/>
-					</div>
-					<span className="fw-bold ms-3">Dashboard</span>
+					<IconChartPieFilled />
+					<span className="font-bold ms-3">Dashboard</span>
+				</Link>
+				<Link
+					href={'/reportes/reportar'}
+					className="bg-primary hover:bg-primaryHover p-3 rounded-lg text-white"
+				>
+					Crear Reportar
 				</Link>
 			</div>
-			<center>
-				<Link
-					href={'reportes/reportar'}
-					className="btn btn-danger border rounded mt-4 mb-2 d-flex align-items-center"
-				>
-					<span className="fw-bold fs-4 mx-2">!</span>Reportar un caso
-				</Link>
-			</center>
 			<ListaReportes props={props} />
 		</>
 	);
@@ -62,11 +52,11 @@ export default async function page() {
 export function registrarReporte() {
 	return (
 		<>
-			<div className={registro}>
+			<div className="">
 				<h3>Reportar caso de maltrato</h3>
-				<div className={registro.contenedorRegistro}>
-					<div className={registro.perfil}></div>
-					<div className={registro.informacion}>
+				<div className="">
+					<div className=""></div>
+					<div className="">
 						<Input id={'adoptado'} label={'Adoptado'} placeholder={'Si/no'} />
 						<Input
 							id={'reporte'}
@@ -87,7 +77,7 @@ export function registrarReporte() {
 					placeholder={'descripcion'}
 				/>
 
-				<div className={registro.buton}>
+				<div className="">
 					<button>Reportar</button>
 				</div>
 			</div>
@@ -97,11 +87,11 @@ export function registrarReporte() {
 export function editarReporte() {
 	return (
 		<>
-			<div className={actualizar}>
+			<div className="">
 				<h3>Informacion del reporte</h3>
-				<div className={actualizar.contenedorRegistro}>
-					<div className={actualizar.perfil}></div>
-					<div className={actualizar.informacion}>
+				<div className="">
+					<div className=""></div>
+					<div className="">
 						<Input id={'adoptado'} label={'Adoptado'} placeholder={'Si/no'} />
 						<Input
 							id={'reporte'}
@@ -122,11 +112,11 @@ export function editarReporte() {
 					placeholder={'descripcion'}
 				/>
 
-				<div className={actualizar.contenedorBotones}>
-					<div className={actualizar.buton1}>
+				<div className="">
+					<div className="">
 						<button>Guardar</button>
 					</div>
-					<div className={actualizar.buton2}>
+					<div className="">
 						<button>Eliminar</button>
 					</div>
 				</div>
