@@ -1,5 +1,6 @@
 'use client';
 
+import postImage from '@/app/lib/cloudinaryActions';
 import { Checkbox, Input, InputFile } from '@/components/Inputs';
 import { Especies, Select } from '@/components/Selects';
 import Toast, { useToast } from '@/components/Toast';
@@ -66,19 +67,7 @@ export default function Rescate({ especies, idRefugio }) {
 			body.set('mascota', JSON.stringify(mascota));
 
 			if (image) {
-				//subir imagen a cloudinary
-				body.set('file', image);
-				body.set('upload_preset', 'mascotaSegura');
-
-				const data = await fetch(
-					'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-					{
-						method: 'POST',
-						body,
-					}
-				).then((r) => r.json());
-
-				body.set('image', data.secure_url);
+				postImage(body, image);
 			} else {
 				body.set('image', null);
 			}

@@ -8,6 +8,7 @@ import { Estados, EstadosReporte } from '@/components/Selects';
 import { Municipios } from '@/components/SelectsClient';
 import Link from 'next/link';
 import { InputFile } from '@/components/Inputs';
+import postImage from '@/app/lib/cloudinaryActions';
 
 export default function Reporte({ props }) {
 	const [reporte, setReporte] = useState({
@@ -67,19 +68,7 @@ export default function Reporte({ props }) {
 			body.set('reporteInit', JSON.stringify(props.reporte));
 
 			if (image) {
-				//subir imagen a cloudinary
-				body.set('file', image);
-				body.set('upload_preset', 'mascotaSegura');
-
-				const data = await fetch(
-					'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-					{
-						method: 'POST',
-						body,
-					}
-				).then((r) => r.json());
-
-				body.set('image', data.secure_url);
+				postImage(body, image);
 			} else {
 				body.set('image', null);
 			}

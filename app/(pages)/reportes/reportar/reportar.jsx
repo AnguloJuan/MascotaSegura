@@ -7,6 +7,7 @@ import { Municipios } from '@/components/SelectsClient';
 import { Input, InputFile } from '@/components/Inputs';
 import Button from '@/components/Button';
 import Toast, { useToast } from '@/components/Toast';
+import postImage from '@/app/lib/cloudinaryActions';
 
 export default function Reportar({ props }) {
 	const userType = props.user.idTipoUsuario;
@@ -57,19 +58,7 @@ export default function Reportar({ props }) {
 			body.set('userType', JSON.stringify(userType));
 
 			if (image) {
-				//subir imagen a cloudinary
-				body.set('file', image);
-				body.set('upload_preset', 'mascotaSegura');
-
-				const data = await fetch(
-					'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-					{
-						method: 'POST',
-						body,
-					}
-				).then((r) => r.json());
-
-				body.set('image', data.secure_url);
+				postImage(body, image);
 			} else {
 				body.set('image', null);
 			}

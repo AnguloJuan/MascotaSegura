@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Link from 'next/link';
 import Cancelar from './cancelarAdopcion';
+import postImage from '@/app/lib/cloudinaryActions';
 
 export default function MascotaPage({ especies, mascotaInicial }) {
 	const [mascota, setMascota] = useState({
@@ -89,19 +90,7 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 			body.set('mascotaInicial', JSON.stringify(mascotaInicial));
 
 			if (image) {
-				//subir imagen a cloudinary
-				body.set('file', image);
-				body.set('upload_preset', 'mascotaSegura');
-
-				const data = await fetch(
-					'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-					{
-						method: 'POST',
-						body,
-					}
-				).then((r) => r.json());
-
-				body.set('image', data.secure_url);
+				postImage(body, image);
 			} else {
 				body.set('image', null);
 			}

@@ -10,6 +10,7 @@ import { useToast } from '@/components/Toast';
 import Popover from '@/components/Popover';
 import { IconMenuDeep } from '@tabler/icons-react';
 import Button from '@/components/Button';
+import postImage from '@/app/lib/cloudinaryActions';
 
 export default function PerfilPage({ props }) {
 	//formatting date
@@ -78,19 +79,7 @@ export default function PerfilPage({ props }) {
 				body.set('userInit', JSON.stringify(props.adoptante));
 
 				if (image) {
-					//subir imagen a cloudinary
-					body.set('file', image);
-					body.set('upload_preset', 'mascotaSegura');
-
-					const data = await fetch(
-						'https://api.cloudinary.com/v1_1/dyvwujin9/image/upload',
-						{
-							method: 'POST',
-							body,
-						}
-					).then((r) => r.json());
-
-					body.set('image', data.secure_url);
+					postImage(body, image);
 				} else {
 					body.set('image', null);
 				}
