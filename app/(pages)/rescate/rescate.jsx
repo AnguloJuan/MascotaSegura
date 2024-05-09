@@ -7,7 +7,7 @@ import Toast, { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Rescate({ especies, idRefugio }) {
+export default function Rescate({ idRefugio }) {
 	const [mascota, setMascota] = useState({
 		nombre: '',
 		especie: 0,
@@ -114,7 +114,6 @@ export default function Rescate({ especies, idRefugio }) {
 							className="w-full"
 						/>
 						<Especies
-							especies={especies}
 							handleChange={handleInputChange}
 							required={true}
 							className="w-full"

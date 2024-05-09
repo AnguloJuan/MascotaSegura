@@ -215,7 +215,6 @@ export default function PerfilPage({ props }) {
 						<div className="flex gap-5">
 							<Estados
 								onChange={handleEstadoChange}
-								estados={props.estados}
 								value={adoptante.estado}
 							/>
 							<Municipios

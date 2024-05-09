@@ -76,7 +76,6 @@ export default function ListaReportes({ props }) {
 					<option value={5}>Falso</option>
 				</Select>
 				<Estados
-					estados={props.estados}
 					onChange={handleEstadoChange}
 					value={searchCriteria.estado}
 				/>

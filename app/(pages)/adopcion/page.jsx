@@ -18,22 +18,12 @@ export default async function Adopcion() {
 			adopcion: user.idTipoUsuario === (0 || 1) ? { is: null } : undefined, // Excluir mascotas en adopción si el usuario es adoptante o sin registro
 		},
 	});
-	const especies = await prisma.especie.findMany();
-	const razas = await prisma.mascota.findMany({
-		select: {
-			id: true,
-			raza: true,
-		},
-		distinct: 'raza',
-	});
 
 	return (
 		<>
 			<h2 className="text-7xl mb-8">Lista de Mascotas</h2>
 			<ListaMascota
 				inicialMascotas={mascotas}
-				especies={especies}
-				razas={razas}
 				userType={user.idTipoUsuario}
 			/>
 		</>

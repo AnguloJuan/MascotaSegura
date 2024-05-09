@@ -8,9 +8,6 @@ import { Especies, Raza, Select, Sexos } from '@/components/Selects';
 
 export default function ListaMascota({
 	inicialMascotas,
-	especies,
-	razas,
-	edades,
 	userType,
 }) {
 	const [searchCriteria, setSearchCriteria] = useState({
@@ -26,7 +23,6 @@ export default function ListaMascota({
 
 	const [mascotas, setMascotas] = useState([]);
 	const [openFilter, setOpenFilter] = useState(false);
-
 	useEffect(() => {
 		setSearchCriteria((prevCriteria) => ({
 			...prevCriteria,
@@ -83,10 +79,10 @@ export default function ListaMascota({
 						</Select>
 					)}
 					<div className="flex flex-col">
-						<Especies onChange={handleInputChange} especies={especies} value={searchCriteria.especie} />
+						<Especies onChange={handleInputChange} value={searchCriteria.especie} />
 					</div>
 					<div className="flex flex-col">
-						<Raza onChange={handleInputChange} razas={razas} />
+						<Raza onChange={handleInputChange} />
 					</div>
 					<label htmlFor="Edad" className="font-bold">
 						Edad

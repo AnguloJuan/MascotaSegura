@@ -68,7 +68,6 @@ export default function ListaAdoptantes({ props }) {
 			<div className="sticky top-0 flex items-end justify-between gap-5 z-50 bg-white">
 				<div className="flex gap-5">
 					<Estados
-						estados={props.estados}
 						onChange={handleEstadoChange}
 						value={searchCriteria.estado}
 					/>

@@ -1,8 +1,37 @@
+import { useEffect, useState } from 'react';
 import { Each } from './Each';
 
-export function Especies({ onChange, especies, required, value, className }) {
+let cachedEspecies = [];
+let cachedEstados = [];
+let cachedRazas = [];
+
+async function fetchData(search) {
+	await fetch(`/api/dataFetch?search=${search}`)
+		.then((response) => response.json())
+		.then((data) => {
+			if (search === 'especies') cachedEspecies = data.data;
+			else if (search === 'estados') cachedEstados = data.data;
+			else if (search === 'razas') cachedRazas = data.data;
+		})
+		.catch((error) => console.error('Error fetching data:', error));
+}
+
+export function Especies({ onChange, required, value, className }) {
+	const [especies, setEspecies] = useState(cachedEspecies);
+	useEffect(() => {
+		async function fetchEspecies() {
+			if (especies.length === 0)
+				await fetchData('especies')
+					.then(() => setEspecies(cachedEspecies));
+		}
+		fetchEspecies();
+	}, []);
+
 	return (
 		<div className="flex flex-col gap-1 h-max">
+			<label htmlFor="especies" className="font-bold">
+				Especies
+			</label>
 			<select
 				id="especies"
 				onChange={onChange}
@@ -21,7 +50,18 @@ export function Especies({ onChange, especies, required, value, className }) {
 		</div>
 	);
 }
-export function Raza({ onChange, razas, className }) {
+
+export function Raza({ onChange, className }) {
+	const [razas, setRazas] = useState(cachedRazas);
+	useEffect(() => {
+		async function fetchRazas() {
+			if (razas.length === 0)
+				await fetchData('razas')
+					.then(() => setRazas(cachedRazas));
+		}
+		fetchRazas();
+	}, []);
+
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="raza" className="font-bold">
@@ -123,14 +163,24 @@ export function EstadosReporte({
 		</div>
 	);
 }
+
 export function Estados({
 	onChange,
-	estados,
 	value,
 	className,
 	disabled,
 	...props
 }) {
+	const [estados, setEstados] = useState(cachedEstados);
+	useEffect(() => {
+		async function fetchEstados() {
+			if (estados.length === 0)
+				await fetchData('estados')
+					.then(() => setEstados(cachedEstados));
+		}
+		fetchEstados();
+	}, []);
+
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="estado" className="font-bold">

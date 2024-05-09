@@ -1,6 +1,8 @@
 'use client';
 import postImage from '@/app/lib/cloudinaryActions';
 import { Input } from '@/components/Inputs';
+import { Estados } from '@/components/Selects';
+import { Municipios } from '@/components/SelectsClient';
 import { Dialog } from '@/components/dialogs';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';
@@ -116,24 +118,6 @@ export default function SignIn() {
 		}
 	};
 
-	useEffect(() => {
-		// Fetch estados data from the API
-		fetch('/api/estados')
-			.then((response) => response.json())
-			.then((data) => setEstados(data.estados))
-			.catch((error) => console.error('Error fetching estados:', error));
-	}, []);
-
-	useEffect(() => {
-		// Fetch municipios data based on selected estado from the API
-		if (selectedEstado) {
-			fetch(`/api/municipios?estado=${selectedEstado}`)
-				.then((response) => response.json())
-				.then((data) => setMunicipios(data.municipios))
-				.catch((error) => console.error('Error fetching municipios:', error));
-		}
-	}, [selectedEstado]);
-
 	return (
 		<>
 			<form onSubmit={handleSignIn}>
@@ -192,37 +176,15 @@ export default function SignIn() {
 					onChange={(e) => setTelefono(e.target.value)}
 				/>
 
-				<label htmlFor="estado">Estado:</label>
-				<select
-					id="estado"
-					value={selectedEstado}
+				<Estados
 					onChange={handleEstadoChange}
-					className="form-select"
-				>
-					<option value="">Selecciona Estado</option>
-					{estados.map((estado) => (
-						<option key={estado.id} value={estado.id}>
-							{estado.nombre}
-						</option>
-					))}
-				</select>
-
-				<label htmlFor="municipio">Municipio:</label>
-				<select
-					id="municipio"
+					value={selectedEstado}
+				/>
+				<Municipios
+					selectedEstado={selectedEstado}
 					value={selectedMunicipio}
 					onChange={handleMunicipioChange}
-					className="form-select"
-					disabled
-				>
-					<option value="">Selecciona Municipio</option>
-					{/* Render municipio options based on selected estado */}
-					{municipios.map((municipio) => (
-						<option key={municipio.id} value={municipio.id}>
-							{municipio.nombre}
-						</option>
-					))}
-				</select>
+				/>
 
 				<Input
 					id={'email'}

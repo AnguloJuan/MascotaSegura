@@ -27,7 +27,6 @@ export default async function PerfilPage() {
 				id: userMunicipio,
 			},
 		});
-		const estados = await prisma.estado.findMany();
 		const municipios = await prisma.municipio.findMany({
 			where: {
 				idEstado: userEstado.idEstado,
@@ -50,7 +49,6 @@ export default async function PerfilPage() {
 		props = {
 			user,
 			userType,
-			estados,
 			municipios,
 			userMunicipio,
 			userEstado,

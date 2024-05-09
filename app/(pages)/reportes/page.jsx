@@ -22,9 +22,8 @@ export default async function page() {
 			},
 		},
 	});
-	const estados = await prisma.estado.findMany();
 
-	const props = { reportes, estados };
+	const props = { reportes };
 
 	return (
 		<>

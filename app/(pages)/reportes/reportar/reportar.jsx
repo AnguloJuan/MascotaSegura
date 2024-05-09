@@ -125,7 +125,6 @@ export default function Reportar({ props }) {
 						<div className="flex gap-3 ">
 							<Estados
 								onChange={handleEstadoChange}
-								estados={props.estados}
 								value={reporte.estado}
 							/>
 							<Municipios

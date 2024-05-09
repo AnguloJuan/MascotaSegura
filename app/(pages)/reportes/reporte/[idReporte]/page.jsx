@@ -27,7 +27,6 @@ export default async function ReportePage({ params }) {
 		},
 	});
 
-	const estados = await prisma.estado.findMany();
 	const municipios = await prisma.municipio.findMany({
 		where: {
 			idEstado: reporte.municipio.idEstado,
@@ -44,7 +43,7 @@ export default async function ReportePage({ params }) {
 	const year = new Date(reporte.fechaCreada).getFullYear();
 	const date = `${year}-${month}-${day}`;
 
-	const props = { reporte, user, userType, estados, municipios, date };
+	const props = { reporte, user, userType, municipios, date };
 	return userType == 2 || userType == 3 ? (
 		<Reporte props={props} />
 	) : (
@@ -75,7 +74,6 @@ export default async function ReportePage({ params }) {
 								Estado
 							</label>
 							<Estados
-								estados={estados}
 								value={reporte.municipio.idEstado}
 								disabled
 							/>

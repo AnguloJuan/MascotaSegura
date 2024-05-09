@@ -15,19 +15,13 @@ export const metadata = {
 export default async function Page({ params }) {
 	const { mascotaId } = params;
 	const mascota = await GetMascota(mascotaId);
-	const especies = await prisma.especie.findMany();
-	/*const refugio = await prisma.refugio.findUnique({
-		where: {
-			id: mascota.idRefugio,
-		}
-	})*/
 	const user = await GetUser();
 	const userId = user.id;
 	const userType = user.idTipoUsuario;
 	return (
 		<>
 			{userType == 2 || userType == 3 ? (
-				<MascotaPage especies={especies} mascotaInicial={mascota} />
+				<MascotaPage mascotaInicial={mascota} />
 			) : (
 				<div className="grid grid-cols-2 gap-6">
 					<img

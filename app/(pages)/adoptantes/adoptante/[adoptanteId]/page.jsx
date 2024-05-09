@@ -20,7 +20,6 @@ export default async function Page({ params }) {
 		},
 	});
 	const adoptanteMunicipio = adoptante.idMunicipio;
-	const estados = await prisma.estado.findMany();
 	const adoptanteEstado = await prisma.municipio.findUnique({
 		select: {
 			idEstado: true,
@@ -50,7 +49,6 @@ export default async function Page({ params }) {
 
 	const props = {
 		adoptante,
-		estados,
 		municipios,
 		adoptanteEstado,
 		adoptanteMunicipio,

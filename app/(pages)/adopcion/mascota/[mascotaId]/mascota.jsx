@@ -11,7 +11,7 @@ import Link from 'next/link';
 import Cancelar from './cancelarAdopcion';
 import postImage from '@/app/lib/cloudinaryActions';
 
-export default function MascotaPage({ especies, mascotaInicial }) {
+export default function MascotaPage({ mascotaInicial }) {
 	const [mascota, setMascota] = useState({
 		id: mascotaInicial.id,
 		nombre: mascotaInicial.nombre,
@@ -157,7 +157,6 @@ export default function MascotaPage({ especies, mascotaInicial }) {
 						</div>
 						<div className="input mb-3">
 							<Especies
-								especies={especies}
 								onChange={handleInputChange}
 								value={mascota.especie}
 							/>

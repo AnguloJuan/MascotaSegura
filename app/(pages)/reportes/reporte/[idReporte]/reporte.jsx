@@ -134,7 +134,6 @@ export default function Reporte({ props }) {
 							</label>
 							<Estados
 								handleChange={handleEstadoChange}
-								estados={props.estados}
 								value={reporte.estado}
 							/>
 						</div>

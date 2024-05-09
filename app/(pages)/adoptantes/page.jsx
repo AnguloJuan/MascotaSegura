@@ -11,8 +11,7 @@ export const metadata = {
 export default async function adoptantes() {
 	const user = await GetUser();
 	const adoptantes = await prisma.adoptante.findMany();
-	const estados = await prisma.estado.findMany();
 
-	const props = { user, adoptantes, estados };
+	const props = { user, adoptantes };
 	return <ListaAdoptantes props={props} />;
 }
