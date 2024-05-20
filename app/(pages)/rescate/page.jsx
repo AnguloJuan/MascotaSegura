@@ -1,8 +1,5 @@
-import Rescate from './rescate';
-import { getPrisma } from '@/app/lib/prisma';
 import { GetUser } from '@/app/lib/user';
-
-const prisma = getPrisma();
+import Rescate from './rescate';
 
 export const metadata = {
 	title: 'Rescate',

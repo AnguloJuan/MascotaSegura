@@ -2,7 +2,7 @@
 
 import postImage from '@/app/lib/cloudinaryActions';
 import { Checkbox, Input, InputFile } from '@/components/Inputs';
-import { Especies, Select } from '@/components/Selects';
+import { Especies, Raza, Select } from '@/components/Selects';
 import Toast, { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -114,18 +114,11 @@ export default function Rescate({ idRefugio }) {
 							className="w-full"
 						/>
 						<Especies
-							handleChange={handleInputChange}
+							onChange={handleInputChange}
 							required={true}
 							className="w-full"
 						/>
-						<Input
-							id="raza"
-							label="Raza"
-							placeholder="Raza"
-							name={'raza'}
-							onChange={handleInputChange}
-							className="w-full"
-						/>
+						<Raza onChange={handleInputChange} className="w-full" />
 					</div>
 				</div>
 				<div className="flex items-end gap-6">
@@ -139,14 +132,14 @@ export default function Rescate({ idRefugio }) {
 					/>
 
 					<Select
-						handleChange={handleInputChange}
+						onChange={handleInputChange}
 						required
 						items={['Macho', 'Hembra']}
 						label="Sexo"
 					/>
 
 					<Select
-						handleChange={handleInputChange}
+						onChange={handleInputChange}
 						required
 						placeholder="Selecciona el tamaño"
 						label="Tamaño"
