@@ -40,7 +40,7 @@ export async function GET(req) {
 		return NextResponse.json({ adoptantes }, { status: 200 });
 	} catch (error) {
 		console.log(error);
-		NextResponse.json(
+		return NextResponse.json(
 			{ error: 'Ocurrio un fallo al realizar la busqueda' },
 			{ staus: 500 }
 		);
@@ -185,7 +185,7 @@ export async function DELETE(req) {
 		);
 	} catch (error) {
 		console.log(error);
-		NextResponse.json(
+		return NextResponse.json(
 			{ error: 'Fallo al eliminar el adoptante' },
 			{ staus: 500 }
 		);

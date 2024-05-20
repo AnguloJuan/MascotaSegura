@@ -31,7 +31,7 @@ export async function GET(req) {
         return NextResponse.json({ mascotas }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
+        return NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
     }
 }
 
@@ -116,7 +116,7 @@ export async function PUT(req) {
                     });
                 } catch (error) {
                     console.error('Error occurred while updating adopcion', error);
-                    NextResponse.json({ error: 'Failed to update adopcion' }, { staus: 500 });
+                    return NextResponse.json({ error: 'Failed to update adopcion' }, { staus: 500 });
                 }
             }
 
@@ -155,6 +155,6 @@ export async function DELETE(req) {
         return NextResponse.json({ message: "Mascota eliminada" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Ocurrio al eliminar la mascota' }, { staus: 500 });
+        return NextResponse.json({ error: 'Ocurrio al eliminar la mascota' }, { staus: 500 });
     }
 }

@@ -85,7 +85,7 @@ export async function GET(req) {
         return NextResponse.json({ empleados }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
+        return NextResponse.json({ error: 'Ocurrio un fallo al realizar la busqueda' }, { staus: 500 });
     }
 }
 
@@ -172,9 +172,9 @@ export async function DELETE(req) {
             }
         });
 
-        return NextResponse.json({ message: "Empledo eliminada" }, { status: 200 });
+        return NextResponse.json({ message: "Empledo eliminado" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Fallo al eliminar el empleado' }, { staus: 500 });
+        return NextResponse.json({ error: 'Fallo al eliminar el empleado' }, { staus: 500 });
     }
 }

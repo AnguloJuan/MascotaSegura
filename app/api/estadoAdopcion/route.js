@@ -94,7 +94,7 @@ export async function PUT(req) {
         return NextResponse.json({ success: true, adopcion: updatedAdopcion }, { status: 200 });
     } catch (error) {
         console.error('Error occurred while updating adopcion', error);
-        NextResponse.json({ error: 'Failed to update adopcion' }, { staus: 500 });
+        return NextResponse.json({ error: 'Failed to update adopcion' }, { staus: 500 });
     }
 }
 

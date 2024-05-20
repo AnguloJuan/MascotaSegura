@@ -18,6 +18,6 @@ export async function GET(request) {
         }
         return NextResponse.json({ municipios }, { status: 200 });
     } catch (error) {
-        NextResponse.json({ error: 'Failed to fetch municipios' }, { staus: 500 });
+        return NextResponse.json({ error: 'Failed to fetch municipios' }, { staus: 500 });
     }
 }

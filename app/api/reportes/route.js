@@ -86,7 +86,7 @@ export async function GET(req) {
         return NextResponse.json({ reportes }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Fallo al registrar el reporte' }, { staus: 500 });
+        return NextResponse.json({ error: 'Fallo al registrar el reporte' }, { staus: 500 });
     }
 }
 
@@ -140,6 +140,6 @@ export async function DELETE(req) {
         return NextResponse.json({ message: "Reporte eliminado" }, { status: 200 });
     } catch (error) {
         console.log(error);
-        NextResponse.json({ error: 'Fallo al eliminar reporte' }, { staus: 500 });
+        return NextResponse.json({ error: 'Fallo al eliminar reporte' }, { staus: 500 });
     }
 }
