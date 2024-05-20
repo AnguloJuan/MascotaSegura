@@ -133,7 +133,7 @@ export default function Reporte({ props }) {
 								Estado
 							</label>
 							<Estados
-								handleChange={handleEstadoChange}
+								onChange={handleEstadoChange}
 								value={reporte.estado}
 							/>
 						</div>
@@ -142,7 +142,7 @@ export default function Reporte({ props }) {
 								Municipio
 							</label>
 							<Municipios
-								handleChange={handleInputChange}
+								onChange={handleInputChange}
 								municipiosInicial={props.municipios}
 								selectedEstado={reporte.estado}
 								value={reporte.municipio}
@@ -164,7 +164,7 @@ export default function Reporte({ props }) {
 						</div>
 
 						<EstadosReporte
-							handleChange={handleInputChange}
+							onChange={handleInputChange}
 							value={reporte.estadoReporte}
 						/>
 
