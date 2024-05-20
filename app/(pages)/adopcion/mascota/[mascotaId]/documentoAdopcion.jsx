@@ -47,9 +47,9 @@ export default function DescargarDocumentoAdopcion({ mascota }) {
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(12);
         doc.text('Me comprometo a encargarme de esta mascota, cuidarloy quererlo, n\
-        atender todas sus necesidades, protegerlo y tener sus vacunas al dia')
+        atender todas sus necesidades, protegerlo y tener sus vacunas al dia', 10, 200);
 
-        doc.text(`Fecha de adopción: ${fechaAdopcion}`, 10, 170);
+        doc.text(`Fecha de adopción: ${fechaAdopcion}`, 10, 230);
         doc.text('Firma del adoptante: ____________________', 10, 260);
         doc.text('Firma del refugio: ____________________', 110, 260);
         //Download the document
