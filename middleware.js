@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { GetUser } from '@/app/lib/user';
 
 export async function middleware(request) {
 	const url = new URL('/api/user', request.url);
