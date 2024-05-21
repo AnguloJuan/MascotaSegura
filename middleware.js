@@ -21,5 +21,6 @@ export const config = {
 		'/adoptantes/:path*',
 		'/empleados/:path*',
 		'/rescate/:path*',
+		'/perfil/:path*',
 	]
 };
