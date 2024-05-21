@@ -1,6 +1,5 @@
 import { GetUser } from '../../lib/user';
 import { getPrisma } from '@/app/lib/prisma';
-import LogoutPage from '../logout/page';
 import { Each } from '@/components/Each';
 import CardMascota from '@/components/CardMascota';
 import Perfil from './perfil';
@@ -57,9 +56,7 @@ export default async function PerfilPage() {
 	} else {
 		props = { user, userType };
 	}
-	return userType == 0 ? (
-		<LogoutPage />
-	) : (
+	return (
 		<section>
 			<h1 className="text-5xl">Mi Perfil</h1>
 			<Perfil props={props} />
