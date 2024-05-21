@@ -78,7 +78,7 @@ export default function SignIn() {
 				body.set('user', JSON.stringify(user));
 
 				if (image) {
-					body.set('image', postImage(body, image));
+					body.set('image', await postImage(body, image));
 				} else {
 					body.set('image', null);
 				}

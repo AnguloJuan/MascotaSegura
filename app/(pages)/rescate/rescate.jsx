@@ -67,7 +67,7 @@ export default function Rescate({ idRefugio }) {
 			body.set('mascota', JSON.stringify(mascota));
 
 			if (image) {
-				body.set('image', postImage(body, image));
+				body.set('image', await postImage(body, image));
 			} else {
 				body.set('image', null);
 			}

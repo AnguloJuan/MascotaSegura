@@ -8,7 +8,7 @@ import { IconMenuDeep } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useToast } from '@/components/Toast';
-import { setCookie, setCookies } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 
 export default function Perfil({ props }) {
 	const dataUser = props.user;
@@ -34,6 +34,7 @@ export default function Perfil({ props }) {
 		if (name == 'telefono' && value < 0) {
 			return;
 		}
+		console.log(user);
 
 		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 	};
@@ -67,7 +68,7 @@ export default function Perfil({ props }) {
 			body.set('userInit', JSON.stringify(props.user));
 
 			if (user.imagen) {
-				postImage(body, user.imagen);
+				body.set('image', await postImage(body, user.imagen));
 			} else {
 				body.set('image', null);
 			}
@@ -80,7 +81,7 @@ export default function Perfil({ props }) {
 				setUnmodified(true);
 				response.json().then((response) => {
 					{
-						setCookies('user', response.token)
+						setCookie('user', response.token)
 						addToast('Los cambios han sido guardados correctamente.', 'success');
 						router.refresh();
 					}
@@ -95,11 +96,10 @@ export default function Perfil({ props }) {
 			setUnmodified(false);
 			addToast('Ocurrió un error de servidor', 'error');
 		}
-
 	};
 
 	const deleteUser = async (e) => {
-		setWarningDialog(false);
+		e.preventDefault();
 		const id = props.user.id;
 		const userType = props.userType;
 		const params = JSON.stringify({ id, userType });
@@ -107,13 +107,13 @@ export default function Perfil({ props }) {
 			method: 'DELETE',
 		});
 		if (response.status == 200) {
-			setDeletedDialog(true);
+			setCookie('user', '');
+			addToast('La cuenta ha sido eliminada correctamente.', 'success');
 			router.replace('/login');
 		} else if (response.status == 409) {
-			setAdopcionDialog(true);
+			response.json().then((res) => addToast(res.message, 'error'));
 		} else {
-			response.json().then((res) => console.log(res.message));
-			setErrorDialog(true);
+			response.json().then((res) => addToast(res.message, 'error'));
 		}
 	};
 
@@ -142,7 +142,9 @@ export default function Perfil({ props }) {
 					>
 						Editar Mi Cuenta
 					</button>
-					<button className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg">
+					<button
+						className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg"
+						onClick={deleteUser}>
 						Eliminar Mi Cuenta
 					</button>
 				</Popover>
@@ -157,9 +159,10 @@ export default function Perfil({ props }) {
 						<InputFile
 							id="perfil"
 							name="perfil"
-							onFileUpload={(image) => setUser(
-								(prevCriteria) => ({ ...prevCriteria, imagen: image })
-							)}
+							onFileUpload={(image) => {
+								setUser((prevCriteria) => ({ ...prevCriteria, imagen: image }));
+								setUnmodified(false);
+							}}
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 							image={user.imagen || '/images/defaultUser.png'}
 							className="mx-auto"

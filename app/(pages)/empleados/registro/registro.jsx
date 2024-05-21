@@ -45,7 +45,7 @@ export default function RegistroEmpleado() {
 				};
 				body.set('empleado', JSON.stringify(empleado));
 				if (image) {
-					body.set('image', postImage(body, image));
+					body.set('image', await postImage(body, image));
 				} else {
 					body.set('image', null);
 				}

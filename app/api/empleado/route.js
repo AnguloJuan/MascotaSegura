@@ -105,7 +105,7 @@ export async function PUT(req) {
         let image;
         if (userType == 3) {
             ({ nombre, apellido, NIP, fechaRegistro, tipoEmpleado } = userParsed);
-            date = new Date(Date.parse(fechaRegistro)).toISOString();
+            //date = new Date(Date.parse(fechaRegistro)).toISOString();
             image = formData.get("image");
         }
 
@@ -140,8 +140,8 @@ export async function PUT(req) {
                         correo: correo !== userInitParsed.correo ? correo : undefined,
                         telefono: telefono !== userInitParsed.telefono ? parseInt(telefono) : undefined,
                         NIP: NIP !== userInitParsed.NIP ? NIP : undefined,
-                        fechaRegistro: fechaRegistro !== userInitParsed.fechaRegistro ? date : undefined,
-                        idTipoUsuario: tipoEmpleado !== userInitParsed.idTipoUsuario ? parseInt(tipoEmpleado) : undefined,
+                        //fechaRegistro: fechaRegistro !== userInitParsed.fechaRegistro ? date : undefined,
+                        //idTipoUsuario: tipoEmpleado !== userInitParsed.idTipoUsuario ? parseInt(tipoEmpleado) : undefined,
                         imagen: (image != "null" && image !== userInitParsed.imagen) ? image : undefined,
                     }
                 })

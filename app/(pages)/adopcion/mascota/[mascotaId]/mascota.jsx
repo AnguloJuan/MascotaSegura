@@ -90,7 +90,7 @@ export default function MascotaPage({ mascotaInicial }) {
 			body.set('mascotaInicial', JSON.stringify(mascotaInicial));
 
 			if (image) {
-				body.set('image', postImage(body, image));
+				body.set('image', await postImage(body, image));
 			} else {
 				body.set('image', null);
 			}

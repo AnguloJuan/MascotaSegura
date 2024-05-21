@@ -68,7 +68,7 @@ export default function Reporte({ props }) {
 			body.set('reporteInit', JSON.stringify(props.reporte));
 
 			if (image) {
-				body.set('image', postImage(body, image));
+				body.set('image', await postImage(body, image));
 			} else {
 				body.set('image', null);
 			}
