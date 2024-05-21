@@ -11,5 +11,5 @@ export default async function postImage(body, image) {
         }
     ).then((r) => r.json());
 
-    body.set('image', data.secure_url);
+    return data.secure_url;
 }

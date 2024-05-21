@@ -58,7 +58,7 @@ export default function Reportar({ props }) {
 			body.set('userType', JSON.stringify(userType));
 
 			if (image) {
-				postImage(body, image);
+				body.set('image', postImage(body, image));
 			} else {
 				body.set('image', null);
 			}

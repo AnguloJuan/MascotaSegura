@@ -78,7 +78,7 @@ export default function SignIn() {
 				body.set('user', JSON.stringify(user));
 
 				if (image) {
-					postImage(body, image);
+					body.set('image', postImage(body, image));
 				} else {
 					body.set('image', null);
 				}
@@ -89,13 +89,13 @@ export default function SignIn() {
 					body,
 				});
 				if (response.ok) {
-					if (hasCookie('token')) {
-						deleteCookie('token');
+					if (hasCookie('user')) {
+						deleteCookie('user');
 					}
 					// Sign-in successful, perform any necessary actions (e.g., redirect)
 					response
 						.json()
-						.then((response) => setCookie('token', response.token));
+						.then((response) => setCookie('user', response.token));
 
 					setIsRegistrado(true);
 					router.replace('/');

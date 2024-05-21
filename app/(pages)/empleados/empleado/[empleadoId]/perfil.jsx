@@ -37,7 +37,7 @@ export default function PerfilPage({ props }) {
 		setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 	};
 
-	const modifyEmpleado = async (e) => {
+	const submitChanges = async (e) => {
 		e.preventDefault();
 
 		try {
@@ -50,7 +50,7 @@ export default function PerfilPage({ props }) {
 			body.set('userInit', JSON.stringify(props.empleado));
 
 			if (image) {
-				postImage(body, image);
+				body.set('image', postImage(body, image));
 			} else {
 				body.set('image', null);
 			}
@@ -96,7 +96,6 @@ export default function PerfilPage({ props }) {
 
 	return (
 		<>
-			{console.log(empleado)}
 			<div className="flex py-8 justify-between">
 				<div className="flex gap-8">
 					<img
@@ -150,21 +149,21 @@ export default function PerfilPage({ props }) {
 							placeholder={'Nombre'}
 							name={'nombre'}
 							value={nombre}
-							onChange={() => {}}
+							onChange={handleInputChange}
 						/>
 						<Input
 							id={'apellido'}
 							label={'Apellido'}
 							placeholder={'Apellido'}
 							name={'apellido'}
-							onChange={() => {}}
+							onChange={handleInputChange}
 							value={apellido}
 						/>
 						<Input
 							id={'correo'}
 							label={'Correo electronico'}
 							placeholder={'Correo electrónico'}
-							onChange={() => {}}
+							onChange={handleInputChange}
 							value={correo}
 						/>
 						<Input
@@ -173,7 +172,7 @@ export default function PerfilPage({ props }) {
 							label={'Numero de telefono'}
 							placeholder={'Numero de telefono'}
 							name={'telefono'}
-							onChange={() => {}}
+							onChange={handleInputChange}
 							value={telefono}
 						/>
 						<Input
@@ -188,7 +187,7 @@ export default function PerfilPage({ props }) {
 						<div className="contenedor-btn d-flex flex-row justify-content-center gap-2 m-3">
 							<Button
 								type="submit"
-								onClick={() => {}}
+								onClick={submitChanges}
 								disabled={modifiedDialog}
 								text="Guardar"
 							/>

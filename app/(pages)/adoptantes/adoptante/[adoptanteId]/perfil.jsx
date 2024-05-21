@@ -79,7 +79,7 @@ export default function PerfilPage({ props }) {
 				body.set('userInit', JSON.stringify(props.adoptante));
 
 				if (image) {
-					postImage(body, image);
+					body.set('image', postImage(body, image));
 				} else {
 					body.set('image', null);
 				}
