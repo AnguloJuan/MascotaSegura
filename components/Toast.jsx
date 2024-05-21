@@ -49,7 +49,7 @@ export default function Toast() {
 	}, [toasts, removeToast]);
 
 	return (
-		<div className="fixed bottom-3 right-2 flex flex-col-reverse gap-2 w-full max-w-sm">
+		<div className="fixed bottom-3 right-2 flex flex-col-reverse gap-2 w-full max-w-sm z-[99999]">
 			{
 				<Each
 					of={toasts}
