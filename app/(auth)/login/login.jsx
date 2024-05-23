@@ -1,16 +1,43 @@
 'use client';
 import { Input } from '@/components/Inputs';
 import Link from 'next/link';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
-import { AuthContext } from '@/context/AuthContext';
+import { useToast } from '@/components/Toast';
+import { useRouter } from 'next/navigation';
 
 export default function LogIn() {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [isDialogUnfilledFields, setIsDialogUnfilledFields] = useState(false);
-	const [isDialogFailedLogin, setIsDialogFailedLogin] = useState(false);
-	const { logIn } = useContext(AuthContext);
+	const { addToast } = useToast();
+	const router = useRouter();
+
+	const logIn = async function () {
+		if (!email || !password) {
+			addToast('Rellene todos los campos primero', 'error');
+			return;
+		}
+		try {
+			// Make an HTTP POST request to the log-in API route
+			const response = await fetch("/api/auth/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ email, password }),
+			});
+
+			if (response.status != 200) {
+				addToast('Error al iniciar sesión, correo o contraseña incorrectos', 'error');
+				return;
+			}
+
+			if (response.ok) router.replace("/");
+		} catch (error) {
+			addToast('Error al iniciar sesión', 'error');
+			console.error('An error occurred', error);
+		}
+	}
 
 	return (
 		<section className="grid place-content-center w-full h-screen">
@@ -36,12 +63,7 @@ export default function LogIn() {
 
 				<button
 					type="button"
-					onClick={() =>
-						logIn(email, password, {
-							setIsDialogUnfilledFields,
-							setIsDialogFailedLogin,
-						})
-					}
+					onClick={logIn}
 					className="bg-primary w-full py-2 rounded-lg text-white font-bold hover:bg-primaryHover transition-colors"
 				>
 					Iniciar sesión
@@ -50,24 +72,6 @@ export default function LogIn() {
 					Crear cuenta
 				</Link>
 			</form>
-			<Dialog
-				id={'errorCampos'}
-				isOpen={isDialogUnfilledFields}
-				onClose={() => setIsDialogUnfilledFields(false)}
-			>
-				<h1>Error</h1>
-				<p>Rellene todos los campos primero</p>
-			</Dialog>
-			<Dialog
-				id={'loginFailed'}
-				isOpen={isDialogFailedLogin}
-				onClose={() => setIsDialogFailedLogin(false)}
-			>
-				<h1>Error</h1>
-				<p>Error al iniciar sesión</p>
-				<p>Correo o contraseña incorrectos</p>
-				<p>Asegurese de ingresar bien los datos</p>
-			</Dialog>
 		</section>
 	);
 }
