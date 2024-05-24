@@ -1,11 +1,15 @@
-import LogoutContext from "./logoutContext";
-import { cookies } from "next/headers";
-
-async function deleteCookie() {
-  "use server";
-  cookies().delete("user");
-}
+'use client'
+import { deleteCookie, hasCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default async function LogoutPage() {
-  return <LogoutContext deleteCookie={deleteCookie} />;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (hasCookie('user')) {
+      deleteCookie('user');
+    }
+    router.replace("/login");
+  }, []);
 }

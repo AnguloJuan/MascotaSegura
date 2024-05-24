@@ -1,5 +1,3 @@
-import { AuthProvider } from '@/context/AuthContext';
-
 export const metadata = {
 	title: {
 		template: '%s | MascotaSegura',
@@ -13,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<main>
-			<AuthProvider>{children}</AuthProvider>;
+			{children}
 		</main>
 	);
 }
