@@ -2,7 +2,7 @@
 import { InputBuscar } from '@/components/Inputs';
 import { useEffect, useState } from 'react';
 import { Estados, Select } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import { Each } from '@/components/Each';
 import CardUser from '@/components/CardUser';
 

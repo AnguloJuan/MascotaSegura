@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import { useRouter } from 'next/navigation';
 import { Estados } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import { Input, InputFile } from '@/components/Inputs';
 import Button from '@/components/Button';
 import Toast, { useToast } from '@/components/Toast';

@@ -2,7 +2,7 @@
 import postImage from '@/app/lib/cloudinaryActions';
 import { Input } from '@/components/Inputs';
 import { Estados } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import Image from 'next/image';

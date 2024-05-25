@@ -1,7 +1,7 @@
 'use client';
 import { Input, InputFile } from '@/components/Inputs';
 import { Estados } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';

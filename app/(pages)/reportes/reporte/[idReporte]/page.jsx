@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Reporte from './reporte';
 import { GetUser } from '@/app/lib/user';
 import { Estados, EstadosReporte } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import EliminarReporte from './deleteReporte';
 
 const prisma = getPrisma();

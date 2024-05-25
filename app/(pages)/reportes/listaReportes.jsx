@@ -4,7 +4,7 @@ import { Each } from '@/components/Each';
 // import maltrato from './reporte.module.css';
 import { InputBuscar } from '@/components/Inputs';
 import { Estados, Select } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import { useEffect, useState } from 'react';
 
 export default function ListaReportes({ props }) {

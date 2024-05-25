@@ -5,7 +5,7 @@ import { Dialog } from '@/components/dialogs';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Estados, EstadosReporte } from '@/components/Selects';
-import { Municipios } from '@/components/SelectsClient';
+import { Municipios } from '@/components/Selects';
 import Link from 'next/link';
 import { InputFile } from '@/components/Inputs';
 import postImage from '@/app/lib/cloudinaryActions';
