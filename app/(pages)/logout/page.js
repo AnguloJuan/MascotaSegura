@@ -3,7 +3,7 @@ import { deleteCookie, hasCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default async function LogoutPage() {
+export default function LogoutPage() {
   const router = useRouter();
 
   useEffect(() => {
