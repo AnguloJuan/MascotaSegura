@@ -54,9 +54,6 @@ export default function PerfilPage({ props }) {
 		setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 		// Reset selected municipio when estado adoptante
 		setAdoptante((prevCriteria) => ({ ...prevCriteria, municipio: 0 }));
-		e.target.value
-			? (document.getElementById('municipio').disabled = false)
-			: (document.getElementById('municipio').disabled = true);
 	};
 
 	const modifyAdoptante = async (e) => {

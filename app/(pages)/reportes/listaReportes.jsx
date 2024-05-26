@@ -55,9 +55,6 @@ export default function ListaReportes({ props }) {
 		setSearchCriteria((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 		// Reset selected municipio when estado user
 		setSearchCriteria((prevCriteria) => ({ ...prevCriteria, municipio: 0 }));
-		e.target.value
-			? (document.getElementById('municipio').disabled = false)
-			: (document.getElementById('municipio').disabled = true);
 	};
 
 	return (

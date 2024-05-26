@@ -40,9 +40,6 @@ export default function Reporte({ props }) {
 		setReporte((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 		// Reset selected municipio when estado reporte
 		setReporte((prevCriteria) => ({ ...prevCriteria, municipio: 0 }));
-		e.target.value
-			? (document.getElementById('municipio').disabled = false)
-			: (document.getElementById('municipio').disabled = true);
 	};
 	//actualizacion de imagen
 	const uploadToClient = (event) => {

@@ -32,10 +32,7 @@ export default function SignIn() {
 	const handleEstadoChange = (event) => {
 		setSelectedEstado(event.target.value);
 		// Reset selected municipio when estado changes
-		setSelectedMunicipio('');
-		event.target.value
-			? (document.getElementById('municipio').disabled = false)
-			: (document.getElementById('municipio').disabled = true);
+		setSelectedMunicipio(0);
 	};
 
 	const handleMunicipioChange = (event) => {
