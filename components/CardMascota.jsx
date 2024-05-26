@@ -7,6 +7,7 @@ export default function CardMascota({
 	id,
 	nombre,
 	edad,
+	sexo,
 	estadoAdopcion,
 }) {
 	const styleEstado = {
@@ -50,7 +51,7 @@ export default function CardMascota({
 						</div>
 						<div className="flex gap-1 *:text-white ">
 							<h2 className="font-bold">Sexo:</h2>
-							{/* <span>{sexo.sexo}</span> */}
+							<span>{sexo.sexo}</span>
 						</div>
 					</div>
 				</div>
