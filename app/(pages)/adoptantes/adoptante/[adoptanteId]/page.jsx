@@ -41,6 +41,7 @@ export default async function Page({ params }) {
 			mascota: {
 				include: {
 					especie: true,
+					sexo: true,
 				},
 			},
 			estadoAdopcion: true,
