@@ -349,3 +349,5 @@ UPDATE adoptante SET imagen = NULL WHERE id = 28;
 UPDATE mascota SET imagen = NULL WHERE id IN (64, 67);
 UPDATE reporte SET imagen = NULL WHERE id IN (6, 36, 40, 42);
 UPDATE empleado SET imagen = "https://res.cloudinary.com/dyvwujin9/image/upload/v1708396284/mascotaSegura/f8e1057a-d4d0-4906-8c61-05cda646b90e" WHERE id = 1;
+INSERT INTO raza (id, raza, idEspecie) VALUES (1, 'Sin raza', 1);
+UPDATE mascota SET idRaza = 1;

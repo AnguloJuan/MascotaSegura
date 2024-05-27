@@ -17,7 +17,7 @@ export async function GET(req) {
                     id: id ? { equals: parseInt(id) } : undefined,
                     nombre: nombre ? { contains: nombre } : undefined,
                     idEspecie: especie ? { equals: parseInt(especie) } : undefined,
-                    raza: raza ? { equals: raza } : undefined,
+                    idRaza: raza ? { equals: parseInt(raza) } : undefined,
                     edad: edad ? { equals: parseInt(edad) } : undefined,
                     idSexo: sexo ? { equals: parseInt(sexo) } : undefined,
                     adopcion: (userType === 0 || userType === 1) ? { is: null }// Excluir mascotas en adopción si el usuario es adoptante o sin registro
@@ -43,14 +43,12 @@ export async function POST(req) {
         const mascotaParsed = JSON.parse(mascota.substring(mascota.indexOf('{'), mascota.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, idRefugio } = mascotaParsed;
 
-        const razaCase = raza.toLowerCase();
-
         try {
             const id = await prisma.mascota.create({
                 data: {
                     nombre,
                     especie: { connect: { id: parseInt(especie) }, },
-                    raza: razaCase,
+                    raza: { connect: { id: parseInt(raza) }, },
                     edad: parseInt(edad),
                     sexo: { connect: { id: parseInt(sexo) } },
                     tamano: { connect: { id: parseInt(tamano) } },
@@ -85,8 +83,6 @@ export async function PUT(req) {
         const mascotaInitParsed = JSON.parse(mascotaInit.substring(mascotaInit.indexOf('{'), mascotaInit.lastIndexOf('}') + 1));
         const { nombre, especie, raza, edad, sexo, tamano, maltratado, motivo, cartilla, estadoAdopcion } = mascotaParsed;
 
-        const razaCase = raza.toLowerCase();
-
         try {
             await prisma.mascota.update({
                 where: {
@@ -95,7 +91,7 @@ export async function PUT(req) {
                 data: {
                     nombre: nombre !== mascotaInitParsed.nombre ? nombre : undefined,
                     especie: especie !== mascotaInitParsed.especie.id ? { connect: { id: parseInt(especie) } } : undefined,
-                    raza: razaCase !== mascotaInitParsed.raza ? razaCase : undefined,
+                    raza: raza !== mascotaInitParsed.raza.id ? { connect: { id: parseInt(raza) } } : undefined,
                     edad: edad !== mascotaInitParsed.edad ? parseInt(edad) : undefined,
                     sexo: sexo !== mascotaInitParsed.sexo.id ? { connect: { id: parseInt(sexo) } } : undefined,
                     tamano: tamano !== mascotaInitParsed.idTamano ? { connect: { id: parseInt(tamano) } } : undefined,

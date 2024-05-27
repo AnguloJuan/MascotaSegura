@@ -34,11 +34,11 @@ export default function DescargarDocumentoAdopcion({ mascota }) {
         doc.text(`Nombre: ${mascota.nombre}`, 10, 110);
         doc.text(`Edad: ${mascota.edad}`, 10, 120);
         doc.text(`Especie: ${mascota.especie.especie}`, 10, 130);
-        doc.text(`Raza: ${mascota.raza}`, 10, 140);
+        doc.text(`Raza: ${mascota.raza.raza}`, 10, 140);
         doc.text(`Sexo: ${mascota.sexo.sexo}`, 10, 150);
         doc.text(`Tamaño: ${mascota.tamano.tamano}`, 10, 160);
         doc.text(`Maltratado: ${mascota.maltratado ? 'Si' : 'No'}`, 10, 170);
-        doc.text(`Descripción: ${mascota.descripcion}`, 10, 180);
+        doc.text(`Descripción: ${mascota.descripcion ? mascota.descripcion : 'Sin descripción'}`, 10, 180);
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(14);
@@ -46,8 +46,8 @@ export default function DescargarDocumentoAdopcion({ mascota }) {
 
         doc.setFont('helvetica', 'normal');
         doc.setFontSize(12);
-        doc.text('Me comprometo a encargarme de esta mascota, cuidarloy quererlo, n\
-        atender todas sus necesidades, protegerlo y tener sus vacunas al dia', 10, 200);
+        doc.text('Me comprometo a encargarme de esta mascota, cuidarloy quererlo', 10, 200);
+        doc.text('atender todas sus necesidades, protegerlo y tener sus vacunas al dia', 10, 210);
 
         doc.text(`Fecha de adopción: ${fechaAdopcion}`, 10, 230);
         doc.text('Firma del adoptante: ____________________', 10, 260);

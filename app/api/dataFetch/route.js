@@ -11,14 +11,6 @@ export async function GET(request) {
         try {
             // change prisma query to get the data requested
             if (search == 'especies') data = await prisma.especie.findMany();
-            else if (search == 'razas') data = await prisma.mascota.findMany({
-                // will remove this part of code as soon as schema is updated
-                select: {
-                    id: true,
-                    raza: true,
-                },
-                distinct: 'raza',
-            });
             else if (search == 'estados') data = await prisma.estado.findMany();
             else {
                 return NextResponse.json({ error: 'Invalid search criteria' }, { status: 400 });

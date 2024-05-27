@@ -23,6 +23,7 @@ export async function GetMascota(mascotaId) {
                 },
             },
             especie: true,
+            raza: true,
             historialAdoptivo: true,
             sexo: true,
             refugio: true,

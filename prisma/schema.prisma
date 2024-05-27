@@ -106,7 +106,6 @@ model mascota {
   nombre        String?
   edad          Int?
   meses         Int?
-  raza          String?  @default("Desconocida")
   maltratado    Boolean  @default(false)
   fechaRegistro DateTime @default(now())
   imagen        String?
@@ -116,6 +115,7 @@ model mascota {
   idSexo        Int
   idTamano      Int?     @default(1)
   idEspecie     Int
+  idRaza        Int?
 
   refugio           refugio?            @relation(fields: [idRefugio], references: [id])
   historialAdoptivo historialAdoptivo[]
@@ -124,6 +124,7 @@ model mascota {
   especie           especie             @relation(fields: [idEspecie], references: [id])
   adopcion          adopcion?
   victima           reporte[]
+  raza              raza?               @relation(fields: [idRaza], references: [id])
 }
 
 model adopcion {
@@ -169,8 +170,17 @@ model reporte {
 model especie {
   id       Int        @id
   especie  String
-  mascota  mascota[]
+  raza     raza[]
   espacios espacios[]
+  mascota  mascota[]
+}
+
+model raza {
+  id        Int       @id
+  raza      String
+  mascota   mascota[]
+  especie   especie?  @relation(fields: [idEspecie], references: [id])
+  idEspecie Int?
 }
 
 model espacios {

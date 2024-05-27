@@ -57,7 +57,7 @@ export default async function Page({ params }) {
 							</div>
 							<div>
 								<h2>Raza</h2>
-								<span>{mascota.raza}</span>
+								<span>{mascota.raza.raza}</span>
 							</div>
 							<div>
 								<h2>Edad</h2>

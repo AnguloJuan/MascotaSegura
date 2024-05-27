@@ -2,8 +2,8 @@
 
 import postImage from '@/app/lib/cloudinaryActions';
 import { Checkbox, Input, InputFile } from '@/components/Inputs';
-import { Especies, Raza, Select } from '@/components/Selects';
-import Toast, { useToast } from '@/components/Toast';
+import { Especies, Razas, Sexos, Tamanos } from '@/components/Selects';
+import { useToast } from '@/components/Toast';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ export default function Rescate({ idRefugio }) {
 	const [mascota, setMascota] = useState({
 		nombre: '',
 		especie: 0,
-		raza: '',
+		raza: 0,
 		edad: 0,
 		sexo: 0,
 		tamano: 0,
@@ -20,7 +20,6 @@ export default function Rescate({ idRefugio }) {
 		cartilla: false,
 		idRefugio: idRefugio,
 	});
-
 	const [image, setImage] = useState(null);
 
 	const { addToast } = useToast();
@@ -98,59 +97,70 @@ export default function Rescate({ idRefugio }) {
 						<InputFile
 							id="perfil"
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							required
 							onFileUpload={(image) => setImage(image)}
 						/>
 					</div>
 					<div className="flex flex-col justify-center gap-7">
-						<Input
-							id="nombre"
-							label="Nombre"
-							type="text"
-							placeholder="Nombre"
-							name="nombre"
-							onChange={handleInputChange}
-							required
-							className="w-full"
-						/>
+						<div>
+							<label htmlFor="nombre" className="font-bold">
+								Nombre *
+							</label>
+							<Input
+								id="nombre"
+								label="Nombre"
+								type="text"
+								placeholder="Nombre"
+								name="nombre"
+								onChange={handleInputChange}
+								required
+								className="w-full"
+								value={mascota.nombre}
+							/>
+						</div>
 						<Especies
 							onChange={handleInputChange}
 							required={true}
 							className="w-full"
+							value={mascota.especie}
 						/>
-						<Raza onChange={handleInputChange} className="w-full" />
+						<Razas
+							onChange={handleInputChange}
+							selectedEspecie={mascota.especie}
+							className="w-full"
+							value={mascota.raza}
+						/>
 					</div>
 				</div>
 				<div className="flex items-end gap-6">
-					<Input
-						id="edad"
-						type="number"
-						label="Edad"
-						placeholder="Edad"
-						name="edad"
+					<div>
+						<label htmlFor="edad" className="font-bold">
+							Edad *
+						</label>
+						<Input
+							id="edad"
+							type="number"
+							label="Edad"
+							placeholder="Edad"
+							name="edad"
+							required
+							onChange={handleInputChange}
+							value={mascota.edad}
+						/>
+					</div>
+
+					<Sexos
 						onChange={handleInputChange}
+						required={true}
+						value={mascota.sexo}
 					/>
 
-					<Select
-						onChange={handleInputChange}
-						required
-						items={['Macho', 'Hembra']}
-						label="Sexo"
-					/>
-
-					<Select
+					<Tamanos
 						onChange={handleInputChange}
 						required
 						placeholder="Selecciona el tamaño"
 						label="Tamaño"
-					>
-						<option value={1}>No especificado</option>
-						<option value={2}>Diminuto</option>
-						<option value={3}>Pequeño</option>
-						<option value={4}>Mediano</option>
-						<option value={5}>Grande</option>
-						<option value={6}>Enorme</option>
-					</Select>
+						value={mascota.tamano}
+					/>
 				</div>
 
 				<div className="flex flex-row gap-4">
@@ -158,7 +168,7 @@ export default function Rescate({ idRefugio }) {
 						<Checkbox
 							name="maltratado"
 							id="maltratado"
-							value={false}
+							value={mascota.maltratado}
 							onChange={handleTernary}
 							text="¿Ha sido maltratado?"
 						/>
@@ -167,7 +177,7 @@ export default function Rescate({ idRefugio }) {
 						<Checkbox
 							name="cartilla"
 							id="cartilla"
-							value={false}
+							value={mascota.cartilla}
 							onChange={handleTernary}
 							text="¿Cuenta con cartilla de vacunación?"
 						/>
@@ -183,6 +193,7 @@ export default function Rescate({ idRefugio }) {
 						id="motivo"
 						rows="4"
 						onChange={handleInputChange}
+						value={mascota.motivo}
 						className="py-2 px-4 w-full rounded-lg border-black border-2 
                         focu:outline outline-prbg-primary outline-offset-4 resize-none"
 					></textarea>

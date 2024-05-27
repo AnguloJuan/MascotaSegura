@@ -4,7 +4,6 @@ import { Each } from './Each';
 
 let cachedEspecies = [];
 let cachedEstados = [];
-let cachedRazas = [];
 
 async function fetchData(search) {
 	await fetch(`/api/dataFetch?search=${search}`)
@@ -12,7 +11,6 @@ async function fetchData(search) {
 		.then((data) => {
 			if (search === 'especies') cachedEspecies = data.data;
 			else if (search === 'estados') cachedEstados = data.data;
-			else if (search === 'razas') cachedRazas = data.data;
 		})
 		.catch((error) => console.error('Error fetching data:', error));
 }
@@ -31,7 +29,7 @@ export function Especies({ onChange, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="especies" className="font-bold">
-				Especies
+				Especies {required ? '*' : ''}
 			</label>
 			<select
 				id="especies"
@@ -52,41 +50,52 @@ export function Especies({ onChange, required, value, className }) {
 	);
 }
 
-export function Raza({ onChange, className }) {
-	const [razas, setRazas] = useState(cachedRazas);
+export function Razas({
+	onChange,
+	razasInicial,
+	selectedEspecie,
+	value,
+	required,
+	disabled,
+}) {
+	const [razas, setRazas] = useState(razasInicial ? razasInicial : []);
+
 	useEffect(() => {
-		async function fetchRazas() {
-			if (razas.length === 0)
-				await fetchData('razas')
-					.then(() => setRazas(cachedRazas));
+		// Fetch razas data based on selected especie from the API
+		if (selectedEspecie) {
+			fetch(`/api/razas?especie=${selectedEspecie}`)
+				.then((response) => response.json())
+				.then((data) => setRazas(data.razas))
+				.catch((error) => console.error('Error fetching razas:', error));
 		}
-		fetchRazas();
-	}, []);
+	}, [selectedEspecie]);
 
 	return (
-		<div className="flex flex-col gap-1 h-max">
-			<label htmlFor="raza" className="font-bold">
-				Raza
-			</label>
-			<select
-				id="razas"
+		<>
+			<Select
+				id="raza"
+				label="Raza"
 				onChange={onChange}
-				name="raza"
-				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
+				value={value ? value : value = 0}
+				required={required}
+				disabled={selectedEspecie == 0 || disabled ? true : false}
 			>
-				<option value="">Selecciona Raza</option>
-				<Each
-					of={razas}
-					render={(item) => (
-						<option key={item.id} value={item.raza}>
-							{item.raza}
-						</option>
-					)}
-				/>
-			</select>
-		</div>
+				<option value={1}>Sin raza</option>
+				{razas.length !== 0 && (
+					<Each
+						of={razas}
+						render={(item) => (
+							<option key={item.id} value={item.id}>
+								{item.raza}
+							</option>
+						)}
+					/>
+				)}
+			</Select>
+		</>
 	);
 }
+
 export function Sexos({ onChange, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
@@ -112,7 +121,7 @@ export function Tamanos({ onChange, required, value, className }) {
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="tamano" className="font-bold">
-				Tamaño{required ? '*' : ''}
+				Tamaño {required ? '*' : ''}
 			</label>
 			<select
 				id="tamano"
@@ -170,6 +179,7 @@ export function Estados({
 	value,
 	className,
 	disabled,
+	required,
 	...props
 }) {
 	const [estados, setEstados] = useState(cachedEstados);
@@ -185,7 +195,7 @@ export function Estados({
 	return (
 		<div className="flex flex-col gap-1 h-max">
 			<label htmlFor="estado" className="font-bold">
-				Estado
+				Estado {required ? '*' : ''}
 			</label>
 			<select
 				id="estado"
@@ -193,6 +203,7 @@ export function Estados({
 				value={value ? value : 0}
 				name="estado"
 				disabled={disabled}
+				required={required}
 				className={`outline outline-2 py-2 px-4 rounded-lg max-w-md ${className}`}
 				{...props}
 			>
@@ -212,15 +223,10 @@ export function Municipios({
 	municipiosInicial,
 	selectedEstado,
 	value,
+	required,
 	disabled,
 }) {
-	const [municipios, setMunicipios] = useState([]);
-	useEffect(() => {
-		if (municipiosInicial) {
-			setMunicipios(municipiosInicial);
-		}
-	}, []);
-
+	const [municipios, setMunicipios] = useState(municipiosInicial ? municipiosInicial : []);
 	useEffect(() => {
 		// Fetch municipios data based on selected estado from the API
 		if (selectedEstado) {
@@ -237,11 +243,10 @@ export function Municipios({
 				id="municipio"
 				label="Municipio"
 				onChange={onChange}
+				required={required}
 				value={value ? value : 0}
 				disabled={selectedEstado == 0 || disabled ? true : false}
 			>
-				{/* Render municipio options based on selected estado */}
-				<option value="">Selecciona Municipio</option>
 				<Each
 					of={municipios}
 					render={(item) => (

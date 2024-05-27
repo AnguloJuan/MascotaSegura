@@ -1,7 +1,7 @@
 'use client';
 import rescate from './rescate.module.css';
 import { Input, InputFile } from '@/components/Inputs';
-import { Especies, Sexos, Tamanos } from '@/components/Selects';
+import { Especies, Razas, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import DescargarDocumentoAdopcion from './documentoAdopcion';
 import Image from 'next/image';
@@ -16,7 +16,7 @@ export default function MascotaPage({ mascotaInicial }) {
 		id: mascotaInicial.id,
 		nombre: mascotaInicial.nombre,
 		especie: mascotaInicial.especie.id,
-		raza: mascotaInicial.raza,
+		raza: mascotaInicial.raza.id,
 		edad: mascotaInicial.edad,
 		sexo: mascotaInicial.sexo.id,
 		tamano: mascotaInicial.idTamano,
@@ -31,7 +31,6 @@ export default function MascotaPage({ mascotaInicial }) {
 	});
 
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
 	const [modifiedDialog, setModifiedDialog] = useState(false);
 	const [errorDialog, setErrorDialog] = useState(false);
@@ -67,8 +66,6 @@ export default function MascotaPage({ mascotaInicial }) {
 			setMascota((prevCriteria) => ({ ...prevCriteria, cartilla: value }));
 		}
 	};
-
-	//actualizacion de imagen
 
 	//registro de mascota
 	const uploadToServer = async (e) => {
@@ -145,6 +142,9 @@ export default function MascotaPage({ mascotaInicial }) {
 						/>
 					</div>
 					<div className="">
+						<label htmlFor="nombre" className="font-bold">
+							Nombre *
+						</label>
 						<div className="input mb-3">
 							<Input
 								type="text"
@@ -153,27 +153,31 @@ export default function MascotaPage({ mascotaInicial }) {
 								onChange={handleInputChange}
 								value={mascota.nombre}
 								className="form-control"
+								required={true}
 							/>
 						</div>
 						<div className="input mb-3">
 							<Especies
 								onChange={handleInputChange}
 								value={mascota.especie}
+								required={true}
 							/>
 						</div>
-						<Input
-							id={'raza'}
-							label={'Raza'}
-							placeholder={'Raza'}
-							name={'raza'}
-							value={mascota.raza}
-							onChange={handleInputChange}
-						/>
+						<div className="input mb-3">
+							<Razas
+								onChange={handleInputChange}
+								value={mascota.raza}
+								selectedEspecie={mascota.especie}
+							/>
+						</div>
 					</div>
 				</div>
 
-				<div className={rescate.contenedor}>
+				<div className={`${rescate.contenedor} my-2`}>
 					<div className={rescate.busqueda}>
+						<label htmlFor="edad" className="font-bold">
+							Edad *
+						</label>
 						<Input
 							id={'edad'}
 							type={'number'}
@@ -186,16 +190,10 @@ export default function MascotaPage({ mascotaInicial }) {
 					</div>
 
 					<div className={rescate.busqueda}>
-						<label htmlFor="sexo" className="form-label">
-							Sexo
-						</label>
-						<Sexos onChange={handleInputChange} value={mascota.sexo} />
+						<Sexos onChange={handleInputChange} value={mascota.sexo} required={true} />
 					</div>
 
 					<div className={rescate.busqueda}>
-						<label htmlFor="tamano" className="form-label">
-							Tamaño
-						</label>
 						<Tamanos onChange={handleInputChange} value={mascota.tamano} />
 					</div>
 				</div>
@@ -313,24 +311,24 @@ export default function MascotaPage({ mascotaInicial }) {
 
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (
-							<div>
-								<p>Anteriores adopciones</p>
-								<p>Motivos de abandono</p>
-								{mascotaInicial.motivo && (
-									<p className="border rounded">- {mascotaInicial.motivo}</p>
-								)}
-
-								{mascotaInicial.historialAdoptivo.length !== 0 &&
-									mascotaInicial.historialAdoptivo.map(
-										(historial) =>
-											historial.motivo && (
-												<p key={historial.id} className="border rounded">
-													- {historial.motivo}
-												</p>
-											)
+								<div>
+									<p>Anteriores adopciones</p>
+									<p>Motivos de abandono</p>
+									{mascotaInicial.motivo && (
+										<p className="border rounded">- {mascotaInicial.motivo}</p>
 									)}
-							</div>
-						)}
+
+									{mascotaInicial.historialAdoptivo.length !== 0 &&
+										mascotaInicial.historialAdoptivo.map(
+											(historial) =>
+												historial.motivo && (
+													<p key={historial.id} className="border rounded">
+														- {historial.motivo}
+													</p>
+												)
+										)}
+								</div>
+							)}
 					</>
 				)}
 			</form>

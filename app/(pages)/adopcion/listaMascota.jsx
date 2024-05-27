@@ -4,7 +4,7 @@ import { IconAdjustments, IconX } from '@tabler/icons-react';
 import { Input, InputBuscar } from '@/components/Inputs';
 import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
-import { Especies, Raza, Select, Sexos } from '@/components/Selects';
+import { Especies, Razas, Select, Sexos } from '@/components/Selects';
 
 export default function ListaMascota({
 	inicialMascotas,
@@ -82,7 +82,11 @@ export default function ListaMascota({
 						<Especies onChange={handleInputChange} value={searchCriteria.especie} />
 					</div>
 					<div className="flex flex-col">
-						<Raza onChange={handleInputChange} />
+						<Razas
+							onChange={handleInputChange}
+							value={searchCriteria.raza}
+							selectedEspecie={searchCriteria.especie}
+						/>
 					</div>
 					<label htmlFor="Edad" className="font-bold">
 						Edad
