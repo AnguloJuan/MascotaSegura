@@ -1,0 +1,310 @@
+[
+  {
+    "schemaName": "",
+    "tableName": "adoptante",
+    "predictions": [
+      {
+        "input": " adoptante apellido",
+        "column": "apellido",
+        "shape": "COMMERCE_ISBN",
+        "confidence": 0.509045422077179,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " adoptante contrasena",
+        "column": "contrasena",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.1088377982378006,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " adoptante correo",
+        "column": "correo",
+        "shape": "FINANCE_CURRENCY_NAME",
+        "confidence": 0.5199068784713745,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " adoptante imagen",
+        "column": "imagen",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.4800677597522736,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " adoptante nombre",
+        "column": "nombre",
+        "shape": "LOCATION_BUILDING_NUMBER",
+        "confidence": 0.3910673856735229,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "empleado",
+    "predictions": [
+      {
+        "input": " empleado apellido",
+        "column": "apellido",
+        "shape": "COMMERCE_ISBN",
+        "confidence": 0.4742989540100098,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " empleado contrasena",
+        "column": "contrasena",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.1248771399259567,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " empleado correo",
+        "column": "correo",
+        "shape": "FINANCE_CURRENCY_NAME",
+        "confidence": 0.5221079587936401,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " empleado imagen",
+        "column": "imagen",
+        "shape": "SSN_FULL",
+        "confidence": 0.3468601703643799,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " empleado nip",
+        "column": "NIP",
+        "shape": "NATIONAL_IDENTIFICATION_NUMBER",
+        "confidence": 0.9869335889816284,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " empleado nombre",
+        "column": "nombre",
+        "shape": "IMAGE_URL",
+        "confidence": 0.1038482189178467,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "especie",
+    "predictions": [
+      {
+        "input": " especie especie",
+        "column": "especie",
+        "shape": "ANIMAL_TYPE",
+        "confidence": 0.5643590688705444,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "estado",
+    "predictions": [
+      {
+        "input": " estado nombre",
+        "column": "nombre",
+        "shape": "COMMERCE_PRODUCT_NAME",
+        "confidence": 0.2720139026641846,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "estadoAdopcion",
+    "predictions": [
+      {
+        "input": " estado_adopcion estado_adopcion",
+        "column": "estadoAdopcion",
+        "shape": "SYSTEM_FILE_TYPE",
+        "confidence": 0.3406956791877747,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "estadoReporte",
+    "predictions": [
+      {
+        "input": " estado_reporte estado",
+        "column": "estado",
+        "shape": "COMMERCE_PRODUCT",
+        "confidence": 0.1622703671455383,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "mascota",
+    "predictions": [
+      {
+        "input": " mascota imagen",
+        "column": "imagen",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.663297176361084,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " mascota motivo",
+        "column": "motivo",
+        "shape": "INTERNET_DOMAIN_WORD",
+        "confidence": 0.2674834132194519,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " mascota nombre",
+        "column": "nombre",
+        "shape": "DATABASE_COLUMN",
+        "confidence": 0.137740820646286,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "municipio",
+    "predictions": [
+      {
+        "input": " municipio nombre",
+        "column": "nombre",
+        "shape": "COMMERCE_DEPARTMENT",
+        "confidence": 0.1118183359503746,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "raza",
+    "predictions": [
+      {
+        "input": " raza raza",
+        "column": "raza",
+        "shape": "COMPANY_NAME",
+        "confidence": 0.7517582774162292,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "refugio",
+    "predictions": [
+      {
+        "input": " refugio nombre",
+        "column": "nombre",
+        "shape": "MUSIC_SONG_NAME",
+        "confidence": 0.07389762997627258,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "reporte",
+    "predictions": [
+      {
+        "input": " reporte correo",
+        "column": "correo",
+        "shape": "FINANCE_CURRENCY_NAME",
+        "confidence": 0.3687215149402618,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " reporte descripcion",
+        "column": "descripcion",
+        "shape": "COMMERCE_PRODUCT_DESCRIPTION",
+        "confidence": 0.4998741447925568,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " reporte imagen",
+        "column": "imagen",
+        "shape": "INTERNET_AVATAR",
+        "confidence": 0.246471956372261,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " reporte nombre",
+        "column": "nombre",
+        "shape": "MAC_ADDRESS",
+        "confidence": 0.09715816378593445,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "sexo",
+    "predictions": [
+      {
+        "input": " sexo sexo",
+        "column": "sexo",
+        "shape": "GENDER",
+        "confidence": 0.9951116442680359,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "tamano",
+    "predictions": [
+      {
+        "input": " tamano tamano",
+        "column": "tamano",
+        "shape": "INTERNET_COLOR",
+        "confidence": 0.06264162063598633,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  },
+  {
+    "schemaName": "",
+    "tableName": "tipoUsuario",
+    "predictions": [
+      {
+        "input": " tipo_usuario usuario",
+        "column": "usuario",
+        "shape": "PERSON_FULL_NAME",
+        "confidence": 0.8188269734382629,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      }
+    ]
+  }
+]

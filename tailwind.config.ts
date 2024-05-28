@@ -1,14 +1,14 @@
-import { Colors } from 'chart.js';
+import type { Config } from "tailwindcss";
 
-const config = {
-	content: [
-		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
-		'./components/**/*.{js,ts,jsx,tsx,mdx}',
-		'./app/**/*.{js,ts,jsx,tsx,mdx}',
-	],
-	theme: {
-		extend: {
-			colors: {
+const config: Config = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
 				primary: '#4844f8',
 				primaryHover: '#7266f5',
 			},
@@ -26,8 +26,8 @@ const config = {
 					'100%': { width: '100%' },
 				},
 			},
-		},
-	},
-	plugins: [],
+    },
+  },
+  plugins: [],
 };
 export default config;

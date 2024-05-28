@@ -9,11 +9,16 @@
     "dev": "next dev",
     "build": "next build",
     "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "postmigrate": "npx @snaplet/seed sync",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^4.14.1",
+    "@prisma/client": "^5.14.0",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
     "@tabler/icons-react": "^2.47.0",
     "bcryptjs": "^2.4.3",
     "chart.js": "^4.3.0",
@@ -21,17 +26,25 @@
     "eslint-config-next": "^14.1.0",
     "jsonwebtoken": "^9.0.0",
     "jspdf": "^2.5.1",
-    "next": "^14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "sqlite3": "^5.1.6",
     "uuid": "^9.0.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.18",
-    "postcss": "^8.4.35",
-    "prisma": "^4.14.1",
-    "tailwindcss": "^3.4.1"
+    "@snaplet/copycat": "^5.0.0",
+    "@snaplet/seed": "^0.97.20",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "postcss": "^8",
+    "prisma": "^5.14.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5",
+    "autoprefixer": "^10.4.18"
+  },
+  "@snaplet/seed": {
+    "config": "prisma\\seed\\seed.config.ts"
   }
 }
