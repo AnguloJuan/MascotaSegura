@@ -35,21 +35,17 @@ const main = async () => {
     "!*refugio",
   ],);
 
-
-  // await seed.empleado([
-  //   { correo: 'admin@gmail.com', contrasena: 'admin', idTipoUsuario: 3, imagen: '' },
-  // ])
   // Seed the database with 10 empleado
-  // await seed.empleado((x) => x(10,
-  //   {
-  //     idTipoUsuario: 2,
-  //     imagen: '',
-  //     correo: (ctx) =>
-  //       copycat.email(ctx.seed, {
-  //         domain: 'gmail.com',
-  //       }),
-  //   }),
-  //   { connect: { refugio } });
+  await seed.empleado((x) => x(10,
+    {
+      idTipoUsuario: 2,
+      imagen: '',
+      correo: (ctx) =>
+        copycat.email(ctx.seed, {
+          domain: 'gmail.com',
+        }),
+    }),
+    { connect: { refugio } });
 
   // Seed the database with 10 adoptante
   await seed.adoptante((x) => x(10, {
@@ -60,11 +56,6 @@ const main = async () => {
       }),
   }), { connect: { municipio } });
 
-  // await seed.sexo([
-  //   { sexo: 'Macho', },
-  //   { sexo: 'Hembra', },
-  //   { sexo: 'No especificado', },
-  // ])
 
   // const raza = await seed.raza((x) => x(20), { connect: { especie } });
 
@@ -84,14 +75,6 @@ const main = async () => {
 
   // }), { connect: { tamano, sexo, especie, refugio } });
 
-  // await seed.estadoReporte([
-  //   { estado: 'Reportado', },
-  //   { estado: 'En investigación', },
-  //   { estado: 'Confirmado', },
-  //   { estado: 'Resuelto', },
-  //   { estado: 'Falso', },
-  // ])
-
   // await seed.reporte((x) => x(20, {
   //   imagen: '',
   //   correo: (ctx) =>
@@ -100,14 +83,7 @@ const main = async () => {
   //     }),
   // }), { connect: { estadoReporte, municipio, } });
 
-
-  // await seed.estadoAdopcion([
-  //   { estadoAdopcion: 'Aceptado', },
-  //   { estadoAdopcion: 'Denegado', },
-  //   { estadoAdopcion: 'Procesando', },
-  //   { estadoAdopcion: 'Cancelado', },
-  //   { estadoAdopcion: 'Devuelto', },
-  // ])
+  
   // await seed.adopcion((x) => x(10), { connect: { estadoAdopcion } });
 
 
