@@ -1,123 +1,5 @@
 {
   "models": {
-    "_prisma_migrations": {
-      "id": "_prisma_migrations",
-      "tableName": "_prisma_migrations",
-      "fields": [
-        {
-          "id": "_prisma_migrations.id",
-          "name": "id",
-          "columnName": "id",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": true
-        },
-        {
-          "id": "_prisma_migrations.checksum",
-          "name": "checksum",
-          "columnName": "checksum",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.finished_at",
-          "name": "finished_at",
-          "columnName": "finished_at",
-          "type": "datetime",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.migration_name",
-          "name": "migration_name",
-          "columnName": "migration_name",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.logs",
-          "name": "logs",
-          "columnName": "logs",
-          "type": "text",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.rolled_back_at",
-          "name": "rolled_back_at",
-          "columnName": "rolled_back_at",
-          "type": "datetime",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": false,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.started_at",
-          "name": "started_at",
-          "columnName": "started_at",
-          "type": "datetime",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": true,
-          "isId": false
-        },
-        {
-          "id": "_prisma_migrations.applied_steps_count",
-          "name": "applied_steps_count",
-          "columnName": "applied_steps_count",
-          "type": "integer",
-          "isRequired": true,
-          "kind": "scalar",
-          "isList": false,
-          "isGenerated": false,
-          "sequence": false,
-          "hasDefaultValue": true,
-          "isId": false
-        }
-      ],
-      "uniqueConstraints": [
-        {
-          "name": "_prisma_migrations_pkey",
-          "fields": [
-            "id"
-          ]
-        }
-      ]
-    },
     "adopcion": {
       "id": "adopcion",
       "tableName": "adopcion",
@@ -338,9 +220,9 @@
           "isId": false
         },
         {
-          "id": "adoptante.correo",
-          "name": "correo",
-          "columnName": "correo",
+          "id": "adoptante.email",
+          "name": "email",
+          "columnName": "email",
           "type": "text",
           "isRequired": true,
           "kind": "scalar",
@@ -523,9 +405,9 @@
       ],
       "uniqueConstraints": [
         {
-          "name": "adoptante_correo_key",
+          "name": "adoptante_email_key",
           "fields": [
-            "correo"
+            "email"
           ]
         },
         {
@@ -596,9 +478,9 @@
           "isId": false
         },
         {
-          "id": "empleado.correo",
-          "name": "correo",
-          "columnName": "correo",
+          "id": "empleado.email",
+          "name": "email",
+          "columnName": "email",
           "type": "text",
           "isRequired": true,
           "kind": "scalar",
@@ -707,9 +589,9 @@
       ],
       "uniqueConstraints": [
         {
-          "name": "empleado_correo_key",
+          "name": "empleado_email_key",
           "fields": [
-            "correo"
+            "email"
           ]
         },
         {
@@ -2001,9 +1883,9 @@
           "isId": false
         },
         {
-          "id": "reporte.correo",
-          "name": "correo",
-          "columnName": "correo",
+          "id": "reporte.email",
+          "name": "email",
+          "columnName": "email",
           "type": "text",
           "isRequired": true,
           "kind": "scalar",

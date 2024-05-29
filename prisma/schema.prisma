@@ -12,13 +12,13 @@ datasource db {
 
 model estado {
   id        Int         @id @default(autoincrement())
-  nombre    String
+  nombre    String      @unique
   municipio municipio[]
 }
 
 model municipio {
   id       Int    @id @default(autoincrement())
-  nombre   String
+  nombre   String @unique
   idEstado Int
 
   estado    estado      @relation(fields: [idEstado], references: [id])
@@ -44,7 +44,7 @@ model adoptante {
   id            Int      @id @default(autoincrement())
   nombre        String
   apellido      String
-  correo        String   @unique
+  correo        String   @unique @map("email")
   telefono      BigInt
   contrasena    String
   fechaRegistro DateTime @default(now())
@@ -65,7 +65,7 @@ model empleado {
   idRefugio     Int
   nombre        String
   apellido      String
-  correo        String   @unique
+  correo        String   @unique @map("email")
   contrasena    String
   telefono      BigInt
   NIP           String
@@ -157,7 +157,7 @@ model reporte {
   idMunicipio  Int
   imagen       String?
   nombre       String?
-  correo       String?
+  correo       String?  @map("email")
 
   reportador      adoptante?     @relation("reportador", fields: [idReportador], references: [id])
   reportado       adoptante?     @relation("reportado", fields: [idReportado], references: [id])
@@ -169,7 +169,7 @@ model reporte {
 
 model especie {
   id       Int        @id
-  especie  String
+  especie  String     @unique
   raza     raza[]
   espacios espacios[]
   mascota  mascota[]
@@ -177,7 +177,7 @@ model especie {
 
 model raza {
   id        Int       @id
-  raza      String
+  raza      String    @unique
   mascota   mascota[]
   especie   especie?  @relation(fields: [idEspecie], references: [id])
   idEspecie Int?

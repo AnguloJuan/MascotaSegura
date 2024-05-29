@@ -20,10 +20,10 @@
         "confidenceContext": 0
       },
       {
-        "input": " adoptante correo",
-        "column": "correo",
-        "shape": "FINANCE_CURRENCY_NAME",
-        "confidence": 0.5199068784713745,
+        "input": " adoptante email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.9954620003700256,
         "context": "GENERAL",
         "confidenceContext": 0
       },
@@ -66,17 +66,17 @@
         "confidenceContext": 0
       },
       {
-        "input": " empleado correo",
-        "column": "correo",
-        "shape": "FINANCE_CURRENCY_NAME",
-        "confidence": 0.5221079587936401,
+        "input": " empleado email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.9961057305335999,
         "context": "GENERAL",
         "confidenceContext": 0
       },
       {
         "input": " empleado imagen",
         "column": "imagen",
-        "shape": "SSN_FULL",
+        "shape": "INTERNET_AVATAR",
         "confidence": 0.3468601703643799,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -232,18 +232,18 @@
     "tableName": "reporte",
     "predictions": [
       {
-        "input": " reporte correo",
-        "column": "correo",
-        "shape": "FINANCE_CURRENCY_NAME",
-        "confidence": 0.3687215149402618,
-        "context": "GENERAL",
-        "confidenceContext": 0
-      },
-      {
         "input": " reporte descripcion",
         "column": "descripcion",
         "shape": "COMMERCE_PRODUCT_DESCRIPTION",
         "confidence": 0.4998741447925568,
+        "context": "GENERAL",
+        "confidenceContext": 0
+      },
+      {
+        "input": " reporte email",
+        "column": "email",
+        "shape": "EMAIL",
+        "confidence": 0.9969603419303894,
         "context": "GENERAL",
         "confidenceContext": 0
       },
