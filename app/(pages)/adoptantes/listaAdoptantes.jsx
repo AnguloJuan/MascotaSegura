@@ -1,6 +1,6 @@
 'use client';
 import { InputBuscar } from '@/components/Inputs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Estados, Select } from '@/components/Selects';
 import { Municipios } from '@/components/Selects';
 import { Each } from '@/components/Each';
@@ -16,17 +16,10 @@ export default function ListaAdoptantes({ props }) {
 		estado: 0,
 		municipio: 0,
 		adopcion: '',
+		userType: props.userType,
 	});
 
-	const [adoptantes, setAdoptantes] = useState([]);
-
-	useEffect(() => {
-		setSearchCriteria((prevCriteria) => ({
-			...prevCriteria,
-			userType: props.userType,
-		}));
-		setAdoptantes(props.adoptantes);
-	}, []);
+	const [adoptantes, setAdoptantes] = useState(props.adoptantes);
 
 	const fetchAdoptantes = async () => {
 		// Perform the API request to fetch the adoptantes list

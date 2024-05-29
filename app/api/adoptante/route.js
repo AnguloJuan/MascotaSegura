@@ -12,25 +12,28 @@ export async function GET(req) {
 		const { id, nombre, correo, telefono, adopcion, estado, municipio } =
 			JSON.parse(search);
 		try {
-			adoptantes = await prisma.adoptante.findMany({
-				where: {
-					nombre: nombre ? { contains: nombre } : undefined,
-					correo: correo ? { contains: correo } : undefined,
-					id: id ? { equals: parseInt(id) } : undefined,
-					telefono: telefono ? { equals: parseInt(telefono) } : undefined,
-					adopcion: adopcion === 'conAdopcion' ? { some: {} } : undefined,
-					NOT:
-						adopcion === 'sinAdopcion' ? { adopcion: { some: {} } } : undefined,
-					// Comprobamos si se proporciona el municipio o el estado para filtrar en consecuencia
-					AND: [
-						municipio
-							? { municipio: { id: parseInt(municipio) } }
-							: estado
-							? { municipio: { estado: { id: parseInt(estado) } } }
-							: undefined,
-					],
-				},
-			});
+			let whereClause = {
+				nombre: nombre ? { contains: nombre } : undefined,
+				correo: correo ? { contains: correo } : undefined,
+				id: id ? { equals: parseInt(id) } : undefined,
+				telefono: telefono ? { equals: parseInt(telefono) } : undefined,
+				adopcion: adopcion === 'conAdopcion' ? { some: {} } : undefined,
+				NOT: adopcion === 'sinAdopcion' ? { adopcion: { some: {} } } : undefined,
+			  };
+			  
+			  // Conditionally add `AND` clause only if `municipio` or `estado` are provided
+			  if (municipio || estado) {
+				whereClause.AND = [
+				  municipio
+					? { municipio: { id: parseInt(municipio) } }
+					: { municipio: { estado: { id: parseInt(estado) } } },
+				];
+			  }
+			  
+			  adoptantes = await prisma.adoptante.findMany({
+				where: whereClause,
+			  });
+			
 		} catch (error) {
 			console.log(error);
 		}

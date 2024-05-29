@@ -60,18 +60,21 @@ export async function GET(req) {
         const search = req.nextUrl.searchParams.get('search');
         const { id, estadoReporte, estado, municipio } = JSON.parse(search);
         try {
+            let whereClause = {
+                id: id ? { equals: parseInt(id) } : undefined,
+                estadoReporte: estadoReporte ? { id: { equals: parseInt(estadoReporte) } } : undefined,
+            };
+
+            // Conditionally add `AND` clause only if `municipio` or `estado` are provided
+            if (municipio || estado) {
+                whereClause.AND = [
+                    municipio
+                        ? { municipio: { id: parseInt(municipio) } }
+                        : { municipio: { estado: { id: parseInt(estado) } } },
+                ];
+            }
             reportes = await prisma.reporte.findMany({
-                where: {
-                    id: id ? { equals: parseInt(id) } : undefined,
-                    estadoReporte: estadoReporte ? { id: { equals: parseInt(estadoReporte) } } : undefined,
-                    AND: [
-                        municipio
-                            ? { municipio: { id: (parseInt(municipio)) } }
-                            : estado
-                                ? { municipio: { estado: { id: parseInt(estado) } } }
-                                : undefined,
-                    ],
-                },
+                where: whereClause,
                 include: {
                     municipio: {
                         include: {
