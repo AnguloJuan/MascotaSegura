@@ -7,5 +7,16 @@ export default defineConfig({
     const client = new PrismaClient();
     return new SeedPrisma(client);
   },
-  select: ["!*_prisma_migrations"],
+  select: [
+    "!*_prisma_migrations",
+    "!*estado",
+    "!*municipio",
+    "!*tipoUsuario",
+    "!*estadoReporte",
+    "!*tamano",
+    "!*sexo",
+    "!*especie",
+    "!*estadoAdopcion",
+    "!*refugio",
+  ],
 });
