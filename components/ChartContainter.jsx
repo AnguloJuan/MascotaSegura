@@ -1,171 +1,173 @@
-"use client"
-import { Chart } from "chart.js/auto";
-import { useEffect, useRef } from "react";
+'use client';
+import { Chart } from 'chart.js/auto';
+import { useEffect, useRef } from 'react';
 
 let espacios, porcentajeEspecie, reportesMunicipio, adopcionMes;
 
 export function Espacios({ data }) {
-    const chartRef = useRef();
+	const chartRef = useRef();
 
-    useEffect(() => {
-        const ctx = chartRef.current.getContext("2d");
+	useEffect(() => {
+		const ctx = chartRef.current.getContext('2d');
 
-        if (espacios) {
-            espacios.destroy();
-        }
-        espacios = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: data.map((especie) => especie.especie),
-                datasets: [
-                    {
-                        label: "Set de datos",
-                        data: data.map((cantidad) => cantidad.cantidad),
-                        backgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#1F6384",
-                            "#36A2EB",
-                            "#FECE56",
-                            "#8c5dff",
-                            "#f33d67",
-                            "#00F060",
-                        ],
-                        borderColor: "#FF6384",
-                        borderWidth: 1,
-                        stack: 'Stack 0',
-                    },
-                ],
-            },
-            options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Cantidad de mascotas por especie',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        }
-                    },
-                },
-                indexAxis: 'y',
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                    },
-                },
-            },
-        });
-    }, [data]);
+		if (espacios) {
+			espacios.destroy();
+		}
+		espacios = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.map((especie) => especie.especie),
+				datasets: [
+					{
+						label: 'Set de datos',
+						data: data.map((cantidad) => cantidad.cantidad),
+						backgroundColor: [
+							'#FF6384',
+							'#36A2EB',
+							'#FFCE56',
+							'#1F6384',
+							'#36A2EB',
+							'#FECE56',
+							'#8c5dff',
+							'#f33d67',
+							'#00F060',
+						],
+						borderColor: '#FF6384',
+						borderWidth: 1,
+						stack: 'Stack 0',
+					},
+				],
+			},
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Cantidad de mascotas por especie',
+						font: {
+							weight: 'bold',
+							size: 16,
+						},
+					},
+				},
+				indexAxis: 'y',
+				responsive: true,
+				scales: {
+					y: {
+						beginAtZero: true,
+					},
+				},
+			},
+		});
+	}, [data]);
 
-    return <canvas ref={chartRef} />;
+	return <canvas ref={chartRef} />;
 }
 
 export function PorcentajeEspecie({ data }) {
-    const chartRef = useRef();
+	const chartRef = useRef();
 
-    useEffect(() => {
-        const ctx = chartRef.current.getContext("2d");
+	useEffect(() => {
+		const ctx = chartRef.current.getContext('2d');
 
-        if (porcentajeEspecie) {
-            porcentajeEspecie.destroy();
-        }
-        porcentajeEspecie = new Chart(ctx, {
-            type: "doughnut",
-            data: {
-                labels: data.map((especie) => especie.especie),
-                datasets: [
-                    {
-                        data: data.map((especie) => especie.porcentaje),
-                        backgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                            "#1F6384",
-                            "#36A2EB",
-                            "#FECE56",
-                            "#8c5dff",
-                            "#f33d67",
-                            "#00F060",
-                        ],
-                    },
-                ],
-            }, options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Porcentaje cantidad total de mascotas por especie',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        }
-                    },
-                },
-            }
-        });
-    }, [data]);
+		if (porcentajeEspecie) {
+			porcentajeEspecie.destroy();
+		}
+		porcentajeEspecie = new Chart(ctx, {
+			type: 'doughnut',
+			data: {
+				labels: data.map((especie) => especie.especie),
+				datasets: [
+					{
+						data: data.map((especie) => especie.porcentaje),
+						backgroundColor: [
+							'#FF6384',
+							'#36A2EB',
+							'#FFCE56',
+							'#1F6384',
+							'#36A2EB',
+							'#FECE56',
+							'#8c5dff',
+							'#f33d67',
+							'#00F060',
+						],
+					},
+				],
+			},
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Porcentaje cantidad total de mascotas por especie',
+						font: {
+							weight: 'bold',
+							size: 16,
+						},
+					},
+				},
+			},
+		});
+	}, [data]);
 
-    return <canvas ref={chartRef} />;
+	return <canvas ref={chartRef} />;
 }
 
 export function ReportesPorMunicipio({ data }) {
-    const chartRef = useRef();
+	const chartRef = useRef();
 
-    useEffect(() => {
-        const ctx = chartRef.current.getContext("2d");
+	useEffect(() => {
+		const ctx = chartRef.current.getContext('2d');
 
-        if (reportesMunicipio) {
-            reportesMunicipio.destroy();
-        }
-        reportesMunicipio = new Chart(ctx, {
-            type: "pie",
-            data: {
-                labels: data.map((reporte) => reporte.municipio),
-                datasets: [
-                    {
-                        data: data.map((reporte) => reporte.count),
-                        backgroundColor: [
-                            "#1F6384",
-                            "#36A2EB",
-                            "#FECE56",
-                            "#8c5dff",
-                            "#f33d67",
-                            "#00F060",
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                        ],
-                        hoverBackgroundColor: [
-                            "#1F6384",
-                            "#36A2EB",
-                            "#FECE56",
-                            "#8c5dff",
-                            "#f33d67",
-                            "#00F060",
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56",
-                        ],
-                    },
-                ],
-            }, options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Cantidad de reportes por municipio',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        }
-                    },
-                },
-            }
-        });
-    }, [data]);
+		if (reportesMunicipio) {
+			reportesMunicipio.destroy();
+		}
+		reportesMunicipio = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: data.map((reporte) => reporte.municipio),
+				datasets: [
+					{
+						data: data.map((reporte) => reporte.count),
+						backgroundColor: [
+							'#4844F8',
+							'#7A1B81',
+							'#51DB2C',
+							'#8E2CDB',
+							'#CBDB2C',
+							'#6C4887',
+							'#6C4ADD',
+							'#93F484',
+							'#EFAD0F',
+						],
+						hoverBackgroundColor: [
+							'#1F6384',
+							'#36A2EB',
+							'#FECE56',
+							'#8c5dff',
+							'#f33d67',
+							'#00F060',
+							'#FF6384',
+							'#36A2EB',
+							'#FFCE56',
+						],
+					},
+				],
+			},
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Cantidad de reportes por municipio',
+						font: {
+							weight: 'bold',
+							size: 16,
+						},
+					},
+				},
+			},
+		});
+	}, [data]);
 
-    return <canvas ref={chartRef} />;
+	return <canvas ref={chartRef} />;
 }
 
 /*
@@ -211,74 +213,79 @@ export function AdopcionesPorMes({ data }) {
 */
 
 export function AdopcionesPorMes({ adopciones, adoptantes }) {
-    const chartRef = useRef();
+	const chartRef = useRef();
 
-    const data = []; // Datos de adopciones por mes
-    const dataAdoptante = [];
+	const data = []; // Datos de adopciones por mes
+	const dataAdoptante = [];
 
-    // Inicializar los contadores de adopciones por mes
-    for (let i = 0; i < 12; i++) {
-        data[i] = 0;
-        dataAdoptante[i] = 0;
-    }
+	// Inicializar los contadores de adopciones por mes
+	for (let i = 0; i < 12; i++) {
+		data[i] = 0;
+		dataAdoptante[i] = 0;
+	}
 
-    // Contar las adopciones por mes
-    adopciones.forEach((adopcion) => {
-        const mes = adopcion.fechaCreada.getMonth();
-        data[mes]++;
-    });
-    adoptantes.forEach((adoptante) => {
-        const mes = adoptante.fechaRegistro.getMonth();
-        dataAdoptante[mes]++;
-    });
+	// Contar las adopciones por mes
+	adopciones.forEach((adopcion) => {
+		const mes = adopcion.fechaCreada.getMonth();
+		data[mes]++;
+	});
+	adoptantes.forEach((adoptante) => {
+		const mes = adoptante.fechaRegistro.getMonth();
+		dataAdoptante[mes]++;
+	});
 
-    useEffect(() => {
-        const ctx = chartRef.current.getContext("2d");
-        if (adopcionMes) {
-            adopcionMes.destroy();
-        }
-        adopcionMes = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['January',
-                    'February',
-                    'March',
-                    'April',
-                    'May',
-                    'June',
-                    'July',
-                    'August',
-                    'September',
-                    'October',
-                    'November',
-                    'December'],
-                datasets: [{
-                    data: data,
-                    label: "Adopciones",
-                    borderColor: "#3e95cd",
-                    backgroundColor: "#7bb6dd",
-                    fill: false,
-                }, {
-                    data: dataAdoptante,
-                    label: "Adoptantes",
-                    borderColor: "#3cba9f",
-                    backgroundColor: "#71d1bd",
-                    fill: false,
-                }
-                ]
-            }, options: {
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Adopciones y Adoptantes registrados por mes',
-                        font: {
-                            weight: 'bold',
-                            size: 16,
-                        }
-                    },
-                },
-            }
-        });
-    }, [])
-    return <canvas ref={chartRef} />;
+	useEffect(() => {
+		const ctx = chartRef.current.getContext('2d');
+		if (adopcionMes) {
+			adopcionMes.destroy();
+		}
+		adopcionMes = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: [
+					'January',
+					'February',
+					'March',
+					'April',
+					'May',
+					'June',
+					'July',
+					'August',
+					'September',
+					'October',
+					'November',
+					'December',
+				],
+				datasets: [
+					{
+						data: data,
+						label: 'Adopciones',
+						borderColor: '#3e95cd',
+						backgroundColor: '#7bb6dd',
+						fill: false,
+					},
+					{
+						data: dataAdoptante,
+						label: 'Adoptantes',
+						borderColor: '#3cba9f',
+						backgroundColor: '#71d1bd',
+						fill: false,
+					},
+				],
+			},
+			options: {
+				plugins: {
+					title: {
+						display: true,
+						text: 'Adopciones y Adoptantes registrados por mes',
+						font: {
+							weight: 'bold',
+							size: 16,
+						},
+					},
+				},
+			},
+		});
+	}, [data, dataAdoptante]);
+	return <canvas ref={chartRef} />;
 }

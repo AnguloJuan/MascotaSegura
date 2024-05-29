@@ -23,7 +23,7 @@ export default function ListaReportes({ props }) {
 			userType: props.userType,
 		}));
 		setReportes(props.reportes);
-	}, []);
+	}, [props.reportes, props.userType]);
 
 	const fetchReportes = async () => {
 		// Perform the API request to fetch the adoptantes list

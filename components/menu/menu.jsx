@@ -11,13 +11,14 @@ import {
 	IconUsers,
 	IconUsersGroup,
 } from '@tabler/icons-react';
+import { Logo } from '../Logo';
 
 export default async function Menu() {
 	const user = await GetUser();
 	return (
 		<aside className={`bg-primary h-screen min-w-min px-5 py-9 z-50`}>
 			<nav className="flex flex-col gap-20">
-				<Logo />
+				<Logo className="text-primary" />
 				<ul className="flex flex-col gap-3 px-4">
 					<Option url={'/adopcion'} text={'Adopción'} icon={<IconDog />} />
 					<Option url={'/reportes'} text={'Reportes'} icon={<IconReport />} />
@@ -72,20 +73,5 @@ export default async function Menu() {
 				</Link>
 			)}
 		</aside>
-	);
-}
-
-function Logo() {
-	return (
-		<>
-			<Link
-				href="/"
-				className="flex gap-1 text-2xl items-center justify-center text-white font-black"
-			>
-				<span>Mascota</span>
-				<IconPawFilled />
-				<span>Segura</span>
-			</Link>
-		</>
 	);
 }

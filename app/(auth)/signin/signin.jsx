@@ -1,11 +1,12 @@
 'use client';
 import postImage from '@/app/lib/cloudinaryActions';
 import { Input } from '@/components/Inputs';
+import { Logo } from '@/components/Logo';
 import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
+import { IconChevronLeft } from '@tabler/icons-react';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -90,9 +91,7 @@ export default function SignIn() {
 						deleteCookie('user');
 					}
 					// Sign-in successful, perform any necessary actions (e.g., redirect)
-					response
-						.json()
-						.then((response) => setCookie('user', response.token));
+					response.json().then((response) => setCookie('user', response.token));
 
 					setIsRegistrado(true);
 					router.replace('/');
@@ -116,96 +115,89 @@ export default function SignIn() {
 	};
 
 	return (
-		<>
-			<form onSubmit={handleSignIn}>
-				<h1>Crear cuenta</h1>
-				<label htmlFor="perfil">
-					Imagen de perfil{' '}
-					<span className="fw-light text-secondary">(Opcional)</span>
-				</label>
-				<div>
-					{image ? (
-						<Image
-							width={200}
-							height={200}
-							src={createObjectURL}
-							alt="upload image"
-						/>
-					) : (
-						<Image
-							width={200}
-							height={200}
-							src={'/images/defaultUser.png'}
-							alt="upload image"
-						/>
-					)}
-					<input
-						id="perfil"
-						type="file"
-						name="perfil"
-						onChange={uploadToClient}
-						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-						className="form-control"
+		<section className="relative grid place-content-center py-24 w-full bg-[url('/images/background.jpg')] bg-cover bg-fixed bg-no-repeat">
+			<Link
+				href={'/'}
+				className="fixed top-9 left-9 py-1 px-4 rounded-full bg-white/25 backdrop-blur-lg flex items-center gap-3"
+			>
+				<IconChevronLeft size={30} />
+				<span className="text-xl">Regresar</span>
+			</Link>
+			<form
+				className="min-h-[85vh] min-w-[35vw] grid place-content-center gap-20 py-10 px-20 shadow-xl shadow-slate-400 bg-white/25 backdrop-blur-lg"
+				onSubmit={handleSignIn}
+			>
+				<Logo className="text-primary text-5xl" color="#4844f8" size={40} />
+
+				<div className="flex flex-col items-center justify-center gap-4">
+					<h1 className="text-3xl">Crear cuenta</h1>
+					<Input
+						id={'name'}
+						type={'text'}
+						label={'Nombre'}
+						placeholder={'Nombre'}
+						onChange={(e) => setFirstName(e.target.value)}
+						className="w-90"
 					/>
+
+					<Input
+						id={'lastName'}
+						type={'text'}
+						label={'Apellidos'}
+						placeholder={'Apellidos'}
+						onChange={(e) => setLastName(e.target.value)}
+						className="w-90"
+					/>
+
+					<Input
+						id={'telefono'}
+						type={'text'}
+						label={'Teléfono'}
+						placeholder={'Teléfono'}
+						onChange={(e) => setTelefono(e.target.value)}
+						className="w-90"
+					/>
+					<div className="flex gap-2">
+						<Estados onChange={handleEstadoChange} value={selectedEstado} />
+						<Municipios
+							selectedEstado={selectedEstado}
+							value={selectedMunicipio}
+							onChange={handleMunicipioChange}
+						/>
+					</div>
+
+					<Input
+						id={'email'}
+						type={'email'}
+						label={'Correo electrónico'}
+						placeholder={'Correo electrónico'}
+						onChange={(e) => setEmail(e.target.value)}
+						className="w-90"
+					/>
+
+					<Input
+						id={'password'}
+						type={'password'}
+						label={'Contraseña'}
+						placeholder={'Contraseña'}
+						onChange={(e) => setPassword(e.target.value)}
+						className="w-90"
+					/>
+
+					<button
+						type="submit"
+						className="bg-primary w-full py-2 rounded-lg text-white font-bold hover:bg-primaryHover transition-colors"
+					>
+						Crear cuenta
+					</button>
+					<br />
+					<p>
+						Ya tienes cuenta?{' '}
+						<Link href={'/login'} className="text-primary font-black">
+							Iniciar sesión
+						</Link>
+					</p>
 				</div>
-
-				<Input
-					id={'name'}
-					type={'text'}
-					label={'Nombre'}
-					placeholder={'Nombre'}
-					onChange={(e) => setFirstName(e.target.value)}
-				/>
-
-				<Input
-					id={'lastName'}
-					type={'text'}
-					label={'Apellidos'}
-					placeholder={'Apellidos'}
-					onChange={(e) => setLastName(e.target.value)}
-				/>
-
-				<Input
-					id={'telefono'}
-					type={'text'}
-					label={'Teléfono'}
-					placeholder={'Teléfono'}
-					onChange={(e) => setTelefono(e.target.value)}
-				/>
-
-				<Estados
-					onChange={handleEstadoChange}
-					value={selectedEstado}
-				/>
-				<Municipios
-					selectedEstado={selectedEstado}
-					value={selectedMunicipio}
-					onChange={handleMunicipioChange}
-				/>
-
-				<Input
-					id={'email'}
-					type={'email'}
-					label={'Correo electrónico'}
-					placeholder={'Correo electrónico'}
-					onChange={(e) => setEmail(e.target.value)}
-				/>
-
-				<Input
-					id={'password'}
-					type={'password'}
-					label={'Contraseña'}
-					placeholder={'Contraseña'}
-					onChange={(e) => setPassword(e.target.value)}
-				/>
-
-				<button type="submit" className="btn btn-primary mb-3">
-					Crear cuenta
-				</button>
-				<br />
-				<p>
-					Ya tienes cuenta? <Link href={'/login'}>Iniciar sesión</Link>
-				</p>
 			</form>
 			<Dialog
 				id={'errorEmail'}
@@ -240,6 +232,6 @@ export default function SignIn() {
 				<h1>Registro exitoso</h1>
 				<p>Espere un momento en lo que carga la pagina</p>
 			</Dialog>
-		</>
+		</section>
 	);
 }

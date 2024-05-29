@@ -1,49 +1,58 @@
 .dashboard {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-content: center;
+	justify-content: center;
 }
 
 .tarjetas {
-    display: flex;
-    justify-content: space-around;
-    gap: 1.5rem;
+	display: flex;
+	justify-content: space-around;
+	gap: 1.5rem;
 }
 
 .tarjetas div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    align-self: center;
-    text-align: center;
-    box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
-    padding: 1rem;
-    margin: 1rem 0;
-    width: 200px;
-    height: 120px;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-self: center;
+	text-align: center;
+	box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
+	padding: 1rem;
+	margin: 1rem 0;
+	width: 200px;
+	height: 120px;
+	justify-content: center;
 }
 
 .tarjetas p {
-    margin: 0;
-}
-
-.canva {
-    padding: 1rem;
-    box-shadow: 0px 0px 8px rgb(0 0 0 / 25%);
-}
-
-.reportesM {
-    width: 300px;
+	margin: 0;
 }
 
 .porcentaje {
-    width: 330px;
-    width: 330px;
+	width: 330px;
+	width: 330px;
 }
 
-.cantidad{
-    width: 400px;
-    height: 300px;
+.cantidad {
+	width: 400px;
+	height: 300px;
+}
+
+.table::-webkit-scrollbar {
+	width: 10px;
+}
+
+.table::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+.table::-webkit-scrollbar-thumb {
+	background: #4844f8;
+	border-radius: 10px;
+}
+
+.table::-webkit-scrollbar-thumb:hover {
+	background: #7266f5;
 }
