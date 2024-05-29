@@ -1,0 +1,2316 @@
+{
+  "models": {
+    "_prisma_migrations": {
+      "id": "_prisma_migrations",
+      "tableName": "_prisma_migrations",
+      "fields": [
+        {
+          "id": "_prisma_migrations.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "_prisma_migrations.checksum",
+          "name": "checksum",
+          "columnName": "checksum",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.finished_at",
+          "name": "finished_at",
+          "columnName": "finished_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.migration_name",
+          "name": "migration_name",
+          "columnName": "migration_name",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.logs",
+          "name": "logs",
+          "columnName": "logs",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.rolled_back_at",
+          "name": "rolled_back_at",
+          "columnName": "rolled_back_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.started_at",
+          "name": "started_at",
+          "columnName": "started_at",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "_prisma_migrations.applied_steps_count",
+          "name": "applied_steps_count",
+          "columnName": "applied_steps_count",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "_prisma_migrations_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "adopcion": {
+      "id": "adopcion",
+      "tableName": "adopcion",
+      "fields": [
+        {
+          "id": "adopcion.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "adopcion_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "adopcion.fechaCreada",
+          "name": "fechaCreada",
+          "columnName": "fechaCreada",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "adopcion.idAdoptante",
+          "name": "idAdoptante",
+          "columnName": "idAdoptante",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adopcion.idMascota",
+          "name": "idMascota",
+          "columnName": "idMascota",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adopcion.idRefugio",
+          "name": "idRefugio",
+          "columnName": "idRefugio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adopcion.idEstadoAdopcion",
+          "name": "idEstadoAdopcion",
+          "columnName": "idEstadoAdopcion",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "estadoAdopcion",
+          "type": "estadoAdopcion",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adopcionToestadoAdopcion",
+          "relationFromFields": [
+            "idEstadoAdopcion"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "refugio",
+          "type": "refugio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adopcionTorefugio",
+          "relationFromFields": [
+            "idRefugio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adopcionTomascota",
+          "relationFromFields": [
+            "idMascota"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adoptante",
+          "type": "adoptante",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adopcionToadoptante",
+          "relationFromFields": [
+            "idAdoptante"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "adopcion_idMascota_key",
+          "fields": [
+            "idMascota"
+          ]
+        },
+        {
+          "name": "adopcion_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "adoptante": {
+      "id": "adoptante",
+      "tableName": "adoptante",
+      "fields": [
+        {
+          "id": "adoptante.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "adoptante_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "adoptante.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.apellido",
+          "name": "apellido",
+          "columnName": "apellido",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.correo",
+          "name": "correo",
+          "columnName": "correo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.telefono",
+          "name": "telefono",
+          "columnName": "telefono",
+          "type": "bigint",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.contrasena",
+          "name": "contrasena",
+          "columnName": "contrasena",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.fechaRegistro",
+          "name": "fechaRegistro",
+          "columnName": "fechaRegistro",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "adoptante.idMunicipio",
+          "name": "idMunicipio",
+          "columnName": "idMunicipio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.idTipoUsuario",
+          "name": "idTipoUsuario",
+          "columnName": "idTipoUsuario",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "adoptante.imagen",
+          "name": "imagen",
+          "columnName": "imagen",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "tipoUsuario",
+          "type": "tipoUsuario",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adoptanteTotipoUsuario",
+          "relationFromFields": [
+            "idTipoUsuario"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "municipio",
+          "type": "municipio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "adoptanteTomunicipio",
+          "relationFromFields": [
+            "idMunicipio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adopcion",
+          "type": "adopcion",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adopcionToadoptante",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "historialAdoptivo",
+          "type": "historialAdoptivo",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "historialAdoptivoToadoptante",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "reporte_reporte_idReportadoToadoptante",
+          "type": "reporte",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "reporte_idReportadoToadoptante",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "reporte_reporte_idReportadorToadoptante",
+          "type": "reporte",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "reporte_idReportadorToadoptante",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "adoptante_correo_key",
+          "fields": [
+            "correo"
+          ]
+        },
+        {
+          "name": "adoptante_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "empleado": {
+      "id": "empleado",
+      "tableName": "empleado",
+      "fields": [
+        {
+          "id": "empleado.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "empleado_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "empleado.idRefugio",
+          "name": "idRefugio",
+          "columnName": "idRefugio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.apellido",
+          "name": "apellido",
+          "columnName": "apellido",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.correo",
+          "name": "correo",
+          "columnName": "correo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.contrasena",
+          "name": "contrasena",
+          "columnName": "contrasena",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.telefono",
+          "name": "telefono",
+          "columnName": "telefono",
+          "type": "bigint",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.NIP",
+          "name": "NIP",
+          "columnName": "NIP",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.fechaRegistro",
+          "name": "fechaRegistro",
+          "columnName": "fechaRegistro",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "empleado.idTipoUsuario",
+          "name": "idTipoUsuario",
+          "columnName": "idTipoUsuario",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "empleado.imagen",
+          "name": "imagen",
+          "columnName": "imagen",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "tipoUsuario",
+          "type": "tipoUsuario",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "empleadoTotipoUsuario",
+          "relationFromFields": [
+            "idTipoUsuario"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "empleado_correo_key",
+          "fields": [
+            "correo"
+          ]
+        },
+        {
+          "name": "empleado_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "espacios": {
+      "id": "espacios",
+      "tableName": "espacios",
+      "fields": [
+        {
+          "id": "espacios.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "espacios_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "espacios.espacioTotal",
+          "name": "espacioTotal",
+          "columnName": "espacioTotal",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "espacios.espacioDisponible",
+          "name": "espacioDisponible",
+          "columnName": "espacioDisponible",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "espacios.idEspecie",
+          "name": "idEspecie",
+          "columnName": "idEspecie",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "espacios.idRefugio",
+          "name": "idRefugio",
+          "columnName": "idRefugio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "refugio",
+          "type": "refugio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "espaciosTorefugio",
+          "relationFromFields": [
+            "idRefugio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "especie",
+          "type": "especie",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "espaciosToespecie",
+          "relationFromFields": [
+            "idEspecie"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "espacios_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "especie": {
+      "id": "especie",
+      "tableName": "especie",
+      "fields": [
+        {
+          "id": "especie.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "especie_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "especie.especie",
+          "name": "especie",
+          "columnName": "especie",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "espacios",
+          "type": "espacios",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "espaciosToespecie",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "mascotaToespecie",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "raza",
+          "type": "raza",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "razaToespecie",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "especie_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "estado": {
+      "id": "estado",
+      "tableName": "estado",
+      "fields": [
+        {
+          "id": "estado.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "estado_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "estado.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "municipio",
+          "type": "municipio",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "municipioToestado",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "estado_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "estadoAdopcion": {
+      "id": "estadoAdopcion",
+      "tableName": "estadoAdopcion",
+      "fields": [
+        {
+          "id": "estadoAdopcion.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "estadoAdopcion_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "estadoAdopcion.estadoAdopcion",
+          "name": "estadoAdopcion",
+          "columnName": "estadoAdopcion",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "adopcion",
+          "type": "adopcion",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adopcionToestadoAdopcion",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "estadoAdopcion_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "estadoReporte": {
+      "id": "estadoReporte",
+      "tableName": "estadoReporte",
+      "fields": [
+        {
+          "id": "estadoReporte.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "estadoReporte_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "estadoReporte.estado",
+          "name": "estado",
+          "columnName": "estado",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "reporte",
+          "type": "reporte",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "reporteToestadoReporte",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "estadoReporte_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "historialAdoptivo": {
+      "id": "historialAdoptivo",
+      "tableName": "historialAdoptivo",
+      "fields": [
+        {
+          "id": "historialAdoptivo.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "historialAdoptivo_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "historialAdoptivo.idMascota",
+          "name": "idMascota",
+          "columnName": "idMascota",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "historialAdoptivo.idAdoptante",
+          "name": "idAdoptante",
+          "columnName": "idAdoptante",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "historialAdoptivo.motivo",
+          "name": "motivo",
+          "columnName": "motivo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "name": "adoptante",
+          "type": "adoptante",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "historialAdoptivoToadoptante",
+          "relationFromFields": [
+            "idAdoptante"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "historialAdoptivoTomascota",
+          "relationFromFields": [
+            "idMascota"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "historialAdoptivo_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "mascota": {
+      "id": "mascota",
+      "tableName": "mascota",
+      "fields": [
+        {
+          "id": "mascota.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "mascota_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "mascota.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.edad",
+          "name": "edad",
+          "columnName": "edad",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.meses",
+          "name": "meses",
+          "columnName": "meses",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.maltratado",
+          "name": "maltratado",
+          "columnName": "maltratado",
+          "type": "boolean",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "mascota.fechaRegistro",
+          "name": "fechaRegistro",
+          "columnName": "fechaRegistro",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "mascota.imagen",
+          "name": "imagen",
+          "columnName": "imagen",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.idRefugio",
+          "name": "idRefugio",
+          "columnName": "idRefugio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.cartilla",
+          "name": "cartilla",
+          "columnName": "cartilla",
+          "type": "boolean",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "mascota.motivo",
+          "name": "motivo",
+          "columnName": "motivo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.idSexo",
+          "name": "idSexo",
+          "columnName": "idSexo",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.idTamano",
+          "name": "idTamano",
+          "columnName": "idTamano",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "mascota.idEspecie",
+          "name": "idEspecie",
+          "columnName": "idEspecie",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "mascota.idRaza",
+          "name": "idRaza",
+          "columnName": "idRaza",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "raza",
+          "type": "raza",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "mascotaToraza",
+          "relationFromFields": [
+            "idRaza"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "especie",
+          "type": "especie",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "mascotaToespecie",
+          "relationFromFields": [
+            "idEspecie"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "tamano",
+          "type": "tamano",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "mascotaTotamano",
+          "relationFromFields": [
+            "idTamano"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "sexo",
+          "type": "sexo",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "mascotaTosexo",
+          "relationFromFields": [
+            "idSexo"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "refugio",
+          "type": "refugio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "mascotaTorefugio",
+          "relationFromFields": [
+            "idRefugio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adopcion",
+          "type": "adopcion",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adopcionTomascota",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "historialAdoptivo",
+          "type": "historialAdoptivo",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "historialAdoptivoTomascota",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "reporte",
+          "type": "reporte",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "reporteTomascota",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "mascota_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "municipio": {
+      "id": "municipio",
+      "tableName": "municipio",
+      "fields": [
+        {
+          "id": "municipio.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "municipio_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "municipio.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "municipio.idEstado",
+          "name": "idEstado",
+          "columnName": "idEstado",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "estado",
+          "type": "estado",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "municipioToestado",
+          "relationFromFields": [
+            "idEstado"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adoptante",
+          "type": "adoptante",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adoptanteTomunicipio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "refugio",
+          "type": "refugio",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "refugioTomunicipio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "reporte",
+          "type": "reporte",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "reporteTomunicipio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "municipio_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "raza": {
+      "id": "raza",
+      "tableName": "raza",
+      "fields": [
+        {
+          "id": "raza.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "raza_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "raza.raza",
+          "name": "raza",
+          "columnName": "raza",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "raza.idEspecie",
+          "name": "idEspecie",
+          "columnName": "idEspecie",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "especie",
+          "type": "especie",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "razaToespecie",
+          "relationFromFields": [
+            "idEspecie"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "mascotaToraza",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "raza_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "refugio": {
+      "id": "refugio",
+      "tableName": "refugio",
+      "fields": [
+        {
+          "id": "refugio.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "refugio_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "refugio.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "refugio.espacios",
+          "name": "espacios",
+          "columnName": "espacios",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "refugio.fechaCreada",
+          "name": "fechaCreada",
+          "columnName": "fechaCreada",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "refugio.idMunicipio",
+          "name": "idMunicipio",
+          "columnName": "idMunicipio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "municipio",
+          "type": "municipio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "refugioTomunicipio",
+          "relationFromFields": [
+            "idMunicipio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adopcion",
+          "type": "adopcion",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adopcionTorefugio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "espacios",
+          "type": "espacios",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "espaciosTorefugio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "mascotaTorefugio",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "refugio_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "reporte": {
+      "id": "reporte",
+      "tableName": "reporte",
+      "fields": [
+        {
+          "id": "reporte.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "reporte_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "reporte.descripcion",
+          "name": "descripcion",
+          "columnName": "descripcion",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.fechaCreada",
+          "name": "fechaCreada",
+          "columnName": "fechaCreada",
+          "type": "datetime",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "id": "reporte.idReportador",
+          "name": "idReportador",
+          "columnName": "idReportador",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.idReportado",
+          "name": "idReportado",
+          "columnName": "idReportado",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.idMascota",
+          "name": "idMascota",
+          "columnName": "idMascota",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.idMunicipio",
+          "name": "idMunicipio",
+          "columnName": "idMunicipio",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.imagen",
+          "name": "imagen",
+          "columnName": "imagen",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.nombre",
+          "name": "nombre",
+          "columnName": "nombre",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.correo",
+          "name": "correo",
+          "columnName": "correo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "id": "reporte.estadoReporteId",
+          "name": "estadoReporteId",
+          "columnName": "estadoReporteId",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": true,
+          "isId": false
+        },
+        {
+          "name": "estadoReporte",
+          "type": "estadoReporte",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "reporteToestadoReporte",
+          "relationFromFields": [
+            "estadoReporteId"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "municipio",
+          "type": "municipio",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "reporteTomunicipio",
+          "relationFromFields": [
+            "idMunicipio"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "reporteTomascota",
+          "relationFromFields": [
+            "idMascota"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adoptante_reporte_idReportadoToadoptante",
+          "type": "adoptante",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "reporte_idReportadoToadoptante",
+          "relationFromFields": [
+            "idReportado"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "adoptante_reporte_idReportadorToadoptante",
+          "type": "adoptante",
+          "isRequired": true,
+          "kind": "object",
+          "relationName": "reporte_idReportadorToadoptante",
+          "relationFromFields": [
+            "idReportador"
+          ],
+          "relationToFields": [
+            "id"
+          ],
+          "isList": false,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "reporte_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "sexo": {
+      "id": "sexo",
+      "tableName": "sexo",
+      "fields": [
+        {
+          "id": "sexo.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "sexo_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "sexo.sexo",
+          "name": "sexo",
+          "columnName": "sexo",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "mascotaTosexo",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "sexo_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "tamano": {
+      "id": "tamano",
+      "tableName": "tamano",
+      "fields": [
+        {
+          "id": "tamano.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "tamano_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "tamano.tamano",
+          "name": "tamano",
+          "columnName": "tamano",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "mascota",
+          "type": "mascota",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "mascotaTotamano",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "tamano_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    },
+    "tipoUsuario": {
+      "id": "tipoUsuario",
+      "tableName": "tipoUsuario",
+      "fields": [
+        {
+          "id": "tipoUsuario.id",
+          "name": "id",
+          "columnName": "id",
+          "type": "integer",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": {
+            "identifier": "tipoUsuario_id_seq",
+            "increment": 1
+          },
+          "hasDefaultValue": false,
+          "isId": true
+        },
+        {
+          "id": "tipoUsuario.usuario",
+          "name": "usuario",
+          "columnName": "usuario",
+          "type": "text",
+          "isRequired": true,
+          "kind": "scalar",
+          "isList": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false,
+          "isId": false
+        },
+        {
+          "name": "adoptante",
+          "type": "adoptante",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "adoptanteTotipoUsuario",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        },
+        {
+          "name": "empleado",
+          "type": "empleado",
+          "isRequired": false,
+          "kind": "object",
+          "relationName": "empleadoTotipoUsuario",
+          "relationFromFields": [],
+          "relationToFields": [],
+          "isList": true,
+          "isId": false,
+          "isGenerated": false,
+          "sequence": false,
+          "hasDefaultValue": false
+        }
+      ],
+      "uniqueConstraints": [
+        {
+          "name": "tipoUsuario_pkey",
+          "fields": [
+            "id"
+          ]
+        }
+      ]
+    }
+  },
+  "enums": {}
+}
