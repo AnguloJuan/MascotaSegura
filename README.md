@@ -2,7 +2,6 @@ Proyecto final para Ingenieria de Software 2.
 
 UABCS IDS 6to Semestre TM
 
-
 ## Boilerplate de Next.js ⬇
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
@@ -24,6 +23,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
+## Generate database
+
+```bash
+npm install
+npx prisma generate
+npx prisma migrate dev
+npx tsx prisma/seed/seed.ts
+```
 
 ## Learn More
 
