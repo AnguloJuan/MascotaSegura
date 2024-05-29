@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -30,7 +31,7 @@ export default function CardUser({ items }) {
 			</div>
 			<div className="z-40 flex flex-row justify-between items-end gap-10">
 				<div className="flex flex-col items-start gap-1">
-					<div className="flex flex-row gap-2">
+					<div className="flex flex-row gap-2 break-all">
 						<h2 className="font-semibold text-md text-white">{items.correo}</h2>
 					</div>
 				</div>
