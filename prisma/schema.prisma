@@ -44,7 +44,7 @@ model adoptante {
   id            Int      @id @default(autoincrement())
   nombre        String
   apellido      String
-  correo        String   @unique @map("email")
+  correo        String   @unique
   telefono      BigInt
   contrasena    String
   fechaRegistro DateTime @default(now())
@@ -65,7 +65,7 @@ model empleado {
   idRefugio     Int
   nombre        String
   apellido      String
-  correo        String   @unique @map("email")
+  correo        String   @unique
   contrasena    String
   telefono      BigInt
   NIP           String
@@ -157,7 +157,7 @@ model reporte {
   idMunicipio  Int
   imagen       String?
   nombre       String?
-  correo       String?  @map("email")
+  correo       String?
 
   reportador      adoptante?     @relation("reportador", fields: [idReportador], references: [id])
   reportado       adoptante?     @relation("reportado", fields: [idReportado], references: [id])

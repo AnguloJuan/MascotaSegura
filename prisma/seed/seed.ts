@@ -4,103 +4,101 @@
  * Use any TypeScript runner to run this script, for example: `npx tsx seed.ts`
  * Learn more about the Seed Client by following our guide: https://docs.snaplet.dev/seed/getting-started
  */
+import { PrismaClient } from "@prisma/client";
 import { createSeedClient } from "@snaplet/seed";
+import { copycat } from '@snaplet/copycat';
 
 const main = async () => {
   const seed = await createSeedClient();
 
   // Truncate all tables in the database
-  await seed.$resetDatabase();
+  await seed.$resetDatabase([
+    "!*estado",
+    "!*municipio",
+    "!*tipoUsuario",
+    "!*estadoReporte",
+    "!*tamano",
+    "!*sexo",
+    "!*especie",
+    "!*estadoAdopcion",
+    "!*refugio",
+  ],);
 
-  await seed.tipoUsuario([
-    { usuario: 'Adoptante', },
-    { usuario: 'Empleado', },
-    { usuario: 'Administrador', },
-  ])
+  const prisma = new PrismaClient();
+  const estado = await prisma.estado.findMany({ select: { id: true } });
+  const municipio = await prisma.municipio.findMany({ select: { id: true } });
+  const tipoUsuario = await prisma.tipoUsuario.findMany({ select: { id: true } });
+  const estadoReporte = await prisma.estadoReporte.findMany({ select: { id: true } });
+  const tamano = await prisma.tamano.findMany({ select: { id: true } });
+  const sexo = await prisma.sexo.findMany({ select: { id: true } });
+  const especie = await prisma.especie.findMany({ select: { id: true } });
+  const estadoAdopcion = await prisma.estadoAdopcion.findMany({ select: { id: true } });
+  const refugio = await prisma.refugio.findMany({ select: { id: true } });
 
-  await seed.estado([
-    { nombre: 'Aguascalientes', },
-    { nombre: 'Baja California', },
-    { nombre: 'Baja California Sur', },
-    { nombre: 'Campeche', },
-    { nombre: 'Chiapas', },
-    { nombre: 'Chihuahua', },
-    { nombre: 'Ciudad de México', },
-    { nombre: 'Coahuila', },
-    { nombre: 'Colima', },
-    { nombre: 'Durango', },
-    { nombre: 'Guanajuato', },
-    { nombre: 'Guerrero', },
-    { nombre: 'Hidalgo', },
-    { nombre: 'Jalisco', },
-    { nombre: 'México', },
-    { nombre: 'Michoacán', },
-    { nombre: 'Morelos', },
-    { nombre: 'Nayarit', },
-    { nombre: 'Nuevo León', },
-    { nombre: 'Oaxaca', },
-    { nombre: 'Puebla', },
-    { nombre: 'Querétaro', },
-    { nombre: 'Quintana Roo', },
-    { nombre: 'San Luis Potosí', },
-    { nombre: 'Sinaloa', },
-    { nombre: 'Sonora', },
-    { nombre: 'Tabasco', },
-    { nombre: 'Tamaulipas', },
-    { nombre: 'Tlaxcala', },
-    { nombre: 'Veracruz', },
-    { nombre: 'Yucatán', },
-    { nombre: 'Zacatecas', },
-    { nombre: 'Extranjero', },
-  ]);
-
-  await seed.empleado([
-    { correo: 'admin@gmail.com', contrasena: 'admin', idTipoUsuario: 3, imagen: '' },
-  ])
+  // await seed.empleado([
+  //   { correo: 'admin@gmail.com', contrasena: 'admin', idTipoUsuario: 3, imagen: '' },
+  // ])
   // Seed the database with 10 empleado
-  await seed.empleado((x) => x(10, { idTipoUsuario: 2, imagen: '' }));
+  await seed.empleado((x) => x(10,
+    {
+      idTipoUsuario: 2,
+      imagen: '',
+      correo: (ctx) =>
+        copycat.email(ctx.seed, {
+          domain: 'gmail.com',
+        }),
+    }),
+    { connect: { refugio } });
 
   // Seed the database with 10 adoptante
-  await seed.adoptante((x) => x(10, { idTipoUsuario: 1, imagen: '' }));
+  await seed.adoptante((x) => x(10, {
+    idTipoUsuario: 1, imagen: '',
+    correo: (ctx) =>
+      copycat.email(ctx.seed, {
+        domain: 'gmail.com',
+      }),
+  }), { connect: { municipio } });
 
-  await seed.sexo([
-    { sexo: 'Macho', },
-    { sexo: 'Hembra', },
-    { sexo: 'No especificado', },
-  ])
+  // await seed.sexo([
+  //   { sexo: 'Macho', },
+  //   { sexo: 'Hembra', },
+  //   { sexo: 'No especificado', },
+  // ])
 
   await seed.mascota((x) => x(20, {
     imagen: '',
-    edad: Math.floor(Math.random() * 20) + 1,
-    idSexo: Math.floor(Math.random() * 3) + 1
-  }));
+    edad: (ctx) =>
+      copycat.int(ctx.seed, {
+        min: 1,
+        max: 20,
+      }),
+  }), { connect: { tamano, sexo, especie, refugio } });
 
-  await seed.estadoReporte([
-    { estado: 'Reportado', },
-    { estado: 'En investigación', },
-    { estado: 'Confirmado', },
-    { estado: 'Resuelto', },
-    { estado: 'Falso', },
-  ])
+  // await seed.estadoReporte([
+  //   { estado: 'Reportado', },
+  //   { estado: 'En investigación', },
+  //   { estado: 'Confirmado', },
+  //   { estado: 'Resuelto', },
+  //   { estado: 'Falso', },
+  // ])
 
   await seed.reporte((x) => x(20, {
     imagen: '',
-    estadoReporteId: Math.floor(Math.random() * 5) + 1
-  }));
+    correo: (ctx) =>
+      copycat.email(ctx.seed, {
+        domain: 'gmail.com',
+      }),
+  }), { connect: { estadoReporte, municipio, } });
 
 
-  await seed.estadoAdopcion([
-    { estadoAdopcion: 'Aceptado', },
-    { estadoAdopcion: 'Denegado', },
-    { estadoAdopcion: 'Procesando', },
-    { estadoAdopcion: 'Cancelado', },
-    { estadoAdopcion: 'Devuelto', },
-  ])
-  await seed.adopcion((x) => x(10,
-    {
-      idEstadoAdopcion: Math.floor(Math.random() * 5) + 1,
-    }
-  ));
+  // await seed.estadoAdopcion([
+  //   { estadoAdopcion: 'Aceptado', },
+  //   { estadoAdopcion: 'Denegado', },
+  //   { estadoAdopcion: 'Procesando', },
+  //   { estadoAdopcion: 'Cancelado', },
+  //   { estadoAdopcion: 'Devuelto', },
+  // ])
+  await seed.adopcion((x) => x(10), { connect: { estadoAdopcion } });
 
 
   // Type completion not working? You might want to reload your TypeScript Server to pick up the changes

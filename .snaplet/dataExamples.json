@@ -686,10 +686,6 @@
     "examples": []
   },
   {
-    "shape": "EMAIL",
-    "examples": []
-  },
-  {
     "input": " adoptante apellido",
     "examples": [
       "Garcia",
@@ -732,46 +728,6 @@
       "Smith",
       "Johnson",
       "Williams"
-    ]
-  },
-  {
-    "input": " adoptante correo",
-    "examples": [
-      "juan.perez@example.com",
-      "maria.rodriguez@hotmail.com",
-      "john.doe@gmail.com",
-      "emilio.hernandez@yahoo.com",
-      "luis.gomez@aol.com",
-      "ana.sanchez@outlook.com",
-      "pedro.garcia@protonmail.com",
-      "martha.ramirez@icloud.com",
-      "carlos.martinez@zoho.com",
-      "diana.lopez@fastmail.com",
-      "laura.gonzalez@tutanota.com",
-      "manuel.rodriguez@yandex.com",
-      "sofia.hernandez@mailfence.com",
-      "juan.carlos.gomez@posteo.com",
-      "luisa.fernandez@hushmail.com",
-      "antonio.sanchez@lavabit.com",
-      "fernando.gutierrez@riseup.net",
-      "maria.jimenez@ Kolabnow.com",
-      "esteban.diaz@openmailbox.org",
-      "laura.martinez@inbox.lv",
-      "emanuel.perez@seznam.cz",
-      "marcos.sanchez@centrum.cz",
-      "ines.gomez@volny.cz",
-      "carlos.hernandez@integra.cz",
-      "miriam.rodriguez@post.cz",
-      "jaime.gutierrez@azet.sk",
-      "luis.gonzalez@chello.sk",
-      "maria.fernandez@t-com.sk",
-      "juan.perez@zoznam.sk",
-      "laura.martinez@inmail.sk",
-      "carlos.sanchez@nadaciocz.cz",
-      "manuel.rodriguez@seznam.cz",
-      "maria.gomez@tiscali.cz",
-      "antonio.hernandez@centrum.cz",
-      "juan.carlos.martinez@volny.cz"
     ]
   },
   {

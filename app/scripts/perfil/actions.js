@@ -45,7 +45,7 @@ export const modifyAdoptante = async (e) => {
 			body.set('userInit', JSON.stringify(props.user));
 
 			if (image) {
-				postImage(body, image)
+				await postImage(body, image)
 			} else {
 				body.set('image', null);
 			}
@@ -101,7 +101,7 @@ export const modifyEmpleado = async (e) => {
 		body.set('userInit', JSON.stringify(props.user));
 		if (userType == 3) {
 			if (image) {
-				postImage(body, image);
+				body.set('image', await postImage(body, image));
 			} else {
 				body.set('image', null);
 			}
