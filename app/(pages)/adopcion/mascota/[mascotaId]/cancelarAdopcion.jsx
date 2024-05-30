@@ -79,9 +79,10 @@ export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 
 			<Dialog
 				id={'warningDialog'}
-				confirmar
+				confirmar={true}
 				fun={handleCancelar}
 				isOpen={warningDialog}
+				contenido={true}
 				onClose={() => setWarningDialog(false)}
 			>
 				<h3>Confirmar cancelación</h3>

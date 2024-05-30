@@ -79,41 +79,45 @@ export default async function Page({ params }) {
 								</div>
 							</div>
 							Muestra adoptante
-							{mascota.adopcion && (
-								<div className="">
+							{mascota.adopcion !== null && (
+								<>
 									<div className="">
-										<Image
-											src={'/images/adoptante1.jpg'}
-											alt="mascota.png"
-											width={200}
-											height={200}
-										/>
+										<div className="">
+											<Image
+												src={mascota.adopcion.adoptante.imagen || '/images/defaultUser.png'}
+												alt="mascota.png"
+												width={200}
+												height={200}
+											/>
+										</div>
+										<div className="">
+											<h3>Persona adoptante</h3>
+											<p>id: {mascota.adopcion.adoptante.id}</p>
+											<p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
+											<p>correo: {mascota.adopcion.adoptante.correo}</p>
+										</div>
 									</div>
-									<div className="">
-										<h3>Persona adoptante</h3>
-										<p>id: {mascota.adopcion.adoptante.id}</p>
-										<p>Nombre: {mascota.adopcion.adoptante.nombre}</p>
-										<p>correo: {mascota.adopcion.adoptante.correo}</p>
-									</div>
-								</div>
+									{mascota.adopcion.adoptante.id == userId && (
+										<p>
+											Estado de adopción:
+											{mascota.adopcion.estadoAdopcion.estadoAdopcion}
+										</p>
+									)}
+									{
+										mascota.adopcion.estadoAdopcion.id == 3 &&
+										mascota.adopcion.adoptante.id == userId &&
+										(
+											<div className="">
+												<Cancelar
+													idAdopcion={mascota.adopcion.id}
+													idAdoptante={mascota.adopcion.adoptante.id}
+													idMascota={mascota.id}
+												/>
+											</div>
+										)
+									}
+								</>
 							)}
-							{mascota.adopcion && mascota.adopcion.adoptante.id == userId && (
-								<p>
-									Estado de adopción:
-									{mascota.adopcion.estadoAdopcion.estadoAdopcion}
-								</p>
-							)}
-							{mascota.adopcion &&
-								mascota.adopcion.estadoAdopcion.id == 3 &&
-								mascota.adopcion.adoptante.id == userId && (
-									<div className="">
-										<Cancelar
-											idAdopcion={mascota.adopcion.id}
-											idAdoptante={mascota.adopcion.adoptante.id}
-											idMascota={mascota.id}
-										/>
-									</div>
-								)}
 							{!mascota.adopcion && (
 								<div className="">
 									<Adoptar mascotaId={mascota.id} adoptanteId={userId} />

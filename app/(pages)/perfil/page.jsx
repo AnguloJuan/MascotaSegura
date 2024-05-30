@@ -41,6 +41,7 @@ export default async function PerfilPage() {
 				mascota: {
 					include: {
 						especie: true,
+						sexo: true,
 					},
 				},
 				estadoAdopcion: true,

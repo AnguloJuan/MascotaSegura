@@ -4,10 +4,8 @@ import { Checkbox, Input, InputFile } from '@/components/Inputs';
 import { Especies, Razas, Select, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import DescargarDocumentoAdopcion from './documentoAdopcion';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import Link from 'next/link';
 import Cancelar from './cancelarAdopcion';
 import postImage from '@/app/lib/cloudinaryActions';
 import CardUser from '@/components/CardUser';
@@ -31,6 +29,7 @@ export default function MascotaPage({ mascotaInicial }) {
 		imagen: mascotaInicial.imagen,
 		adopcion: mascotaInicial.adopcion,
 	});
+	const estado = mascotaInicial.adopcion ? mascotaInicial.adopcion.estadoAdopcion.estadoAdopcion : null;
 
 	const [image, setImage] = useState(null);
 	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
@@ -128,7 +127,6 @@ export default function MascotaPage({ mascotaInicial }) {
 		e.preventDefault();
 		setWarningDialog(true);
 	};
-	const estado = mascotaInicial.adopcion.estadoAdopcion.estadoAdopcion;
 	return (
 		<>
 			<form className="space-y-5">
@@ -137,8 +135,13 @@ export default function MascotaPage({ mascotaInicial }) {
 						id="perfil"
 						type="file"
 						name="perfil"
-						onFileUpload={(i) => setImage(i)}
+						onFileUpload={(image) => {
+							setImage(image);
+							setUnmodified(false);
+						}}
 						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+						className="mx-auto"
+						image={mascota.imagen || '/images/dogIcon.png'}
 					/>
 					<div className="space-y-5">
 						<div className="flex gap-3">
@@ -221,13 +224,12 @@ export default function MascotaPage({ mascotaInicial }) {
 									<label htmlFor="estadoAdopcion" className="space-x-3">
 										<span>Estado adopción</span>
 										<span
-											className={`${
-												estado.toLowerCase() == 'aceptado'
+											className={`${estado.toLowerCase() == 'aceptado'
 													? 'bg-green-500'
 													: estado.toLowerCase() == 'procesando'
-													? 'bg-yellow-500'
-													: 'bg-red-500'
-											} p-1 rounded-lg text-white`}
+														? 'bg-yellow-500'
+														: 'bg-red-500'
+												} p-1 rounded-lg text-white`}
 										>
 											{estado}
 										</span>
@@ -276,22 +278,22 @@ export default function MascotaPage({ mascotaInicial }) {
 
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (
-							<div>
-								<h2 className="text-4xl">Anteriores adopciones</h2>
-								<h3 className="text-2xl">Motivos de abandono</h3>
-								{mascotaInicial.motivo && <p>{mascotaInicial.motivo}</p>}
+								<div>
+									<h2 className="text-4xl">Anteriores adopciones</h2>
+									<h3 className="text-2xl">Motivos de abandono</h3>
+									{mascotaInicial.motivo && <p>{mascotaInicial.motivo}</p>}
 
-								{mascotaInicial.historialAdoptivo.length !== 0 &&
-									mascotaInicial.historialAdoptivo.map(
-										(historial) =>
-											historial.motivo && (
-												<p key={historial.id} className="border rounded">
-													- {historial.motivo}
-												</p>
-											)
-									)}
-							</div>
-						)}
+									{mascotaInicial.historialAdoptivo.length !== 0 &&
+										mascotaInicial.historialAdoptivo.map(
+											(historial) =>
+												historial.motivo && (
+													<p key={historial.id} className="border rounded">
+														- {historial.motivo}
+													</p>
+												)
+										)}
+								</div>
+							)}
 					</>
 				)}
 			</form>

@@ -95,11 +95,6 @@ async function main() {
             { id: 3, especie: 'Ave' },
             { id: 4, especie: 'Reptil' },
             { id: 5, especie: 'Roedor' },
-            { id: 6, especie: 'Pez' },
-            { id: 7, especie: 'Caballo' },
-            { id: 8, especie: 'Vaca' },
-            { id: 9, especie: 'Cerdo' },
-            { id: 10, especie: 'Chivo' },
         ],
     });
 
@@ -107,8 +102,10 @@ async function main() {
     await prisma.estadoAdopcion.createMany({
         data: [
             { id: 1, estadoAdopcion: 'Aceptado' },
-            { id: 2, estadoAdopcion: 'Cancelado' },
+            { id: 2, estadoAdopcion: 'Denegado' },
             { id: 3, estadoAdopcion: 'Procesando' },
+            { id: 3, estadoAdopcion: 'Cancelado' },
+            { id: 3, estadoAdopcion: 'Devuelto' },
         ],
     });
 
