@@ -1,9 +1,7 @@
-import { Input } from '@/components/Inputs';
 import { getPrisma } from '@/app/lib/prisma';
 import Link from 'next/link';
 import ListaReportes from './listaReportes';
-import Image from 'next/image';
-import { IconChartPie, IconChartPieFilled } from '@tabler/icons-react';
+import { IconChartPieFilled } from '@tabler/icons-react';
 
 const prisma = getPrisma();
 

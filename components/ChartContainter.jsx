@@ -262,18 +262,21 @@ export function AdopcionesPorMes({ adopciones, adoptantes }) {
 						label: 'Adopciones',
 						borderColor: '#3e95cd',
 						backgroundColor: '#7bb6dd',
-						fill: false,
+						fill: 'start',
+						tension: 0.4,
 					},
 					{
 						data: dataAdoptante,
 						label: 'Adoptantes',
 						borderColor: '#3cba9f',
 						backgroundColor: '#71d1bd',
-						fill: false,
+						fill: 'start',
+						tension: 0.4,
 					},
 				],
 			},
 			options: {
+				responsive: true,
 				plugins: {
 					title: {
 						display: true,
