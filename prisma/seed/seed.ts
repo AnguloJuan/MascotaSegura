@@ -24,91 +24,72 @@ const main = async () => {
 
   // Truncate all tables in the database except for the ones listed below
   await seed.$resetDatabase([
+    "!*_prisma_migrations",
     "!*estado",
     "!*municipio",
     "!*tipoUsuario",
     "!*estadoReporte",
     "!*tamano",
     "!*sexo",
-    "!*especie",
     "!*estadoAdopcion",
     "!*refugio",
+    "!*empleado",
+    "!*espacios",
+    "!*especie",
   ],);
 
 
-  // await seed.empleado([
-  //   { correo: 'admin@gmail.com', contrasena: 'admin', idTipoUsuario: 3, imagen: '' },
-  // ])
   // Seed the database with 10 empleado
-  // await seed.empleado((x) => x(10,
-  //   {
-  //     idTipoUsuario: 2,
-  //     imagen: '',
-  //     correo: (ctx) =>
-  //       copycat.email(ctx.seed, {
-  //         domain: 'gmail.com',
-  //       }),
-  //   }),
-  //   { connect: { refugio } });
+  await seed.empleado((x) => x(10,
+    {
+      idTipoUsuario: 2,
+      imagen: '',
+      correo: (ctx) =>
+        copycat.email(ctx.seed, {
+          domain: 'gmail.com',
+        }),
+    }),
+    { connect: { refugio } });
 
   // Seed the database with 10 adoptante
-  await seed.adoptante((x) => x(10, {
+  const { adoptante } = await seed.adoptante((x) => x(30, {
     idTipoUsuario: 1, imagen: '',
     correo: (ctx) =>
       copycat.email(ctx.seed, {
         domain: 'gmail.com',
       }),
+      fechaRegistro: new Date(),
   }), { connect: { municipio } });
 
-  // await seed.sexo([
-  //   { sexo: 'Macho', },
-  //   { sexo: 'Hembra', },
-  //   { sexo: 'No especificado', },
-  // ])
 
-  // const raza = await seed.raza((x) => x(20), { connect: { especie } });
+  const { raza } = await seed.raza((x) => x(60), { connect: { especie } });
 
-  // await seed.mascota((x) => x(20, {
-  //   imagen: '',
-  //   edad: (ctx) =>
-  //     copycat.int(ctx.seed, {
-  //       min: 1,
-  //       max: 20,
-  //     }),
-  //   raza: {
-  //     idEspecie: (ctx) => copycat.int(ctx.seed, {
-  //       min: 0,
-  //       max: seed.especie.length - 1,
-  //     }),
-  //   }
-
-  // }), { connect: { tamano, sexo, especie, refugio } });
-
-  // await seed.estadoReporte([
-  //   { estado: 'Reportado', },
-  //   { estado: 'En investigación', },
-  //   { estado: 'Confirmado', },
-  //   { estado: 'Resuelto', },
-  //   { estado: 'Falso', },
-  // ])
-
-  // await seed.reporte((x) => x(20, {
-  //   imagen: '',
-  //   correo: (ctx) =>
-  //     copycat.email(ctx.seed, {
-  //       domain: 'gmail.com',
-  //     }),
-  // }), { connect: { estadoReporte, municipio, } });
+  const { mascota } = await seed.mascota((x) => x(20, {
+    imagen: '',
+    edad: (ctx) =>
+      copycat.int(ctx.seed, {
+        min: 1,
+        max: 20,
+      }),
+      fechaRegistro: new Date(),
+      idRefugio: 1,
+  }), { connect: { tamano, sexo, raza, especie, refugio } });
 
 
-  // await seed.estadoAdopcion([
-  //   { estadoAdopcion: 'Aceptado', },
-  //   { estadoAdopcion: 'Denegado', },
-  //   { estadoAdopcion: 'Procesando', },
-  //   { estadoAdopcion: 'Cancelado', },
-  //   { estadoAdopcion: 'Devuelto', },
-  // ])
-  // await seed.adopcion((x) => x(10), { connect: { estadoAdopcion } });
+  await seed.adopcion((x) => x(10, {
+    fechaCreada: new Date(),
+    idRefugio: 1,
+  }), { connect: { estadoAdopcion, mascota, refugio, adoptante } });
+
+  await seed.reporte((x) => x(20, {
+    imagen: '',
+    correo: (ctx) =>
+      copycat.email(ctx.seed, {
+        domain: 'gmail.com',
+      }),
+      fechaCreada: new Date(),
+  }), { connect: { estadoReporte, municipio, mascota, adoptante } });
+
 
 
   // Type completion not working? You might want to reload your TypeScript Server to pick up the changes

@@ -686,10 +686,6 @@
     "examples": []
   },
   {
-    "shape": "EMAIL",
-    "examples": []
-  },
-  {
     "input": " adoptante apellido",
     "examples": [
       "Garcia",
