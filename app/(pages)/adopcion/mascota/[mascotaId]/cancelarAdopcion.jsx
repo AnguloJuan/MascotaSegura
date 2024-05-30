@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import { useRouter } from 'next/navigation';
 import Input from '@/components/Inputs';
+import Button from '@/components/Button';
 
 export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 	const [cancelDialog, setCancelDialog] = useState(false);
@@ -51,9 +52,9 @@ export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 
 	return (
 		<>
-			<div className="d-flex flex-column w-100">
+			<div>
 				<label htmlFor="motivo">
-					Motivo de cancelación{' '}
+					Motivo de cancelación
 					<span className="text-secondary fw-light">(No es obligatorio)</span>
 				</label>
 				<textarea
@@ -63,23 +64,25 @@ export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 					onChange={(e) => {
 						e.preventDefault(), setMotivo(e.target.value);
 					}}
-					className="form-control w-100 rounded"
+					className="py-2 px-4 w-full rounded-lg border-black border-2 
+                        focu:outline outline-primary outline-offset-4 resize-none"
 				></textarea>
-				<button
+				<Button
 					type="button"
 					onClick={() => setWarningDialog(true)}
-					className="btn btn-danger btn-lg mt-4"
+					className="bg-red-500 hover:bg-red-400"
 					disabled={cancelando}
 				>
 					Cancelar adopción
-				</button>
+				</Button>
 			</div>
 
 			<Dialog
 				id={'warningDialog'}
-				confirmar
+				confirmar={true}
 				fun={handleCancelar}
 				isOpen={warningDialog}
+				contenido={true}
 				onClose={() => setWarningDialog(false)}
 			>
 				<h3>Confirmar cancelación</h3>

@@ -18,7 +18,7 @@ export default function ListaEmpleados({ props }) {
 
 	useEffect(() => {
 		setEmpleados(props.empleados);
-	}, []);
+	}, [props.empleados]);
 
 	const fetchEmpleado = async () => {
 		// Perform the API request to fetch the empleados list

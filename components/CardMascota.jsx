@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function CardMascota({
 	href,
-	src,
+	imagen,
 	id,
 	nombre,
 	edad,
@@ -37,7 +37,7 @@ export default function CardMascota({
 					<Image
 						className="object-cover rounded-t-lg"
 						alt="Card Image"
-						src={src || '/images/dogIcon.png'}
+						src={imagen || '/images/dogIcon.png'}
 						width={300}
 						height={300}
 					/>

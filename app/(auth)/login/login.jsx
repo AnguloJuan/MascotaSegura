@@ -52,7 +52,10 @@ export default function LogIn() {
 				<IconChevronLeft size={30} />
 				<span className="text-xl">Regresar</span>
 			</Link>
-			<form className="h-[85vh] min-w-[35vw] grid place-content-center gap-20 py-10 px-20 shadow-xl shadow-slate-400 bg-white/25 backdrop-blur-lg">
+			<form
+				className="h-[85vh] min-w-[35vw] grid place-content-center gap-20 py-10 
+			px-20 shadow-xl shadow-slate-400 bg-white/25 backdrop-blur-lg rounded-xl"
+			>
 				<Logo className="text-primary text-5xl" color="#4844f8" size={40} />
 				<div className="flex flex-col items-center justify-center gap-4">
 					<h1 className="text-3xl">Iniciar sesión</h1>

@@ -1,9 +1,8 @@
-import Image from 'next/image';
+/* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 export default function CardUser({ items }) {
-	// Get the current url
 	const route = usePathname();
 	const url = route.includes('empleados')
 		? `/empleados/empleado/${items.id}`

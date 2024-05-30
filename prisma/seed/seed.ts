@@ -41,7 +41,6 @@ const main = async () => {
     "!*especie",
   ],);
 
-
   // Seed the database with 10 empleado
   await seed.empleado((x) => x(10,
     {

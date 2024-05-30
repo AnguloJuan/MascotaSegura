@@ -1,15 +1,15 @@
 'use client';
 import rescate from './rescate.module.css';
-import { Input, InputFile } from '@/components/Inputs';
-import { Especies, Razas, Sexos, Tamanos } from '@/components/Selects';
+import { Checkbox, Input, InputFile } from '@/components/Inputs';
+import { Especies, Razas, Select, Sexos, Tamanos } from '@/components/Selects';
 import { Dialog } from '@/components/dialogs';
 import DescargarDocumentoAdopcion from './documentoAdopcion';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import Link from 'next/link';
 import Cancelar from './cancelarAdopcion';
 import postImage from '@/app/lib/cloudinaryActions';
+import CardUser from '@/components/CardUser';
+import Button from '@/components/Button';
 
 export default function MascotaPage({ mascotaInicial }) {
 	const [mascota, setMascota] = useState({
@@ -29,6 +29,7 @@ export default function MascotaPage({ mascotaInicial }) {
 		imagen: mascotaInicial.imagen,
 		adopcion: mascotaInicial.adopcion,
 	});
+	const estado = mascotaInicial.adopcion ? mascotaInicial.adopcion.estadoAdopcion.estadoAdopcion : null;
 
 	const [image, setImage] = useState(null);
 	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
@@ -126,180 +127,146 @@ export default function MascotaPage({ mascotaInicial }) {
 		e.preventDefault();
 		setWarningDialog(true);
 	};
-
 	return (
 		<>
-			<form>
-				<h3>Id: {mascotaInicial.id}</h3>
-				<div className="">
-					<div className="">
-						<InputFile
-							id="perfil"
-							type="file"
-							name="perfil"
-							onFileUpload={(i) => setImage(i)}
-							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-						/>
-					</div>
-					<div className="">
-						<label htmlFor="nombre" className="font-bold">
-							Nombre *
-						</label>
-						<div className="input mb-3">
-							<Input
-								type="text"
-								placeholder="Nombre"
-								name="nombre"
-								onChange={handleInputChange}
-								value={mascota.nombre}
-								className="form-control"
-								required={true}
-							/>
-						</div>
-						<div className="input mb-3">
+			<form className="space-y-5">
+				<div className="flex gap-5 items-center justify-center">
+					<InputFile
+						id="perfil"
+						type="file"
+						name="perfil"
+						onFileUpload={(image) => {
+							setImage(image);
+							setUnmodified(false);
+						}}
+						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+						className="mx-auto"
+						image={mascota.imagen || '/images/dogIcon.png'}
+					/>
+					<div className="space-y-5">
+						<div className="flex gap-3">
+							<div>
+								<label htmlFor="nombre" className="font-bold">
+									Nombre *
+								</label>
+								<Input
+									type="text"
+									placeholder="Nombre"
+									name="nombre"
+									onChange={handleInputChange}
+									value={mascota.nombre}
+									className="form-control"
+									required={true}
+								/>
+							</div>
 							<Especies
 								onChange={handleInputChange}
 								value={mascota.especie}
 								required={true}
 							/>
-						</div>
-						<div className="input mb-3">
 							<Razas
 								onChange={handleInputChange}
 								value={mascota.raza}
 								selectedEspecie={mascota.especie}
 							/>
 						</div>
-					</div>
-				</div>
+						<div className="flex gap-3">
+							<div>
+								<label htmlFor="edad" className="font-bold">
+									Edad *
+								</label>
+								<Input
+									id={'edad'}
+									type={'number'}
+									label={'Edad'}
+									placeholder={'edad'}
+									name={'edad'}
+									value={mascota.edad}
+									onChange={handleInputChange}
+								/>
+							</div>
 
-				<div className={`${rescate.contenedor} my-2`}>
-					<div className={rescate.busqueda}>
-						<label htmlFor="edad" className="font-bold">
-							Edad *
-						</label>
-						<Input
-							id={'edad'}
-							type={'number'}
-							label={'Edad'}
-							placeholder={'edad'}
-							name={'edad'}
-							value={mascota.edad}
-							onChange={handleInputChange}
-						/>
-					</div>
+							<div className={rescate.busqueda}>
+								<Sexos
+									onChange={handleInputChange}
+									value={mascota.sexo}
+									required={true}
+								/>
+							</div>
 
-					<div className={rescate.busqueda}>
-						<Sexos onChange={handleInputChange} value={mascota.sexo} required={true} />
-					</div>
-
-					<div className={rescate.busqueda}>
-						<Tamanos onChange={handleInputChange} value={mascota.tamano} />
-					</div>
-				</div>
-				<div className={rescate.cartilla}>
-					<div className="d-flex">
-						<p>Ha sido maltratado?</p>
-						<input
-							type="checkbox"
-							name="maltratado"
-							id="maltratado"
-							checked={mascota.maltratado}
-							onChange={handleTernary}
-							className="form-check-input ms-2"
-						/>
-					</div>
-					<div className="d-flex">
-						<p>Cuenta con cartilla de vacunación?</p>
-						<input
-							type="checkbox"
-							name="cartilla"
-							id="cartilla"
-							checked={mascota.cartilla}
-							onChange={handleTernary}
-							className="form-check-input ms-2"
-						/>
-					</div>
-				</div>
-
-				{mascotaInicial.adopcion && (
-					<>
-						{/* Estado de adopcion */}
-						<label htmlFor="estadoAdopcion" className="mb-1">
-							Estado adopción:{' '}
-							{mascotaInicial.adopcion.estadoAdopcion.estadoAdopcion}
-						</label>
-						<select
-							id="estadoAdopcion"
-							name="estadoAdopcion"
-							onChange={handleInputChange}
-							value={mascota.estadoAdopcion}
-							className="form-select mb-4"
-						>
-							<option value="3">Procesando</option>
-							<option value="1">Aceptado</option>
-							<option value="2">Cancelado</option>
-						</select>
-					</>
-				)}
-
-				<div className={rescate.contendor}>
-					<div className={rescate.buton}>
-						<button
-							className="btn btn-danger m-2 btn-lg"
-							onClick={warning}
-							type="submit"
-						>
-							Eliminar mascota
-						</button>
-						<button
-							className="btn btn-primary m-2 btn-lg"
-							type="submit"
-							disabled={unmodified}
-							onClick={uploadToServer}
-						>
-							Guardar cambios
-						</button>
-					</div>
-				</div>
-
-				{mascotaInicial.adopcion && (
-					<>
-						<h3 className="mt-2 mb-2">Proceso de adopción</h3>
-
-						{/* Muestra adoptante */}
-						<div className="border p-2 rounded mb-4">
-							<Link
-								href={`/adoptantes/adoptante/${mascotaInicial.adopcion.adoptante.id}`}
-								className="link-dark link-underline-opacity-0"
-							>
-								<div>
-									<div>
-										{mascotaInicial.adopcion.adoptante.imagen ? (
-											<Image
-												src={mascotaInicial.adopcion.adoptante.imagen}
-												alt="userImage"
-												width={200}
-												height={200}
-											/>
-										) : (
-											<Image
-												src={'/images/defaultUser.png'}
-												alt="defaultUser.png"
-												width={200}
-												height={200}
-											/>
-										)}
-									</div>
-									<div>
-										<h3>Persona adoptante</h3>
-										<p>id: {mascotaInicial.adopcion.adoptante.id}</p>
-										<p>Nombre: {mascotaInicial.adopcion.adoptante.nombre}</p>
-										<p>correo: {mascotaInicial.adopcion.adoptante.correo}</p>
-									</div>
-								</div>
-							</Link>
+							<div className={rescate.busqueda}>
+								<Tamanos onChange={handleInputChange} value={mascota.tamano} />
+							</div>
 						</div>
+						<div className={rescate.cartilla}>
+							<Checkbox
+								type="checkbox"
+								name="maltratado"
+								id="maltratado"
+								text="Ha sido maltratado?"
+								checked={mascota.maltratado}
+								onChange={handleTernary}
+								className="form-check-input ms-2"
+							/>
+							<Checkbox
+								type="checkbox"
+								name="cartilla"
+								id="cartilla"
+								text="Cuenta con cartilla de vacunación?"
+								checked={mascota.cartilla}
+								onChange={handleTernary}
+								className="form-check-input ms-2"
+							/>
+						</div>
+						<div>
+							{mascotaInicial.adopcion && (
+								<div className="space-y-3">
+									<label htmlFor="estadoAdopcion" className="space-x-3">
+										<span>Estado adopción</span>
+										<span
+											className={`${estado.toLowerCase() == 'aceptado'
+													? 'bg-green-500'
+													: estado.toLowerCase() == 'procesando'
+														? 'bg-yellow-500'
+														: 'bg-red-500'
+												} p-1 rounded-lg text-white`}
+										>
+											{estado}
+										</span>
+									</label>
+									<Select
+										id="estadoAdopcion"
+										name="estadoAdopcion"
+										onChange={handleInputChange}
+										value={mascota.estadoAdopcion}
+										className="form-select mb-4"
+									>
+										<option value="1">Aceptado</option>
+										<option value="3">Procesando</option>
+										<option value="2">Cancelado</option>
+									</Select>
+								</div>
+							)}
+						</div>
+					</div>
+				</div>
+				<div className="flex justify-center gap-5 py-9">
+					<Button
+						className="bg-red-500 hover:bg-red-400"
+						onClick={warning}
+						type="submit"
+					>
+						Eliminar mascota
+					</Button>
+					<Button type="submit" disabled={unmodified} onClick={uploadToServer}>
+						Guardar cambios
+					</Button>
+				</div>
+
+				{mascotaInicial.adopcion && (
+					<>
+						<h3>Proceso de adopción</h3>
+						<CardUser items={mascotaInicial.adopcion.adoptante} />
 
 						<Cancelar
 							idAdopcion={mascotaInicial.adopcion.id}
@@ -312,11 +279,9 @@ export default function MascotaPage({ mascotaInicial }) {
 						{(mascotaInicial.motivo ||
 							mascotaInicial.historialAdoptivo.length !== 0) && (
 								<div>
-									<p>Anteriores adopciones</p>
-									<p>Motivos de abandono</p>
-									{mascotaInicial.motivo && (
-										<p className="border rounded">- {mascotaInicial.motivo}</p>
-									)}
+									<h2 className="text-4xl">Anteriores adopciones</h2>
+									<h3 className="text-2xl">Motivos de abandono</h3>
+									{mascotaInicial.motivo && <p>{mascotaInicial.motivo}</p>}
 
 									{mascotaInicial.historialAdoptivo.length !== 0 &&
 										mascotaInicial.historialAdoptivo.map(
