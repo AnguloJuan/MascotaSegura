@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * ! Executing this script will delete all data in your database and seed it with 10 tipoUsuario.
  * ! Make sure to adjust the script to your needs.
@@ -9,6 +11,7 @@ import { createSeedClient } from "@snaplet/seed";
 import { copycat } from '@snaplet/copycat';
 
 const main = async () => {
+  // @ts-ignore
   const seed = await createSeedClient();
   
   const prisma = new PrismaClient();
@@ -24,15 +27,18 @@ const main = async () => {
 
   // Truncate all tables in the database except for the ones listed below
   await seed.$resetDatabase([
+    "!*_prisma_migrations",
     "!*estado",
     "!*municipio",
     "!*tipoUsuario",
     "!*estadoReporte",
     "!*tamano",
     "!*sexo",
-    "!*especie",
     "!*estadoAdopcion",
     "!*refugio",
+    "!*empleado",
+    "!*espacios",
+    "!*especie",
   ],);
 
   // Seed the database with 10 empleado
@@ -48,43 +54,44 @@ const main = async () => {
     { connect: { refugio } });
 
   // Seed the database with 10 adoptante
-  await seed.adoptante((x) => x(10, {
+  const { adoptante } = await seed.adoptante((x) => x(30, {
     idTipoUsuario: 1, imagen: '',
     correo: (ctx) =>
       copycat.email(ctx.seed, {
         domain: 'gmail.com',
       }),
+      fechaRegistro: new Date(),
   }), { connect: { municipio } });
 
 
-  // const raza = await seed.raza((x) => x(20), { connect: { especie } });
+  const { raza } = await seed.raza((x) => x(60), { connect: { especie } });
 
-  // await seed.mascota((x) => x(20, {
-  //   imagen: '',
-  //   edad: (ctx) =>
-  //     copycat.int(ctx.seed, {
-  //       min: 1,
-  //       max: 20,
-  //     }),
-  //   raza: {
-  //     idEspecie: (ctx) => copycat.int(ctx.seed, {
-  //       min: 0,
-  //       max: seed.especie.length - 1,
-  //     }),
-  //   }
+  const { mascota } = await seed.mascota((x) => x(20, {
+    imagen: '',
+    edad: (ctx) =>
+      copycat.int(ctx.seed, {
+        min: 1,
+        max: 20,
+      }),
+      fechaRegistro: new Date(),
+      idRefugio: 1,
+  }), { connect: { tamano, sexo, raza, especie, refugio } });
 
-  // }), { connect: { tamano, sexo, especie, refugio } });
 
-  // await seed.reporte((x) => x(20, {
-  //   imagen: '',
-  //   correo: (ctx) =>
-  //     copycat.email(ctx.seed, {
-  //       domain: 'gmail.com',
-  //     }),
-  // }), { connect: { estadoReporte, municipio, } });
+  await seed.adopcion((x) => x(10, {
+    fechaCreada: new Date(),
+    idRefugio: 1,
+  }), { connect: { estadoAdopcion, mascota, refugio, adoptante } });
 
-  
-  // await seed.adopcion((x) => x(10), { connect: { estadoAdopcion } });
+  await seed.reporte((x) => x(20, {
+    imagen: '',
+    correo: (ctx) =>
+      copycat.email(ctx.seed, {
+        domain: 'gmail.com',
+      }),
+      fechaCreada: new Date(),
+  }), { connect: { estadoReporte, municipio, mascota, adoptante } });
+
 
 
   // Type completion not working? You might want to reload your TypeScript Server to pick up the changes

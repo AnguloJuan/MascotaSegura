@@ -6,7 +6,7 @@
       {
         "input": " adoptante apellido",
         "column": "apellido",
-        "shape": "PERSON_FULL_NAME",
+        "shape": "COMMERCE_ISBN",
         "confidence": 0.509045422077179,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -22,7 +22,7 @@
       {
         "input": " adoptante correo",
         "column": "correo",
-        "shape": "EMAIL",
+        "shape": "FINANCE_CURRENCY_NAME",
         "confidence": 0.5199068784713745,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -38,7 +38,7 @@
       {
         "input": " adoptante nombre",
         "column": "nombre",
-        "shape": "PERSON_FULL_NAME",
+        "shape": "LOCATION_BUILDING_NUMBER",
         "confidence": 0.3910673856735229,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -68,7 +68,7 @@
       {
         "input": " empleado correo",
         "column": "correo",
-        "shape": "EMAIL",
+        "shape": "FINANCE_CURRENCY_NAME",
         "confidence": 0.5221079587936401,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -92,7 +92,7 @@
       {
         "input": " empleado nombre",
         "column": "nombre",
-        "shape": "PERSON_FULL_NAME",
+        "shape": "IMAGE_URL",
         "confidence": 0.1038482189178467,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -206,7 +206,7 @@
       {
         "input": " raza raza",
         "column": "raza",
-        "shape": "COMPANY_NAME",
+        "shape": "ANIMAL_TYPE",
         "confidence": 0.7517582774162292,
         "context": "GENERAL",
         "confidenceContext": 0
@@ -234,7 +234,7 @@
       {
         "input": " reporte correo",
         "column": "correo",
-        "shape": "EMAIL",
+        "shape": "FINANCE_CURRENCY_NAME",
         "confidence": 0.3687215149402618,
         "context": "GENERAL",
         "confidenceContext": 0
