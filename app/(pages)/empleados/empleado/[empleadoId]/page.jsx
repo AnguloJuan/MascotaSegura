@@ -2,6 +2,8 @@ import RedirectUser from '@/app/(pages)/redirectUser';
 import { getPrisma } from '@/app/lib/prisma';
 import PerfilPage from './perfil';
 import { GetUser } from '@/app/lib/user';
+import { Suspense } from 'react';
+import Loading from '@/app/(pages)/loading';
 
 const prisma = getPrisma();
 
@@ -29,5 +31,9 @@ export default async function Page({ params }) {
 	const date = `${year}-${month}-${day}`;
 
 	const props = { empleado, userType, date };
-	return userType == 0 ? <RedirectUser /> : <PerfilPage props={props} />;
+	return (
+		<Suspense fallback={<Loading />}>
+			{userType == 0 ? <RedirectUser /> : <PerfilPage props={props} />}
+		</Suspense>
+	);
 }

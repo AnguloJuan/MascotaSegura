@@ -1,19 +1,23 @@
-import { getPrisma } from "@/app/lib/prisma";
-import { GetUser } from "@/app/lib/user";
-import Reportar from "./reportar";
+import { getPrisma } from '@/app/lib/prisma';
+import { GetUser } from '@/app/lib/user';
+import Reportar from './reportar';
+import { Suspense } from 'react';
+import Loading from '../../loading';
 
 const prisma = getPrisma();
 
 export const metadata = {
-    title: 'Reportar',
-}
+	title: 'Reportar',
+};
 
 export default async function ReportarPage() {
-    const user = await GetUser();
+	const user = await GetUser();
 
-    const props = { user }
+	const props = { user };
 
-    return (
-        <Reportar props={props} />
-    )
+	return (
+		<Suspense fallback={<Loading />}>
+			<Reportar props={props} />
+		</Suspense>
+	);
 }

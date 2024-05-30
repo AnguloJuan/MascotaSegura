@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import { Input, InputFile } from '@/components/Inputs';
 import { useState } from 'react';

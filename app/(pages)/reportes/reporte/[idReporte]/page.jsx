@@ -5,6 +5,8 @@ import { GetUser } from '@/app/lib/user';
 import { Estados, EstadosReporte } from '@/components/Selects';
 import { Municipios } from '@/components/Selects';
 import EliminarReporte from './deleteReporte';
+import Loading from '@/app/(pages)/loading';
+import { Suspense } from 'react';
 
 const prisma = getPrisma();
 
@@ -45,14 +47,16 @@ export default async function ReportePage({ params }) {
 
 	const props = { reporte, user, userType, municipios, date };
 	return userType == 2 || userType == 3 ? (
-		<Reporte props={props} />
+		<Suspense fallback={<Loading />}>
+			<Reporte props={props} />
+		</Suspense>
 	) : (
 		<>
-			<form className="m-3">
-				<div className="perfilEmpleado">
-					<h1>Información del reporte</h1>
-					<div className="datos-reporte">
-						<center>
+			<Suspense fallback={<Loading />}>
+				<form className="m-3">
+					<div className="perfilEmpleado">
+						<h1>Información del reporte</h1>
+						<div className="datos-reporte">
 							<Image
 								width={250}
 								height={250}
@@ -63,55 +67,50 @@ export default async function ReportePage({ params }) {
 								}
 								className="rounded-top"
 							/>
-						</center>
-						<label htmlFor="fechaCreada">Fecha reportada</label>
-						<p id="fechaCreada" className="form-control">
-							{new Date(reporte.fechaCreada).toLocaleDateString()}
-						</p>
+							<label htmlFor="fechaCreada">Fecha reportada</label>
+							<p id="fechaCreada" className="form-control">
+								{new Date(reporte.fechaCreada).toLocaleDateString()}
+							</p>
 
-						<div className="input mb-3 mt-3">
-							<label htmlFor="estado" className="form-label">
-								Estado
-							</label>
-							<Estados
-								value={reporte.municipio.idEstado}
-								disabled
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="municipio" className="form-label">
-								Municipio
-							</label>
-							<Municipios
-								municipiosInicial={municipios}
-								value={reporte.municipio.id}
-								disabled
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="descripcion" className="form-label">
-								Descripción
-							</label>
-							<textarea
-								name="descripcion"
-								id="descripcion"
-								rows="5"
-								disabled
-								value={reporte.descripcion}
-								className="form-control"
-							></textarea>
-						</div>
+							<div className="input mb-3 mt-3">
+								<label htmlFor="estado" className="form-label">
+									Estado
+								</label>
+								<Estados value={reporte.municipio.idEstado} disabled />
+							</div>
+							<div className="input mb-3 mt-3">
+								<label htmlFor="municipio" className="form-label">
+									Municipio
+								</label>
+								<Municipios
+									municipiosInicial={municipios}
+									value={reporte.municipio.id}
+									disabled
+								/>
+							</div>
+							<div className="input mb-3 mt-3">
+								<label htmlFor="descripcion" className="form-label">
+									Descripción
+								</label>
+								<textarea
+									name="descripcion"
+									id="descripcion"
+									rows="5"
+									disabled
+									value={reporte.descripcion}
+									className="form-control"
+								></textarea>
+							</div>
 
-						<EstadosReporte value={reporte.estadoReporte.id} disabled />
+							<EstadosReporte value={reporte.estadoReporte.id} disabled />
 
-						{reporte.reportador && reporte.reportador.id == user.id && (
-							<center className="my-3">
+							{reporte.reportador && reporte.reportador.id == user.id && (
 								<EliminarReporte props={props} />
-							</center>
-						)}
+							)}
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</Suspense>
 		</>
 	);
 }

@@ -124,7 +124,8 @@ export default function SignIn() {
 				<span className="text-xl">Regresar</span>
 			</Link>
 			<form
-				className="min-h-[85vh] min-w-[35vw] grid place-content-center gap-20 py-10 px-20 shadow-xl shadow-slate-400 bg-white/25 backdrop-blur-lg"
+				className="min-h-[85vh] min-w-[35vw] grid place-content-center gap-20 py-10 px-20 shadow-xl
+				 shadow-slate-400 bg-white/25 backdrop-blur-lg rounded-xl"
 				onSubmit={handleSignIn}
 			>
 				<Logo className="text-primary text-5xl" color="#4844f8" size={40} />

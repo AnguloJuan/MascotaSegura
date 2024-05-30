@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import { useEffect, useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
@@ -6,10 +7,7 @@ import CardMascota from '@/components/CardMascota';
 import { Each } from '@/components/Each';
 import { Especies, Razas, Select, Sexos } from '@/components/Selects';
 
-export default function ListaMascota({
-	inicialMascotas,
-	userType,
-}) {
+export default function ListaMascota({ inicialMascotas, userType }) {
 	const [searchCriteria, setSearchCriteria] = useState({
 		id: '',
 		nombre: '',
@@ -60,8 +58,9 @@ export default function ListaMascota({
 	return (
 		<section className="relative">
 			<div
-				className={`fixed h-screen top-0 -z-10 ${openFilter ? 'left-0' : '-left-full'
-					}  bg-white z-50 px-12 py-6 shadow-2xl transition-[left] duration-500`}
+				className={`fixed h-screen top-0 -z-10 ${
+					openFilter ? 'left-0' : '-left-full'
+				}  bg-white z-50 px-12 py-6 shadow-2xl transition-[left] duration-500`}
 			>
 				<button
 					onClick={() => setOpenFilter(false)}
@@ -72,14 +71,22 @@ export default function ListaMascota({
 				<h2 className="text-3xl">Filtro</h2>
 				<div className="flex flex-col gap-4">
 					{(userType == 2 || userType == 3) && (
-						<Select id="adoptado" onChange={handleInputChange} value={searchCriteria.adoptado} label="Adoptado">
+						<Select
+							id="adoptado"
+							onChange={handleInputChange}
+							value={searchCriteria.adoptado}
+							label="Adoptado"
+						>
 							<option value="">Cualquiera</option>
 							<option value="adoptado">Adoptado</option>
 							<option value="noAdoptado">No adoptado</option>
 						</Select>
 					)}
 					<div className="flex flex-col">
-						<Especies onChange={handleInputChange} value={searchCriteria.especie} />
+						<Especies
+							onChange={handleInputChange}
+							value={searchCriteria.especie}
+						/>
 					</div>
 					<div className="flex flex-col">
 						<Razas

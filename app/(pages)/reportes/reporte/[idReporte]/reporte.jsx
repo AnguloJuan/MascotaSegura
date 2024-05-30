@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Estados, EstadosReporte } from '@/components/Selects';
 import { Municipios } from '@/components/Selects';
-import Link from 'next/link';
 import { InputFile } from '@/components/Inputs';
 import postImage from '@/app/lib/cloudinaryActions';
+import Button from '@/components/Button';
+import { useToast } from '@/components/Toast';
+import CardUser from '@/components/CardUser';
 
 export default function Reporte({ props }) {
 	const [reporte, setReporte] = useState({
@@ -26,8 +27,8 @@ export default function Reporte({ props }) {
 	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
 	const router = useRouter();
+	const { addToast } = useToast();
 
 	const handleInputChange = (e) => {
 		setUnmodified(false);
@@ -40,16 +41,6 @@ export default function Reporte({ props }) {
 		setReporte((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 		// Reset selected municipio when estado reporte
 		setReporte((prevCriteria) => ({ ...prevCriteria, municipio: 0 }));
-	};
-	//actualizacion de imagen
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			setUnmodified(false);
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
 	};
 
 	const modifyReporte = async (e) => {
@@ -98,6 +89,7 @@ export default function Reporte({ props }) {
 			router.replace('/reportes');
 		} else {
 			response.json().then((res) => console.log(res.message));
+			addToast('', 'error');
 			setErrorDialog(true);
 		}
 	};
@@ -106,126 +98,72 @@ export default function Reporte({ props }) {
 		setWarningDialog(true);
 	};
 
+	console.log(props.reporte.reportador);
 	return (
 		<>
 			<form className="m-3">
 				<div className="perfilEmpleado">
-					<h1>Información del reporte</h1>
+					<h1 className="text-4xl">Información del reporte</h1>
 					<div className="datos-reporte">
-						<center>
-							<div className="">
-								<InputFile
-									id="perfil"
-									type="file"
-									name="perfil"
-									onChange={uploadToClient}
-									accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-									className="form-control"
+						<div className="flex gap-5">
+							<InputFile
+								id="perfil"
+								type="file"
+								name="perfil"
+								onFileUpload={(image) => setImage(image)}
+								accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+							/>
+							<div className="space-y-5">
+								<div className="flex gap-5">
+									<Estados
+										onChange={handleEstadoChange}
+										value={reporte.estado}
+									/>
+									<Municipios
+										onChange={handleInputChange}
+										municipiosInicial={props.municipios}
+										selectedEstado={reporte.estado}
+										value={reporte.municipio}
+									/>
+									<EstadosReporte
+										onChange={handleInputChange}
+										value={reporte.estadoReporte}
+									/>
+								</div>
+								<textarea
+									name="descripcion"
+									id="descripcion"
+									type="textarea"
+									rows="5"
+									placeholder="Descripción"
+									onChange={handleInputChange}
+									value={reporte.descripcion}
+									className="py-2 px-4 w-full rounded-lg border-black border-2 focu:outline outline-primary outline-offset-4 resize-none"
 								/>
 							</div>
-						</center>
-
-						<div className="input mb-3 mt-3">
-							<label htmlFor="estado" className="form-label">
-								Estado
-							</label>
-							<Estados
-								onChange={handleEstadoChange}
-								value={reporte.estado}
-							/>
 						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="municipio" className="form-label">
-								Municipio
-							</label>
-							<Municipios
-								onChange={handleInputChange}
-								municipiosInicial={props.municipios}
-								selectedEstado={reporte.estado}
-								value={reporte.municipio}
-							/>
-						</div>
-						<div className="input mb-3 mt-3">
-							<label htmlFor="descripcion" className="form-label">
-								Descripción
-							</label>
-							<textarea
-								name="descripcion"
-								id="descripcion"
-								rows="5"
-								placeholder="Descripción"
-								onChange={handleInputChange}
-								value={reporte.descripcion}
-								className="form-control"
-							></textarea>
-						</div>
-
-						<EstadosReporte
-							onChange={handleInputChange}
-							value={reporte.estadoReporte}
-						/>
-
-						<center className="my-3">
-							<button
-								className="btn btn-primary m-2 btn-lg"
+						<div className="flex justify-center gap-5">
+							<Button
 								type="submit"
 								disabled={unmodified}
 								onClick={modifyReporte}
 							>
 								Guardar
-							</button>
-							<button
+							</Button>
+							<Button
 								type="submit"
-								className="btn btn-danger btn-lg"
+								className="bg-red-600 hover:bg-red-500"
 								onClick={warning}
 							>
-								Eliminar reporte
-							</button>
-						</center>
+								Eliminar
+							</Button>
+						</div>
 
 						{props.reporte.idReportador ? (
-							<>
-								{/* Muestra adoptante */}
-								<div className="border p-2 rounded mb-4">
-									<Link
-										href={`/adoptantes/adoptante/${props.reporte.reportador.id}`}
-										className="link-dark link-underline-opacity-0"
-									>
-										<div className={'d-flex align-items-center'}>
-											<div className={'rounded my-2 bg-body-light'}>
-												<Image
-													src={
-														props.reporte.reportador.imagen ||
-														'/images/defaultUser.png'
-													}
-													alt="userImage"
-													width={200}
-													height={200}
-												/>
-											</div>
-											<div
-												className={'d-flex flex-column justify-content-between'}
-											>
-												<h3>Persona reportante</h3>
-												<p>id: {props.reporte.reportador.id}</p>
-												<p>Nombre: {props.reporte.reportador.nombre}</p>
-												<p>correo: {props.reporte.reportador.correo}</p>
-											</div>
-										</div>
-									</Link>
-								</div>
-							</>
+							<CardUser items={props.reporte.reportador} />
 						) : (
 							<>
-								<div
-									className={
-										'd-flex flex-column justify-content-between border rounded p-4'
-									}
-								>
-									<h3>Persona reportante</h3>
-									<p>Nombre: {props.reporte.nombre}</p>
-									<p>correo: {props.reporte.correo}</p>
-								</div>
+								<CardUser items={props.reporte.reportador} />
 							</>
 						)}
 					</div>

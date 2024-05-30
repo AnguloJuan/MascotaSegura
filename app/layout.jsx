@@ -1,6 +1,8 @@
 import Toast from '@/components/Toast';
 import '@/styles/styles.css';
 import { Poppins } from 'next/font/google';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata = {
 	title: {
@@ -19,7 +21,7 @@ export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
 			<body className={`${poppins.className}`}>
-				{children}
+				<Suspense fallback={<Loading />}>{children}</Suspense>
 				<Toast />
 			</body>
 		</html>

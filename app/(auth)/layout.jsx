@@ -1,3 +1,6 @@
+import { Suspense } from 'react';
+import Loading from './loading';
+
 export const metadata = {
 	title: {
 		template: '%s | MascotaSegura',
@@ -11,6 +14,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<main>
+			<Suspense fallback={<Loading />}></Suspense>
 			{children}
 		</main>
 	);
