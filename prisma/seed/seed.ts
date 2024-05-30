@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * ! Executing this script will delete all data in your database and seed it with 10 tipoUsuario.
  * ! Make sure to adjust the script to your needs.
@@ -9,6 +11,7 @@ import { createSeedClient } from "@snaplet/seed";
 import { copycat } from '@snaplet/copycat';
 
 const main = async () => {
+  // @ts-ignore
   const seed = await createSeedClient();
   
   const prisma = new PrismaClient();
@@ -37,7 +40,6 @@ const main = async () => {
     "!*espacios",
     "!*especie",
   ],);
-
 
   // Seed the database with 10 empleado
   await seed.empleado((x) => x(10,

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { SeedPrisma } from "@snaplet/seed/adapter-prisma";
 import { defineConfig } from "@snaplet/seed/config";
 import { PrismaClient } from "@prisma/client";
