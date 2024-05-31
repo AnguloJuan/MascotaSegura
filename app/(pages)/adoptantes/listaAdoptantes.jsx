@@ -16,7 +16,7 @@ export default function ListaAdoptantes({ props }) {
 		estado: 0,
 		municipio: 0,
 		adopcion: '',
-		userType: props.userType,
+		userType: props.user.idTipoUsuario,
 	});
 
 	const [adoptantes, setAdoptantes] = useState(props.adoptantes);
@@ -75,7 +75,8 @@ export default function ListaAdoptantes({ props }) {
 				<InputBuscar
 					id={'buscar'}
 					placeholder={'Buscar'}
-					name={'buscar'}
+					name={'nombre'}
+					value={searchCriteria.nombre}
 					onChange={handleInputChange}
 					onClick={fetchAdoptantes}
 				/>

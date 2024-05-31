@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IconAdjustments, IconX } from '@tabler/icons-react';
 import { Input, InputBuscar } from '@/components/Inputs';
 import CardMascota from '@/components/CardMascota';
@@ -17,17 +17,11 @@ export default function ListaMascota({ inicialMascotas, userType }) {
 		sexo: '',
 		userType: 0,
 		adoptado: '',
+		userType: userType,
 	});
 
-	const [mascotas, setMascotas] = useState([]);
+	const [mascotas, setMascotas] = useState(inicialMascotas);
 	const [openFilter, setOpenFilter] = useState(false);
-	useEffect(() => {
-		setSearchCriteria((prevCriteria) => ({
-			...prevCriteria,
-			userType: userType,
-		}));
-		setMascotas(inicialMascotas);
-	}, []);
 
 	const fetchMascotas = async () => {
 		// Perform the API request to fetch the mascotas list

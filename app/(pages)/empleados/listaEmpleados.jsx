@@ -1,7 +1,7 @@
 'use client';
 import { InputBuscar } from '@/components/Inputs';
 // import listaEmpleados from './empleados.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Each } from '@/components/Each';
 import CardUser from '@/components/CardUser';
@@ -14,11 +14,7 @@ export default function ListaEmpleados({ props }) {
 		userId: props.user.id,
 	});
 
-	const [empleados, setEmpleados] = useState([]);
-
-	useEffect(() => {
-		setEmpleados(props.empleados);
-	}, [props.empleados]);
+	const [empleados, setEmpleados] = useState(props.empleados);
 
 	const fetchEmpleado = async () => {
 		// Perform the API request to fetch the empleados list
