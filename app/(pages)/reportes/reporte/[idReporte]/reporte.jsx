@@ -26,7 +26,7 @@ export default function Reporte({ props }) {
 	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
 	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
-	const [image, setImage] = useState(null);
+	const [image, setImage] = useState(props.reporte.imagen);
 	const router = useRouter();
 	const { addToast } = useToast();
 
@@ -109,9 +109,12 @@ export default function Reporte({ props }) {
 								id="perfil"
 								type="file"
 								name="perfil"
-								onFileUpload={(image) => setImage(image)}
+								onFileUpload={(image) => {
+									setImage(image),
+										setUnmodified(false);
+								}}
 								accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-								image={props.reporte.imagen || '/images/defaultReporte.png'}
+								image={image || '/images/defaultReporte.png'}
 							/>
 							<div className="space-y-5">
 								<div className="flex gap-5">
