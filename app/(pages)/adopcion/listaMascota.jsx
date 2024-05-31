@@ -122,6 +122,7 @@ export default function ListaMascota({ inicialMascotas, userType }) {
 				<InputBuscar
 					id={'nombre'}
 					name={'nombre'}
+					value={searchCriteria.nombre}
 					placeholder={'Nombre o ID'}
 					onChange={handleInputChange}
 					onClick={fetchMascotas}

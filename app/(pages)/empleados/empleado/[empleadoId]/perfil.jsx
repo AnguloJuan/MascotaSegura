@@ -33,7 +33,17 @@ export default function PerfilPage({ props }) {
 	const handleInputChange = (e) => {
 		setUnmodified(false);
 		const { name, value } = e.target;
-		if (name == 'telefono' && value < 0) {
+		if ((name === "nombre" || name === "apellido") && !value.match(/^[a-zA-Z]+$/)) {
+			return;
+		}
+		if (name === "correo" &&
+			!value.match(
+				/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+			)
+		) {
+			return;
+		}
+		if (name === "telefono" && (value < 0 || value > 9999999999)) {
 			return;
 		}
 		setAdoptante((prevCriteria) => ({ ...prevCriteria, [name]: value }));
@@ -142,7 +152,7 @@ export default function PerfilPage({ props }) {
 							name="perfil"
 							onFileUpload={(image) => {
 								setImage(image),
-								setUnmodified(false);
+									setUnmodified(false);
 							}} //
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 							image={image}
@@ -166,13 +176,14 @@ export default function PerfilPage({ props }) {
 						/>
 						<Input
 							id={'correo'}
+							name={'correo'}
 							label={'Correo electronico'}
 							placeholder={'Correo electrónico'}
 							onChange={handleInputChange}
 							value={correo}
 						/>
 						<Input
-							id={'numero'}
+							id={'telefono'}
 							type={'number'}
 							label={'Numero de telefono'}
 							placeholder={'Numero de telefono'}
