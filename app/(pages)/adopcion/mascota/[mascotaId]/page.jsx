@@ -63,7 +63,7 @@ export default async function Page({ params }) {
 								</div>
 								<div>
 									<h2>Raza</h2>
-									<span>{mascota.raza.raza}</span>
+									<span>{mascota.raza ? mascota.raza.raza : 'Sin raza'}</span>
 								</div>
 								<div>
 									<h2>Edad</h2>
