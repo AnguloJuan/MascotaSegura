@@ -10,6 +10,7 @@ import Cancelar from './cancelarAdopcion';
 import postImage from '@/app/lib/cloudinaryActions';
 import CardUser from '@/components/CardUser';
 import Button from '@/components/Button';
+import { useToast } from '@/components/Toast';
 
 export default function MascotaPage({ mascotaInicial }) {
 	const [mascota, setMascota] = useState({
