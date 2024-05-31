@@ -47,6 +47,7 @@ export default function Perfil({ props }) {
 			return;
 		}
 
+		console.log(user);
 		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 	};
 
@@ -183,6 +184,7 @@ export default function Perfil({ props }) {
 							placeholder={'Nombre'}
 							name={'nombre'}
 							value={user.nombre}
+							readOnly={userType == 1}
 							onChange={handleInputChange}
 						/>
 						<Input
@@ -190,6 +192,7 @@ export default function Perfil({ props }) {
 							label={'Apellido'}
 							placeholder={'Apellido'}
 							name={'apellido'}
+							readOnly={userType == 1}
 							onChange={handleInputChange}
 							value={user.apellido}
 						/>

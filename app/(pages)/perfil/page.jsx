@@ -14,8 +14,6 @@ export const metadata = {
 
 export default async function PerfilPage() {
 	const user = await GetUser();
-
-	console.log(user);
 	const userType = user.idTipoUsuario;
 	const userMunicipio = user.idMunicipio;
 	let userEstado;
