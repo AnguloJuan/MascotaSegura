@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -18,9 +19,9 @@ export default function CardMascota({
 
 	return (
 		<Link key={id} href={href}>
-			<div className="relative w-80 rounded-lg overflow-hidden bg-zinc-50 shadow-lg shadow-zinc-600 transition-shadow">
+			<div className="relative rounded-lg overflow-hidden bg-zinc-50 shadow-lg shadow-zinc-600 transition-shadow">
 				<div className="absolute flex justify-between w-full top-0 left-0 p-2 *:px-2  *:rounded-lg">
-					<h2 className="text-2xl bg-primary font-semibold text-white">
+					<h2 className="text-2xl bg-primary font-semibold text-white first-letter:uppercase">
 						{nombre}
 					</h2>
 					{estadoAdopcion && (
@@ -34,12 +35,10 @@ export default function CardMascota({
 					)}
 				</div>
 				<div className="p-4">
-					<Image
-						className="object-cover rounded-t-lg"
+					<img
+						className="size-64 object-cover rounded-md"
 						alt="Card Image"
 						src={imagen || '/images/dogIcon.png'}
-						width={300}
-						height={300}
 					/>
 				</div>
 

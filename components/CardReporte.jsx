@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -43,13 +44,12 @@ export default function CardReporte({
 				}`}
 			</span>
 
-			<Image
+			<img
 				width={100}
 				height={100}
 				src={imagen || '/images/defaultReporte.png'}
 				alt={`ImagenReporte${id}`}
-				loading="lazy"
-				className="rounded-circle"
+				className="rounded-md size-24 object-cover"
 			/>
 			<div className="flex flex-col gap-2">
 				<p>
