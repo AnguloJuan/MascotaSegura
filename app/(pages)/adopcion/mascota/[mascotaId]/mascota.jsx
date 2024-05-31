@@ -32,15 +32,10 @@ export default function MascotaPage({ mascotaInicial }) {
 	const estado = mascotaInicial.adopcion ? mascotaInicial.adopcion.estadoAdopcion.estadoAdopcion : null;
 
 	const [image, setImage] = useState(null);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
-	const [modifiedDialog, setModifiedDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
-	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [unmodified, setUnmodified] = useState(true);
-	const [adopcionDialog, setAdopcionDialog] = useState(false);
 
+	const { addToast } = useToast();
 	const router = useRouter();
 
 	//manejo de cambios en el formulario
@@ -78,7 +73,7 @@ export default function MascotaPage({ mascotaInicial }) {
 			!mascota.tamano ||
 			mascota.edad < 0
 		) {
-			setInvalidFieldsDialog(true);
+			addToast('Error valores invalidos', 'error');
 		} else {
 			const body = new FormData();
 			BigInt.prototype.toJSON = function () {
@@ -98,12 +93,12 @@ export default function MascotaPage({ mascotaInicial }) {
 				body,
 			});
 			if (response.status == 200) {
-				setModifiedDialog(true);
+				addToast('Cambios guardados', 'success');
 				router.refresh();
 				setUnmodified(true);
 			} else {
 				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
+				addToast('Error en el servidor', 'error');
 			}
 		}
 	};
@@ -113,13 +108,13 @@ export default function MascotaPage({ mascotaInicial }) {
 			method: 'DELETE',
 		});
 		if (response.status == 200) {
-			setDeletedDialog(true);
+			addToast('Mascota eliminada', 'success');
 			router.replace('/rescate');
 		} else if (response.status == 409) {
-			setAdopcionDialog(true);
+			addToast('Error al eliminar mascota, la mascota esta adoptada, cancele adoción antes de eliminar', 'error');
 		} else {
 			response.json().then((res) => console.log(res.message));
-			setErrorDialog(true);
+			addToast('Error en el servidor', 'error');
 		}
 	};
 
@@ -299,54 +294,6 @@ export default function MascotaPage({ mascotaInicial }) {
 			</form>
 
 			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h3>Error valores invalidos</h3>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>El campo nombre no puede quedar vacio</p>
-				<p>La edad no puede ser negativa</p>
-				<p>
-					La especie, sexo, y tamaño, deben de tener seleccionado un valor
-					valido
-				</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h3>Error de modificación</h3>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h3>Se han guardado los cambios</h3>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h3>Error de servidor</h3>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'deleted'}
-				isOpen={deletedDialog}
-				onClose={() => setDeletedDialog(false)}
-			>
-				<h3>Mascota Eliminada</h3>
-				<p>Se ha eliminado la mascota de la pagina</p>
-				<p>Sera redirigido a la pagina rescate</p>
-			</Dialog>
-			<Dialog
 				id={'warning'}
 				isOpen={warningDialog}
 				onClose={() => setWarningDialog(false)}
@@ -361,18 +308,6 @@ export default function MascotaPage({ mascotaInicial }) {
 					Esta acción sera irreversible
 				</p>
 				<p>Haga clic en confirmar para continuar</p>
-			</Dialog>
-			<Dialog
-				id={'adopcion'}
-				isOpen={adopcionDialog}
-				onClose={() => setAdopcionDialog(false)}
-			>
-				<h3>Error al eliminar mascota</h3>
-				<p>Se ha encontrado que esta mascota se encuentra adoptada</p>
-				<p>No puede eliminar la mascota si esta adoptado por un adoptante</p>
-				<p>
-					Cancele la adopción si de la mascota si requiere eliminar la mascota
-				</p>
 			</Dialog>
 		</>
 	);

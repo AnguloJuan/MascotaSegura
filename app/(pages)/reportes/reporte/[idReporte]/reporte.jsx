@@ -20,11 +20,6 @@ export default function Reporte({ props }) {
 		estadoReporte: props.reporte.estadoReporte.id,
 	});
 	const [unmodified, setUnmodified] = useState(true);
-	const [invalidFieldsDialog, setInvalidFieldsDialog] = useState(false);
-	const [modifiedDialog, setModifiedDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
-	const [unmodifiedDialog, setUnmodifiedDialog] = useState(false);
-	const [deletedDialog, setDeletedDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
 	const [image, setImage] = useState(props.reporte.imagen);
 	const router = useRouter();
@@ -47,7 +42,7 @@ export default function Reporte({ props }) {
 		e.preventDefault();
 
 		if (!reporte.municipio || !reporte.estadoReporte) {
-			setInvalidFieldsDialog(true);
+			addToast('Valores invalidos', 'error');
 			return;
 		}
 		try {
@@ -66,16 +61,16 @@ export default function Reporte({ props }) {
 				body,
 			});
 			if (response.status == 200) {
-				setModifiedDialog(true);
+				addToast('Reporte modificado', 'success');
 				router.refresh();
 			} else {
 				response.json().then((res) => console.log(res.message));
-				setErrorDialog(true);
+				addToast('Error en el servidor', 'error');
 				setUnmodified(true);
 			}
 		} catch (error) {
 			console.log(error);
-			setErrorDialog(true);
+			addToast('Error en el servidor', 'error');
 		}
 	};
 
@@ -85,12 +80,11 @@ export default function Reporte({ props }) {
 			method: 'DELETE',
 		});
 		if (response.status == 200) {
-			setDeletedDialog(true);
+			addToast('Reporte eliminado', 'success');
 			router.replace('/reportes');
 		} else {
 			response.json().then((res) => console.log(res.message));
-			addToast('', 'error');
-			setErrorDialog(true);
+			addToast('Error en el servidor', 'error');
 		}
 	};
 	const warning = (e) => {
@@ -169,52 +163,6 @@ export default function Reporte({ props }) {
 				</div>
 			</form>
 
-			<Dialog
-				id={'invalidField'}
-				isOpen={invalidFieldsDialog}
-				onClose={() => setInvalidFieldsDialog(false)}
-			>
-				<h1>Error valores invalidos</h1>
-				<p>No se pueden modificar datos con valores invalidos</p>
-				<p>
-					En los campos estado, municipio, y Estado reporte debe haber
-					seleccionado una opción
-				</p>
-			</Dialog>
-			<Dialog
-				id={'unmodified'}
-				isOpen={unmodifiedDialog}
-				onClose={() => setUnmodifiedDialog(false)}
-			>
-				<h1>Error de modificación</h1>
-				<p>No se ha registrado ningun cambio</p>
-			</Dialog>
-			<Dialog
-				id={'modified'}
-				isOpen={modifiedDialog}
-				onClose={() => setModifiedDialog(false)}
-			>
-				<h1>Se han guardado los cambios</h1>
-				<p>Los cambios han sido guardados correctamente en la base de datos</p>
-			</Dialog>
-			<Dialog
-				id={'error'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ha ocurrido un error en el servidor</p>
-				<p>Vuelva a intentarlo más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'deleted'}
-				isOpen={deletedDialog}
-				onClose={() => setDeletedDialog(false)}
-			>
-				<h1>Reporte Eliminado</h1>
-				<p>Se ha eliminado el reporte de la pagina</p>
-				<p>Sera redirigido a la pagina reportes</p>
-			</Dialog>
 			<Dialog
 				id={'warning'}
 				isOpen={warningDialog}

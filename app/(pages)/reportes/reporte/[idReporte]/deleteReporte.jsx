@@ -4,9 +4,8 @@ import { Dialog } from "@/components/dialogs";
 import { useRouter } from "next/navigation";
 
 export default function EliminarReporte({ props }) {
-    const [errorDialog, setErrorDialog] = useState(false);
-    const [deletedDialog, setDeletedDialog] = useState(false);
     const [warningDialog, setWarningDialog] = useState(false);
+    const { addToast } = useToast();
     const router = useRouter();
 
     const deleteReporte = async (e) => {
@@ -15,11 +14,11 @@ export default function EliminarReporte({ props }) {
             method: "DELETE"
         });
         if (response.status == 200) {
-            setDeletedDialog(true);
+            addToast("Reporte eliminado con exito", "success");
             router.replace("/reportes");
         } else {
             response.json().then(res => console.log(res.message))
-            setErrorDialog(true);
+            addToast("Ha ocurrido un error en el servidor", "error");
         }
     };
     const warning = (e) => {
@@ -31,16 +30,6 @@ export default function EliminarReporte({ props }) {
         <>
             <button type="submit" className="btn btn-danger btn-lg" onClick={warning} >Eliminar reporte</button>
 
-            <Dialog id={"error"} isOpen={errorDialog} onClose={() => setErrorDialog(false)}>
-                <h1>Error de servidor</h1>
-                <p>Ha ocurrido un error en el servidor</p>
-                <p>Vuelva a intentarlo más tarde</p>
-            </Dialog>
-            <Dialog id={"deleted"} isOpen={deletedDialog} onClose={() => setDeletedDialog(false)}>
-                <h1>Reporte Eliminado</h1>
-                <p>Se ha eliminado el reporte de la pagina</p>
-                <p>Sera redirigido a la pagina reportes</p>
-            </Dialog>
             <Dialog id={"warning"} isOpen={warningDialog} onClose={() => setWarningDialog(false)} fun={deleteReporte} confirmar={true} contenido={true} >
                 <h1>Advertencia</h1>
                 <p>Estas apunto de eliminar a un reporte de la pagina<br />Esta accion sera irreversible</p>

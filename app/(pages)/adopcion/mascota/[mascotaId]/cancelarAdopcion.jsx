@@ -2,16 +2,15 @@
 import { useState } from 'react';
 import { Dialog } from '@/components/dialogs';
 import { useRouter } from 'next/navigation';
-import Input from '@/components/Inputs';
 import Button from '@/components/Button';
+import { useToast } from '@/components/Toast';
 
 export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
-	const [cancelDialog, setCancelDialog] = useState(false);
-	const [errorDialog, setErrorDialog] = useState(false);
 	const [warningDialog, setWarningDialog] = useState(false);
 	const [cancelando, setCancelando] = useState(false);
 	const [motivo, setMotivo] = useState('');
 	const router = useRouter();
+	const { addToast } = useToast();
 
 	const handleCancelar = async () => {
 		setWarningDialog(false);
@@ -30,22 +29,23 @@ export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 			});
 
 			if (response.status === 200) {
+				addToast('Adopción cancelada con éxito', 'success');
 				setCancelDialog(true);
 				router.refresh();
 			} else {
 				if (response.status === 400) {
-					setIsAdopcionExistenteDialog(true);
+					addToast('Ya se ha registrado una adopción con esta mascota', 'error');
 				}
 				if (response.status === 500) {
 					console.error('An error occurred', error);
-					setErrorDialog(true);
+					addToast('Error de servidor', 'error');
 				}
 				setCancelando(false);
 				response.json().then((response) => console.log(response.error));
 			}
 		} catch (error) {
 			console.error('An error occurred', error);
-			setErrorDialog(true);
+			addToast('Error de servidor', 'error');
 			setCancelando(false);
 		}
 	};
@@ -88,23 +88,6 @@ export default function Cancelar({ idAdopcion, idAdoptante, idMascota }) {
 				<h3>Confirmar cancelación</h3>
 				<p>¿Estas seguro que va a cancelar la adopción?</p>
 				<p>Haga click en confirmar para continuar</p>
-			</Dialog>
-			<Dialog
-				id={'adopcionProcesada'}
-				isOpen={cancelDialog}
-				onClose={() => setCancelDialog(false)}
-			>
-				<h3>Adopción cancelada</h3>
-				<p>La Adopción ha sido cancelada con exito</p>
-			</Dialog>
-			<Dialog
-				id={'errorServidor'}
-				isOpen={errorDialog}
-				onClose={() => setErrorDialog(false)}
-			>
-				<h3>Error de servidor</h3>
-				<p>Ocurrió un error de servidor</p>
-				<p>Vuelve a intentar más tarde</p>
 			</Dialog>
 		</>
 	);
