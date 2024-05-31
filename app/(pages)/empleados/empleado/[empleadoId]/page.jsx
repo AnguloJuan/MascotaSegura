@@ -12,7 +12,8 @@ export const metadata = {
 };
 
 export default async function Page({ params }) {
-	const userType = await GetUser().idTipoUsuario;
+	const user = await GetUser();
+	const userType = user.idTipoUsuario;
 	const { empleadoId } = params;
 	const empleado = await prisma.empleado.findUnique({
 		where: {

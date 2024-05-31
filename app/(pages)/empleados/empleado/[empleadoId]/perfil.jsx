@@ -140,9 +140,12 @@ export default function PerfilPage({ props }) {
 						<InputFile
 							id="perfil"
 							name="perfil"
-							onFileUpload={(image) => setImage(image)} //
+							onFileUpload={(image) => {
+								setImage(image),
+								setUnmodified(false);
+							}} //
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							image={props.empleado.imagen}
+							image={image}
 							className="mx-auto"
 						/>
 						<Input
