@@ -41,7 +41,7 @@ export default function EliminarReporte({ props }) {
                 <p>Se ha eliminado el reporte de la pagina</p>
                 <p>Sera redirigido a la pagina reportes</p>
             </Dialog>
-            <Dialog id={"warning"} isOpen={warningDialog} onClose={() => setWarningDialog(false)} fun={deleteReporte} confirmar={true}>
+            <Dialog id={"warning"} isOpen={warningDialog} onClose={() => setWarningDialog(false)} fun={deleteReporte} confirmar={true} contenido={true} >
                 <h1>Advertencia</h1>
                 <p>Estas apunto de eliminar a un reporte de la pagina<br />Esta accion sera irreversible</p>
                 <p>Haga clic en confirmar para continuar</p>

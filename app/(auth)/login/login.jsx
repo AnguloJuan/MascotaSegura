@@ -64,7 +64,15 @@ export default function LogIn() {
 						type={'email'}
 						label={'Correo electrónico'}
 						placeholder={'Correo electrónico'}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(e) => {
+							if (!e.target.value.match(
+									/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+								)
+							) {
+								return;
+							}
+							setEmail(e.target.value);
+						}}
 						className="w-90"
 					/>
 
