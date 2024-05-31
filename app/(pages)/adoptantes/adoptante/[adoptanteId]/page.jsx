@@ -14,7 +14,8 @@ export const metadata = {
 };
 
 export default async function Page({ params }) {
-	const userType = GetUser().idTipoUsuario;
+	const user = await GetUser();
+	const userType = user.idTipoUsuario;
 	const { adoptanteId } = params;
 	const adoptante = await prisma.adoptante.findUnique({
 		where: {

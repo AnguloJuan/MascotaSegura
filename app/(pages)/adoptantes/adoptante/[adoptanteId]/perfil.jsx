@@ -76,7 +76,7 @@ export default function PerfilPage({ props }) {
 				body.set('userInit', JSON.stringify(props.adoptante));
 
 				if (image) {
-					body.set('image', await await postImage(body, image));
+					body.set('image', await postImage(body, image));
 				} else {
 					body.set('image', null);
 				}
@@ -172,9 +172,12 @@ export default function PerfilPage({ props }) {
 						<InputFile
 							id="perfil"
 							name="perfil"
-							onFileUpload={(image) => setImage(image)}
+							onFileUpload={(image) => {
+								setImage(image);
+								setUnmodified(false);
+							}}
 							accept="image/*, .jpg, .png, .svg, .webp, .jfif"
-							image={props.adoptante.imagen}
+							image={image}
 							className="mx-auto"
 						/>
 						<Input

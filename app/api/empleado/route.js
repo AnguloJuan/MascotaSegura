@@ -30,7 +30,9 @@ export async function POST(req) {
 
         let user;
         const date = new Date().toISOString();
-        const idRefugio = GetUser().idRefugio;
+        const currentUser = await GetUser();
+        const idRefugio = currentUser.idRefugio;
+        
         
                 // Create the user in the database
                 try {

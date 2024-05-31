@@ -36,7 +36,6 @@ export default function Perfil({ props }) {
 		if (name == 'telefono' && value < 0) {
 			return;
 		}
-		console.log(user);
 
 		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 	};
