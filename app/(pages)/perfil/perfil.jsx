@@ -132,7 +132,7 @@ export default function Perfil({ props }) {
 			<div className="flex py-8 justify-between">
 				<div className="flex gap-8">
 					<img
-						src={imagen || '/images/defaultUser.png'}
+						src={user.imagen || '/images/defaultUser.png'}
 						alt=""
 						loading="lazy"
 						className="size-32 object-cover rounded-full"
