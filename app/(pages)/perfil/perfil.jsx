@@ -33,14 +33,7 @@ export default function Perfil({ props }) {
 	const handleInputChange = (e) => {
 		setUnmodified(false);
 		const { name, value } = e.target;
-		if ((name === "nombre" || name === "apellido") && !value.match(/^[a-zA-Z]+$/)) {
-			return;
-		}
-		if (name === "correo" &&
-			!value.match(
-				/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
-			)
-		) {
+		if ((name === "nombre" || name === "apellido") && !value.match(/^[a-zA-Z\s]*$/)) {
 			return;
 		}
 		if (name == 'telefono' && (value < 0 || value > 9999999999)) {

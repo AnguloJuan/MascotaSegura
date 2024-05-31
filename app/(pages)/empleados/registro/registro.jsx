@@ -9,40 +9,49 @@ import { useState } from 'react';
 
 export default function RegistroEmpleado() {
 	const router = useRouter();
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [telefono, setTelefono] = useState('');
-	const [password, setPassword] = useState('');
-	const [NIP, setNIP] = useState('');
-	const [tipoEmpleado, setTipoEmpleado] = useState(0);
 	const [image, setImage] = useState(null);
 	const { addToast } = useToast();
+
+	const [empleado, setEmpleado] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		telefono: '',
+		NIP: '',
+		tipoEmpleado: '',
+		password: '',
+	});
+
+
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		// Check if the input are letter and accpts empty spaces and empty fields
+		if ((name === "firstName" || name === "lastName") && !value.match(/^[a-zA-Z\s]*$/)) {
+			return;
+		}
+		if (name == 'telefono' && (value < 0 || value > 9999999999)) {
+			return;
+		}
+
+		setEmpleado((prevCriteria) => ({ ...prevCriteria, [name]: value }));
+		console.log(empleado);
+	};
 
 	const registrarEmpleado = async (e) => {
 		e.preventDefault();
 
 		if (
-			!firstName ||
-			!lastName ||
-			!email ||
-			!telefono ||
-			isNaN(telefono) ||
-			!password
+			!empleado.firstName ||
+			!empleado.lastName ||
+			!empleado.email ||
+			!empleado.telefono ||
+			isNaN(empleado.telefono) ||
+			!empleado.password
 		) {
 			addToast('Se deben de llenar todos los campos.', 'warning');
 		} else {
 			try {
 				const body = new FormData();
-				const empleado = {
-					firstName,
-					lastName,
-					email,
-					telefono,
-					NIP,
-					tipoEmpleado,
-					password,
-				};
 				body.set('empleado', JSON.stringify(empleado));
 				if (image) {
 					body.set('image', await postImage(body, image));
@@ -99,16 +108,17 @@ export default function RegistroEmpleado() {
 					<InputFile
 						id="perfil"
 						name="perfil"
+						value={image}
 						onFileUpload={(image) => setImage(image)}
 						accept="image/*, .jpg, .png, .svg, .webp, .jfif"
 					/>
 					<div className="grid w-full place-content-center space-y-3 *:w-full">
 						<Select
 							id="tipoEmpleado"
-							onChange={(e) => setTipoEmpleado(e.target.value)}
+							onChange={handleInputChange}
 							name="tipoEmpleado"
+							value={empleado.tipoEmpleado}
 						>
-							<option value="">Selecciona el tipo empleado</option>
 							<option value={2}>Empleado</option>
 							<option value={3}>Administrador</option>
 						</Select>
@@ -117,42 +127,60 @@ export default function RegistroEmpleado() {
 								id={'name'}
 								type={'text'}
 								placeholder={'Nombre'}
-								onChange={(e) => setFirstName(e.target.value)}
+								name={'firstName'}
+								value={empleado.firstName}
+								required
+								onChange={handleInputChange}
 							/>
 
 							<Input
 								id={'lastName'}
 								type={'text'}
 								placeholder={'Apellidos'}
-								onChange={(e) => setLastName(e.target.value)}
+								name={'lastName'}
+								value={empleado.lastName}
+								required
+								onChange={handleInputChange}
 							/>
 						</div>
 						<div className="flex gap-3">
 							<Input
 								id={'NIP'}
 								type={'text'}
+								name={'NIP'}
 								placeholder={'NIP'}
-								onChange={(e) => setNIP(e.target.value)}
+								required
+								value={empleado.NIP}
+								onChange={handleInputChange}
 							/>
 							<Input
 								id={'telefono'}
 								type={'text'}
+								name={'telefono'}
 								placeholder={'Teléfono'}
-								onChange={(e) => setTelefono(e.target.value)}
+								required
+								value={empleado.telefono}
+								onChange={handleInputChange}
 							/>
 						</div>
 						<div className="flex gap-3">
 							<Input
 								id={'email'}
 								type={'email'}
+								name={'email'}
 								placeholder={'Correo electrónico'}
-								onChange={(e) => setEmail(e.target.value)}
+								required
+								value={empleado.email}
+								onChange={handleInputChange}
 							/>
 							<Input
 								id={'password'}
 								type={'password'}
+								name={'password'}
 								placeholder={'Contraseña'}
-								onChange={(e) => setPassword(e.target.value)}
+								required
+								value={empleado.password}
+								onChange={handleInputChange}
 							/>
 						</div>
 					</div>
