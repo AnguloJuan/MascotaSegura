@@ -45,8 +45,6 @@ export default function CardReporte({
 			</span>
 
 			<img
-				width={100}
-				height={100}
 				src={imagen || '/images/defaultReporte.png'}
 				alt={`ImagenReporte${id}`}
 				className="rounded-md size-24 object-cover"
