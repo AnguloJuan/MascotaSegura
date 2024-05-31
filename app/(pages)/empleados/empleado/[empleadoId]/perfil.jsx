@@ -123,13 +123,13 @@ export default function PerfilPage({ props }) {
 						className="bg-primary hover:bg-primaryHover w-full py-1 px-2 text-white rounded-lg"
 						onClick={() => setEditar(true)}
 					>
-						Editar Mi Cuenta
+						Editar Cuenta
 					</button>
 					<button
 						className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg"
 						onClick={warning}
 					>
-						Eliminar Mi Cuenta
+						Eliminar Cuenta
 					</button>
 				</Popover>
 			</div>
