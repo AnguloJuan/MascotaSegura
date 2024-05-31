@@ -16,7 +16,7 @@ export default function MascotaPage({ mascotaInicial }) {
 		id: mascotaInicial.id,
 		nombre: mascotaInicial.nombre,
 		especie: mascotaInicial.especie.id,
-		raza: mascotaInicial.raza.id,
+		raza: mascotaInicial.raza ? mascotaInicial.raza.id : 0,
 		edad: mascotaInicial.edad,
 		sexo: mascotaInicial.sexo.id,
 		tamano: mascotaInicial.idTamano,

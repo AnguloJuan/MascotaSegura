@@ -17,7 +17,7 @@ export async function GET(req) {
                     id: id ? { equals: parseInt(id) } : undefined,
                     nombre: nombre ? { contains: nombre } : undefined,
                     idEspecie: especie ? { equals: parseInt(especie) } : undefined,
-                    idRaza: { equals: parseInt(raza) },
+                    idRaza: raza ? { equals: parseInt(raza) } : undefined,
                     edad: edad ? { equals: parseInt(edad) } : undefined,
                     idSexo: sexo ? { equals: parseInt(sexo) } : undefined,
                     adopcion: (userType === 0 || userType === 1) ? { is: null }// Excluir mascotas en adopción si el usuario es adoptante o sin registro
