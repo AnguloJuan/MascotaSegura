@@ -49,8 +49,9 @@ export default function ListaEmpleados({ props }) {
 				<InputBuscar
 					id={'empleado'}
 					type={'number'}
-					placeholder={'Buscar'}
+					placeholder={'Id del empleado'}
 					name={'id'}
+					label={'ID del empleado'}
 					value={searchCriteria.id}
 					onChange={handleInputChange}
 					className="rounded-r-none"

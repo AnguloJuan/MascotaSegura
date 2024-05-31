@@ -74,8 +74,9 @@ export default function ListaAdoptantes({ props }) {
 				</div>
 				<InputBuscar
 					id={'buscar'}
-					placeholder={'Buscar'}
+					placeholder={'Buscar nombre'}
 					name={'nombre'}
+					label={'Nombre de adoptante'}
 					value={searchCriteria.nombre}
 					onChange={handleInputChange}
 					onClick={fetchAdoptantes}
