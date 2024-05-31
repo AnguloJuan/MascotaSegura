@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { getPrisma } from '@/app/lib/prisma';
 import Image from 'next/image';
 import Reporte from './reporte';
@@ -53,42 +54,34 @@ export default async function ReportePage({ params }) {
 	) : (
 		<>
 			<Suspense fallback={<Loading />}>
-				<form className="m-3">
-					<div className="perfilEmpleado">
-						<h1>Información del reporte</h1>
-						<div className="datos-reporte">
-							<Image
-								width={250}
-								height={250}
-								src={props.reporte.imagen}
-								alt={
-									`ImagenReporte${props.reporte.id}` ||
-									'/images/defaultReporte.png'
-								}
-								className="rounded-top"
-							/>
-							<label htmlFor="fechaCreada">Fecha reportada</label>
-							<p id="fechaCreada" className="form-control">
-								{new Date(reporte.fechaCreada).toLocaleDateString()}
-							</p>
-
-							<div className="input mb-3 mt-3">
-								<label htmlFor="estado" className="form-label">
-									Estado
-								</label>
-								<Estados value={reporte.municipio.idEstado} disabled />
+				<form>
+					<h1 className="text-5xl">Información del reporte</h1>
+					<div className="flex gap-5">
+						<img
+							src={props.reporte.imagen}
+							alt={
+								`ImagenReporte${props.reporte.id}` ||
+								'/images/defaultReporte.png'
+							}
+							className="rounded-md size-80 object-cover aspect-square"
+						/>
+						<div className="grid w-full">
+							<div>
+								<h3 className="text-xl">Fecha reportada</h3>
+								<p className="bg-primary py-2 rounded-md text-white text-center">
+									{new Date(reporte.fechaCreada).toLocaleDateString()}
+								</p>
 							</div>
-							<div className="input mb-3 mt-3">
-								<label htmlFor="municipio" className="form-label">
-									Municipio
-								</label>
+							<div className="flex gap-5">
+								<Estados value={reporte.municipio.idEstado} disabled />
+
 								<Municipios
 									municipiosInicial={municipios}
 									value={reporte.municipio.id}
 									disabled
 								/>
 							</div>
-							<div className="input mb-3 mt-3">
+							<div className="">
 								<label htmlFor="descripcion" className="form-label">
 									Descripción
 								</label>
@@ -98,17 +91,17 @@ export default async function ReportePage({ params }) {
 									rows="5"
 									disabled
 									value={reporte.descripcion}
-									className="form-control"
-								></textarea>
+									className="py-2 px-4 w-full rounded-lg border-black border-2 focu:outline outline-primary outline-offset-4 resize-none"
+								/>
 							</div>
-
-							<EstadosReporte value={reporte.estadoReporte.id} disabled />
-
-							{reporte.reportador && reporte.reportador.id == user.id && (
-								<EliminarReporte props={props} />
-							)}
 						</div>
 					</div>
+
+					<EstadosReporte value={reporte.estadoReporte.id} disabled />
+
+					{reporte.reportador && reporte.reportador.id == user.id && (
+						<EliminarReporte props={props} />
+					)}
 				</form>
 			</Suspense>
 		</>
