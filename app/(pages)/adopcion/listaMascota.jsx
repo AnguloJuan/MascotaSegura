@@ -15,7 +15,6 @@ export default function ListaMascota({ inicialMascotas, userType }) {
 		raza: '',
 		edad: '',
 		sexo: '',
-		userType: 0,
 		adoptado: '',
 		userType: userType,
 	});
