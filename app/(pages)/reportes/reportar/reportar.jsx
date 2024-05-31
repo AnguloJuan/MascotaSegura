@@ -28,6 +28,18 @@ export default function Reportar({ props }) {
 	const handleInputChange = (e) => {
 		setUnmodified(false);
 		const { name, value } = e.target;
+
+		if (name === "nombre" && !value.match(/^[a-zA-Z]+$/)) {
+			return;
+		}
+		if (name === "correo" &&
+			!value.match(
+				/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+			)
+		) {
+			return;
+		}
+
 		setReporte((prevCriteria) => ({ ...prevCriteria, [name]: value }));
 	};
 	const handleEstadoChange = (e) => {
