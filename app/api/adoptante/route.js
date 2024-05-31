@@ -91,6 +91,7 @@ export async function PUT(req) {
 						id: parseInt(userInitParsed.id),
 					},
 					data: {
+						nombre: nombre !== userInitParsed.nombre ? nombre : undefined,
 						correo: correo !== userInitParsed.correo ? correo : undefined,
 						telefono:
 							telefono !== userInitParsed.telefono

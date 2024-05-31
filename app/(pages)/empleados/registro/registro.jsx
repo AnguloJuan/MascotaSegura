@@ -34,7 +34,6 @@ export default function RegistroEmpleado() {
 		}
 
 		setEmpleado((prevCriteria) => ({ ...prevCriteria, [name]: value }));
-		console.log(empleado);
 	};
 
 	const registrarEmpleado = async (e) => {

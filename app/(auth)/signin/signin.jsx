@@ -13,51 +13,59 @@ import { useState } from 'react';
 
 export default function SignIn() {
 	const router = useRouter();
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
-	const [email, setEmail] = useState('');
-	const [telefono, setTelefono] = useState('');
 	const [selectedEstado, setSelectedEstado] = useState('');
-	const [selectedMunicipio, setSelectedMunicipio] = useState('');
-	const [password, setPassword] = useState('');
+	const [ user, setUser ] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		telefono: '',
+		selectedMunicipio: '',
+		password: '',
+	});
 
 	const [image, setImage] = useState(null);
 	const { addToast } = useToast();
 
+	const handleInputChange = (e) => {
+		const { name, value } = e.target;
+		// Check if the input are letter and accpts empty spaces and empty fields
+		if ((name === "firstName" || name === "lastName") && !value.match(/^[a-zA-Z\s]*$/)) {
+			return;
+		}
+		if (name == 'telefono' && (value < 0 || value > 9999999999)) {
+			return;
+		}
+
+		setUser((prevCriteria) => ({ ...prevCriteria, [name]: value }));
+		console.log(user);
+	};
+
 	const handleEstadoChange = (event) => {
 		setSelectedEstado(event.target.value);
 		// Reset selected municipio when estado changes
-		setSelectedMunicipio(0);
+		setUser((prevCriteria) => ({ ...prevCriteria, selectedMunicipio: 0 }));
 	};
 
 	const handleMunicipioChange = (event) => {
-		setSelectedMunicipio(event.target.value);
+		setUser((prevCriteria) => ({ ...prevCriteria, selectedMunicipio: event.target.value }));
 	};
 
 	const handleSignIn = async (e) => {
 		e.preventDefault();
 
 		if (
-			!firstName ||
-			!lastName ||
-			!email ||
-			!telefono ||
-			isNaN(telefono) ||
-			!selectedMunicipio ||
-			!password
+			!user.firstName ||
+			!user.lastName ||
+			!user.email ||
+			!user.telefono ||
+			isNaN(user.telefono) ||
+			!user.selectedMunicipio ||
+			!user.password
 		) {
 			addToast('Por favor, llena todos los campos correctamente', 'error');
 		} else {
 			try {
 				const body = new FormData();
-				const user = {
-					firstName,
-					lastName,
-					email,
-					telefono,
-					selectedMunicipio,
-					password,
-				};
 				body.set('user', JSON.stringify(user));
 
 				if (image) {
@@ -118,20 +126,24 @@ export default function SignIn() {
 				<div className="flex flex-col items-center justify-center gap-4">
 					<h1 className="text-3xl">Crear cuenta</h1>
 					<Input
-						id={'name'}
+						id={'firstName'}
 						type={'text'}
 						label={'Nombre'}
+						name={'firstName'}
+						value={user.firstName}
 						placeholder={'Nombre'}
-						onChange={(e) => setFirstName(e.target.value)}
+						onChange={handleInputChange}
 						className="w-90"
 					/>
 
 					<Input
 						id={'lastName'}
+						name={'lastName'}
 						type={'text'}
 						label={'Apellidos'}
 						placeholder={'Apellidos'}
-						onChange={(e) => setLastName(e.target.value)}
+						onChange={handleInputChange}
+						value={user.lastName}
 						className="w-90"
 					/>
 
@@ -139,15 +151,17 @@ export default function SignIn() {
 						id={'telefono'}
 						type={'text'}
 						label={'Teléfono'}
+						name={'telefono'}
 						placeholder={'Teléfono'}
-						onChange={(e) => setTelefono(e.target.value)}
+						onChange={handleInputChange}
+						value={user.telefono}
 						className="w-90"
 					/>
 					<div className="flex gap-2">
 						<Estados onChange={handleEstadoChange} value={selectedEstado} />
 						<Municipios
 							selectedEstado={selectedEstado}
-							value={selectedMunicipio}
+							value={user.selectedMunicipio}
 							onChange={handleMunicipioChange}
 						/>
 					</div>
@@ -155,9 +169,11 @@ export default function SignIn() {
 					<Input
 						id={'email'}
 						type={'email'}
+						name={'email'}
 						label={'Correo electrónico'}
 						placeholder={'Correo electrónico'}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={handleInputChange}
+						value={user.email}
 						className="w-90"
 					/>
 
@@ -165,8 +181,10 @@ export default function SignIn() {
 						id={'password'}
 						type={'password'}
 						label={'Contraseña'}
+						name={'password'}
 						placeholder={'Contraseña'}
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={handleInputChange}
+						value={user.password}
 						className="w-90"
 					/>
 

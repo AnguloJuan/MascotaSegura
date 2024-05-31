@@ -33,7 +33,6 @@ export async function POST(req) {
         const currentUser = await GetUser();
         const idRefugio = currentUser.idRefugio;
         
-        
                 // Create the user in the database
                 try {
                     user = await prisma.empleado.create({
@@ -55,7 +54,7 @@ export async function POST(req) {
                 }
                 BigInt.prototype.toJSON = function () { return this.toString() }
         
-                return NextResponse.json({ message: 'User registered', user }, { status: 201 });
+                return NextResponse.json({ message: 'User registered', user}, { status: 201 });
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: 'Something went wrong' }, { status: 500 })
