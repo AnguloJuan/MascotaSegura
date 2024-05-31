@@ -46,7 +46,9 @@ export default function RegistroEmpleado() {
 			!empleado.email ||
 			!empleado.telefono ||
 			isNaN(empleado.telefono) ||
-			!empleado.password
+			!empleado.password ||
+			!empleado.NIP || 
+			!empleado.tipoEmpleado
 		) {
 			addToast('Se deben de llenar todos los campos.', 'warning');
 		} else {
@@ -69,8 +71,10 @@ export default function RegistroEmpleado() {
 
 					response
 						.json()
-						.then((response) =>
+						.then((response) =>{
+							console.log(response);
 							router.replace(`/empleados/empleado/${response.user.id}`)
+						}
 						);
 				} else {
 					// Handle sign-in error
