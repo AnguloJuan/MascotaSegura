@@ -20,6 +20,7 @@ export default function PerfilPage({ props }) {
 		NIP: props.empleado.NIP,
 		fechaRegistro: props.date,
 		tipoEmpleado: props.empleado.idTipoUsuario,
+		idMunicipio: props.empleado.idMunicipio,
 	});
 	const [unmodified, setUnmodified] = useState(true);
 	const [modifiedDialog, setModifiedDialog] = useState(false);

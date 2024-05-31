@@ -4,12 +4,12 @@ import { Input } from '@/components/Inputs';
 import { Logo } from '@/components/Logo';
 import { Estados } from '@/components/Selects';
 import { Municipios } from '@/components/Selects';
-import { Dialog } from '@/components/dialogs';
+import { useToast } from '@/components/Toast';
 import { IconChevronLeft } from '@tabler/icons-react';
 import { deleteCookie, hasCookie, setCookie } from 'cookies-next';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function SignIn() {
 	const router = useRouter();
@@ -19,16 +19,10 @@ export default function SignIn() {
 	const [telefono, setTelefono] = useState('');
 	const [selectedEstado, setSelectedEstado] = useState('');
 	const [selectedMunicipio, setSelectedMunicipio] = useState('');
-	const [estados, setEstados] = useState([]);
-	const [municipios, setMunicipios] = useState([]);
 	const [password, setPassword] = useState('');
-	const [isErrorEmail, setIsErrorEmail] = useState(false);
-	const [isErrorServidor, setIsErrorServidor] = useState(false);
-	const [isFieldsFilled, setIsFieldsFilled] = useState(false);
-	const [isRegistrado, setIsRegistrado] = useState(false);
 
 	const [image, setImage] = useState(null);
-	const [createObjectURL, setCreateObjectURL] = useState(null);
+	const { addToast } = useToast();
 
 	const handleEstadoChange = (event) => {
 		setSelectedEstado(event.target.value);
@@ -38,15 +32,6 @@ export default function SignIn() {
 
 	const handleMunicipioChange = (event) => {
 		setSelectedMunicipio(event.target.value);
-	};
-
-	const uploadToClient = (event) => {
-		if (event.target.files && event.target.files[0]) {
-			const i = event.target.files[0];
-
-			setImage(i);
-			setCreateObjectURL(URL.createObjectURL(i));
-		}
 	};
 
 	const handleSignIn = async (e) => {
@@ -61,7 +46,7 @@ export default function SignIn() {
 			!selectedMunicipio ||
 			!password
 		) {
-			setIsFieldsFilled(true);
+			addToast('Por favor, llena todos los campos correctamente', 'error');
 		} else {
 			try {
 				const body = new FormData();
@@ -93,23 +78,23 @@ export default function SignIn() {
 					// Sign-in successful, perform any necessary actions (e.g., redirect)
 					response.json().then((response) => setCookie('user', response.token));
 
-					setIsRegistrado(true);
+					addToast('Registro exitoso', 'success');
 					router.replace('/');
 				} else {
 					// Handle sign-in error
 					console.error('Sign-in failed');
 					response.json().then((response) => console.error(response.message));
 					if (response.status == 409) {
-						setIsErrorEmail(true);
+						addToast('Ya se ha registrado una cuenta con ese correo', 'error');
 					}
 					if (response.status == 500) {
 						response.json().then((response) => console.error(response.message));
-						setIsErrorServidor(true);
+						addToast('Ha ocurrido un error en el servidor', 'error');
 					}
 				}
 			} catch (error) {
 				console.error('An error occurred', message);
-				setIsErrorServidor(true);
+				addToast('Ha ocurrido un error en el servidor', 'error');
 			}
 		}
 	};
@@ -200,39 +185,6 @@ export default function SignIn() {
 					</p>
 				</div>
 			</form>
-			<Dialog
-				id={'errorEmail'}
-				isOpen={isErrorEmail}
-				onClose={() => setIsErrorEmail(false)}
-			>
-				<h1>Error al registrarse</h1>
-				<p>Ya se registrado una cuenta con ese correo</p>
-			</Dialog>
-			<Dialog
-				id={'errorServidor'}
-				isOpen={isErrorServidor}
-				onClose={() => setIsErrorServidor(false)}
-			>
-				<h1>Error de servidor</h1>
-				<p>Ocurrió un error de servidor</p>
-				<p>Vuelve a intentar más tarde</p>
-			</Dialog>
-			<Dialog
-				id={'errorCampos'}
-				isOpen={isFieldsFilled}
-				onClose={() => setIsFieldsFilled(false)}
-			>
-				<h1>Error</h1>
-				<p>Rellene todos los campos primero</p>
-			</Dialog>
-			<Dialog
-				id={'registrado'}
-				isOpen={isRegistrado}
-				onClose={() => setIsRegistrado(false)}
-			>
-				<h1>Registro exitoso</h1>
-				<p>Espere un momento en lo que carga la pagina</p>
-			</Dialog>
 		</section>
 	);
 }

@@ -4,6 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
+    /*
     // Estado
     await prisma.estado.createMany({
         data: [
@@ -272,6 +273,51 @@ async function main() {
         ],
     });
 
+    */
+    // Adoptantes
+    await prisma.adoptante.createMany({
+        data: [
+            {
+                id: 1,
+                nombre: 'Juan',
+                apellido: 'Perez',
+                correo: 'perez@gmail.com',
+                contrasena: 'password1',
+                telefono: BigInt('6121928402'), // Convertir el valor a BigInt
+                idTipoUsuario: 1,
+                idMunicipio: 2,
+                imagen: 'https://res.cloudinary.com/dyvwujin9/image/upload/v1717113238/mascotaSegura/jdhnxvpeyaf8rty8dz9d'
+            },
+            {
+                id: 2,
+                nombre: 'Maria',
+                apellido: 'Gomez',
+                correo: 'Elmo_Adams83407@gmail.com',
+                contrasena: 'password2',
+                telefono: BigInt('6122004032'),
+                idTipoUsuario: 1,
+                idMunicipio: 3,
+                imagen: 'https://res.cloudinary.com/dyvwujin9/image/upload/v1717113238/mascotaSegura/mn1angpgz2t8spbl3ckh'
+            },
+            {
+                id: 3,
+                nombre: 'Pedro',
+                apellido: 'Lopez',
+                correo: '',
+                contrasena: 'password3',
+                telefono: BigInt('987654321'),
+                idTipoUsuario: 1,
+                idMunicipio: 4,
+                imagen: 'https://res.cloudinary.com/dyvwujin9/image/upload/v1717113238/mascotaSegura/raurj5pwdlwijxmghvex'
+            },
+            {
+                id: 4,
+                nombre: 'Ana',
+                apellido: 'Hernandez',
+                correo: '',
+            }
+        ],
+    });
 
     console.log('Seed completado.');
 }

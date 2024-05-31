@@ -104,7 +104,7 @@ export default function Reportar({ props }) {
 									placeholder={'Nombre completo'}
 									value={reporte.nombre}
 									name={'nombre'}
-									onChange={(image) => setImage(image)}
+									onChange={handleInputChange}
 									required
 								/>
 

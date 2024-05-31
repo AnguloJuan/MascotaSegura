@@ -352,6 +352,7 @@ export default function MascotaPage({ mascotaInicial }) {
 				onClose={() => setWarningDialog(false)}
 				fun={deleteMascota}
 				confirmar={true}
+				contenido={true}
 			>
 				<h3>Advertencia</h3>
 				<p>

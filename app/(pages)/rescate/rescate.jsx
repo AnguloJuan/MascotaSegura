@@ -11,7 +11,7 @@ export default function Rescate({ idRefugio }) {
 	const [mascota, setMascota] = useState({
 		nombre: '',
 		especie: 0,
-		raza: 0,
+		raza: 1,
 		edad: 0,
 		sexo: 0,
 		tamano: 0,

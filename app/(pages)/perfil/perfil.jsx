@@ -12,10 +12,11 @@ import { setCookie } from 'cookies-next';
 
 export default function Perfil({ props }) {
 	const dataUser = props.user;
-	const { imagen, nombre, apellido, correo, telefono, id } = dataUser;
+	const { imagen, nombre, apellido, correo, telefono, id, idMunicipio } = dataUser;
 	const userType = props.userType;
 	const [editar, setEditar] = useState(false);
 	const [unmodified, setUnmodified] = useState(true);
+	const [warningDialog, setWarningDialog] = useState(false);
 	const { addToast } = useToast();
 	const router = useRouter();
 
@@ -25,6 +26,7 @@ export default function Perfil({ props }) {
 		correo: correo,
 		telefono: telefono,
 		imagen: imagen,
+		municipio: idMunicipio,
 	});
 
 
@@ -99,7 +101,6 @@ export default function Perfil({ props }) {
 	};
 
 	const deleteUser = async (e) => {
-		e.preventDefault();
 		const id = props.user.id;
 		const userType = props.userType;
 		const params = JSON.stringify({ id, userType });
@@ -144,7 +145,7 @@ export default function Perfil({ props }) {
 					</button>
 					<button
 						className="bg-red-600 hover:bg-red-500 w-full py-1 px-2 text-white rounded-lg"
-						onClick={deleteUser}>
+						onClick={() => setWarningDialog(true)}>
 						Eliminar Mi Cuenta
 					</button>
 				</Popover>
@@ -219,6 +220,25 @@ export default function Perfil({ props }) {
 						</div>
 					</div>
 				</form>
+			</Dialog>
+
+			<Dialog
+				id={'warning'}
+				isOpen={warningDialog}
+				onClose={() => setWarningDialog(false)}
+				fun={deleteUser}
+				confirmar={true}
+				contenido={true}
+			>
+				<h3>Advertencia</h3>
+				<p>
+					Estas apunto de eliminar a su perfil de la pagina
+					<br />
+					Perdera todos los datos relacionados con su cuenta
+					<br />
+					Esta acción sera irreversible
+				</p>
+				<p>Haga clic en confirmar para continuar</p>
 			</Dialog>
 		</>
 	);

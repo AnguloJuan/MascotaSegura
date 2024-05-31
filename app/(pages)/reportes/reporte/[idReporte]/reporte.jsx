@@ -98,7 +98,6 @@ export default function Reporte({ props }) {
 		setWarningDialog(true);
 	};
 
-	console.log(props.reporte.reportador);
 	return (
 		<>
 			<form className="m-3">
@@ -112,6 +111,7 @@ export default function Reporte({ props }) {
 								name="perfil"
 								onFileUpload={(image) => setImage(image)}
 								accept="image/*, .jpg, .png, .svg, .webp, .jfif"
+								image={props.reporte.imagen || '/images/defaultReporte.png'}
 							/>
 							<div className="space-y-5">
 								<div className="flex gap-5">
@@ -159,12 +159,8 @@ export default function Reporte({ props }) {
 							</Button>
 						</div>
 
-						{props.reporte.idReportador ? (
+						{props.reporte.idReportador && (
 							<CardUser items={props.reporte.reportador} />
-						) : (
-							<>
-								<CardUser items={props.reporte.reportador} />
-							</>
 						)}
 					</div>
 				</div>
@@ -222,6 +218,7 @@ export default function Reporte({ props }) {
 				onClose={() => setWarningDialog(false)}
 				fun={deleteReporte}
 				confirmar={true}
+				contenido={true}
 			>
 				<h1>Advertencia</h1>
 				<p>
